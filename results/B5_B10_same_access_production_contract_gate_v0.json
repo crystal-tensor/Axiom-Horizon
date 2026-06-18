@@ -1,0 +1,161 @@
+{
+  "benchmark_id": "B5",
+  "claim_boundary": {
+    "accuracy_per_resource_win_claimed": false,
+    "bqp_separation_claimed": false,
+    "dequantization_theorem_claimed": false,
+    "next_gate": "Implement mature canonical-environment production DMRG/MPS or a real same-access response oracle with state-preparation, mixing, measurement, confidence, optimizer-loop, and classical denominator costs.",
+    "production_dmrg_claimed": false,
+    "quantum_advantage_claimed": false,
+    "quantum_response_win_claimed": false,
+    "same_access_positive_route_claimed": false,
+    "sampling_access_theorem_claimed": false,
+    "what_is_not_supported": "This is not production DMRG, not a deployable tensor solver, not a response sampling oracle, not a same-access positive route, not quantum advantage, and not a BQP separation.",
+    "what_is_supported": "The current B5/B10 evidence covers the same nine Hubbard response rows and keeps forbidden claims off, but the production same-access contract fails."
+  },
+  "contract_gates": [
+    {
+      "evidence": {
+        "bridge_b5_instance_count": 9,
+        "readiness_instance_count": 9,
+        "smoke_instance_count": 9
+      },
+      "gate_id": "P1",
+      "label": "Same B5/B10 response rows are covered",
+      "passed": true,
+      "required_next_step": "Keep the same row IDs and response observable contract for all future production runs."
+    },
+    {
+      "evidence": {
+        "production_dmrg_available": false
+      },
+      "gate_id": "P2",
+      "label": "Production DMRG denominator is available",
+      "passed": false,
+      "required_next_step": "Add a non-exact-state-seeded canonical DMRG/MPS denominator with convergence and cost ledgers."
+    },
+    {
+      "evidence": {
+        "required_rows": 9,
+        "smoke_passed_row_count": 0
+      },
+      "gate_id": "P3",
+      "label": "Canonical-environment smoke rows pass",
+      "passed": false,
+      "required_next_step": "Make all rows pass fixed-sector, variance, discarded-weight, monotonicity, and response checks."
+    },
+    {
+      "evidence": {
+        "readiness_gate_count": 8,
+        "readiness_passed_gate_count": 0
+      },
+      "gate_id": "P4",
+      "label": "Readiness gates pass",
+      "passed": false,
+      "required_next_step": "Satisfy the full canonical-DMRG readiness checklist before promoting B5 evidence."
+    },
+    {
+      "evidence": {
+        "production_dmrg_available": false,
+        "seeded_mps_mean_relative_response_error": 0.0004416259745141554,
+        "variational_mps_mean_relative_response_error": 0.01805548365563228,
+        "variational_mps_rows_beating_seeded_pressure": 0
+      },
+      "gate_id": "P5",
+      "label": "Non-seeded production route beats seeded pressure",
+      "passed": false,
+      "required_next_step": "Beat the exact-state-seeded pressure reference without using exact-state seeding."
+    },
+    {
+      "evidence": {
+        "seeded_mps_rows_beating_non_oracle_embedding": 6,
+        "seeded_pressure_is_deployable": false
+      },
+      "gate_id": "P6",
+      "label": "Seeded pressure is replaced by a deployable denominator",
+      "passed": false,
+      "required_next_step": "Replace exact-state-seeded MPS pressure with deployable tensor or DMRG evidence."
+    },
+    {
+      "evidence": {
+        "sampling_oracle_constructed": false
+      },
+      "gate_id": "P7",
+      "label": "Sampling or response oracle is constructed",
+      "passed": false,
+      "required_next_step": "Construct a response observable sampler with preparation, mixing, variance, and confidence costs."
+    },
+    {
+      "evidence": {
+        "blocking_sampling_requirement_count": 5
+      },
+      "gate_id": "P8",
+      "label": "Sampling requirements no longer block the bridge",
+      "passed": false,
+      "required_next_step": "Resolve all B10 same-access sampling requirements before claiming a positive route."
+    },
+    {
+      "evidence": {
+        "same_access_positive_route_ready": false
+      },
+      "gate_id": "P9",
+      "label": "Positive same-access route exists after full costs",
+      "passed": false,
+      "required_next_step": "Beat the full denominator ladder after optimizer-loop, measurement, and classical-denominator costs."
+    },
+    {
+      "evidence": {
+        "bqp_separation_claimed": false,
+        "production_dmrg_claimed": false,
+        "quantum_advantage_claimed": false,
+        "same_access_positive_route_claimed": false
+      },
+      "gate_id": "P10",
+      "label": "No forbidden claim is made",
+      "passed": true,
+      "required_next_step": "Keep claim boundaries explicit until the production contract passes."
+    }
+  ],
+  "last_updated": "2026-06-18",
+  "linked_benchmark_id": "B10",
+  "linked_problem_id": 11,
+  "method": "b5_b10_same_access_production_contract_gate_v0",
+  "model_status": "production_dmrg_or_response_oracle_requirements_unmet",
+  "problem_id": 38,
+  "runtime_seconds": 0.000326,
+  "source_readiness_result": "results/B5_canonical_dmrg_readiness_gate_v0.json",
+  "source_same_access_bridge_result": "results/B10_t1_b5_same_access_sampling_or_dmrg_bridge_v0.json",
+  "source_smoke_result": "results/B5_canonical_environment_smoke_gate_v0.json",
+  "status": "same_access_production_contract_failed",
+  "summary": {
+    "accuracy_per_resource_win_claimed": false,
+    "b10_t1_positive_route_ready": false,
+    "blocking_sampling_requirement_count": 5,
+    "bqp_separation_claimed": false,
+    "canonical_environment_smoke_passed_rows": 0,
+    "contract_acceptance_passed": false,
+    "contract_fail_count": 8,
+    "contract_gate_count": 10,
+    "contract_pass_count": 2,
+    "dequantization_theorem_claimed": false,
+    "instance_count": 9,
+    "production_contract_ready": false,
+    "production_dmrg_available": false,
+    "production_dmrg_claimed": false,
+    "quantum_advantage_claimed": false,
+    "quantum_response_win_claimed": false,
+    "readiness_passed_gate_count": 0,
+    "same_access_positive_route_claimed": false,
+    "same_access_positive_route_ready": false,
+    "sampling_access_theorem_claimed": false,
+    "sampling_oracle_constructed": false,
+    "seeded_mps_mean_relative_response_error": 0.0004416259745141554,
+    "seeded_mps_rows_beating_non_oracle_embedding": 6,
+    "validation_error_count": 0,
+    "variational_mps_mean_relative_response_error": 0.01805548365563228,
+    "variational_mps_rows_beating_seeded_pressure": 0
+  },
+  "title": "B5/B10 same-access production contract gate",
+  "validation_errors": [],
+  "version": "0.1"
+}

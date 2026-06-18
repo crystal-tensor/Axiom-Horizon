@@ -406,6 +406,16 @@ DMRG/MPS with stored environments, orthonormal residuals, convergence, no
 exact-state seeding, and full cost accounting, or a fully costed quantum
 response kernel beats the denominator ladder.
 
+**Sprint update 53:** `T-B5-006b` is now merged as a B5/B10 same-access
+production contract gate. `tools/b5_b10_same_access_production_contract_gate.py`
+consumes the canonical DMRG readiness gate, the canonical-environment smoke
+gate, and the B10-T1 B5 same-access bridge. The current portfolio passes only
+2/10 contract gates: row coverage and no-forbidden-claim discipline. It still
+has 0 smoke-passed rows, 0 readiness gates, 5 blocking sampling requirements,
+no production DMRG, no sampling oracle, and no same-access positive route. This
+does not solve B5 or B10; it turns `T-B5-006` and `T-B10-014` into explicit
+acceptance-contract tasks.
+
 ## B6: High-Temperature Superconductivity Search
 
 **Technical target:** rank candidate materials using mechanism-aware

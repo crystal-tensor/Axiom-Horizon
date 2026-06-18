@@ -40,6 +40,37 @@ next_actions:
   - add_observable_errors_beyond_energy
   - move_from_1d_chain_to_2d_plaquette_proxy
 current_results:
+  b5_b10_same_access_production_contract_gate_v0:
+    status: same_access_production_contract_failed
+    model_status: production_dmrg_or_response_oracle_requirements_unmet
+    method: b5_b10_same_access_production_contract_gate_v0
+    source_readiness_result: ../results/B5_canonical_dmrg_readiness_gate_v0.json
+    source_smoke_result: ../results/B5_canonical_environment_smoke_gate_v0.json
+    source_same_access_bridge_result: ../results/B10_t1_b5_same_access_sampling_or_dmrg_bridge_v0.json
+    instance_count: 9
+    contract_gate_count: 10
+    contract_pass_count: 2
+    contract_fail_count: 8
+    contract_acceptance_passed: false
+    production_contract_ready: false
+    production_dmrg_available: false
+    canonical_environment_smoke_passed_rows: 0
+    readiness_passed_gate_count: 0
+    blocking_sampling_requirement_count: 5
+    sampling_oracle_constructed: false
+    same_access_positive_route_ready: false
+    b10_t1_positive_route_ready: false
+    production_dmrg_claimed: false
+    quantum_response_win_claimed: false
+    accuracy_per_resource_win_claimed: false
+    same_access_positive_route_claimed: false
+    quantum_advantage_claimed: false
+    bqp_separation_claimed: false
+    dequantization_theorem_claimed: false
+    sampling_access_theorem_claimed: false
+    validation_error_count: 0
+    result: ../results/B5_B10_same_access_production_contract_gate_v0.json
+    markdown_report: ../research/B5_B10_same_access_production_contract_gate.md
   canonical_environment_smoke_gate_v0:
     status: canonical_environment_smoke_gate_failed_not_production_dmrg
     model_status: posthoc_two_site_environment_diagnostics_not_canonical_solver

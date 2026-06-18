@@ -87,6 +87,10 @@ response rows: 8 readiness conditions evaluated, 0 passed, 8 failed; the smoke
 gate finds 9 environment ledgers, 0 smoke-passed rows, 3 rows passing the
 fixed-sector, variance, discarded-weight, and monotonicity checks, 0 rows close
 to the seeded MPS pressure response, and 0 rows beating seeded MPS pressure.
+The B5/B10 same-access production contract now makes that blocker explicit:
+10 contract gates are checked, only row coverage and no-forbidden-claim gates
+pass, 8 gates fail, there is still no production DMRG, no sampling oracle,
+no same-access positive route, and no BQP or quantum-advantage claim.
 The latest B10-T1 stress test still finds no positive same-access route because
 0 rows beat explicit D5 matvec-equivalent costs by shots. This is progress, but
 it is not a production DMRG result, not a deployable tensor solver, not a

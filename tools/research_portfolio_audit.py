@@ -4991,6 +4991,7 @@ def audit(root: Path) -> dict:
     b5_hubbard = b5_results.get("hubbard_exact_diagonalization_cluster_proxy_v0")
     b5_canonical_smoke = b5_results.get("canonical_environment_smoke_gate_v0")
     b5_dmrg_readiness = b5_results.get("canonical_dmrg_readiness_gate_v0")
+    b5_b10_production_contract = b5_results.get("b5_b10_same_access_production_contract_gate_v0")
     b5_two_site_dmrg = b5_results.get("two_site_finite_dmrg_response_reference_v0")
     b5_var_mps = b5_results.get("variational_mps_als_response_reference_v0")
     b5_mps = b5_results.get("mps_schmidt_truncation_response_reference_v0")
@@ -5249,6 +5250,128 @@ def audit(root: Path) -> dict:
         ]:
             if claim_boundary.get(field) is not False:
                 errors.append(f"B5 canonical DMRG readiness claim boundary must keep {field}=False")
+
+    b5_b10_production_contract_status = {}
+    if not b5_b10_production_contract:
+        warnings.append("B5 manifest has no B5/B10 same-access production contract gate")
+    else:
+        result_path = b5_b10_production_contract.get("result")
+        markdown_path = b5_b10_production_contract.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B5/B10 same-access production contract result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B5/B10 same-access production contract markdown path missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        claims = payload.get("claim_boundary", {})
+        b5_b10_production_contract_status = {
+            "status": b5_b10_production_contract.get("status"),
+            "method": b5_b10_production_contract.get("method"),
+            "model_status": b5_b10_production_contract.get("model_status"),
+            "instance_count": summary.get("instance_count"),
+            "contract_gate_count": summary.get("contract_gate_count"),
+            "contract_pass_count": summary.get("contract_pass_count"),
+            "contract_fail_count": summary.get("contract_fail_count"),
+            "contract_acceptance_passed": summary.get("contract_acceptance_passed"),
+            "production_contract_ready": summary.get("production_contract_ready"),
+            "production_dmrg_available": summary.get("production_dmrg_available"),
+            "canonical_environment_smoke_passed_rows": summary.get(
+                "canonical_environment_smoke_passed_rows"
+            ),
+            "readiness_passed_gate_count": summary.get("readiness_passed_gate_count"),
+            "blocking_sampling_requirement_count": summary.get("blocking_sampling_requirement_count"),
+            "sampling_oracle_constructed": summary.get("sampling_oracle_constructed"),
+            "same_access_positive_route_ready": summary.get("same_access_positive_route_ready"),
+            "b10_t1_positive_route_ready": summary.get("b10_t1_positive_route_ready"),
+            "production_dmrg_claimed": summary.get("production_dmrg_claimed"),
+            "quantum_response_win_claimed": summary.get("quantum_response_win_claimed"),
+            "accuracy_per_resource_win_claimed": summary.get("accuracy_per_resource_win_claimed"),
+            "same_access_positive_route_claimed": summary.get("same_access_positive_route_claimed"),
+            "quantum_advantage_claimed": summary.get("quantum_advantage_claimed"),
+            "bqp_separation_claimed": summary.get("bqp_separation_claimed"),
+            "dequantization_theorem_claimed": summary.get("dequantization_theorem_claimed"),
+            "sampling_access_theorem_claimed": summary.get("sampling_access_theorem_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("benchmark_id") != "B5":
+            errors.append("B5/B10 same-access production contract benchmark_id must be B5")
+        if payload.get("linked_benchmark_id") != "B10":
+            errors.append("B5/B10 same-access production contract linked_benchmark_id must be B10")
+        if payload.get("method") != b5_b10_production_contract.get("method"):
+            errors.append("B5/B10 same-access production contract method mismatch")
+        if payload.get("status") != b5_b10_production_contract.get("status"):
+            errors.append("B5/B10 same-access production contract status mismatch")
+        if payload.get("model_status") != b5_b10_production_contract.get("model_status"):
+            errors.append("B5/B10 same-access production contract model-status mismatch")
+        for field in [
+            "instance_count",
+            "contract_gate_count",
+            "contract_pass_count",
+            "contract_fail_count",
+            "contract_acceptance_passed",
+            "production_contract_ready",
+            "production_dmrg_available",
+            "canonical_environment_smoke_passed_rows",
+            "readiness_passed_gate_count",
+            "blocking_sampling_requirement_count",
+            "sampling_oracle_constructed",
+            "same_access_positive_route_ready",
+            "b10_t1_positive_route_ready",
+            "production_dmrg_claimed",
+            "quantum_response_win_claimed",
+            "accuracy_per_resource_win_claimed",
+            "same_access_positive_route_claimed",
+            "quantum_advantage_claimed",
+            "bqp_separation_claimed",
+            "dequantization_theorem_claimed",
+            "sampling_access_theorem_claimed",
+        ]:
+            if summary.get(field) != b5_b10_production_contract.get(field):
+                errors.append(f"B5/B10 same-access production contract {field} mismatch")
+        if summary.get("instance_count") != 9:
+            errors.append("B5/B10 same-access production contract must cover all nine D5 rows")
+        if summary.get("contract_gate_count") != 10:
+            errors.append("B5/B10 same-access production contract must expose ten gates")
+        if summary.get("contract_pass_count") != 2 or summary.get("contract_fail_count") != 8:
+            errors.append("B5/B10 same-access production contract should currently pass 2/10 gates")
+        if summary.get("contract_acceptance_passed") is not False:
+            errors.append("B5/B10 same-access production contract must not pass acceptance")
+        if summary.get("production_contract_ready") is not False:
+            errors.append("B5/B10 same-access production contract must not be production-ready")
+        if summary.get("production_dmrg_available") is not False:
+            errors.append("B5/B10 same-access production contract must not claim production DMRG availability")
+        if summary.get("canonical_environment_smoke_passed_rows") != 0:
+            errors.append("B5/B10 same-access production contract must keep smoke-passed rows at 0")
+        if summary.get("readiness_passed_gate_count") != 0:
+            errors.append("B5/B10 same-access production contract must keep readiness-passed gates at 0")
+        if summary.get("blocking_sampling_requirement_count") != 5:
+            errors.append("B5/B10 same-access production contract must keep five blocking sampling requirements")
+        if len(payload.get("contract_gates", [])) != 10:
+            errors.append("B5/B10 same-access production contract gate row count mismatch")
+        if sum(1 for gate in payload.get("contract_gates", []) if gate.get("passed")) != 2:
+            errors.append("B5/B10 same-access production contract payload should have two passing gates")
+        for field in [
+            "production_dmrg_claimed",
+            "quantum_response_win_claimed",
+            "accuracy_per_resource_win_claimed",
+            "same_access_positive_route_claimed",
+            "quantum_advantage_claimed",
+            "bqp_separation_claimed",
+            "dequantization_theorem_claimed",
+            "sampling_access_theorem_claimed",
+        ]:
+            if summary.get(field) is not False:
+                errors.append(f"B5/B10 same-access production contract must keep {field}=False")
+            if claims.get(field) is not False:
+                errors.append(f"B5/B10 same-access production contract claim boundary must keep {field}=False")
+        if len(payload.get("validation_errors", [])) != b5_b10_production_contract.get("validation_error_count"):
+            errors.append("B5/B10 same-access production contract validation-error count mismatch")
 
     b5_boundary_field_status = {}
     if not b5_boundary_field:
@@ -9440,6 +9563,7 @@ def audit(root: Path) -> dict:
         "b5": {
             "manifest": str(b5_manifest_path),
             "hubbard_embedding": b5_status,
+            "same_access_production_contract_gate": b5_b10_production_contract_status,
             "canonical_environment_smoke_gate": b5_canonical_smoke_status,
             "canonical_dmrg_readiness_gate": b5_dmrg_readiness_status,
             "two_site_finite_dmrg_response_reference": b5_two_site_dmrg_status,
@@ -9640,6 +9764,9 @@ def audit(root: Path) -> dict:
             ),
             "b5_canonical_dmrg_readiness_gate": str(
                 research / "B5_canonical_dmrg_readiness_gate.md"
+            ),
+            "b5_b10_same_access_production_contract_gate": str(
+                research / "B5_B10_same_access_production_contract_gate.md"
             ),
             "b5_canonical_environment_smoke_gate": str(
                 research / "B5_canonical_environment_smoke_gate.md"
@@ -10401,6 +10528,12 @@ def markdown_report(report: dict) -> str:
             f"- Canonical DMRG readiness production DMRG / quantum win / same-access positive route: {report['b5']['canonical_dmrg_readiness_gate'].get('production_dmrg')} / {report['b5']['canonical_dmrg_readiness_gate'].get('quantum_response_win_claimed')} / {report['b5']['canonical_dmrg_readiness_gate'].get('same_access_positive_route_claimed')}",
             f"- Canonical DMRG readiness validation errors: {report['b5']['canonical_dmrg_readiness_gate'].get('validation_error_count')}",
             f"- Canonical DMRG readiness result/markdown exists: {report['b5']['canonical_dmrg_readiness_gate'].get('result_exists')} / {report['b5']['canonical_dmrg_readiness_gate'].get('markdown_exists')}",
+            f"- B5/B10 same-access production contract status: {report['b5']['same_access_production_contract_gate'].get('status')}",
+            f"- B5/B10 same-access production contract gates passed/failed: {report['b5']['same_access_production_contract_gate'].get('contract_pass_count')} / {report['b5']['same_access_production_contract_gate'].get('contract_fail_count')}",
+            f"- B5/B10 same-access production contract smoke/readiness/sampling blockers: {report['b5']['same_access_production_contract_gate'].get('canonical_environment_smoke_passed_rows')} smoke-passed rows / {report['b5']['same_access_production_contract_gate'].get('readiness_passed_gate_count')} readiness gates / {report['b5']['same_access_production_contract_gate'].get('blocking_sampling_requirement_count')} blocking sampling requirements",
+            f"- B5/B10 same-access production contract production DMRG / oracle / positive route: {report['b5']['same_access_production_contract_gate'].get('production_dmrg_available')} / {report['b5']['same_access_production_contract_gate'].get('sampling_oracle_constructed')} / {report['b5']['same_access_production_contract_gate'].get('same_access_positive_route_ready')}",
+            f"- B5/B10 same-access production contract validation errors: {report['b5']['same_access_production_contract_gate'].get('validation_error_count')}",
+            f"- B5/B10 same-access production contract result/markdown exists: {report['b5']['same_access_production_contract_gate'].get('result_exists')} / {report['b5']['same_access_production_contract_gate'].get('markdown_exists')}",
             "",
             "## B6 Superconductivity Descriptor Status",
             "",

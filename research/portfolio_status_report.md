@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 44, 'B2': 48, 'B3': 30, 'B4': 20, 'B5': 26, 'B6': 21, 'B7': 41, 'B8': 32, 'B9': 13, 'B10': 49}
+- Maturity scores: {'B1': 44, 'B2': 48, 'B3': 30, 'B4': 20, 'B5': 27, 'B6': 21, 'B7': 41, 'B8': 32, 'B9': 13, 'B10': 50}
 
 ## Technical Resolution Program
 
@@ -665,6 +665,12 @@ Overall audit: PASS
 - Canonical DMRG readiness production DMRG / quantum win / same-access positive route: False / False / False
 - Canonical DMRG readiness validation errors: 0
 - Canonical DMRG readiness result/markdown exists: True / True
+- B5/B10 same-access production contract status: same_access_production_contract_failed
+- B5/B10 same-access production contract gates passed/failed: 2 / 8
+- B5/B10 same-access production contract smoke/readiness/sampling blockers: 0 smoke-passed rows / 0 readiness gates / 5 blocking sampling requirements
+- B5/B10 same-access production contract production DMRG / oracle / positive route: False / False / False
+- B5/B10 same-access production contract validation errors: 0
+- B5/B10 same-access production contract result/markdown exists: True / True
 
 ## B6 Superconductivity Descriptor Status
 

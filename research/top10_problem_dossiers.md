@@ -418,6 +418,12 @@ discarded-weight / monotonicity checks, 0 rows are close to seeded MPS pressure,
 0 rows beat seeded MPS pressure, and mature canonical DMRG, production DMRG,
 quantum response win, accuracy-per-resource win, and same-access positive route
 all remain false.
+T-B5-006b adds a B5/B10 same-access production contract gate: it consumes the
+canonical DMRG readiness gate, canonical-environment smoke gate, and B10-T1 B5
+same-access bridge. The current portfolio passes only 2/10 contract gates,
+fails 8/10, has 0 smoke-passed rows, 0 readiness gates, 5 blocking sampling
+requirements, no production DMRG, no sampling oracle, no same-access positive
+route, and no BQP or quantum-advantage claim.
 
 **Remaining path to a serious solution:** run T-B5-006 by implementing mature
 canonical-environment DMRG/MPS for the same response rows, with stored
@@ -425,9 +431,9 @@ left/right environments, orthonormal residuals, sweep convergence, no
 exact-state seeding, and full cost accounting; or compare a fully costed
 quantum impurity/response kernel against exact D5, non-oracle embedding, seeded
 MPS pressure, one-site ALS, two-site finite-DMRG-style, readiness-gate, and
-smoke-gate denominators.
+smoke-gate denominators while satisfying the same-access production contract.
 
-**Current internal maturity:** 26/100.
+**Current internal maturity:** 27/100.
 
 ## B6: High-Temperature Superconductivity Search
 
@@ -842,6 +848,10 @@ access-model chain: 0/8 readiness gates pass, seeded MPS pressure remains
 strongest, non-seeded tensor references beat seeded pressure on 0 rows, and no
 production-DMRG, same-access positive-route, quantum-advantage, or
 BQP-separation claim is made.
+T-B5-006b now turns the B5/B10 same-access blocker into a production contract:
+only 2/10 gates pass, 8/10 fail, and the current state has 0 smoke-passed rows,
+0 readiness gates, 5 blocking sampling requirements, no production DMRG, no
+sampling oracle, and no same-access positive route.
 
 **Remaining path to a serious solution:** treat B3 as demoted unless a
 multi-parameter UCCSD/ADAPT or stronger measurement rescue succeeds; run
@@ -853,7 +863,7 @@ enough to survive the full denominator ladder; turn the B10-T2
 bridge into real backend-property verifier execution or hardware randomized
 measurements; connect B4/B8 verification burdens back into the boundary map.
 
-**Current internal maturity:** 49/100.
+**Current internal maturity:** 50/100.
 
 ## Cross-Portfolio Process
 
