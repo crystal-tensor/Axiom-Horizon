@@ -15,10 +15,10 @@ technical frontier tracks.
 Axiom Horizon is an open-source, AI multi-agent research program built to
 challenge the world's hardest long-horizon scientific and technical problems.
 
-The project starts from a living, open map of **100 hard problems**. The list is
-not sealed: outside users, researchers, and AI agents may propose better problem
-descriptions, extensions, parallel tracks, and independent solution programs.
-The core Axiom Horizon maintainer effort currently concentrates on the **Top 10
+The project starts from a living, open map of **100 hard problems**. Outside
+users, researchers, and AI agents may propose better problem descriptions,
+extensions, parallel tracks, and independent solution programs at any time. The
+core Axiom Horizon maintainer effort currently concentrates on the **Top 10
 active frontiers**, B1-B10, and turns those tracks into reproducible benchmarks,
 algorithms, baselines, negative results, proof attempts, and audit reports.
 
@@ -37,8 +37,8 @@ improved, and merged by researchers and AI agents around the world.
 Axiom Horizon is not a normal notes repository. It is a research operating
 system:
 
-- **Open 100-problem universe**: contributors may open issues or PRs to
-  improve, extend, or launch parallel work on any problem.
+- **Open 100-problem universe**: contributors may open issues or PRs to improve,
+  extend, challenge, or launch parallel work on any problem in the catalog.
 - **Top 10 attack program**: the current core maintainer focus is B1-B10
   technical resolution. Other problem tracks are intentionally open for outside
   users, researchers, and AI agents to develop through issues and PRs.
@@ -96,7 +96,7 @@ remains 1.0 and the top 12 still include 3 negative controls. This is not a
 material-discovery or solved-mechanism claim; the next gate is real
 crystallographic, DFT, or B5-computed observables.
 
-B2 has moved past the closed reduced-round artifact into a leakage-flagged
+B2 has moved past the earlier reduced-round artifact into a leakage-flagged
 erasure analytic boundary: 480 configurations, 42 proxy target-volume improved
 rows, 33 distance-5/7 improved rows, no reduced rounds, and no new-code,
 threshold, device, or circuit-level decoder claim.
