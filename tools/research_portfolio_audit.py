@@ -5569,6 +5569,7 @@ def audit(root: Path) -> dict:
     b10_t1_b3_b5_comparison = b10_results.get("b10_t1_b3_b5_denominator_boundary_comparison_v0")
     b10_t1_missing_assumption_note = b10_results.get("b10_t1_missing_assumption_note_v0")
     b10_t1_asymptotic_access_contract = b10_results.get("b10_t1_asymptotic_access_contract_v0")
+    b10_t1_b5_same_access_bridge = b10_results.get("b10_t1_b5_same_access_sampling_or_dmrg_bridge_v0")
     b10_status = {}
     if not b10_graph:
         warnings.append("B10 manifest has no BQP-boundary graph result")
@@ -6754,6 +6755,92 @@ def audit(root: Path) -> dict:
         if claim_boundary.get("bqp_separation_claimed") is not False:
             errors.append("B10-T1 asymptotic access contract payload claims BQP separation")
 
+    b10_t1_b5_same_access_bridge_status = {}
+    if not b10_t1_b5_same_access_bridge:
+        warnings.append("B10 manifest has no B10-T1 B5 same-access sampling-or-DMRG bridge")
+    else:
+        result_path = b10_t1_b5_same_access_bridge.get("result")
+        markdown_path = b10_t1_b5_same_access_bridge.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B10-T1 B5 same-access bridge result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B10-T1 B5 same-access bridge markdown path missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        b10_t1_b5_same_access_bridge_status = {
+            "status": b10_t1_b5_same_access_bridge.get("status"),
+            "method": b10_t1_b5_same_access_bridge.get("method"),
+            "source_target_id": payload.get("source_target_id"),
+            "dependency_benchmarks": payload.get("dependency_benchmarks"),
+            "denominator_ladder_count": summary.get("denominator_ladder_count"),
+            "sampling_requirement_count": summary.get("sampling_requirement_count"),
+            "blocking_sampling_requirement_count": summary.get("blocking_sampling_requirement_count"),
+            "bridge_decision_count": summary.get("bridge_decision_count"),
+            "b5_instance_count": summary.get("b5_instance_count"),
+            "max_exact_d5_hilbert_dimension": summary.get("max_exact_d5_hilbert_dimension"),
+            "seeded_mps_rows_beating_non_oracle_embedding": summary.get("seeded_mps_rows_beating_non_oracle_embedding"),
+            "variational_mps_rows_beating_seeded_pressure": summary.get(
+                "variational_mps_rows_beating_seeded_pressure"
+            ),
+            "sampling_oracle_constructed": summary.get("sampling_oracle_constructed"),
+            "production_dmrg_available": summary.get("production_dmrg_available"),
+            "same_access_positive_route_ready": summary.get("same_access_positive_route_ready"),
+            "general_dequantization_theorem_proved": summary.get("general_dequantization_theorem_proved"),
+            "sampling_access_theorem_proved": summary.get("sampling_access_theorem_proved"),
+            "bqp_separation_claimed": summary.get("bqp_separation_claimed"),
+            "quantum_advantage_claimed": summary.get("quantum_advantage_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("status") != "b5_same_access_sampling_oracle_not_constructed_dmrg_required":
+            errors.append("B10-T1 B5 same-access bridge status mismatch")
+        if payload.get("method") != b10_t1_b5_same_access_bridge.get("method"):
+            errors.append("B10-T1 B5 same-access bridge method mismatch")
+        if payload.get("source_target_id") != b10_t1_b5_same_access_bridge.get("source_target_id"):
+            errors.append("B10-T1 B5 same-access bridge source target mismatch")
+        for field in [
+            "denominator_ladder_count",
+            "sampling_requirement_count",
+            "blocking_sampling_requirement_count",
+            "bridge_decision_count",
+            "b5_instance_count",
+            "max_exact_d5_hilbert_dimension",
+            "seeded_mps_rows_beating_non_oracle_embedding",
+            "variational_mps_rows_beating_seeded_pressure",
+        ]:
+            if summary.get(field) != b10_t1_b5_same_access_bridge.get(field):
+                errors.append(f"B10-T1 B5 same-access bridge {field} mismatch")
+        if summary.get("denominator_ladder_count", 0) < 4:
+            errors.append("B10-T1 B5 same-access bridge must include at least four denominator ladder rows")
+        if summary.get("blocking_sampling_requirement_count") != summary.get("sampling_requirement_count"):
+            errors.append("B10-T1 B5 same-access bridge must keep every sampling requirement blocking")
+        if summary.get("sampling_oracle_constructed") is not False:
+            errors.append("B10-T1 B5 same-access bridge must not claim a sampling oracle")
+        if summary.get("production_dmrg_available") is not False:
+            errors.append("B10-T1 B5 same-access bridge must not claim production DMRG")
+        if summary.get("same_access_positive_route_ready") is not False:
+            errors.append("B10-T1 B5 same-access bridge must not claim a positive same-access route")
+        if summary.get("general_dequantization_theorem_proved") is not False:
+            errors.append("B10-T1 B5 same-access bridge must not claim a general dequantization theorem")
+        if summary.get("sampling_access_theorem_proved") is not False:
+            errors.append("B10-T1 B5 same-access bridge must not claim a sampling-access theorem")
+        if summary.get("bqp_separation_claimed") is not False:
+            errors.append("B10-T1 B5 same-access bridge must not claim BQP separation")
+        if summary.get("quantum_advantage_claimed") is not False:
+            errors.append("B10-T1 B5 same-access bridge must not claim quantum advantage")
+        if len(payload.get("validation_errors", [])) != b10_t1_b5_same_access_bridge.get("validation_error_count"):
+            errors.append("B10-T1 B5 same-access bridge validation-error count mismatch")
+        claim_boundary = payload.get("claim_boundary", {})
+        if claim_boundary.get("same_access_positive_route_ready") is not False:
+            errors.append("B10-T1 B5 same-access bridge payload claims a positive route")
+        if claim_boundary.get("bqp_separation_claimed") is not False:
+            errors.append("B10-T1 B5 same-access bridge payload claims BQP separation")
+
     for path in [roadmap_path, status_html_path]:
         if not path.exists():
             errors.append(f"missing status artifact: {path}")
@@ -6932,6 +7019,7 @@ def audit(root: Path) -> dict:
             "t1_b3_b5_denominator_boundary_comparison": b10_t1_b3_b5_comparison_status,
             "t1_missing_assumption_note": b10_t1_missing_assumption_note_status,
             "t1_asymptotic_access_contract": b10_t1_asymptotic_access_contract_status,
+            "t1_b5_same_access_sampling_or_dmrg_bridge": b10_t1_b5_same_access_bridge_status,
         },
         "status_artifacts": {
             "roadmap": str(roadmap_path),
@@ -7039,6 +7127,9 @@ def audit(root: Path) -> dict:
             ),
             "b10_t1_missing_assumption_note": str(research / "B10_t1_missing_assumption_note.md"),
             "b10_t1_asymptotic_access_contract": str(research / "B10_t1_asymptotic_access_contract.md"),
+            "b10_t1_b5_same_access_sampling_or_dmrg_bridge": str(
+                research / "B10_t1_b5_same_access_sampling_or_dmrg_bridge.md"
+            ),
             "b9_failed_gap_amplification_lemma": str(research / "B9_failed_gap_amplification_lemma.md"),
             "b9_symbolic_gap_skeleton": str(research / "B9_symbolic_gap_skeleton.md"),
             "b9_symbolic_gap_lean_skeleton": str(
@@ -7994,6 +8085,13 @@ def markdown_report(report: dict) -> str:
             f"- B10-T1 general dequantization theorem / sampling-access theorem / BQP separation / quantum advantage: {report['b10']['t1_asymptotic_access_contract'].get('general_dequantization_theorem_proved')} / {report['b10']['t1_asymptotic_access_contract'].get('general_sampling_access_theorem_proved')} / {report['b10']['t1_asymptotic_access_contract'].get('bqp_separation_claimed')} / {report['b10']['t1_asymptotic_access_contract'].get('quantum_advantage_claimed')}",
             f"- B10-T1 asymptotic access validation errors: {report['b10']['t1_asymptotic_access_contract'].get('validation_error_count')}",
             f"- B10-T1 asymptotic access result/markdown exists: {report['b10']['t1_asymptotic_access_contract'].get('result_exists')} / {report['b10']['t1_asymptotic_access_contract'].get('markdown_exists')}",
+            f"- B10-T1 B5 same-access bridge status: {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('status')}",
+            f"- B10-T1 B5 denominator ladder / sampling requirements / blocking requirements: {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('denominator_ladder_count')} / {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('sampling_requirement_count')} / {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('blocking_sampling_requirement_count')}",
+            f"- B10-T1 B5 seeded-MPS-over-non-oracle / variational-over-seeded rows: {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('seeded_mps_rows_beating_non_oracle_embedding')} / {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('variational_mps_rows_beating_seeded_pressure')}",
+            f"- B10-T1 B5 sampling oracle / production DMRG / same-access positive route: {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('sampling_oracle_constructed')} / {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('production_dmrg_available')} / {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('same_access_positive_route_ready')}",
+            f"- B10-T1 B5 dequantization theorem / sampling-access theorem / BQP separation / quantum advantage: {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('general_dequantization_theorem_proved')} / {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('sampling_access_theorem_proved')} / {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('bqp_separation_claimed')} / {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('quantum_advantage_claimed')}",
+            f"- B10-T1 B5 same-access bridge validation errors: {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('validation_error_count')}",
+            f"- B10-T1 B5 same-access bridge result/markdown exists: {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('result_exists')} / {report['b10']['t1_b5_same_access_sampling_or_dmrg_bridge'].get('markdown_exists')}",
             "",
         ]
     )

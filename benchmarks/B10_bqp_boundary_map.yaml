@@ -480,6 +480,33 @@ current_results:
     caveat: access_contract_note_refutes_current_sampling_bridge_not_general_dequantization_theorem
     result: ../results/B10_t1_asymptotic_access_contract_v0.json
     markdown_report: ../research/B10_t1_asymptotic_access_contract.md
+  b10_t1_b5_same_access_sampling_or_dmrg_bridge_v0:
+    status: b5_same_access_sampling_oracle_not_constructed_dmrg_required
+    method: b10_t1_b5_same_access_sampling_or_dmrg_bridge_v0
+    source: b10_t1_asymptotic_access_contract_v0
+    source_target_id: B10-T1
+    dependency_benchmarks:
+      - B5
+      - B10
+    denominator_ladder_count: 4
+    sampling_requirement_count: 5
+    blocking_sampling_requirement_count: 5
+    bridge_decision_count: 4
+    b5_instance_count: 9
+    max_exact_d5_hilbert_dimension: 4900
+    seeded_mps_rows_beating_non_oracle_embedding: 6
+    variational_mps_rows_beating_seeded_pressure: 0
+    sampling_oracle_constructed: false
+    production_dmrg_available: false
+    same_access_positive_route_ready: false
+    general_dequantization_theorem_proved: false
+    sampling_access_theorem_proved: false
+    bqp_separation_claimed: false
+    quantum_advantage_claimed: false
+    validation_error_count: 0
+    caveat: b5_same_access_bridge_not_sampling_theorem_not_production_dmrg
+    result: ../results/B10_t1_b5_same_access_sampling_or_dmrg_bridge_v0.json
+    markdown_report: ../research/B10_t1_b5_same_access_sampling_or_dmrg_bridge.md
 prototype_artifacts:
   boundary_graph_builder: ../tools/b10_bqp_boundary_graph.py
   formal_theorem_target_builder: ../tools/b10_formal_theorem_targets.py
@@ -494,6 +521,7 @@ prototype_artifacts:
   t1_b3_b5_denominator_boundary_comparison_builder: ../tools/b10_t1_b3_b5_denominator_boundary_comparison.py
   t1_missing_assumption_note_builder: ../tools/b10_t1_missing_assumption_note.py
   t1_asymptotic_access_contract_builder: ../tools/b10_t1_asymptotic_access_contract.py
+  t1_b5_same_access_sampling_or_dmrg_bridge_builder: ../tools/b10_t1_b5_same_access_sampling_or_dmrg_bridge.py
   t2_refresh_proof_obligation_gate_builder: ../tools/b10_t2_refresh_proof_obligation_gate.py
   t2_restricted_soundness_lemma_builder: ../tools/b10_t2_restricted_soundness_lemma.py
   t2_transcript_leakage_simulator_builder: ../tools/b10_t2_transcript_leakage_simulator.py

@@ -696,19 +696,23 @@ portfolio evidence because no comparable sampling/query oracle or positive
 quantum response kernel is instantiated; it explicitly does not prove a
 general dequantization theorem, sampling-access theorem, BQP separation, or
 quantum advantage.
+T-B10-012 now adds the B5 same-access sampling-or-DMRG bridge: 4 denominator
+ladder rows, 5 sampling requirements all blocking, 6
+seeded-MPS-over-non-oracle rows, 0 variational-over-seeded rows, no sampling
+oracle, no production DMRG, no same-access positive route, and explicit
+non-claim of dequantization, sampling theorem, BQP separation, or quantum
+advantage.
 
 **Remaining path to a serious solution:** treat B3 as demoted unless a
 multi-parameter UCCSD/ADAPT or stronger measurement rescue succeeds; run
-T-B10-012 on the B5 Hubbard response family by either building a comparable
-sampling/query oracle with variance, preparation, and response-estimator costs
-or formalizing why production DMRG/MPS remains the stronger same-access
-denominator; promote the B5 MPS/ALS prototype with real variational DMRG/MPS
-evidence or compare a real candidate B5 response subroutine against the D5
-table; turn the B10-T2 bridge into real backend-property verifier execution or
-hardware randomized measurements; connect B4/B8 verification burdens back into
-the boundary map.
+T-B10-013 by implementing canonical-environment production DMRG/MPS for the
+same B5 Hubbard response rows, or by supplying a sampling/query oracle with
+response-estimator variance, preparation/mixing cost, and confidence bounds
+strong enough to survive the T-B10-012 denominator ladder; turn the B10-T2
+bridge into real backend-property verifier execution or hardware randomized
+measurements; connect B4/B8 verification burdens back into the boundary map.
 
-**Current internal maturity:** 45/100.
+**Current internal maturity:** 47/100.
 
 ## Cross-Portfolio Process
 

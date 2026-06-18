@@ -1,0 +1,148 @@
+{
+  "benchmark_id": "B10",
+  "bridge_decisions": [
+    {
+      "access_mode": "explicit",
+      "decision": "classical_denominator_available",
+      "reason": "D5 CG response and non-oracle embedding denominators are explicit-input artifacts."
+    },
+    {
+      "access_mode": "sampling_or_query_access",
+      "decision": "not_constructed",
+      "reason": "No sampler, variance certificate, or preparation/mixing cost exists for the B5 response observable."
+    },
+    {
+      "access_mode": "mps_dmrg_denominator",
+      "decision": "production_dmrg_required_next",
+      "reason": "Exact-state-seeded MPS is strong pressure but not deployable; variational MPS/ALS is nonproduction and loses to seeded pressure."
+    },
+    {
+      "access_mode": "quantum_response_kernel",
+      "decision": "not_positive_ready",
+      "reason": "No state-preparation, measurement, optimizer-loop, or response-kernel costed comparison beats the same-access denominator ladder."
+    }
+  ],
+  "claim_boundary": {
+    "bqp_separation_claimed": false,
+    "general_dequantization_theorem_proved": false,
+    "production_dmrg_available": false,
+    "quantum_advantage_claimed": false,
+    "same_access_positive_route_ready": false,
+    "sampling_access_theorem_proved": false,
+    "sampling_oracle_constructed": false,
+    "what_is_not_supported": "This is not a production DMRG result, not a same-access sampling theorem, not a quantum response win, not a dequantization theorem, and not a BQP separation.",
+    "what_is_supported": "For the current B5 Hubbard response portfolio, explicit denominators exist and exact-state-seeded MPS is a strong pressure reference. However, no comparable sampling/query oracle is constructed and the available variational MPS/ALS reference is not production DMRG."
+  },
+  "denominator_ladder": [
+    {
+      "access_mode": "explicit",
+      "claim_boundary": "Exact small D5 denominator, not a scalable response solution.",
+      "id": "D1_explicit_d5_cg_response",
+      "max_relative_response_error": 9.788055078561953e-09,
+      "mean_relative_response_error": null,
+      "resource_proxy": 1014300,
+      "status": "same_input_denominator_instantiated"
+    },
+    {
+      "access_mode": "explicit_predeclared_classical_denominator",
+      "claim_boundary": "Predeclared embedding denominator, not quantum response.",
+      "id": "D2_non_oracle_embedding",
+      "max_relative_response_error": 0.12308129218169694,
+      "mean_relative_response_error": 0.050983452310434746,
+      "resource_proxy": 36,
+      "status": "non_oracle_denominator_instantiated"
+    },
+    {
+      "access_mode": "mps_pressure_reference_not_deployable",
+      "claim_boundary": "Exact-state seeded MPS pressure, not variational DMRG.",
+      "id": "D3_exact_state_seeded_mps_pressure",
+      "max_relative_response_error": 0.0016954037598740704,
+      "mean_relative_response_error": 0.0004416259745141554,
+      "resource_proxy": 16,
+      "status": "strong_pressure_reference_not_production_dmrg"
+    },
+    {
+      "access_mode": "variational_mps_prototype",
+      "claim_boundary": "One-site MPS/ALS prototype, not production DMRG.",
+      "id": "D4_variational_mps_als_prototype",
+      "max_relative_response_error": 0.03907201105154143,
+      "mean_relative_response_error": 0.01805548365563228,
+      "resource_proxy": 4,
+      "status": "nonproduction_dmrg_prototype"
+    }
+  ],
+  "dependency_benchmarks": [
+    "B5",
+    "B10"
+  ],
+  "method": "b10_t1_b5_same_access_sampling_or_dmrg_bridge_v0",
+  "next_required_artifacts": [
+    "Implement canonical-environment production DMRG/MPS for the same B5 response rows.",
+    "If a sampling/query oracle is proposed, attach response-estimator variance, preparation/mixing cost, and confidence bounds.",
+    "Compare any quantum response kernel against the explicit, non-oracle, seeded-MPS pressure, and production-DMRG denominators under the same access contract."
+  ],
+  "problem_id": 11,
+  "sampling_oracle_requirements": [
+    {
+      "blocks_sampling_bridge": true,
+      "current_status": "missing",
+      "id": "S1_response_observable_sampler",
+      "requirement": "Construct samples whose expectation estimates the same density-response observable and eta/tolerance as the D5 table."
+    },
+    {
+      "blocks_sampling_bridge": true,
+      "current_status": "missing",
+      "id": "S2_preparation_or_mixing_cost",
+      "requirement": "Charge preparation, thermalization, tensor sampling, or quantum state-preparation cost under the same input model."
+    },
+    {
+      "blocks_sampling_bridge": true,
+      "current_status": "missing",
+      "id": "S3_variance_and_confidence_certificate",
+      "requirement": "Provide variance, confidence, and failure-probability accounting for the response estimator."
+    },
+    {
+      "blocks_sampling_bridge": true,
+      "current_status": "partially_satisfied_by_finite_denominators",
+      "id": "S4_same_access_classical_denominator",
+      "requirement": "Compare against explicit, embedding, MPS/DMRG, or sampling-access classical denominators receiving no weaker access."
+    },
+    {
+      "blocks_sampling_bridge": true,
+      "current_status": "refuted_for_current_portfolio_evidence",
+      "id": "S5_positive_kernel_after_full_costs",
+      "requirement": "Show a candidate quantum or sampling response kernel beats the best same-access denominator after full costs."
+    }
+  ],
+  "source_access_contract_method": "b10_t1_asymptotic_access_contract_v0",
+  "source_d5_denominator_method": "b10_t1_d5_observable_denominator_table_v0",
+  "source_non_oracle_embedding_method": "b5_non_oracle_response_embedding_baseline_v0",
+  "source_seeded_mps_method": "b5_mps_schmidt_truncation_response_reference_v0",
+  "source_target_id": "B10-T1",
+  "source_variational_mps_method": "b5_variational_mps_als_response_reference_v0",
+  "status": "b5_same_access_sampling_oracle_not_constructed_dmrg_required",
+  "summary": {
+    "b5_instance_count": 9,
+    "blocking_sampling_requirement_count": 5,
+    "bqp_separation_claimed": false,
+    "bridge_decision_count": 4,
+    "denominator_ladder_count": 4,
+    "general_dequantization_theorem_proved": false,
+    "max_exact_d5_hilbert_dimension": 4900,
+    "non_oracle_mean_relative_response_error": 0.050983452310434746,
+    "production_dmrg_available": false,
+    "quantum_advantage_claimed": false,
+    "same_access_positive_route_ready": false,
+    "sampling_access_theorem_proved": false,
+    "sampling_oracle_constructed": false,
+    "sampling_requirement_count": 5,
+    "seeded_mps_mean_relative_response_error": 0.0004416259745141554,
+    "seeded_mps_rows_beating_non_oracle_embedding": 6,
+    "validation_error_count": 0,
+    "variational_mps_mean_relative_response_error": 0.01805548365563228,
+    "variational_mps_rows_beating_seeded_pressure": 0
+  },
+  "title": "B10-T1 B5 Same-Access Sampling-or-DMRG Bridge",
+  "validation_errors": [],
+  "version": "0.1"
+}

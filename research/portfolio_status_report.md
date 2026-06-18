@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 37, 'B2': 39, 'B3': 30, 'B4': 20, 'B5': 21, 'B6': 19, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 45}
+- Maturity scores: {'B1': 37, 'B2': 39, 'B3': 30, 'B4': 20, 'B5': 21, 'B6': 19, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 47}
 
 ## Technical Resolution Program
 
@@ -902,6 +902,13 @@ Overall audit: PASS
 - B10-T1 general dequantization theorem / sampling-access theorem / BQP separation / quantum advantage: False / False / False / False
 - B10-T1 asymptotic access validation errors: 0
 - B10-T1 asymptotic access result/markdown exists: True / True
+- B10-T1 B5 same-access bridge status: b5_same_access_sampling_oracle_not_constructed_dmrg_required
+- B10-T1 B5 denominator ladder / sampling requirements / blocking requirements: 4 / 5 / 5
+- B10-T1 B5 seeded-MPS-over-non-oracle / variational-over-seeded rows: 6 / 0
+- B10-T1 B5 sampling oracle / production DMRG / same-access positive route: False / False / False
+- B10-T1 B5 dequantization theorem / sampling-access theorem / BQP separation / quantum advantage: False / False / False / False
+- B10-T1 B5 same-access bridge validation errors: 0
+- B10-T1 B5 same-access bridge result/markdown exists: True / True
 
 ## Errors
 
