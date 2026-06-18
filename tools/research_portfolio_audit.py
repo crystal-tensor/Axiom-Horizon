@@ -1314,6 +1314,9 @@ def audit(root: Path) -> dict:
     b2_posterior_risk_ledger = b2_results.get("posterior_weighted_decoder_risk_ledger_v0")
     b2_decoder_input_contract = b2_results.get("decoder_input_contract_feasibility_gate_v0")
     b2_per_shot_trace_packet = b2_results.get("per_shot_decoder_trace_packet_v0")
+    b2_posterior_injection_gate = b2_results.get(
+        "posterior_likelihood_decoder_injection_gate_v0"
+    )
     b2_status = {}
     if not b2_baseline:
         warnings.append("B2 manifest has no repetition-code control baseline result")
@@ -2470,6 +2473,133 @@ def audit(root: Path) -> dict:
         ]:
             if claims.get(key) is not False:
                 errors.append(f"B2 per-shot trace packet must keep {key}=False")
+
+    b2_posterior_injection_gate_status = {}
+    if not b2_posterior_injection_gate:
+        warnings.append("B2 manifest has no posterior-likelihood decoder injection gate result")
+    else:
+        result_path = b2_posterior_injection_gate.get("result")
+        markdown_path = b2_posterior_injection_gate.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B2 posterior injection gate result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B2 posterior injection gate markdown missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        claims = payload.get("claim_boundary", {})
+        b2_posterior_injection_gate_status = {
+            "status": b2_posterior_injection_gate.get("status"),
+            "method": b2_posterior_injection_gate.get("method"),
+            "model_status": payload.get("model_status"),
+            "source_challenge_count": summary.get("source_challenge_count"),
+            "injection_profile_count": summary.get("injection_profile_count"),
+            "profile_result_count": summary.get("profile_result_count"),
+            "total_profile_shots": summary.get("total_profile_shots"),
+            "baseline_total_failures": summary.get("baseline_total_failures"),
+            "best_profile": summary.get("best_profile"),
+            "best_profile_injected_failures": summary.get("best_profile_injected_failures"),
+            "best_profile_failure_delta": summary.get("best_profile_failure_delta"),
+            "best_profile_fixed_failures": summary.get("best_profile_fixed_failures"),
+            "best_profile_introduced_failures": summary.get(
+                "best_profile_introduced_failures"
+            ),
+            "best_profile_changed_predictions": summary.get("best_profile_changed_predictions"),
+            "posterior_likelihood_injection_performed": summary.get(
+                "posterior_likelihood_injection_performed"
+            ),
+            "synthetic_flag_likelihoods_consumed": summary.get(
+                "synthetic_flag_likelihoods_consumed"
+            ),
+            "calibrated_flag_data_used": summary.get("calibrated_flag_data_used"),
+            "real_hardware_trace_used": summary.get("real_hardware_trace_used"),
+            "improvement_gate_passed": summary.get("improvement_gate_passed"),
+            "all_challenge_nonregression_gate_passed": summary.get(
+                "all_challenge_nonregression_gate_passed"
+            ),
+            "route_demotion_recommended": summary.get("route_demotion_recommended"),
+            "posterior_likelihood_injection_interface_built": claims.get(
+                "posterior_likelihood_injection_interface_built"
+            ),
+            "circuit_level_decoder_claimed": claims.get("circuit_level_decoder_claimed"),
+            "production_decoder_claimed": claims.get("production_decoder_claimed"),
+            "threshold_claimed": claims.get("threshold_claimed"),
+            "new_code_claimed": claims.get("new_code_claimed"),
+            "hardware_result_claimed": claims.get("hardware_result_claimed"),
+            "calibrated_device_claimed": claims.get("calibrated_device_claimed"),
+            "quantum_advantage_claimed": claims.get("quantum_advantage_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("status") != b2_posterior_injection_gate.get("status"):
+            errors.append("B2 posterior injection gate status mismatch")
+        if payload.get("method") != b2_posterior_injection_gate.get("method"):
+            errors.append("B2 posterior injection gate method mismatch")
+        if payload.get("model_status") != b2_posterior_injection_gate.get("model_status"):
+            errors.append("B2 posterior injection gate model-status mismatch")
+        for key in [
+            "source_challenge_count",
+            "injection_profile_count",
+            "profile_result_count",
+            "total_profile_shots",
+            "baseline_total_failures",
+            "best_profile",
+            "best_profile_injected_failures",
+            "best_profile_failure_delta",
+            "best_profile_fixed_failures",
+            "best_profile_introduced_failures",
+            "best_profile_changed_predictions",
+            "posterior_likelihood_injection_performed",
+            "synthetic_flag_likelihoods_consumed",
+            "calibrated_flag_data_used",
+            "real_hardware_trace_used",
+            "improvement_gate_passed",
+            "all_challenge_nonregression_gate_passed",
+            "route_demotion_recommended",
+        ]:
+            if summary.get(key) != b2_posterior_injection_gate.get(key):
+                errors.append(f"B2 posterior injection gate {key} mismatch")
+        if summary.get("source_challenge_count") != 3:
+            errors.append("B2 posterior injection gate should consume three challenge rows")
+        if summary.get("injection_profile_count") != 3:
+            errors.append("B2 posterior injection gate should evaluate three injection profiles")
+        if summary.get("total_profile_shots") != 1728:
+            errors.append("B2 posterior injection gate should evaluate 1728 profile shots")
+        if summary.get("posterior_likelihood_injection_performed") is not True:
+            errors.append("B2 posterior injection gate must perform posterior likelihood injection")
+        if summary.get("synthetic_flag_likelihoods_consumed") is not True:
+            errors.append("B2 posterior injection gate must consume synthetic flag likelihoods")
+        if summary.get("calibrated_flag_data_used") is not False:
+            errors.append("B2 posterior injection gate must not claim calibrated flag data")
+        if summary.get("real_hardware_trace_used") is not False:
+            errors.append("B2 posterior injection gate must not claim real hardware traces")
+        if summary.get("improvement_gate_passed") is not False:
+            errors.append("B2 posterior injection gate must not pass improvement gate")
+        if summary.get("route_demotion_recommended") is not True:
+            errors.append("B2 posterior injection gate must keep route demoted")
+        if claims.get("posterior_likelihood_injection_interface_built") is not True:
+            errors.append("B2 posterior injection gate must disclose injection interface construction")
+        if claims.get("posterior_likelihood_injection_performed") is not True:
+            errors.append("B2 posterior injection gate must disclose injection execution")
+        if claims.get("real_flag_events_claimed") is not False:
+            errors.append("B2 posterior injection gate must not claim real flag events")
+        for key in [
+            "circuit_level_decoder_claimed",
+            "production_decoder_claimed",
+            "threshold_claimed",
+            "new_code_claimed",
+            "hardware_result_claimed",
+            "calibrated_device_claimed",
+            "quantum_advantage_claimed",
+        ]:
+            if claims.get(key) is not False:
+                errors.append(f"B2 posterior injection gate must keep {key}=False")
+        if len(payload.get("validation_errors", [])) != 0:
+            errors.append("B2 posterior injection gate validation errors must be zero")
         if len(payload.get("validation_errors", [])) != 0:
             errors.append("B2 decoder input contract validation errors must be zero")
 
@@ -7942,6 +8072,7 @@ def audit(root: Path) -> dict:
             "posterior_weighted_decoder_risk_ledger": b2_posterior_risk_ledger_status,
             "decoder_input_contract_feasibility_gate": b2_decoder_input_contract_status,
             "per_shot_decoder_trace_packet": b2_per_shot_trace_packet_status,
+            "posterior_likelihood_decoder_injection_gate": b2_posterior_injection_gate_status,
         },
         "b3": {
             "manifest": str(b3_manifest_path),
@@ -8092,6 +8223,9 @@ def audit(root: Path) -> dict:
             ),
             "b2_per_shot_decoder_trace_packet": str(
                 research / "B2_per_shot_decoder_trace_packet.md"
+            ),
+            "b2_posterior_likelihood_decoder_injection_gate": str(
+                research / "B2_posterior_likelihood_decoder_injection_gate.md"
             ),
             "b3_quantum_observable_fci_comparison": str(research / "B3_quantum_observable_fci_comparison.md"),
             "b3_quantum_observable_fci_qasm_directory": str(
@@ -8611,6 +8745,15 @@ def markdown_report(report: dict) -> str:
             f"- Per-shot trace packet circuit decoder / production decoder / threshold / hardware: {report['b2']['per_shot_decoder_trace_packet'].get('circuit_level_decoder_claimed')} / {report['b2']['per_shot_decoder_trace_packet'].get('production_decoder_claimed')} / {report['b2']['per_shot_decoder_trace_packet'].get('threshold_claimed')} / {report['b2']['per_shot_decoder_trace_packet'].get('hardware_result_claimed')}",
             f"- Per-shot trace packet validation errors: {report['b2']['per_shot_decoder_trace_packet'].get('validation_error_count')}",
             f"- Per-shot trace packet result/markdown exists: {report['b2']['per_shot_decoder_trace_packet'].get('result_exists')} / {report['b2']['per_shot_decoder_trace_packet'].get('markdown_exists')}",
+            f"- Posterior injection gate status: {report['b2']['posterior_likelihood_decoder_injection_gate'].get('status')}",
+            f"- Posterior injection gate challenges / profiles / shots: {report['b2']['posterior_likelihood_decoder_injection_gate'].get('source_challenge_count')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('injection_profile_count')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('total_profile_shots')}",
+            f"- Posterior injection gate best profile / injected failures / delta: {report['b2']['posterior_likelihood_decoder_injection_gate'].get('best_profile')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('best_profile_injected_failures')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('best_profile_failure_delta')}",
+            f"- Posterior injection gate fixed / introduced / changed predictions: {report['b2']['posterior_likelihood_decoder_injection_gate'].get('best_profile_fixed_failures')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('best_profile_introduced_failures')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('best_profile_changed_predictions')}",
+            f"- Posterior injection gate injection / synthetic flags / calibrated data / hardware: {report['b2']['posterior_likelihood_decoder_injection_gate'].get('posterior_likelihood_injection_performed')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('synthetic_flag_likelihoods_consumed')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('calibrated_flag_data_used')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('real_hardware_trace_used')}",
+            f"- Posterior injection gate improvement / non-regression / demotion: {report['b2']['posterior_likelihood_decoder_injection_gate'].get('improvement_gate_passed')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('all_challenge_nonregression_gate_passed')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('route_demotion_recommended')}",
+            f"- Posterior injection gate circuit decoder / production decoder / threshold / hardware: {report['b2']['posterior_likelihood_decoder_injection_gate'].get('circuit_level_decoder_claimed')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('production_decoder_claimed')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('threshold_claimed')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('hardware_result_claimed')}",
+            f"- Posterior injection gate validation errors: {report['b2']['posterior_likelihood_decoder_injection_gate'].get('validation_error_count')}",
+            f"- Posterior injection gate result/markdown exists: {report['b2']['posterior_likelihood_decoder_injection_gate'].get('result_exists')} / {report['b2']['posterior_likelihood_decoder_injection_gate'].get('markdown_exists')}",
             "",
             "## B3 Resource Proxy Status",
             "",

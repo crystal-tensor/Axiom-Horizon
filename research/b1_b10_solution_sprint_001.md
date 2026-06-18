@@ -241,6 +241,18 @@ hardware evidence, or a new code. Next: `T-B2-009b` must consume these traces in
 a posterior-likelihood PyMatching/Stim decoder or replace the synthetic flag
 fixture with calibrated leakage/flag data.
 
+**Sprint update 47:** `T-B2-009b` is now merged as a posterior-likelihood
+injection interface gate, but it is a negative boundary, not a decoder win. The
+new tool `tools/b2_posterior_likelihood_decoder_injection_gate.py` consumes the
+T-B2-009a per-shot traces, reconstructs PyMatching edge weights per shot using
+synthetic flag posteriors, and evaluates 3 injection profiles over 1,728
+profile-shots. The best profile is `mild_flag_weight_shift`: it changes 0
+predictions, fixes 0 failures, introduces 0 failures, and leaves 22 injected
+failures. The strong profile introduces 2 failures. Therefore the improvement
+gate is false, the route remains demoted, and the next useful gate is
+`T-B2-009c`: calibrated detector-to-edge posterior semantics or real
+leakage/flag data.
+
 ## B3: Molecular Reaction Dynamics
 
 **Technical target:** produce a reaction-coordinate quantum observable estimate

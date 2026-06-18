@@ -109,11 +109,14 @@ boundary, a posterior-weighted decoder-risk ledger, and a decoder-input
 contract feasibility gate. The latest B2 increment adds a per-shot decoder
 trace packet for three strict challenge rows: 576 detector bitstring traces,
 576 observable/prediction rows, and 482 synthetic detector/tick flag events are
-now persisted as an input fixture. Posterior likelihood injection is still
-missing, the flag events are not calibrated or hardware-derived, strict
-high-purity adjusted survivors remain 0, and all-profile robustness is still
-false. This is still not a circuit-level decoder, production decoder,
-threshold, hardware result, or new-code claim.
+now persisted as an input fixture. A posterior-likelihood injection gate now
+consumes those traces through PyMatching edge-weight reconstruction across
+three injection profiles. The best profile changes 0 predictions and fixes 0
+failures; the strong profile introduces 2 failures, so the improvement gate
+fails and the route remains demoted. The flag events are not calibrated or
+hardware-derived, strict high-purity adjusted survivors remain 0, and
+all-profile robustness is still false. This is still not a circuit-level
+decoder, production decoder, threshold, hardware result, or new-code claim.
 
 ## Repository Layout
 

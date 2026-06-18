@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 37, 'B2': 45, 'B3': 30, 'B4': 20, 'B5': 25, 'B6': 21, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 49}
+- Maturity scores: {'B1': 37, 'B2': 46, 'B3': 30, 'B4': 20, 'B5': 25, 'B6': 21, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 49}
 
 ## Technical Resolution Program
 
@@ -378,6 +378,15 @@ Overall audit: PASS
 - Per-shot trace packet circuit decoder / production decoder / threshold / hardware: False / False / False / False
 - Per-shot trace packet validation errors: 0
 - Per-shot trace packet result/markdown exists: True / True
+- Posterior injection gate status: posterior_likelihood_injection_interface_negative_boundary
+- Posterior injection gate challenges / profiles / shots: 3 / 3 / 1728
+- Posterior injection gate best profile / injected failures / delta: mild_flag_weight_shift / 22 / 0
+- Posterior injection gate fixed / introduced / changed predictions: 0 / 0 / 0
+- Posterior injection gate injection / synthetic flags / calibrated data / hardware: True / True / False / False
+- Posterior injection gate improvement / non-regression / demotion: False / True / True
+- Posterior injection gate circuit decoder / production decoder / threshold / hardware: False / False / False / False
+- Posterior injection gate validation errors: 0
+- Posterior injection gate result/markdown exists: True / True
 
 ## B3 Resource Proxy Status
 
