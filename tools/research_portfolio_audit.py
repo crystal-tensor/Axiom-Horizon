@@ -1312,6 +1312,7 @@ def audit(root: Path) -> dict:
     b2_false_positive_erasure = b2_results.get("heralded_erasure_false_positive_stress_v0")
     b2_shot_conditioned_erasure = b2_results.get("shot_conditioned_erasure_decoder_boundary_v0")
     b2_posterior_risk_ledger = b2_results.get("posterior_weighted_decoder_risk_ledger_v0")
+    b2_decoder_input_contract = b2_results.get("decoder_input_contract_feasibility_gate_v0")
     b2_status = {}
     if not b2_baseline:
         warnings.append("B2 manifest has no repetition-code control baseline result")
@@ -2214,6 +2215,136 @@ def audit(root: Path) -> dict:
                 errors.append(f"B2 posterior-risk ledger must keep {key}=False")
         if len(payload.get("validation_errors", [])) != 0:
             errors.append("B2 posterior-risk ledger validation errors must be zero")
+
+    b2_decoder_input_contract_status = {}
+    if not b2_decoder_input_contract:
+        warnings.append("B2 manifest has no decoder input contract feasibility gate result")
+    else:
+        result_path = b2_decoder_input_contract.get("result")
+        markdown_path = b2_decoder_input_contract.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B2 decoder input contract result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B2 decoder input contract markdown missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        claims = payload.get("claim_boundary", {})
+        b2_decoder_input_contract_status = {
+            "status": b2_decoder_input_contract.get("status"),
+            "method": b2_decoder_input_contract.get("method"),
+            "model_status": payload.get("model_status"),
+            "contract_input_count": summary.get("contract_input_count"),
+            "available_contract_input_count": summary.get("available_contract_input_count"),
+            "missing_contract_input_count": summary.get("missing_contract_input_count"),
+            "feasibility_gate_count": summary.get("feasibility_gate_count"),
+            "passed_gate_count": summary.get("passed_gate_count"),
+            "failed_gate_count": summary.get("failed_gate_count"),
+            "failed_critical_gate_count": summary.get("failed_critical_gate_count"),
+            "source_raw_surviving_d5_d7_rows": summary.get("source_raw_surviving_d5_d7_rows"),
+            "conservative_adjusted_surviving_d5_d7_rows": summary.get(
+                "conservative_adjusted_surviving_d5_d7_rows"
+            ),
+            "strict_adjusted_surviving_d5_d7_rows": summary.get(
+                "strict_adjusted_surviving_d5_d7_rows"
+            ),
+            "strict_high_purity_adjusted_survivors": summary.get(
+                "strict_high_purity_adjusted_survivors"
+            ),
+            "robust_all_profile_adjusted_survival": summary.get(
+                "robust_all_profile_adjusted_survival"
+            ),
+            "decoder_contract_satisfied": summary.get("decoder_contract_satisfied"),
+            "demotion_recommended_until_decoder_or_calibration": summary.get(
+                "demotion_recommended_until_decoder_or_calibration"
+            ),
+            "circuit_level_decoder_claimed": claims.get("circuit_level_decoder_claimed"),
+            "shot_conditioned_erasure_decoder_claimed": claims.get(
+                "shot_conditioned_erasure_decoder_claimed"
+            ),
+            "production_decoder_claimed": claims.get("production_decoder_claimed"),
+            "threshold_claimed": claims.get("threshold_claimed"),
+            "new_code_claimed": claims.get("new_code_claimed"),
+            "hardware_result_claimed": claims.get("hardware_result_claimed"),
+            "calibrated_device_claimed": claims.get("calibrated_device_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("status") != b2_decoder_input_contract.get("status"):
+            errors.append("B2 decoder input contract status mismatch")
+        if payload.get("method") != b2_decoder_input_contract.get("method"):
+            errors.append("B2 decoder input contract method mismatch")
+        if payload.get("model_status") != b2_decoder_input_contract.get("model_status"):
+            errors.append("B2 decoder input contract model-status mismatch")
+        for key in [
+            "contract_input_count",
+            "available_contract_input_count",
+            "missing_contract_input_count",
+            "feasibility_gate_count",
+            "passed_gate_count",
+            "failed_gate_count",
+            "failed_critical_gate_count",
+            "source_raw_surviving_d5_d7_rows",
+            "conservative_adjusted_surviving_d5_d7_rows",
+            "strict_adjusted_surviving_d5_d7_rows",
+            "strict_high_purity_adjusted_survivors",
+            "robust_all_profile_adjusted_survival",
+            "decoder_contract_satisfied",
+            "demotion_recommended_until_decoder_or_calibration",
+        ]:
+            if summary.get(key) != b2_decoder_input_contract.get(key):
+                errors.append(f"B2 decoder input contract {key} mismatch")
+        if summary.get("contract_input_count") != 10:
+            errors.append("B2 decoder input contract must track ten decoder inputs")
+        if summary.get("available_contract_input_count") != 4:
+            errors.append("B2 decoder input contract should have four currently available inputs")
+        if summary.get("missing_contract_input_count") != 6:
+            errors.append("B2 decoder input contract should have six missing inputs")
+        if summary.get("failed_critical_gate_count") < 5:
+            errors.append("B2 decoder input contract should fail at least five critical gates")
+        if summary.get("strict_high_purity_adjusted_survivors") != 0:
+            errors.append("B2 decoder input contract strict high-purity survivors must be zero")
+        if summary.get("robust_all_profile_adjusted_survival") is not False:
+            errors.append("B2 decoder input contract must not claim all-profile survival")
+        if summary.get("decoder_contract_satisfied") is not False:
+            errors.append("B2 decoder input contract must not be marked satisfied")
+        if summary.get("demotion_recommended_until_decoder_or_calibration") is not True:
+            errors.append("B2 decoder input contract must recommend demotion until decoder or calibration")
+        if len(payload.get("decoder_contract_inputs", [])) != summary.get("contract_input_count"):
+            errors.append("B2 decoder input contract input count mismatch")
+        if len(payload.get("feasibility_gates", [])) != summary.get("feasibility_gate_count"):
+            errors.append("B2 decoder input contract feasibility gate count mismatch")
+        if not any(
+            row.get("input") == "per_shot_syndrome_bitstrings" and row.get("available") is False
+            for row in payload.get("decoder_contract_inputs", [])
+        ):
+            errors.append("B2 decoder input contract must record missing per-shot syndrome bitstrings")
+        if not any(
+            row.get("critical") is True and row.get("passed") is False
+            for row in payload.get("feasibility_gates", [])
+        ):
+            errors.append("B2 decoder input contract must have failed critical gates")
+        if claims.get("decoder_input_contract_built") is not True:
+            errors.append("B2 decoder input contract claim boundary must disclose contract construction")
+        if claims.get("demotion_recommended_until_decoder_or_calibration") is not True:
+            errors.append("B2 decoder input contract claim boundary must recommend demotion")
+        for key in [
+            "circuit_level_decoder_claimed",
+            "shot_conditioned_erasure_decoder_claimed",
+            "production_decoder_claimed",
+            "threshold_claimed",
+            "new_code_claimed",
+            "hardware_result_claimed",
+            "calibrated_device_claimed",
+        ]:
+            if claims.get(key) is not False:
+                errors.append(f"B2 decoder input contract must keep {key}=False")
+        if len(payload.get("validation_errors", [])) != 0:
+            errors.append("B2 decoder input contract validation errors must be zero")
 
     b3_manifest = yaml.safe_load(read(b3_manifest_path))
     b3_results = b3_manifest.get("current_results", {})
@@ -7682,6 +7813,7 @@ def audit(root: Path) -> dict:
             "heralded_erasure_false_positive_stress": b2_false_positive_erasure_status,
             "shot_conditioned_erasure_decoder_boundary": b2_shot_conditioned_erasure_status,
             "posterior_weighted_decoder_risk_ledger": b2_posterior_risk_ledger_status,
+            "decoder_input_contract_feasibility_gate": b2_decoder_input_contract_status,
         },
         "b3": {
             "manifest": str(b3_manifest_path),
@@ -7826,6 +7958,9 @@ def audit(root: Path) -> dict:
             ),
             "b2_posterior_weighted_decoder_risk_ledger": str(
                 research / "B2_posterior_weighted_decoder_risk_ledger.md"
+            ),
+            "b2_decoder_input_contract_feasibility_gate": str(
+                research / "B2_decoder_input_contract_feasibility_gate.md"
             ),
             "b3_quantum_observable_fci_comparison": str(research / "B3_quantum_observable_fci_comparison.md"),
             "b3_quantum_observable_fci_qasm_directory": str(
@@ -8329,6 +8464,14 @@ def markdown_report(report: dict) -> str:
             f"- Posterior-risk ledger risk model / circuit decoder / production decoder / threshold / hardware: {report['b2']['posterior_weighted_decoder_risk_ledger'].get('posterior_weighted_decoder_risk_model_performed')} / {report['b2']['posterior_weighted_decoder_risk_ledger'].get('circuit_level_decoder_claimed')} / {report['b2']['posterior_weighted_decoder_risk_ledger'].get('production_decoder_claimed')} / {report['b2']['posterior_weighted_decoder_risk_ledger'].get('threshold_claimed')} / {report['b2']['posterior_weighted_decoder_risk_ledger'].get('hardware_result_claimed')}",
             f"- Posterior-risk ledger validation errors: {report['b2']['posterior_weighted_decoder_risk_ledger'].get('validation_error_count')}",
             f"- Posterior-risk ledger result/markdown exists: {report['b2']['posterior_weighted_decoder_risk_ledger'].get('result_exists')} / {report['b2']['posterior_weighted_decoder_risk_ledger'].get('markdown_exists')}",
+            f"- Decoder input contract status: {report['b2']['decoder_input_contract_feasibility_gate'].get('status')}",
+            f"- Decoder input contract available/missing inputs: {report['b2']['decoder_input_contract_feasibility_gate'].get('available_contract_input_count')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('missing_contract_input_count')}",
+            f"- Decoder input contract gates passed/failed/critical failed: {report['b2']['decoder_input_contract_feasibility_gate'].get('passed_gate_count')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('failed_gate_count')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('failed_critical_gate_count')}",
+            f"- Decoder input contract raw/conservative/strict survivors: {report['b2']['decoder_input_contract_feasibility_gate'].get('source_raw_surviving_d5_d7_rows')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('conservative_adjusted_surviving_d5_d7_rows')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('strict_adjusted_surviving_d5_d7_rows')}",
+            f"- Decoder input contract satisfied / demotion recommended: {report['b2']['decoder_input_contract_feasibility_gate'].get('decoder_contract_satisfied')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('demotion_recommended_until_decoder_or_calibration')}",
+            f"- Decoder input contract circuit decoder / production decoder / threshold / hardware: {report['b2']['decoder_input_contract_feasibility_gate'].get('circuit_level_decoder_claimed')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('production_decoder_claimed')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('threshold_claimed')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('hardware_result_claimed')}",
+            f"- Decoder input contract validation errors: {report['b2']['decoder_input_contract_feasibility_gate'].get('validation_error_count')}",
+            f"- Decoder input contract result/markdown exists: {report['b2']['decoder_input_contract_feasibility_gate'].get('result_exists')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('markdown_exists')}",
             "",
             "## B3 Resource Proxy Status",
             "",

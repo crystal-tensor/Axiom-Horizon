@@ -216,6 +216,18 @@ survival is false. Next: `T-B2-008` must be a real circuit-level
 shot-conditioned decoder or a calibrated leakage/flag dataset; otherwise this
 route should stay a boundary track.
 
+**Sprint update 45:** `T-B2-008` is now merged as a decoder-input contract
+feasibility gate, not a circuit-level decoder. The new tool
+`tools/b2_decoder_input_contract_feasibility_gate.py` maps the T-B2-006/T-B2-007
+posterior and risk rows into 10 decoder contract inputs. Only 4 inputs are
+available and 6 are missing; 9 feasibility gates are evaluated, 4 pass, and 5
+critical gates fail. Strict high-purity adjusted survivors remain 0, robust
+all-profile adjusted survival remains false, and the route is explicitly
+demoted until a real decoder or calibrated leakage/flag dataset exists. Next:
+`T-B2-009` must persist per-shot syndrome/flag traces and inject posterior flag
+likelihoods into a PyMatching/Stim circuit-level decoder, or collect calibrated
+leakage/flag data.
+
 ## B3: Molecular Reaction Dynamics
 
 **Technical target:** produce a reaction-coordinate quantum observable estimate

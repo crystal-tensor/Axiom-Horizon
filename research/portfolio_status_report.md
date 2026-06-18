@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 37, 'B2': 43, 'B3': 30, 'B4': 20, 'B5': 25, 'B6': 21, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 49}
+- Maturity scores: {'B1': 37, 'B2': 44, 'B3': 30, 'B4': 20, 'B5': 25, 'B6': 21, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 49}
 
 ## Technical Resolution Program
 
@@ -362,6 +362,14 @@ Overall audit: PASS
 - Posterior-risk ledger risk model / circuit decoder / production decoder / threshold / hardware: True / False / False / False / False
 - Posterior-risk ledger validation errors: 0
 - Posterior-risk ledger result/markdown exists: True / True
+- Decoder input contract status: decoder_input_contract_failed_calibrated_data_or_decoder_required
+- Decoder input contract available/missing inputs: 4 / 6
+- Decoder input contract gates passed/failed/critical failed: 4 / 5 / 5
+- Decoder input contract raw/conservative/strict survivors: 6 / 3 / 3
+- Decoder input contract satisfied / demotion recommended: False / True
+- Decoder input contract circuit decoder / production decoder / threshold / hardware: False / False / False / False
+- Decoder input contract validation errors: 0
+- Decoder input contract result/markdown exists: True / True
 
 ## B3 Resource Proxy Status
 

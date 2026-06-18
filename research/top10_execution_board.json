@@ -2,7 +2,7 @@
   "schema_version": "0.1",
   "last_updated": "2026-06-18",
   "purpose": "Execution board for turning the Top 10 quantum attack directions from v0 artifacts into a one-year technical-resolution portfolio.",
-  "portfolio_state": "stage 1p evidence hardening; B2 has a posterior-weighted decoder-risk ledger, B5 has a canonical DMRG readiness gate, B6 has a structural/electronic proxy boundary, and B10 remains a denominator-boundary track",
+  "portfolio_state": "stage 1q evidence hardening; B2 now has a decoder-input contract feasibility gate, B5 has a canonical DMRG readiness gate, B6 has a structural/electronic proxy boundary, and B10 remains a denominator-boundary track",
   "decision_rules": {
     "monthly_keep_rule": "Keep a direction only if the next 30-day artifact can falsify or improve a concrete claim.",
     "merge_rule": "Merge directions when their validation stack is shared, such as B4 plus B8 or B1 plus B7.",
@@ -50,17 +50,17 @@
       "problem_id": 22,
       "title": "Low-overhead quantum error-correcting codes",
       "priority_lane": "technical_system_spine",
-      "current_maturity": "Stim baseline plus closed reduced-round artifact boundary; T-B2-007 posterior-weighted decoder-risk ledger over 4 risk budgets / 4608 budget-profile rows leaves mild/nominal/conservative/strict adjusted survivors at 6/5/3/3, strict high-purity survivors 0, and no robust all-profile adjusted survival.",
-      "strongest_evidence": "Stim/PyMatching baseline plus closed reduced-round artifact boundary; T-B2-003 analytic leakage-erasure proxy found 42 improved rows; T-B2-004 circuit-derived HERALDED_ERASE stress found 10 d=5/d=7 rows; T-B2-005 false-positive stress preserved 5 rows at fp=0.001/tick; T-B2-006 posterior calibration gave 6 raw profile-survivor rows; T-B2-007 risk ledger shrinks conservative/strict adjusted survivors to 3 and keeps strict high-purity survivors at 0.",
-      "30_day_gate": "Replace the posterior-weighted risk ledger with a circuit-level shot-conditioned decoder or hardware-calibrated leakage/flag dataset that preserves d=5/d=7 target-volume rows under strict posterior, missed-leakage, noise-mismatch, and realistic false-positive gates.",
-      "next_artifact": "B2 T-B2-008 circuit-level shot-conditioned decoder or calibrated leakage-data stress with posterior flag integration.",
-      "kill_condition": "Demote the leakage-erasure route if d=5/d=7 target-volume rows disappear under conservative/strict posterior-weighted risk, calibrated false-positive rates, missed-leakage bounds, or noise mismatch.",
+      "current_maturity": "decoder_input_contract_failed_calibrated_data_or_decoder_required",
+      "strongest_evidence": "Stim/PyMatching baseline plus closed reduced-round artifact boundary; leakage-erasure proxy/stress rows; posterior calibration; posterior-weighted risk ledger; and T-B2-008 decoder-input contract gate. The gate finds 4/10 decoder inputs available, 6 missing, 4/9 gates passed, 5 critical gates failed, strict high-purity survivors 0, and all-profile robustness false.",
+      "30_day_gate": "Persist per-shot syndrome and flag traces, inject posterior flag probabilities into a real circuit-level decoder, or collect calibrated leakage/flag data; otherwise keep the heralded-erasure route demoted.",
+      "next_artifact": "B2 T-B2-009 per-shot posterior decoder trace plus PyMatching/Stim likelihood-injection decoder, or calibrated leakage/flag dataset.",
+      "kill_condition": "Keep the leakage-erasure route demoted if per-shot decoder inputs or calibrated leakage/flag data remain unavailable, or if strict high-purity/all-profile survival remains zero/false.",
       "downstream_translation_route": "Deferred until B2 shows Wilson-bounded target-volume reduction under shot-conditioned or calibrated leakage/erasure evidence, without relying on the closed reduced-round artifact.",
       "dependencies": [
         "B1",
         "B7"
       ],
-      "kill_or_merge_condition": "Demote the leakage-erasure route if d=5/d=7 target-volume rows disappear under conservative/strict posterior-weighted risk, calibrated false-positive rates, missed-leakage bounds, or noise mismatch."
+      "kill_or_merge_condition": "Keep the leakage-erasure route demoted if per-shot decoder inputs or calibrated leakage/flag data remain unavailable, or if strict high-purity/all-profile survival remains zero/false."
     },
     {
       "b_id": "B3",
@@ -196,7 +196,7 @@
   "next_30_days": {
     "week_1": [
       "Freeze B1 proof-log report outline.",
-      "B2 reduced-round is closed; T-B2-004 adds Stim heralded-erasure stress, so the next gate is a shot-conditioned erasure decoder or calibrated leakage model.",
+      "B2 T-B2-008 closes the current posterior-risk route as a decoder-input contract failure; next gate is per-shot posterior decoder traces or calibrated leakage/flag data.",
       "Pair B4 and B8 into one verification protocol lane."
     ],
     "week_2": [

@@ -141,16 +141,20 @@ mild/nominal/conservative/strict adjusted survivors of 6/5/3/3. Strict
 high-purity adjusted survivors remain 0 and all-profile adjusted survival is
 false. This is useful risk accounting, but it is not a circuit-level
 shot-conditioned decoder, production decoder, threshold result, hardware result,
-or new code.
+or new code. T-B2-008 adds a decoder-input contract feasibility gate: 10
+required decoder inputs, 4 available, 6 missing; 9 feasibility gates, 4 passed,
+5 failed critical gates; strict high-purity adjusted survivors remain 0; robust
+all-profile adjusted survival remains false; and no circuit-level decoder,
+production decoder, threshold, hardware, or new-code claim is made.
 
-**Remaining path to a serious solution:** integrate posterior flag probabilities
-into an actual circuit-level decoder; collect or emulate calibrated leakage/flag
-data with realistic false-positive and false-negative rates; stress surviving
-d=5/d=7 rows under conservative/strict posterior-weighted risk, missed-leakage,
-noise-mismatch, and larger shot gates; connect only robust non-artifact B2 rows
-into the B7 resource ledger.
+**Remaining path to a serious solution:** persist per-shot syndrome bitstrings
+and detector/tick-indexed flag events from Stim or hardware; implement
+posterior likelihood injection in a PyMatching/Stim circuit-level decoder;
+collect calibrated leakage/flag confusion data or a holdout validation split;
+re-test d=5/d=7 rows under strict high-purity and all-profile robustness gates
+before feeding B7.
 
-**Current internal maturity:** 43/100.
+**Current internal maturity:** 44/100.
 
 ## B3: Quantum Algorithms for Molecular Reaction Dynamics
 

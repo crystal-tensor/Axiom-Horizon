@@ -105,12 +105,13 @@ threshold, device, or circuit-level decoder claim.
 
 B2 now also has a Stim HERALDED_ERASE / DEPOLARIZE1 stress boundary, a
 false-positive overhead stress, a posterior-calibrated shot-conditioned leakage
-boundary, and a posterior-weighted decoder-risk ledger. The latest B2 ledger
-evaluates 4 risk budgets across 4,608 budget/profile rows. The raw T-B2-006
-profile survivors are 6; mild/nominal/conservative/strict adjusted survivors
-are 6/5/3/3, strict high-purity survivors remain 0, and all-profile robustness
-is still false. This is still not a circuit-level decoder, production decoder,
-threshold, hardware result, or new-code claim.
+boundary, a posterior-weighted decoder-risk ledger, and a decoder-input
+contract feasibility gate. The latest B2 gate maps the current posterior/risk
+rows into 10 decoder contract inputs: 4 are available, 6 are missing, 4 of 9
+feasibility gates pass, 5 critical gates fail, strict high-purity adjusted
+survivors remain 0, and all-profile robustness is still false. This is still
+not a circuit-level decoder, production decoder, threshold, hardware result, or
+new-code claim.
 
 ## Repository Layout
 

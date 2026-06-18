@@ -1,0 +1,318 @@
+{
+  "benchmark_id": "B2",
+  "claim_boundary": {
+    "calibrated_device_claimed": false,
+    "circuit_level_decoder_claimed": false,
+    "decoder_input_contract_built": true,
+    "demotion_recommended_until_decoder_or_calibration": true,
+    "hardware_result_claimed": false,
+    "new_code_claimed": false,
+    "next_gate": "Persist per-shot syndrome/flag traces and implement posterior likelihood injection in a decoder, or collect calibrated leakage/flag data.",
+    "production_decoder_claimed": false,
+    "shot_conditioned_erasure_decoder_claimed": false,
+    "threshold_claimed": false,
+    "what_is_not_supported": "This is not a circuit-level shot-conditioned decoder, not a production decoder, not calibrated leakage data, not a threshold result, not a hardware result, and not a new-code claim.",
+    "what_is_supported": "A decoder-facing input contract and feasibility gate over the current posterior/risk rows."
+  },
+  "decoder_contract_inputs": [
+    {
+      "available": true,
+      "blocker": null,
+      "input": "stim_detector_error_model",
+      "source": "upstream Stim/PyMatching false-positive stress"
+    },
+    {
+      "available": true,
+      "blocker": null,
+      "input": "aggregate_target_volume_rows",
+      "source": "results/B2_posterior_weighted_decoder_risk_ledger_v0.json"
+    },
+    {
+      "available": true,
+      "blocker": null,
+      "input": "posterior_flag_probabilities",
+      "source": "results/B2_shot_conditioned_erasure_decoder_boundary_v0.json"
+    },
+    {
+      "available": true,
+      "blocker": null,
+      "input": "risk_adjusted_volume_rows",
+      "source": "results/B2_posterior_weighted_decoder_risk_ledger_v0.json"
+    },
+    {
+      "available": false,
+      "blocker": "Only aggregate target-comparison rows are retained; per-shot syndrome traces are not present.",
+      "input": "per_shot_syndrome_bitstrings",
+      "source": null
+    },
+    {
+      "available": false,
+      "blocker": "Flag posterior rows are profile-level rows, not detector/tick-indexed flag events.",
+      "input": "per_detector_flag_event_ids",
+      "source": null
+    },
+    {
+      "available": false,
+      "blocker": "No PyMatching/Stim decoder path consumes posterior flag probabilities as edge weights.",
+      "input": "decoder_likelihood_injection_api",
+      "source": null
+    },
+    {
+      "available": false,
+      "blocker": "Detection efficiency and false-positive rates are profile assumptions, not measured calibration data.",
+      "input": "calibrated_leakage_confusion_matrix",
+      "source": null
+    },
+    {
+      "available": false,
+      "blocker": "No hardware trace, calibrated dataset, or holdout split exists for posterior-weight validation.",
+      "input": "holdout_validation_or_hardware_trace",
+      "source": null
+    },
+    {
+      "available": false,
+      "blocker": "No circuit-level shot-conditioned decoder runtime or distance-scaling curve has been measured.",
+      "input": "decoder_runtime_and_threshold_curve",
+      "source": null
+    }
+  ],
+  "feasibility_gates": [
+    {
+      "critical": false,
+      "evidence": {
+        "calibration_profile_count": 4,
+        "evaluated_profile_rows": 1152
+      },
+      "gate_id": "G1",
+      "label": "Posterior flag probabilities exist",
+      "passed": true,
+      "required_next_step": "Keep carrying posterior fields into decoder-facing artifacts."
+    },
+    {
+      "critical": false,
+      "evidence": {
+        "conservative_adjusted_surviving_d5_d7_rows": 3,
+        "conservative_max_decoder_adjusted_reduction": 1.9936373276776251
+      },
+      "gate_id": "G2",
+      "label": "Conservative risk-adjusted d=5/d=7 survivors exist",
+      "passed": true,
+      "required_next_step": "Preserve these rows only as candidate rows for a real decoder run."
+    },
+    {
+      "critical": false,
+      "evidence": {
+        "strict_adjusted_surviving_d5_d7_rows": 3,
+        "strict_max_decoder_adjusted_reduction": 1.7942735949098625
+      },
+      "gate_id": "G3",
+      "label": "Strict risk-adjusted d=5/d=7 survivors exist",
+      "passed": true,
+      "required_next_step": "Run a decoder with these rows as challenge cases."
+    },
+    {
+      "critical": true,
+      "evidence": {
+        "strict_high_purity_adjusted_survivors": 0
+      },
+      "gate_id": "G4",
+      "label": "Strict high-purity survivor exists",
+      "passed": false,
+      "required_next_step": "Obtain high-purity flag rows or demote the route under strict calibration assumptions."
+    },
+    {
+      "critical": true,
+      "evidence": {
+        "robust_all_profile_adjusted_survival": false,
+        "survivor_profiles": [
+          "field_detector_0p80",
+          "high_purity_detector_0p95",
+          "nominal_lab_detector_0p90"
+        ]
+      },
+      "gate_id": "G5",
+      "label": "All-profile robustness exists",
+      "passed": false,
+      "required_next_step": "Show survival across all declared detector profiles or keep the route profile-sensitive."
+    },
+    {
+      "critical": true,
+      "evidence": {
+        "per_detector_flag_event_ids": false,
+        "per_shot_syndrome_bitstrings": false
+      },
+      "gate_id": "G6",
+      "label": "Per-shot syndrome and flag traces are available",
+      "passed": false,
+      "required_next_step": "Persist shot-level syndrome bitstrings and detector/tick-indexed flag events from Stim or hardware."
+    },
+    {
+      "critical": true,
+      "evidence": {
+        "circuit_level_decoder_claimed": false,
+        "decoder_likelihood_injection_api": false
+      },
+      "gate_id": "G7",
+      "label": "Posterior probabilities are injected into a circuit-level decoder",
+      "passed": false,
+      "required_next_step": "Implement a PyMatching/Stim decoder path that consumes posterior flag likelihoods as edge weights."
+    },
+    {
+      "critical": true,
+      "evidence": {
+        "calibrated_leakage_confusion_matrix": false,
+        "holdout_validation_or_hardware_trace": false
+      },
+      "gate_id": "G8",
+      "label": "Calibrated leakage/flag data are available",
+      "passed": false,
+      "required_next_step": "Collect calibrated leakage/flag data or provide a holdout validation split."
+    },
+    {
+      "critical": false,
+      "evidence": {
+        "hardware_result_claimed": false,
+        "new_code_claimed": false,
+        "production_decoder_claimed": false,
+        "threshold_claimed": false
+      },
+      "gate_id": "G9",
+      "label": "Claim boundary remains clean",
+      "passed": true,
+      "required_next_step": "Continue to block threshold, hardware, and new-code claims until a real decoder passes."
+    }
+  ],
+  "last_updated": "2026-06-18",
+  "method": "b2_decoder_input_contract_feasibility_gate_v0",
+  "model_status": "decoder_input_contract_from_aggregate_rows_not_circuit_level_decoder",
+  "problem_id": 22,
+  "runtime_seconds": 0.003271,
+  "source_posterior_risk_ledger": "results/B2_posterior_weighted_decoder_risk_ledger_v0.json",
+  "source_shot_conditioned_boundary": "results/B2_shot_conditioned_erasure_decoder_boundary_v0.json",
+  "status": "decoder_input_contract_failed_calibrated_data_or_decoder_required",
+  "strict_survivor_rows": [
+    {
+      "baseline_distance": 9,
+      "baseline_space_time_volume": 1692,
+      "candidate_distance": 5,
+      "candidate_space_time_volume": 377.19999999999993,
+      "decoder_adjusted_candidate_space_time_volume": 942.9999999999998,
+      "decoder_adjusted_surviving_d5_d7_improvement": true,
+      "decoder_adjusted_volume_reduction": 1.7942735949098625,
+      "decoder_risk_multiplier": 2.5,
+      "false_positive_rate_per_tick": 0.001,
+      "false_positive_ratio": 1.0,
+      "leakage_rate_per_tick": 0.01,
+      "max_false_positive_rate_per_tick": 0.001,
+      "max_missed_leakage_rate_per_tick": 0.001,
+      "memory_basis": "x",
+      "missed_leakage_rate_per_tick": 0.0009999999999999998,
+      "missed_leakage_ratio": 0.9999999999999998,
+      "physical_error": 0.003,
+      "posterior_leakage_probability_given_flag": 0.9009009009009009,
+      "posterior_shortfall_ratio": 0.0,
+      "posterior_threshold": 0.75,
+      "profile": "nominal_lab_detector_0p90",
+      "raw_surviving_d5_d7_improvement": true,
+      "raw_volume_reduction_vs_baseline": 4.485683987274657,
+      "risk_budget": "strict_decoder_penalty",
+      "shot_conditioned_accept": true,
+      "target_logical_error": 0.05
+    },
+    {
+      "baseline_distance": 7,
+      "baseline_space_time_volume": 826,
+      "candidate_distance": 5,
+      "candidate_space_time_volume": 386.4,
+      "decoder_adjusted_candidate_space_time_volume": 772.8,
+      "decoder_adjusted_surviving_d5_d7_improvement": true,
+      "decoder_adjusted_volume_reduction": 1.068840579710145,
+      "decoder_risk_multiplier": 2.0,
+      "false_positive_rate_per_tick": 0.001,
+      "false_positive_ratio": 1.0,
+      "leakage_rate_per_tick": 0.005,
+      "max_false_positive_rate_per_tick": 0.001,
+      "max_missed_leakage_rate_per_tick": 0.001,
+      "memory_basis": "x",
+      "missed_leakage_rate_per_tick": 0.0004999999999999999,
+      "missed_leakage_ratio": 0.4999999999999999,
+      "physical_error": 0.005,
+      "posterior_leakage_probability_given_flag": 0.818926296633303,
+      "posterior_shortfall_ratio": 0.0,
+      "posterior_threshold": 0.75,
+      "profile": "nominal_lab_detector_0p90",
+      "raw_surviving_d5_d7_improvement": true,
+      "raw_volume_reduction_vs_baseline": 2.13768115942029,
+      "risk_budget": "strict_decoder_penalty",
+      "shot_conditioned_accept": true,
+      "target_logical_error": 0.05
+    },
+    {
+      "baseline_distance": 7,
+      "baseline_space_time_volume": 826,
+      "candidate_distance": 5,
+      "candidate_space_time_volume": 386.4,
+      "decoder_adjusted_candidate_space_time_volume": 772.8000000000002,
+      "decoder_adjusted_surviving_d5_d7_improvement": true,
+      "decoder_adjusted_volume_reduction": 1.0688405797101446,
+      "decoder_risk_multiplier": 2.0000000000000004,
+      "false_positive_rate_per_tick": 0.001,
+      "false_positive_ratio": 1.0,
+      "leakage_rate_per_tick": 0.005,
+      "max_false_positive_rate_per_tick": 0.001,
+      "max_missed_leakage_rate_per_tick": 0.0005,
+      "memory_basis": "x",
+      "missed_leakage_rate_per_tick": 0.0002500000000000002,
+      "missed_leakage_ratio": 0.5000000000000004,
+      "physical_error": 0.005,
+      "posterior_leakage_probability_given_flag": 0.8268059181897301,
+      "posterior_shortfall_ratio": 0.0,
+      "posterior_threshold": 0.75,
+      "profile": "high_purity_detector_0p95",
+      "raw_surviving_d5_d7_improvement": true,
+      "raw_volume_reduction_vs_baseline": 2.13768115942029,
+      "risk_budget": "strict_decoder_penalty",
+      "shot_conditioned_accept": true,
+      "target_logical_error": 0.05
+    }
+  ],
+  "summary": {
+    "adjusted_survivor_row_count": 17,
+    "available_contract_input_count": 4,
+    "circuit_level_decoder_claimed": false,
+    "conservative_adjusted_surviving_d5_d7_rows": 3,
+    "conservative_survivor_row_count": 3,
+    "contract_input_count": 10,
+    "decoder_contract_satisfied": false,
+    "demotion_recommended_until_decoder_or_calibration": true,
+    "failed_critical_gate_count": 5,
+    "failed_gate_count": 5,
+    "feasibility_gate_count": 9,
+    "hardware_result_claimed": false,
+    "missing_contract_input_count": 6,
+    "new_code_claimed": false,
+    "passed_gate_count": 4,
+    "production_decoder_claimed": false,
+    "robust_all_profile_adjusted_survival": false,
+    "source_raw_surviving_d5_d7_rows": 6,
+    "strict_adjusted_surviving_d5_d7_rows": 3,
+    "strict_high_purity_adjusted_survivors": 0,
+    "strict_survivor_row_count": 3,
+    "survivor_profiles": [
+      "field_detector_0p80",
+      "high_purity_detector_0p95",
+      "nominal_lab_detector_0p90"
+    ],
+    "survivor_risk_budgets": [
+      "conservative_decoder_penalty",
+      "mild_decoder_penalty",
+      "nominal_decoder_penalty",
+      "strict_decoder_penalty"
+    ],
+    "threshold_claimed": false,
+    "validation_error_count": 0
+  },
+  "title": "B2 decoder input contract feasibility gate",
+  "validation_errors": [],
+  "version": "0.1"
+}

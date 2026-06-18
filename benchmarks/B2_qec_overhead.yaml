@@ -415,6 +415,37 @@ current_results:
     caveat: risk_ledger_not_circuit_level_decoder_threshold_or_hardware_calibration
     result: ../results/B2_posterior_weighted_decoder_risk_ledger_v0.json
     markdown_report: ../research/B2_posterior_weighted_decoder_risk_ledger.md
+  decoder_input_contract_feasibility_gate_v0:
+    status: decoder_input_contract_failed_calibrated_data_or_decoder_required
+    method: b2_decoder_input_contract_feasibility_gate_v0
+    source: posterior_weighted_decoder_risk_ledger_v0
+    model_status: decoder_input_contract_from_aggregate_rows_not_circuit_level_decoder
+    toolchain: decoder input contract over posterior rows plus missing per-shot syndrome and flag trace audit
+    contract_input_count: 10
+    available_contract_input_count: 4
+    missing_contract_input_count: 6
+    feasibility_gate_count: 9
+    passed_gate_count: 4
+    failed_gate_count: 5
+    failed_critical_gate_count: 5
+    source_raw_surviving_d5_d7_rows: 6
+    conservative_adjusted_surviving_d5_d7_rows: 3
+    strict_adjusted_surviving_d5_d7_rows: 3
+    strict_high_purity_adjusted_survivors: 0
+    robust_all_profile_adjusted_survival: false
+    decoder_contract_satisfied: false
+    demotion_recommended_until_decoder_or_calibration: true
+    new_code_claimed: false
+    threshold_claimed: false
+    calibrated_device_claimed: false
+    production_decoder_claimed: false
+    circuit_level_decoder_claimed: false
+    shot_conditioned_erasure_decoder_claimed: false
+    hardware_result_claimed: false
+    interpretation: aggregate_posterior_rows_are_not_sufficient_for_circuit_level_shot_conditioned_decoder
+    caveat: requires_per_shot_syndrome_flag_traces_decoder_likelihood_injection_and_calibrated_leakage_data
+    result: ../results/B2_decoder_input_contract_feasibility_gate_v0.json
+    markdown_report: ../research/B2_decoder_input_contract_feasibility_gate.md
 prototype_artifacts:
   baseline_runner: ../tools/b2_repetition_code_baseline.py
   target_volume_estimator: ../tools/b2_target_volume.py
@@ -430,4 +461,5 @@ prototype_artifacts:
   heralded_erasure_false_positive_stress: ../tools/b2_heralded_erasure_false_positive_stress.py
   shot_conditioned_erasure_decoder_boundary: ../tools/b2_shot_conditioned_erasure_decoder_boundary.py
   posterior_weighted_decoder_risk_ledger: ../tools/b2_posterior_weighted_decoder_risk_ledger.py
+  decoder_input_contract_feasibility_gate: ../tools/b2_decoder_input_contract_feasibility_gate.py
   prototype_notes: ../research/B2_prototype_notes.md
