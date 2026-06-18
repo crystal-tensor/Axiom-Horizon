@@ -2,7 +2,7 @@
   "schema_version": "0.1",
   "last_updated": "2026-06-18",
   "purpose": "Execution board for turning the Top 10 quantum attack directions from v0 artifacts into a one-year technical-resolution portfolio.",
-  "portfolio_state": "stage 1s evidence hardening; B2 now has a posterior-likelihood injection interface but it is a negative boundary, B5 has a canonical DMRG readiness gate, B6 has a structural/electronic proxy boundary, and B10 remains a denominator-boundary track",
+  "portfolio_state": "stage 1t evidence hardening; B2 now has a DEM-informed detector-to-edge semantics gate but remains a negative boundary, B5 has a canonical DMRG readiness gate, B6 has a structural/electronic proxy boundary, and B10 remains a denominator-boundary track",
   "decision_rules": {
     "monthly_keep_rule": "Keep a direction only if the next 30-day artifact can falsify or improve a concrete claim.",
     "merge_rule": "Merge directions when their validation stack is shared, such as B4 plus B8 or B1 plus B7.",
@@ -50,10 +50,10 @@
       "problem_id": 22,
       "title": "Low-overhead quantum error-correcting codes",
       "priority_lane": "technical_system_spine",
-      "current_maturity": "posterior_likelihood_injection_interface_negative_boundary",
-      "strongest_evidence": "Stim/PyMatching baseline plus closed reduced-round artifact boundary; leakage-erasure proxy/stress rows; posterior calibration; posterior-weighted risk ledger; T-B2-008 decoder-input contract gate; T-B2-009a per-shot trace packet; and T-B2-009b posterior-likelihood injection gate. The injection gate consumes 3 strict challenge rows across 3 profiles / 1728 profile-shots; best profile failure delta is 0 with 0 changed predictions, while strong weight shift introduces 2 failures, so improvement gate fails and route demotion remains recommended.",
-      "30_day_gate": "Replace synthetic flag events with calibrated leakage/flag data or detector-to-edge posterior semantics, then rerun posterior-likelihood decoding and require improvement plus all-challenge non-regression.",
-      "next_artifact": "B2 T-B2-009c calibrated detector-to-edge posterior semantics or real leakage/flag dataset for the injection gate.",
+      "current_maturity": "dem_informed_detector_edge_semantics_negative_boundary",
+      "strongest_evidence": "Stim/PyMatching baseline plus closed reduced-round artifact boundary; leakage-erasure proxy/stress rows; posterior calibration; posterior-weighted risk ledger; T-B2-008 decoder-input contract gate; T-B2-009a per-shot trace packet; T-B2-009b posterior-likelihood injection gate; and T-B2-009c DEM-informed detector-to-edge semantics gate. The DEM gate consumes 3 strict challenge rows across 3 semantic profiles / 1728 profile-shots; best conservative profile failure delta is 0 with 0 changed predictions, while aggressive DEM semantics introduces 1 failure, so improvement gate fails and route demotion remains recommended.",
+      "30_day_gate": "Replace synthetic flag events with calibrated leakage/flag data or a hardware-like leakage model, then rerun posterior-likelihood decoding and require improvement plus all-challenge non-regression.",
+      "next_artifact": "B2 T-B2-009d calibrated leakage/flag observation packet or hardware-like leakage-model posterior injection gate.",
       "kill_condition": "Keep the leakage-erasure route demoted if calibrated posterior injection still fails to improve strict challenge rows without introduced failures, or if strict high-purity/all-profile survival remains zero/false.",
       "downstream_translation_route": "Deferred until B2 shows Wilson-bounded target-volume reduction under shot-conditioned or calibrated leakage/erasure evidence, without relying on the closed reduced-round artifact.",
       "dependencies": [
@@ -194,7 +194,7 @@
     }
   ],
   "next_30_days": {
-    "week_1": "Freeze B1 proof-log report outline; B2 T-B2-009b now consumes per-shot traces but closes as a negative synthetic-injection boundary, so the next B2 gate is calibrated detector-to-edge posterior semantics or real leakage/flag data; pair B4 and B8 into one verification lane.",
+    "week_1": "Freeze B1 proof-log report outline; B2 T-B2-009c now closes as a negative DEM semantics boundary, so the next B2 gate is calibrated leakage/flag data or a hardware-like leakage model; pair B4 and B8 into one verification lane.",
     "week_2": [
       "Run B1 on one broader benchmark family or document why the verifier blocks scale.",
       "Upgrade the B7 dependency bridge to a real workload DAG.",

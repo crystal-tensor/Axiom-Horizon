@@ -253,6 +253,18 @@ gate is false, the route remains demoted, and the next useful gate is
 `T-B2-009c`: calibrated detector-to-edge posterior semantics or real
 leakage/flag data.
 
+**Sprint update 48:** `T-B2-009c` is now merged as a DEM-informed
+detector-to-edge semantics gate, and it is also a negative boundary. The new
+tool `tools/b2_dem_informed_detector_edge_semantics_gate.py` consumes the
+T-B2-009a per-shot traces and allocates synthetic flag posterior mass onto
+incident PyMatching/Stim detector-error-model edges by base edge-probability
+responsibility. It evaluates 3 semantic profiles over 1,728 profile-shots. The
+best conservative profile changes 0 predictions, fixes 0 failures, introduces
+0 failures, and leaves 22 injected failures; the aggressive DEM profile
+introduces 1 failure. The improvement gate is still false, the route remains
+demoted, and the next useful gate is `T-B2-009d`: calibrated leakage/flag
+observations or a hardware-like leakage model.
+
 ## B3: Molecular Reaction Dynamics
 
 **Technical target:** produce a reaction-coordinate quantum observable estimate

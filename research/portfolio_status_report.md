@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 37, 'B2': 46, 'B3': 30, 'B4': 20, 'B5': 25, 'B6': 21, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 49}
+- Maturity scores: {'B1': 37, 'B2': 47, 'B3': 30, 'B4': 20, 'B5': 25, 'B6': 21, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 49}
 
 ## Technical Resolution Program
 
@@ -387,6 +387,16 @@ Overall audit: PASS
 - Posterior injection gate circuit decoder / production decoder / threshold / hardware: False / False / False / False
 - Posterior injection gate validation errors: 0
 - Posterior injection gate result/markdown exists: True / True
+- DEM edge semantics gate status: dem_informed_detector_edge_semantics_negative_boundary
+- DEM edge semantics gate challenges / profiles / shots: 3 / 3 / 1728
+- DEM edge semantics gate best profile / injected failures / delta: conservative_dem_responsibility / 22 / 0
+- DEM edge semantics gate fixed / introduced / changed predictions: 0 / 0 / 0
+- DEM edge semantics gate aggressive injected / introduced failures: 23 / 1
+- DEM edge semantics gate DEM semantics / synthetic flags / calibrated data / hardware: True / True / False / False
+- DEM edge semantics gate improvement / non-regression / demotion: False / True / True
+- DEM edge semantics gate production decoder / threshold / hardware: False / False / False
+- DEM edge semantics gate validation errors: 0
+- DEM edge semantics gate result/markdown exists: True / True
 
 ## B3 Resource Proxy Status
 

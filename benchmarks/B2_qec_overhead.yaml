@@ -511,6 +511,43 @@ current_results:
     caveat: synthetic_flag_likelihood_injection_not_calibrated_or_hardware_derived_and_not_a_production_decoder
     result: ../results/B2_posterior_likelihood_decoder_injection_gate_v0.json
     markdown_report: ../research/B2_posterior_likelihood_decoder_injection_gate.md
+  dem_informed_detector_edge_semantics_gate_v0:
+    status: dem_informed_detector_edge_semantics_negative_boundary
+    method: b2_dem_informed_detector_edge_semantics_gate_v0
+    source: per_shot_decoder_trace_packet_v0
+    model_status: stim_dem_edge_probability_semantics_with_synthetic_flags_not_calibrated_data
+    toolchain: Stim detector error model edge probabilities plus PyMatching graph reconstruction with synthetic flag posterior mass allocated to incident edges
+    source_challenge_count: 3
+    semantic_profile_count: 3
+    profile_result_count: 9
+    total_profile_shots: 1728
+    baseline_total_failures: 66
+    best_profile: conservative_dem_responsibility
+    best_profile_injected_failures: 22
+    best_profile_failure_delta: 0
+    best_profile_fixed_failures: 0
+    best_profile_introduced_failures: 0
+    best_profile_changed_predictions: 0
+    best_profile_max_adjusted_edge_probability: 0.25466790852429344
+    aggressive_profile_injected_failures: 23
+    aggressive_profile_introduced_failures: 1
+    dem_edge_probability_semantics_performed: true
+    synthetic_flag_likelihoods_consumed: true
+    calibrated_flag_data_used: false
+    real_hardware_trace_used: false
+    improvement_gate_passed: false
+    all_challenge_nonregression_gate_passed: true
+    route_demotion_recommended: true
+    new_code_claimed: false
+    threshold_claimed: false
+    calibrated_device_claimed: false
+    production_decoder_claimed: false
+    hardware_result_claimed: false
+    quantum_advantage_claimed: false
+    interpretation: dem_informed_detector_edge_semantics_consumes_synthetic_flag_likelihoods_but_does_not_improve_best_profile_and_aggressive_semantics_introduces_one_failure
+    caveat: dem_edge_semantics_are_derived_from_stim_dem_probabilities_and_synthetic_flags_not_calibrated_or_hardware_derived_data
+    result: ../results/B2_dem_informed_detector_edge_semantics_gate_v0.json
+    markdown_report: ../research/B2_dem_informed_detector_edge_semantics_gate.md
 prototype_artifacts:
   baseline_runner: ../tools/b2_repetition_code_baseline.py
   target_volume_estimator: ../tools/b2_target_volume.py
@@ -529,4 +566,5 @@ prototype_artifacts:
   decoder_input_contract_feasibility_gate: ../tools/b2_decoder_input_contract_feasibility_gate.py
   per_shot_decoder_trace_packet: ../tools/b2_per_shot_decoder_trace_packet.py
   posterior_likelihood_decoder_injection_gate: ../tools/b2_posterior_likelihood_decoder_injection_gate.py
+  dem_informed_detector_edge_semantics_gate: ../tools/b2_dem_informed_detector_edge_semantics_gate.py
   prototype_notes: ../research/B2_prototype_notes.md
