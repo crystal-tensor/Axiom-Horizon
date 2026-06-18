@@ -776,11 +776,14 @@ selected-CI larger-basis denominator wins 0, B3 max optimizer-loop shots lower
 bound 475,043,013,690,000, B5 non-oracle-over-oracle rows 4,
 seeded-MPS-over-non-oracle rows 6, variational MPS/ALS-over-seeded rows 0, and
 no BQP separation or quantum advantage claim.
+`T-B10-010` is also merged: 2 theorem skeletons, 5 missing assumptions, and 5
+proof obligations; it is not a dequantization theorem, sampling-access theorem,
+BQP separation, or quantum advantage claim.
 
-**Next PR:** `T-B10-010` or `T-B10-009`. Expected artifacts:
+**Next PR:** `T-B10-011` or `T-B10-009`. Expected artifacts:
 
-- `research/B10_t1_dequantization_theorem_note.md` or `research/B10_t1_missing_assumption_note.md`
-- `results/B10_t1_dequantization_theorem_note_v0.json` or `results/B10_t1_missing_assumption_note_v0.json`
+- `research/B10_t1_asymptotic_observable_family.md` or `research/B10_t1_sampling_access_bridge.md`
+- `results/B10_t1_asymptotic_observable_family_v0.json` or `results/B10_t1_sampling_access_bridge_v0.json`
 - `research/B4_B8_hardware_randomized_verifier.md` or `research/B10_t2_real_backend_verifier_bridge.md`
 - `results/B4_B8_hardware_randomized_verifier_v0.json` or `results/B10_t2_real_backend_verifier_bridge_v0.json`
 - optional update to `research/B10_formal_theorem_targets.md`

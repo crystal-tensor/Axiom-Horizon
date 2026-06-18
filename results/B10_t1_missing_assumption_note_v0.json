@@ -1,0 +1,111 @@
+{
+  "benchmark_id": "B10",
+  "claim_boundary": {
+    "bqp_separation_claimed": false,
+    "dequantization_theorem_proved": false,
+    "quantum_advantage_claimed": false,
+    "sampling_access_theorem_proved": false,
+    "what_is_not_supported": "This is not a dequantization theorem, not a sampling-access theorem, not a BQP separation, and not a quantum advantage claim.",
+    "what_is_supported": "The current finite B3/B5 denominator evidence is strong enough to reject positive B3/B5/BQP claims under the audited route cards, and to define missing assumptions for a future theorem note."
+  },
+  "dependency_benchmarks": [
+    "B3",
+    "B5",
+    "B10"
+  ],
+  "method": "b10_t1_missing_assumption_note_v0",
+  "missing_assumptions": [
+    {
+      "current_evidence": "B10 D5 B5 instances = 9; B10 D5 B3 FCI instances = 4.",
+      "id": "A1_asymptotic_family",
+      "statement": "The current B3/B5 evidence is a finite D5 table, not an asymptotic family with declared scaling of Hamiltonian construction, observable count, error, and condition parameters.",
+      "status": "missing",
+      "why_needed": "A theorem needs a family parameter and scaling law; finite denominator pressure is not a theorem."
+    },
+    {
+      "current_evidence": "B10-T1 source-backed boundaries distinguish explicit I/O, oracle, and sampling-access regimes.",
+      "id": "A2_access_model_equivalence",
+      "statement": "Classical and quantum algorithms must receive equivalent explicit, sparse, oracle, or sampling/query access.",
+      "status": "partially_specified_not_proved",
+      "why_needed": "A dequantization or separation note collapses if one side receives stronger access."
+    },
+    {
+      "current_evidence": "B3 max optimizer-loop shots lower bound is 475043013690000; B5 positive-claim-ready is false.",
+      "id": "A3_state_preparation_and_block_encoding_cost",
+      "statement": "Any candidate quantum response kernel must charge state preparation, block encoding, measurement, and optimizer-loop costs.",
+      "status": "missing_for_positive_quantum_route",
+      "why_needed": "B3 loses after optimizer-loop accounting; B5 has no honestly costed quantum response kernel yet."
+    },
+    {
+      "current_evidence": "B3 selected-CI larger-basis denominator wins = 0; B5 variational MPS/ALS rows beating seeded pressure = 0.",
+      "id": "A4_strong_classical_denominator",
+      "statement": "The theorem note must compare against selected-CI/FCI, DMRG/MPS, embedding, or sampling-access baselines appropriate to each regime.",
+      "status": "partially_satisfied_for_finite_instances",
+      "why_needed": "The current evidence is denominator pressure, not a universal lower bound."
+    },
+    {
+      "current_evidence": "No B3/B5 sampling-access theorem or oracle-equivalence lemma exists in the portfolio.",
+      "id": "A5_sampling_access_or_dequantization_bridge",
+      "statement": "To become a dequantization theorem, the note must state whether B3/B5 observables admit sampling/query access or another classical simulation contract comparable to the quantum input model.",
+      "status": "missing",
+      "why_needed": "Without an access bridge, the result is only a negative boundary and not a dequantization theorem."
+    }
+  ],
+  "next_required_artifacts": [
+    "Define an asymptotic B3/B5 observable family with explicit access contracts.",
+    "Prove or refute sampling/query access for the chosen B3/B5 observables.",
+    "Upgrade B5 to production DMRG/MPS or an honestly costed quantum response kernel.",
+    "Keep B3 demoted unless a multi-parameter or stronger measurement rescue beats denominators."
+  ],
+  "problem_id": 11,
+  "proof_obligations": [
+    "Define an asymptotic B3/B5 observable family rather than a finite table.",
+    "Specify explicit, oracle, and sampling/query access contracts for both quantum and classical algorithms.",
+    "Show whether B3/B5 state-preparation and observable access can be built without hiding linear or worse costs.",
+    "State the best classical denominator family under the same access contract.",
+    "Prove or refute that the quantum route improves the denominator after measurement and optimizer-loop costs."
+  ],
+  "source_comparison_method": "b10_t1_b3_b5_denominator_boundary_comparison_v0",
+  "source_comparison_status": "b3_b5_denominator_boundary_comparison_not_bqp_separation",
+  "source_target_id": "B10-T1",
+  "status": "missing_assumption_note_not_dequantization_theorem",
+  "summary": {
+    "bqp_separation_claimed": false,
+    "dequantization_theorem_proved": false,
+    "missing_assumption_count": 5,
+    "proof_obligation_count": 5,
+    "quantum_advantage_claimed": false,
+    "sampling_access_theorem_proved": false,
+    "source_b3_demoted": true,
+    "source_b5_positive_claim_ready": false,
+    "source_route_count": 4,
+    "theorem_skeleton_count": 2,
+    "validation_error_count": 0
+  },
+  "theorem_skeletons": [
+    {
+      "claim_type": "finite_negative_boundary",
+      "depends_on": [
+        "A3_state_preparation_and_block_encoding_cost",
+        "A4_strong_classical_denominator"
+      ],
+      "id": "T1_finite_boundary_no_advantage_claim",
+      "informal_statement": "Under the currently audited finite B3/B5 D5 evidence, no B3 reaction-dynamics, B5 strong-correlation, quantum-advantage, or BQP-separation claim is supported.",
+      "status": "supported_as_claim_policy_not_complexity_theorem"
+    },
+    {
+      "claim_type": "candidate_theorem_not_proved",
+      "depends_on": [
+        "A1_asymptotic_family",
+        "A2_access_model_equivalence",
+        "A5_sampling_access_or_dequantization_bridge"
+      ],
+      "id": "T2_sampling_access_dequantization_candidate",
+      "informal_statement": "If the B3/B5 observable family admits sampling/query access with comparable state-preparation and observable access, then quantum speedup claims must be compared against quantum-inspired or tensor/embedding classical denominators.",
+      "status": "blocked_by_missing_A1_A2_A5"
+    }
+  ],
+  "title": "B10-T1 Missing-Assumption Theorem Note",
+  "validation_errors": [],
+  "version": "0.1"
+}

@@ -384,6 +384,31 @@
       "status": "d5_observable_denominator_table_instantiated_not_quantum_speedup_claim",
       "validation_error_count": 0
     },
+    "t1_missing_assumption_note": {
+      "bqp_separation_claimed": false,
+      "dependency_benchmarks": [
+        "B3",
+        "B5",
+        "B10"
+      ],
+      "dequantization_theorem_proved": false,
+      "markdown_exists": true,
+      "markdown_report": "../research/B10_t1_missing_assumption_note.md",
+      "method": "b10_t1_missing_assumption_note_v0",
+      "missing_assumption_count": 5,
+      "proof_obligation_count": 5,
+      "quantum_advantage_claimed": false,
+      "result": "../results/B10_t1_missing_assumption_note_v0.json",
+      "result_exists": true,
+      "sampling_access_theorem_proved": false,
+      "source_b3_demoted": true,
+      "source_b5_positive_claim_ready": false,
+      "source_route_count": 4,
+      "source_target_id": "B10-T1",
+      "status": "missing_assumption_note_not_dequantization_theorem",
+      "theorem_skeleton_count": 2,
+      "validation_error_count": 0
+    },
     "t1_negative_boundary_proof": {
       "explicit_not_bqp_separation": true,
       "method": "b10_t1_linear_systems_io_accounting_negative_boundary_v0",
@@ -2032,7 +2057,7 @@
     "markdown_path": "research/top10_problem_dossiers.md",
     "maturity_scores": {
       "B1": 37,
-      "B10": 41,
+      "B10": 43,
       "B2": 39,
       "B3": 30,
       "B4": 20,
@@ -2053,6 +2078,7 @@
     "b10_t1_d5_b3_molecular_observable_table": "research/B10_t1_d5_b3_molecular_observable_table.md",
     "b10_t1_d5_b3_reaction_observable_table": "research/B10_t1_d5_b3_reaction_observable_table.md",
     "b10_t1_d5_observable_denominator_table": "research/B10_t1_d5_observable_denominator_table.md",
+    "b10_t1_missing_assumption_note": "research/B10_t1_missing_assumption_note.md",
     "b10_t1_negative_boundary_proof": "research/B10_t1_negative_boundary_proof.md",
     "b10_t1_numerical_denominator_table": "research/B10_t1_numerical_denominator_table.md",
     "b10_t1_source_backed_boundaries": "research/B10_t1_source_backed_boundaries.md",

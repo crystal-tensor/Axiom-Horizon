@@ -684,17 +684,22 @@ optimizer-loop shots lower bound 475,043,013,690,000; B5 has classical
 denominator pressure with 4 non-oracle-over-oracle rows and 6 seeded-MPS rows
 beating non-oracle embedding, but 0 variational MPS/ALS rows beat seeded MPS
 pressure. The comparison makes no BQP separation or quantum advantage claim.
+T-B10-010 now adds a missing-assumption theorem note with 2 theorem skeletons,
+5 missing assumptions, and 5 proof obligations; it supports a finite
+negative-boundary claim policy but explicitly does not prove a dequantization
+theorem, sampling-access theorem, BQP separation, or quantum advantage.
 
 **Remaining path to a serious solution:** treat B3 as demoted unless a
-multi-parameter UCCSD/ADAPT or stronger measurement rescue succeeds; promote the
-B5 MPS/ALS prototype with real variational DMRG/MPS evidence or compare a real
-candidate B5 response subroutine against the D5 table; run T-B10-010 to turn
-the B3/B5 comparison into a dequantization/sampling-access theorem-note
-skeleton or expose the missing assumption; turn the B10-T2 bridge into real
-backend-property verifier execution or hardware randomized measurements; connect
-B4/B8 verification burdens back into the boundary map.
+multi-parameter UCCSD/ADAPT or stronger measurement rescue succeeds; define an
+asymptotic B3/B5 observable family with equivalent explicit/oracle/sampling
+access contracts; prove or refute the sampling-access bridge required by
+T-B10-010; promote the B5 MPS/ALS prototype with real variational DMRG/MPS
+evidence or compare a real candidate B5 response subroutine against the D5
+table; turn the B10-T2 bridge into real backend-property verifier execution or
+hardware randomized measurements; connect B4/B8 verification burdens back into
+the boundary map.
 
-**Current internal maturity:** 41/100.
+**Current internal maturity:** 43/100.
 
 ## Cross-Portfolio Process
 

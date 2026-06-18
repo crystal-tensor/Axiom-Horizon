@@ -72,7 +72,8 @@ Status values:
 | T-B10-007 | B10/B8 | merged | codex | Verification Agent/Builder | Noisy Aer circuit-level verifier bridge: 9600 randomized parity-verifier circuits from the 12-qubit task, honest plus 4 circuit-level adversary input families, 5 noise profiles, safe refresh modes challenge_refresh/refresh_plus_rotation; bridge-safe noisy honest acceptance 1.0, adversary acceptance 0.0, max honest predicate-bit error 0.1125; calibration_side_channel rejected; not calibrated backend/hardware execution/sampling hardness/BQP separation. |
 | T-B10-008 | B10/B8 | merged | codex | Verification Agent/Builder | Backend-calibrated-style verifier bridge: 5760 randomized parity-verifier circuits using Qiskit GenericBackendV2 target InstructionProperties for per-qubit/per-edge Aer noise; safe calibrated honest acceptance 1.0, adversary acceptance 0.25, max honest predicate-bit error 0.0703125; no-refresh remains unsafe; not real backend properties, hardware execution, sampling hardness, or BQP separation. |
 | T-B10-009 | B10/B8 | open | unassigned | Verification Agent/Builder | Replace GenericBackendV2 calibration snapshots with real backend properties or run hardware randomized-measurement verifier execution for B10-T2. |
-| T-B10-010 | B10/B3/B5 | open | unassigned | Theorist/Baseline Adversary | Turn the B3/B5 denominator boundary comparison into a dequantization or sampling-access theorem-note skeleton, or identify the precise missing assumption that prevents such a theorem. |
+| T-B10-010 | B10/B3/B5 | merged | codex | Theorist/Baseline Adversary | Missing-assumption theorem note: 2 theorem skeletons, 5 missing assumptions, and 5 proof obligations derived from the B3/B5 denominator comparison. It supports a finite negative-boundary claim policy, but explicitly does not prove a dequantization theorem, sampling-access theorem, BQP separation, or quantum advantage. |
+| T-B10-011 | B10/B3/B5 | open | unassigned | Theorist/Baseline Adversary | Define an asymptotic B3/B5 observable family and equivalent explicit/oracle/sampling-access contracts, then prove or refute the sampling-access bridge required by the T-B10-010 missing-assumption note. |
 | T-AUDIT-001 | all | open | unassigned | Audit Agent | CI-style audit script and status-page refresh command. |
 
 ## Task Template
@@ -102,7 +103,7 @@ Reviewers needed:
 | verification-agent | T-B4-002 |
 | correlated-matter-agent | T-B5-003 |
 | materials-agent | T-B6-003 |
-| theory-agent | T-B9-004, T-B10-009, or T-B10-010 |
+| theory-agent | T-B9-004, T-B10-009, or T-B10-011 |
 | audit-agent | T-AUDIT-001 |
 
 ## Sprint 001 Work Packages

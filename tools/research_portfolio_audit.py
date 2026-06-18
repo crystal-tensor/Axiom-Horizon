@@ -5567,6 +5567,7 @@ def audit(root: Path) -> dict:
     b10_t1_d5_b3_correlated_table = b10_results.get("b10_t1_d5_b3_correlated_reference_table_v0")
     b10_t1_d5_b3_fci_table = b10_results.get("b10_t1_d5_b3_fci_reference_table_v0")
     b10_t1_b3_b5_comparison = b10_results.get("b10_t1_b3_b5_denominator_boundary_comparison_v0")
+    b10_t1_missing_assumption_note = b10_results.get("b10_t1_missing_assumption_note_v0")
     b10_status = {}
     if not b10_graph:
         warnings.append("B10 manifest has no BQP-boundary graph result")
@@ -6604,6 +6605,73 @@ def audit(root: Path) -> dict:
         if claim_boundary.get("quantum_advantage_claimed") is not False:
             errors.append("B10-T1 B3/B5 denominator comparison payload claims quantum advantage")
 
+    b10_t1_missing_assumption_note_status = {}
+    if not b10_t1_missing_assumption_note:
+        warnings.append("B10 manifest has no B10-T1 missing-assumption theorem note")
+    else:
+        result_path = b10_t1_missing_assumption_note.get("result")
+        markdown_path = b10_t1_missing_assumption_note.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B10-T1 missing-assumption note result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B10-T1 missing-assumption note markdown path missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        b10_t1_missing_assumption_note_status = {
+            "status": b10_t1_missing_assumption_note.get("status"),
+            "method": b10_t1_missing_assumption_note.get("method"),
+            "source_target_id": payload.get("source_target_id"),
+            "dependency_benchmarks": payload.get("dependency_benchmarks"),
+            "theorem_skeleton_count": summary.get("theorem_skeleton_count"),
+            "missing_assumption_count": summary.get("missing_assumption_count"),
+            "proof_obligation_count": summary.get("proof_obligation_count"),
+            "source_route_count": summary.get("source_route_count"),
+            "source_b3_demoted": summary.get("source_b3_demoted"),
+            "source_b5_positive_claim_ready": summary.get("source_b5_positive_claim_ready"),
+            "dequantization_theorem_proved": summary.get("dequantization_theorem_proved"),
+            "sampling_access_theorem_proved": summary.get("sampling_access_theorem_proved"),
+            "bqp_separation_claimed": summary.get("bqp_separation_claimed"),
+            "quantum_advantage_claimed": summary.get("quantum_advantage_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("status") != "missing_assumption_note_not_dequantization_theorem":
+            errors.append("B10-T1 missing-assumption note must not claim to be a dequantization theorem")
+        if payload.get("method") != b10_t1_missing_assumption_note.get("method"):
+            errors.append("B10-T1 missing-assumption note method mismatch")
+        if payload.get("source_target_id") != b10_t1_missing_assumption_note.get("source_target_id"):
+            errors.append("B10-T1 missing-assumption note source target mismatch")
+        for field in [
+            "theorem_skeleton_count",
+            "missing_assumption_count",
+            "proof_obligation_count",
+            "source_route_count",
+        ]:
+            if summary.get(field) != b10_t1_missing_assumption_note.get(field):
+                errors.append(f"B10-T1 missing-assumption note {field} mismatch")
+        if summary.get("missing_assumption_count", 0) < 3:
+            errors.append("B10-T1 missing-assumption note must expose at least three missing assumptions")
+        if summary.get("dequantization_theorem_proved") is not False:
+            errors.append("B10-T1 missing-assumption note must not claim a dequantization theorem")
+        if summary.get("sampling_access_theorem_proved") is not False:
+            errors.append("B10-T1 missing-assumption note must not claim a sampling-access theorem")
+        if summary.get("bqp_separation_claimed") is not False:
+            errors.append("B10-T1 missing-assumption note must not claim BQP separation")
+        if summary.get("quantum_advantage_claimed") is not False:
+            errors.append("B10-T1 missing-assumption note must not claim quantum advantage")
+        if len(payload.get("validation_errors", [])) != b10_t1_missing_assumption_note.get("validation_error_count"):
+            errors.append("B10-T1 missing-assumption note validation-error count mismatch")
+        claim_boundary = payload.get("claim_boundary", {})
+        if claim_boundary.get("dequantization_theorem_proved") is not False:
+            errors.append("B10-T1 missing-assumption note payload claims dequantization theorem")
+        if claim_boundary.get("bqp_separation_claimed") is not False:
+            errors.append("B10-T1 missing-assumption note payload claims BQP separation")
+
     for path in [roadmap_path, status_html_path]:
         if not path.exists():
             errors.append(f"missing status artifact: {path}")
@@ -6780,6 +6848,7 @@ def audit(root: Path) -> dict:
             "t1_d5_b3_correlated_reference_table": b10_t1_d5_b3_correlated_table_status,
             "t1_d5_b3_fci_reference_table": b10_t1_d5_b3_fci_table_status,
             "t1_b3_b5_denominator_boundary_comparison": b10_t1_b3_b5_comparison_status,
+            "t1_missing_assumption_note": b10_t1_missing_assumption_note_status,
         },
         "status_artifacts": {
             "roadmap": str(roadmap_path),
@@ -6885,6 +6954,7 @@ def audit(root: Path) -> dict:
             "b10_t1_b3_b5_denominator_boundary_comparison": str(
                 research / "B10_t1_b3_b5_denominator_boundary_comparison.md"
             ),
+            "b10_t1_missing_assumption_note": str(research / "B10_t1_missing_assumption_note.md"),
             "b9_failed_gap_amplification_lemma": str(research / "B9_failed_gap_amplification_lemma.md"),
             "b9_symbolic_gap_skeleton": str(research / "B9_symbolic_gap_skeleton.md"),
             "b9_symbolic_gap_lean_skeleton": str(
@@ -7829,6 +7899,11 @@ def markdown_report(report: dict) -> str:
             f"- B10-T1 B3 demoted / B5 positive-ready / BQP separation / quantum advantage: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('b3_demoted')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('b5_positive_claim_ready')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('bqp_separation_claimed')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('quantum_advantage_claimed')}",
             f"- B10-T1 B3/B5 comparison validation errors: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('validation_error_count')}",
             f"- B10-T1 B3/B5 comparison result/markdown exists: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('result_exists')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('markdown_exists')}",
+            f"- B10-T1 missing-assumption note status: {report['b10']['t1_missing_assumption_note'].get('status')}",
+            f"- B10-T1 missing-assumption theorem skeletons / missing assumptions / proof obligations: {report['b10']['t1_missing_assumption_note'].get('theorem_skeleton_count')} / {report['b10']['t1_missing_assumption_note'].get('missing_assumption_count')} / {report['b10']['t1_missing_assumption_note'].get('proof_obligation_count')}",
+            f"- B10-T1 missing-assumption dequantization theorem / sampling-access theorem / BQP separation / quantum advantage: {report['b10']['t1_missing_assumption_note'].get('dequantization_theorem_proved')} / {report['b10']['t1_missing_assumption_note'].get('sampling_access_theorem_proved')} / {report['b10']['t1_missing_assumption_note'].get('bqp_separation_claimed')} / {report['b10']['t1_missing_assumption_note'].get('quantum_advantage_claimed')}",
+            f"- B10-T1 missing-assumption validation errors: {report['b10']['t1_missing_assumption_note'].get('validation_error_count')}",
+            f"- B10-T1 missing-assumption result/markdown exists: {report['b10']['t1_missing_assumption_note'].get('result_exists')} / {report['b10']['t1_missing_assumption_note'].get('markdown_exists')}",
             "",
         ]
     )

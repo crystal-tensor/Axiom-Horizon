@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 37, 'B2': 39, 'B3': 30, 'B4': 20, 'B5': 21, 'B6': 19, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 41}
+- Maturity scores: {'B1': 37, 'B2': 39, 'B3': 30, 'B4': 20, 'B5': 21, 'B6': 19, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 43}
 
 ## Technical Resolution Program
 
@@ -891,6 +891,11 @@ Overall audit: PASS
 - B10-T1 B3 demoted / B5 positive-ready / BQP separation / quantum advantage: True / False / False / False
 - B10-T1 B3/B5 comparison validation errors: 0
 - B10-T1 B3/B5 comparison result/markdown exists: True / True
+- B10-T1 missing-assumption note status: missing_assumption_note_not_dequantization_theorem
+- B10-T1 missing-assumption theorem skeletons / missing assumptions / proof obligations: 2 / 5 / 5
+- B10-T1 missing-assumption dequantization theorem / sampling-access theorem / BQP separation / quantum advantage: False / False / False / False
+- B10-T1 missing-assumption validation errors: 0
+- B10-T1 missing-assumption result/markdown exists: True / True
 
 ## Errors
 

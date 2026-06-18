@@ -431,6 +431,29 @@ current_results:
     caveat: denominator_boundary_comparison_not_dequantization_theorem_or_quantum_advantage
     result: ../results/B10_t1_b3_b5_denominator_boundary_comparison_v0.json
     markdown_report: ../research/B10_t1_b3_b5_denominator_boundary_comparison.md
+  b10_t1_missing_assumption_note_v0:
+    status: missing_assumption_note_not_dequantization_theorem
+    method: b10_t1_missing_assumption_note_v0
+    source: b10_t1_b3_b5_denominator_boundary_comparison_v0
+    source_target_id: B10-T1
+    dependency_benchmarks:
+      - B3
+      - B5
+      - B10
+    theorem_skeleton_count: 2
+    missing_assumption_count: 5
+    proof_obligation_count: 5
+    source_route_count: 4
+    source_b3_demoted: true
+    source_b5_positive_claim_ready: false
+    dequantization_theorem_proved: false
+    sampling_access_theorem_proved: false
+    bqp_separation_claimed: false
+    quantum_advantage_claimed: false
+    validation_error_count: 0
+    caveat: missing_assumption_note_not_dequantization_or_sampling_access_theorem
+    result: ../results/B10_t1_missing_assumption_note_v0.json
+    markdown_report: ../research/B10_t1_missing_assumption_note.md
 prototype_artifacts:
   boundary_graph_builder: ../tools/b10_bqp_boundary_graph.py
   formal_theorem_target_builder: ../tools/b10_formal_theorem_targets.py
@@ -443,6 +466,7 @@ prototype_artifacts:
   t1_d5_b3_correlated_reference_table_builder: ../tools/b10_t1_d5_b3_correlated_reference_table.py
   t1_d5_b3_fci_reference_table_builder: ../tools/b10_t1_d5_b3_fci_reference_table.py
   t1_b3_b5_denominator_boundary_comparison_builder: ../tools/b10_t1_b3_b5_denominator_boundary_comparison.py
+  t1_missing_assumption_note_builder: ../tools/b10_t1_missing_assumption_note.py
   t2_refresh_proof_obligation_gate_builder: ../tools/b10_t2_refresh_proof_obligation_gate.py
   t2_restricted_soundness_lemma_builder: ../tools/b10_t2_restricted_soundness_lemma.py
   t2_transcript_leakage_simulator_builder: ../tools/b10_t2_transcript_leakage_simulator.py
