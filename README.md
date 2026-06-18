@@ -120,6 +120,16 @@ model is still not calibrated or hardware-derived. This is still not a
 circuit-level decoder, production decoder, threshold, hardware result,
 quantum-advantage result, or new-code claim.
 
+B1/B7 now has a template-priority gate for the current `gcm_h6` bottleneck.
+The gate evaluates the 12 retained nonlocal templates from the B7 scan and
+finds 0 single-template one-angle routes that clear the one-sided 1.20x
+`gcm_h6` target. The best template remains `w8_21`, but it needs at least 2
+arbitrary removals per occurrence and still has no exact occurrence-removing
+certificate after 43,480 prior optimizer runs. This is not a resource-saving
+claim, not a symbolic lower bound, and not a solved B7 result; it narrows the
+next useful work to a symbolic KAK/Clifford-scaffold proof, an alternate
+certified rewrite, or stronger B1 T-resource reduction.
+
 ## Repository Layout
 
 ```text

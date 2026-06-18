@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 37, 'B2': 48, 'B3': 30, 'B4': 20, 'B5': 26, 'B6': 21, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 49}
+- Maturity scores: {'B1': 37, 'B2': 48, 'B3': 30, 'B4': 20, 'B5': 26, 'B6': 21, 'B7': 34, 'B8': 32, 'B9': 12, 'B10': 49}
 
 ## Technical Resolution Program
 
@@ -723,6 +723,12 @@ Overall audit: PASS
 - Nonlocal template min STV / gcm_h6 occurrence target for 1.20x: 1.086007702182285 / 30
 - Nonlocal template all-variant 1.20x by gcm_h6-only removals: False
 - Nonlocal template block scan result exists: True
+- Template priority gate status: template_priority_gate_no_single_one_angle_template_clears_gcm_h6
+- Template priority gate templates / target removed arbitrary / one-angle clear count: 12 / 30 / 0
+- Template priority gate best template / required removals per occurrence / one-angle shortfall: w8_21 / 2 / 10
+- Template priority gate w8_21 prior optimizer runs / exact rewrite found: 43480 / False
+- Template priority gate all-variant 1.20x / physical claim / global lower bound: False / False / False
+- Template priority gate validation errors / result/markdown exists: 0 / True / True
 - w8_21 small-block synthesis status: w8_21_small_block_synthesis_negative_boundary_not_physical_layout
 - w8_21 synthesis attempts / passing candidates: 55 / 0
 - w8_21 best fixed parameter/label/residual: a / pi/2 / 0.03936333737388844

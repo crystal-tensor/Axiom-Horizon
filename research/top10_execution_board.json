@@ -2,7 +2,7 @@
   "schema_version": "0.1",
   "last_updated": "2026-06-18",
   "purpose": "Execution board for turning the Top 10 quantum attack directions from v0 artifacts into a one-year technical-resolution portfolio.",
-  "portfolio_state": "stage 1v evidence hardening; B2 now has a hardware-like leakage observation model gate but remains a negative boundary, B5 has a canonical-environment smoke gate with 0 passed rows, B6 has a structural/electronic proxy boundary, and B10 remains a denominator-boundary track",
+  "portfolio_state": "stage 1w evidence hardening; B7 now has a template-priority gate showing 0 one-angle template routes clear the gcm_h6 threshold, B2 remains a hardware-like leakage negative boundary, B5 has a canonical-environment smoke gate with 0 passed rows, and B10 remains a denominator-boundary track",
   "decision_rules": {
     "monthly_keep_rule": "Keep a direction only if the next 30-day artifact can falsify or improve a concrete claim.",
     "merge_rule": "Merge directions when their validation stack is shared, such as B4 plus B8 or B1 plus B7.",
@@ -130,10 +130,10 @@
       "problem_id": 21,
       "title": "Architecture-level fault-tolerance co-design",
       "priority_lane": "technical_system_spine",
-      "current_maturity": "b1_b2_bridge_plus_ft_ledger_plus_w8_21_claim_boundary",
-      "strongest_evidence": "B1/B2 bridge gives 1.195x-1.616x; workload-DAG factory schedule gives mean 1.475x; FT synthesis ledger exposes gcm_h6 as the current min row at 1.086008x; w8_21 negative searches total 43480 optimizer runs with 0 exact four-arbitrary-angle replacements and 0 ledger removal.",
-      "30_day_gate": "Either improve the B7 minimum row through B1 T-resource work, or produce a symbolic KAK/Clifford-scaffold proof or alternate occurrence-removing rewrite for gcm_h6; do not count repeated-template savings without a verified certificate.",
-      "next_artifact": "B7 v0.3 claim-separated resource ledger with T-B7-010 symbolic/rewrite evidence or B1 T-B1-004 min-row improvement.",
+      "current_maturity": "b1_b2_bridge_plus_ft_ledger_plus_template_priority_gate",
+      "strongest_evidence": "B1/B2 bridge gives 1.195x-1.616x; workload-DAG factory schedule gives mean 1.475x; FT synthesis ledger exposes gcm_h6 as the current min row at 1.086008x; w8_21 negative searches total 43480 optimizer runs with 0 exact four-arbitrary-angle replacements and 0 ledger removal; template-priority gate over 12 retained templates shows 0 one-angle single-template routes clear gcm_h6, while best w8_21 needs at least 2 arbitrary removals per occurrence.",
+      "30_day_gate": "Either improve the B7 minimum row through B1 T-resource work, or produce a symbolic KAK/Clifford-scaffold proof or alternate occurrence-removing rewrite for gcm_h6 that removes enough arbitrary rotations per occurrence; do not count repeated-template savings without a verified certificate.",
+      "next_artifact": "B7 v0.3 claim-separated resource ledger with T-B7-010 symbolic/rewrite evidence, template-priority certificate evidence, or B1 T-B1-004 min-row improvement.",
       "kill_condition": "Demote if B1/B2-linked reductions collapse once physical layout, factory throughput, and feed-forward are explicit.",
       "downstream_translation_route": "Deferred until cross-layer resource reductions survive workload DAGs, layout, factory throughput, feed-forward assumptions, and occurrence-level synthesis certificates.",
       "dependencies": [

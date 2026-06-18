@@ -483,12 +483,15 @@ assumptions are applied.
 **Completed here:** scalar planning model, B1/B2 dependency-schedule bridge,
 workload-DAG factory-throughput schedule, logical T-factory boundary tests, FT
 synthesis ledger, `gcm_h6` min-row boundary, repeated-template/cache boundary,
-nonlocal template scan, and `w8_21` claim-boundary closure. The workload-DAG
-schedule has mean STV reduction 1.475x. The FT synthesis ledger exposes
-`gcm_h6` as the current min row at 1.086008x. The `w8_21` route was tested
-across same-skeleton, exhaustive two-CNOT Rz/Ry, target-informed Euler-local,
-and bounded three-CNOT families for 43480 optimizer runs, finding 0 exact
-four-arbitrary-angle replacements and 0 ledger removal.
+nonlocal template scan, `w8_21` claim-boundary closure, and template-priority
+gate. The workload-DAG schedule has mean STV reduction 1.475x. The FT synthesis
+ledger exposes `gcm_h6` as the current min row at 1.086008x. The `w8_21` route
+was tested across same-skeleton, exhaustive two-CNOT Rz/Ry, target-informed
+Euler-local, and bounded three-CNOT families for 43480 optimizer runs, finding
+0 exact four-arbitrary-angle replacements and 0 ledger removal. The new
+template-priority gate evaluates 12 retained templates: 0 one-angle
+single-template routes clear the one-sided `gcm_h6` 1.20x target, and best
+`w8_21` needs at least 2 arbitrary removals per occurrence.
 
 **Remaining path to a serious solution:** produce a symbolic KAK/Clifford-
 scaffold proof or alternate occurrence-removing rewrite for `gcm_h6`; strengthen
@@ -497,7 +500,7 @@ separate claims by data-path versus T-factory dominated regimes; include
 physical layout, routing, and feed-forward constraints; run a full algorithm
 resource ledger.
 
-**Current internal maturity:** 33/100.
+**Current internal maturity:** 34/100.
 
 ## B8: Classical Verification of Quantum Outputs
 

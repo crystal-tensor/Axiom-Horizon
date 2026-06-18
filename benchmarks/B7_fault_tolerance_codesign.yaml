@@ -335,6 +335,30 @@ current_results:
     result: ../results/B7_nonlocal_template_block_scan_v0.json
     markdown_report: ../research/B7_nonlocal_template_block_scan.md
     proof_log: ../results/b7_nonlocal_template_block_scan/proofs.jsonl
+  template_priority_gate_v0:
+    status: template_priority_gate_no_single_one_angle_template_clears_gcm_h6
+    model_status: posthoc_template_priority_gate_not_rewrite_or_lower_bound
+    method: b7_template_priority_gate_v0
+    source_template_report: nonlocal_template_block_scan_v0
+    source_claim_fragment: w8_21_claim_boundary_fragment_v0
+    workload: qasmbench_medium_exact/gcm_h6.qasm
+    template_count: 12
+    target_removed_arbitrary_occurrences_for_gcm_h6_1_20: 30
+    target_removed_t_ledger_for_gcm_h6_1_20: 600
+    single_template_one_angle_clear_count: 0
+    single_template_all_components_clear_count: 12
+    best_template_id: w8_21
+    best_template_nonoverlap_occurrences: 20
+    best_template_required_arbitrary_removed_per_occurrence: 2
+    best_template_one_angle_shortfall: 10
+    w8_21_prior_optimizer_runs: 43480
+    w8_21_prior_exact_rewrite_found: false
+    all_variant_1_20_by_gcm_h6_only: false
+    physical_resource_reduction_claimed: false
+    global_lower_bound_claimed: false
+    validation_error_count: 0
+    result: ../results/B7_template_priority_gate_v0.json
+    markdown_report: ../research/B7_template_priority_gate.md
   w8_21_small_block_synthesis_v0:
     status: w8_21_small_block_synthesis_negative_boundary_not_physical_layout
     method: b7_w8_21_small_block_synthesis_v0
@@ -493,6 +517,7 @@ prototype_artifacts:
   gcm_h6_numeric_rotation_structure: ../tools/b7_gcm_h6_numeric_rotation_structure.py
   shared_synthesis_cache_boundary: ../tools/b7_shared_synthesis_cache_boundary.py
   nonlocal_template_block_scan: ../tools/b7_nonlocal_template_block_scan.py
+  template_priority_gate: ../tools/b7_template_priority_gate.py
   w8_21_small_block_synthesis: ../tools/b7_w8_21_small_block_synthesis.py
   w8_21_broad_skeleton_search: ../tools/b7_w8_21_broad_skeleton_search.py
   w8_21_euler_local_search: ../tools/b7_w8_21_euler_local_search.py

@@ -310,6 +310,9 @@
         最新推进 43：T-AUDIT-001 已完成 unified portfolio refresh/check command。新增 <code>tools/portfolio_refresh_check.py</code>，统一执行 <code>tools/*.py</code> 编译、portfolio audit JSON/Markdown 刷新、benchmark YAML 解析、关键 JSON/HTML 解析、README 无中文字符检查，以及 audit passed/errors/warnings 验证；脚本支持 <code>--require-clean</code>，后续可用于 CI 或 release gate，防止 agent 忘记提交刷新后的审计报告或状态文件。这不是科学结果，但它把后续 B1-B10 每一次推进都绑到同一个可重复质量门上。
       </p>
       <p style="margin-top: 10px;">
+        最新推进 44：B7/T-B7-010a 已完成 template-priority gate。新增 <code>tools/b7_template_priority_gate.py</code>、<code>results/B7_template_priority_gate_v0.json</code> 和 <code>research/B7_template_priority_gate.md</code>，读取 nonlocal template scan 的 12 个 retained templates，并对照 <code>gcm_h6</code> 单侧 1.20x 所需的 30 个 arbitrary occurrence removal / 600 proxy-T ledger units。结论：0 个 single-template one-angle route 能清这个门槛；最佳模板仍是 <code>w8_21</code>，但它只有 20 个 nonoverlap occurrences，因此至少需要每 occurrence 移除 2 个 arbitrary rotations。此前 <code>w8_21</code> 的 43480 次 optimizer runs 仍为 0 exact rewrite，所以这不是 physical resource saving、不是 symbolic lower bound、不是 B7 solved result；它把 T-B7-010 收紧为 symbolic KAK/Clifford-scaffold proof、alternate certified rewrite，或回到 B1 T-resource reduction。
+      </p>
+      <p style="margin-top: 10px;">
         最新推进 28：B10/T-B10-001 已完成 B3/B5 denominator boundary comparison。新工具汇总 B3 cross-molecule UCC/ADAPT pressure、B5 oracle/non-oracle response embedding、seeded MPS pressure reference、variational MPS/ALS prototype 和 B10 D5 denominator tables，输出 4 张 route cards。结论：B3 当前保持 negative-boundary，selected-CI larger-basis denominator wins 为 0，max optimizer-loop shots lower bound 为 475,043,013,690,000；B5 有 classical denominator pressure，non-oracle-over-oracle rows 为 4、seeded-MPS-over-non-oracle rows 为 6，但 variational MPS/ALS-over-seeded rows 为 0。它不是 BQP separation、不是 quantum advantage，也不是 B3/B5 solution；下一步 T-B10-010 是把这个 comparison 写成 dequantization/sampling-access theorem-note skeleton，或明确缺失的关键假设。
       </p>
       <p style="margin-top: 10px;">
@@ -546,7 +549,7 @@
             <td>B1 硬件感知量子线路压缩</td>
             <td>virtual-SWAP elimination 覆盖 30/30 circuits；control-RZ pass 删除 380 个 RZ，T-count proxy 1.119320x；U3 phase-factored pass 又分解 1641 个 U3、删除 313 个 RZ，T-count proxy 相对 control-RZ 再提升 1.036371x，Aer 30/30 通过。</td>
             <td><span class="ok">最强候选</span>，B1 已经从路由/门数压缩推进到可传递给 B7 的 T-resource proxy；但仍是 diagnostic，不是最终设备 claim。</td>
-            <td>T-B7-009 已关闭为 claim-boundary fragment；下一步回到 T-B1-004，或进入 T-B7-010 的 symbolic KAK/Clifford-scaffold proof / alternate rewrite。</td>
+            <td>T-B7-010a 已给出 template-priority gate：B7 要么拿到 symbolic KAK/Clifford-scaffold proof / alternate certified rewrite，要么回到 T-B1-004 改善 T-resource min row。</td>
           </tr>
           <tr>
             <td>B2 低开销量子纠错</td>
@@ -556,9 +559,9 @@
           </tr>
           <tr>
             <td>B7 容错架构 co-design</td>
-            <td>workload-DAG factory schedule：mean STV reduction 1.475x；FT synthesis ledger：sat_n11 balanced/throughput STV 1.611481x，新 min row 为 gcm_h6 1.086008x；T-B7-004 显示 precision-aware budgets 不能清 1.20x；T-B7-005 显示保守同轴局部合并也无法减少 arbitrary rotations；T-B7-006 显示 repeated-angle cache 不减少 FT T ledger；T-B7-007 发现 w8_21 覆盖 100 个任意旋转 occurrence；T-B7-008/T-B7-009 已连续关闭 same-skeleton、broad-skeleton、target-informed Euler-local 和 bounded three-CNOT 的 four-arbitrary replacement 路线。</td>
-            <td><span class="ok">旧 sat_n11 卡点已被重分类</span>，但 gcm_h6 成为新的 sensitivity/ledger boundary；precision-aware synthesis 和 local same-axis merge 都不能解决。</td>
-            <td>下一步 T-B7-010：只有找到新的 symbolic KAK/Clifford-scaffold 论证或不同 occurrence-removing rewrite 时才继续；不能再把 repeated template 直接计为物理 savings。</td>
+            <td>workload-DAG factory schedule：mean STV reduction 1.475x；FT synthesis ledger：sat_n11 balanced/throughput STV 1.611481x，新 min row 为 gcm_h6 1.086008x；T-B7-004 到 T-B7-009 已关闭 precision-aware budget、local same-axis merge、shared cache、nonlocal adjacent cancellation、w8_21 four-arbitrary replacement 等路线；T-B7-010a 又显示 12 个 retained templates 中 0 个 one-angle single-template route 能清 gcm_h6 1.20x，w8_21 至少需要每 occurrence 移除 2 个 arbitrary rotations。</td>
+            <td><span class="ok">旧 sat_n11 卡点已被重分类</span>，但 gcm_h6 成为新的 sensitivity/ledger boundary；template-priority gate 已把下一步压缩成证书问题，不是继续盲搜。</td>
+            <td>下一步 T-B7-010：只有找到 symbolic KAK/Clifford-scaffold 论证、不同 occurrence-removing rewrite，或 B1 T-resource min-row 改善时才继续；不能把 repeated template 直接计为物理 savings。</td>
           </tr>
           <tr>
             <td>B8 量子输出经典验证</td>
@@ -842,6 +845,7 @@
         <li><code>research/B7_gcm_h6_numeric_rotation_structure.md</code>：B7 gcm_h6 numeric-rotation structural pass，172 条证书、Aer 1/1 通过，但 arbitrary rotations 270 -> 270，T ledger 6224 -> 6224</li>
         <li><code>research/B7_shared_synthesis_cache_boundary.md</code>：B7 shared-synthesis/cache boundary，270 occurrences -> 26 经典模板，但 cache FT T-ledger reduction 为 0，物理 occurrence 模型 min STV 仍为 1.086008x</li>
         <li><code>research/B7_nonlocal_template_block_scan.md</code>：B7 nonlocal template block scan，2633 条模板证书；最佳 w8_21 覆盖 100 个 arbitrary occurrences，但 adjacent inverse/duplicate block 为 0，T ledger 仍为 6224</li>
+        <li><code>research/B7_template_priority_gate.md</code>：B7 template-priority gate，12 个 retained templates 中 0 个 one-angle single-template route 清 gcm_h6 1.20x；最佳 w8_21 至少需要每 occurrence 移除 2 个 arbitrary rotations</li>
         <li><code>research/B7_w8_21_small_block_synthesis.md</code>：B7 w8_21 same-skeleton exact small-block synthesis，55 个候选 / 16 seeds，0 个通过；最佳 residual 3.936e-02，local rank 5</li>
         <li><code>research/B7_w8_21_broad_skeleton_search.md</code>：B7 w8_21 broad-skeleton exhaustive scan，15360/15360 family、30720 optimizer runs，0 个 exact four-rotation candidate，最佳 residual 0.244378</li>
         <li><code>research/B7_w8_21_euler_local_search.md</code>：B7 w8_21 Euler-local target-informed scan，500/500 family、3000 optimizer runs，0 个 exact four-arbitrary-angle candidate，最佳 residual 0.244378</li>
@@ -910,6 +914,7 @@
         <li>最新 T-B7-007：nonlocal template block scan 已完成；最佳 w8_21 覆盖 100 个任意旋转 occurrence，但没有相邻逆块或同绑定重复块可删。随后 T-B7-008 已关闭 same-skeleton one-angle exact replacement 路线。</li>
         <li>最新 T-B7-008/T-B7-009：w8_21 same-skeleton、broad-skeleton、target-informed Euler-local、bounded three-CNOT 四组搜索均未找到 exact four-arbitrary replacement；该路线已关闭为 claim-boundary fragment，但仍不是全局 KAK lower bound。</li>
         <li>最新 T-B7-009：全量扫描 15360/15360 个 two-CNOT/four-Rz-Ry family、500/500 个 target-informed Euler-local family、1480/1480 个 three-CNOT target-informed family，并汇总 same-skeleton 搜索；总计 43480 次优化，0 个 exact four-arbitrary candidate；scoped minimality note 与 claim-boundary fragment 已完成，T-B7-009 关闭为负结果边界。</li>
+        <li>最新 T-B7-010a：template-priority gate 已完成；12 个 retained templates 中 0 个 one-angle single-template route 能清 gcm_h6 1.20x，最佳 w8_21 需要至少每 occurrence 移除 2 个 arbitrary rotations；T-B7-010 仍必须给出 symbolic proof、alternate certified rewrite 或 B1 T-resource min-row 改善。</li>
         <li>最新 T-B2-006：posterior-calibrated shot-conditioned leakage boundary 已完成；读取 T-B2-005 的 288 target comparisons，评估 4 calibration profiles / 1152 profile rows，3 profiles 保留部分 d=5/d=7 rows，单 profile 最多 4 行，strict high-purity survival 0，robust all-profile survival false；随后 T-B2-007 已把这些 posterior rows 接入 decoder-risk ledger。</li>
         <li>最新 T-B2-007：posterior-weighted decoder-risk ledger 已完成；读取 T-B2-006 的 1152 profile rows，评估 4 risk budgets / 4608 budget-profile rows，raw profile survivors 6，mild/nominal/conservative/strict adjusted survivors 6/5/3/3，strict high-purity adjusted survivors 0，robust all-profile adjusted survival false。</li>
         <li>最新 T-B2-008：decoder-input contract feasibility gate 已完成；10 个 decoder inputs 中 4 个可用、6 个缺失，9 个 feasibility gates 中 4 个通过、5 个关键 gate 失败；随后 T-B2-009a 先补 per-shot trace input fixture。</li>

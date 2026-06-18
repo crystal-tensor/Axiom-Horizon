@@ -658,6 +658,18 @@ numeric `w8_21` expansion path. The next useful work is symbolic
 KAK/Clifford-scaffold proof, a certified alternate rewrite for `gcm_h6`, or a
 return to `T-B1-004`.
 
+**Sprint update 18:** `T-B7-010a` is now merged as a template-priority gate.
+The new artifact `research/B7_template_priority_gate.md` evaluates the 12
+retained nonlocal templates against the one-sided `gcm_h6` 1.20x target of 30
+removed arbitrary occurrences / 600 proxy-T ledger units. No single template
+clears the gate by removing only one arbitrary rotation per occurrence. The
+best template remains `w8_21`, but it has only 20 nonoverlap occurrences, so it
+needs at least 2 arbitrary removals per occurrence and still has no exact
+occurrence-removing certificate after the prior 43480 optimizer runs. This does
+not solve B7 and does not claim a physical resource reduction; it tightens
+`T-B7-010` so future work must be symbolic, certificate-producing, or return to
+B1 T-resource improvement.
+
 ## B8: Classical Verification of Quantum Outputs
 
 **Technical target:** keep verifier soundness low under adaptive leakage by

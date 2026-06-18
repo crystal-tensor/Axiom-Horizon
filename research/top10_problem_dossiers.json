@@ -191,7 +191,7 @@
         "compiler-resource co-design"
       ],
       "our_solution": "Bridge B1 circuit savings and B2 target-volume assumptions into a workload-level dependency schedule, then add workload-DAG, factory-throughput, logical T-resource, FT synthesis, and occurrence-level rewrite-certification pressure tests.",
-      "completed": "Scalar planning model, B1/B2 dependency-schedule bridge, workload-DAG factory-throughput schedule, logical T-factory boundary tests, FT synthesis ledger, gcm_h6 min-row boundary, repeated-template/cache boundary, nonlocal template scan, and w8_21 claim-boundary closure. The workload-DAG schedule has mean STV reduction 1.475x; the FT synthesis ledger exposes gcm_h6 as the current min row at 1.086008x; w8_21 was tested across same-skeleton, exhaustive two-CNOT Rz/Ry, target-informed Euler-local, and bounded three-CNOT families for 43480 optimizer runs, finding 0 exact four-arbitrary-angle replacements and 0 ledger removal.",
+      "completed": "Scalar planning model, B1/B2 dependency-schedule bridge, workload-DAG factory-throughput schedule, logical T-factory boundary tests, FT synthesis ledger, gcm_h6 min-row boundary, repeated-template/cache boundary, nonlocal template scan, w8_21 claim-boundary closure, and template-priority gate. The workload-DAG schedule has mean STV reduction 1.475x; the FT synthesis ledger exposes gcm_h6 as the current min row at 1.086008x; w8_21 was tested across same-skeleton, exhaustive two-CNOT Rz/Ry, target-informed Euler-local, and bounded three-CNOT families for 43480 optimizer runs, finding 0 exact four-arbitrary-angle replacements and 0 ledger removal. The template-priority gate evaluates 12 retained templates: 0 one-angle single-template routes clear the one-sided gcm_h6 1.20x target, and best w8_21 needs at least 2 arbitrary removals per occurrence.",
       "remaining_steps": [
         "symbolic KAK/Clifford-scaffold proof or alternate occurrence-removing rewrite for gcm_h6",
         "strengthen B1 non-Clifford/T-depth optimization until min factory STV improves",
@@ -200,7 +200,7 @@
         "feed-forward modeling",
         "full algorithm resource ledger"
       ],
-      "maturity_score": 33
+      "maturity_score": 34
     },
     {
       "b_id": "B8",

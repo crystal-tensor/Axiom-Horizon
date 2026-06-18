@@ -5373,6 +5373,7 @@ def audit(root: Path) -> dict:
     b7_gcm_h6_numeric_structure = b7_results.get("gcm_h6_numeric_rotation_structure_v0")
     b7_shared_synthesis_cache = b7_results.get("shared_synthesis_cache_boundary_v0")
     b7_nonlocal_template_block_scan = b7_results.get("nonlocal_template_block_scan_v0")
+    b7_template_priority_gate = b7_results.get("template_priority_gate_v0")
     b7_w8_21_small_block_synthesis = b7_results.get("w8_21_small_block_synthesis_v0")
     b7_w8_21_broad_skeleton_search = b7_results.get("w8_21_broad_skeleton_search_v0")
     b7_w8_21_euler_local_search = b7_results.get("w8_21_euler_local_search_v0")
@@ -6176,6 +6177,102 @@ def audit(root: Path) -> dict:
             b7_nonlocal_template_block_scan.get("all_variant_1_20_by_gcm_h6_only")
         ):
             errors.append("B7 nonlocal template block scan all-variant target flag mismatch")
+
+    b7_template_priority_status = {}
+    if not b7_template_priority_gate:
+        errors.append("B7 manifest missing template priority gate")
+    else:
+        result_path = b7_template_priority_gate.get("result")
+        markdown_path = b7_template_priority_gate.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B7 template priority gate result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B7 template priority gate markdown path missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        claims = payload.get("claim_boundary", {})
+        rows = payload.get("template_priority_rows", [])
+        b7_template_priority_status = {
+            "status": b7_template_priority_gate.get("status"),
+            "model_status": b7_template_priority_gate.get("model_status"),
+            "method": b7_template_priority_gate.get("method"),
+            "template_count": summary.get("template_count"),
+            "target_removed_arbitrary_occurrences_for_gcm_h6_1_20": summary.get(
+                "target_removed_arbitrary_occurrences_for_gcm_h6_1_20"
+            ),
+            "target_removed_t_ledger_for_gcm_h6_1_20": summary.get(
+                "target_removed_t_ledger_for_gcm_h6_1_20"
+            ),
+            "single_template_one_angle_clear_count": summary.get("single_template_one_angle_clear_count"),
+            "single_template_all_components_clear_count": summary.get(
+                "single_template_all_components_clear_count"
+            ),
+            "best_template_id": summary.get("best_template_id"),
+            "best_template_nonoverlap_occurrences": summary.get("best_template_nonoverlap_occurrences"),
+            "best_template_required_arbitrary_removed_per_occurrence": summary.get(
+                "best_template_required_arbitrary_removed_per_occurrence"
+            ),
+            "best_template_one_angle_shortfall": summary.get("best_template_one_angle_shortfall"),
+            "w8_21_prior_optimizer_runs": summary.get("w8_21_prior_optimizer_runs"),
+            "w8_21_prior_exact_rewrite_found": summary.get("w8_21_prior_exact_rewrite_found"),
+            "all_variant_1_20_by_gcm_h6_only": summary.get("all_variant_1_20_by_gcm_h6_only"),
+            "physical_resource_reduction_claimed": summary.get("physical_resource_reduction_claimed"),
+            "global_lower_bound_claimed": summary.get("global_lower_bound_claimed"),
+            "new_rewrite_claimed": claims.get("new_rewrite_claimed"),
+            "validation_error_count": summary.get("validation_error_count"),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("benchmark_id") != "B7":
+            errors.append("B7 template priority gate benchmark id mismatch")
+        if payload.get("status") != "template_priority_gate_no_single_one_angle_template_clears_gcm_h6":
+            errors.append("B7 template priority gate status mismatch")
+        if payload.get("method") != b7_template_priority_gate.get("method"):
+            errors.append("B7 template priority gate method mismatch")
+        if payload.get("model_status") != b7_template_priority_gate.get("model_status"):
+            errors.append("B7 template priority gate model_status mismatch")
+        if summary.get("template_count") != b7_template_priority_gate.get("template_count"):
+            errors.append("B7 template priority gate template count mismatch")
+        if len(rows) != b7_template_priority_gate.get("template_count"):
+            errors.append("B7 template priority gate row count mismatch")
+        if summary.get("target_removed_arbitrary_occurrences_for_gcm_h6_1_20") != b7_template_priority_gate.get(
+            "target_removed_arbitrary_occurrences_for_gcm_h6_1_20"
+        ):
+            errors.append("B7 template priority gate target occurrence mismatch")
+        if summary.get("target_removed_t_ledger_for_gcm_h6_1_20") != b7_template_priority_gate.get(
+            "target_removed_t_ledger_for_gcm_h6_1_20"
+        ):
+            errors.append("B7 template priority gate target T-ledger mismatch")
+        if summary.get("single_template_one_angle_clear_count") != 0:
+            errors.append("B7 template priority gate should have zero one-angle template clears")
+        if summary.get("single_template_all_components_clear_count") != 12:
+            errors.append("B7 template priority gate all-components template count mismatch")
+        if summary.get("best_template_id") != "w8_21":
+            errors.append("B7 template priority gate best template should remain w8_21")
+        if summary.get("best_template_required_arbitrary_removed_per_occurrence") != 2:
+            errors.append("B7 template priority gate w8_21 required removals per occurrence mismatch")
+        if summary.get("best_template_one_angle_shortfall") != 10:
+            errors.append("B7 template priority gate w8_21 one-angle shortfall mismatch")
+        if summary.get("w8_21_prior_optimizer_runs") != 43480:
+            errors.append("B7 template priority gate prior optimizer-run total mismatch")
+        if summary.get("w8_21_prior_exact_rewrite_found") is not False:
+            errors.append("B7 template priority gate must keep prior exact rewrite false")
+        if summary.get("all_variant_1_20_by_gcm_h6_only") is not False:
+            errors.append("B7 template priority gate must keep all-variant 1.20x false")
+        if summary.get("physical_resource_reduction_claimed") is not False:
+            errors.append("B7 template priority gate must not claim physical resource reduction")
+        if summary.get("global_lower_bound_claimed") is not False:
+            errors.append("B7 template priority gate must not claim a global lower bound")
+        if claims.get("new_rewrite_claimed") is not False:
+            errors.append("B7 template priority gate must not claim a new rewrite")
+        if claims.get("all_variant_1_20_claimed") is not False:
+            errors.append("B7 template priority gate must not claim all-variant 1.20x")
+        if summary.get("validation_error_count") != 0:
+            errors.append("B7 template priority gate validation errors must remain zero")
 
     b7_w8_21_synthesis_status = {}
     if not b7_w8_21_small_block_synthesis:
@@ -8540,6 +8637,7 @@ def audit(root: Path) -> dict:
             "gcm_h6_numeric_rotation_structure": b7_gcm_h6_numeric_structure_status,
             "shared_synthesis_cache_boundary": b7_shared_synthesis_cache_status,
             "nonlocal_template_block_scan": b7_nonlocal_template_status,
+            "template_priority_gate": b7_template_priority_status,
             "w8_21_small_block_synthesis": b7_w8_21_synthesis_status,
             "w8_21_broad_skeleton_search": b7_w8_21_broad_search_status,
             "w8_21_euler_local_search": b7_w8_21_euler_local_status,
@@ -8761,6 +8859,7 @@ def audit(root: Path) -> dict:
             "b7_gcm_h6_numeric_rotation_structure": str(research / "B7_gcm_h6_numeric_rotation_structure.md"),
             "b7_shared_synthesis_cache_boundary": str(research / "B7_shared_synthesis_cache_boundary.md"),
             "b7_nonlocal_template_block_scan": str(research / "B7_nonlocal_template_block_scan.md"),
+            "b7_template_priority_gate": str(research / "B7_template_priority_gate.md"),
             "b7_w8_21_small_block_synthesis": str(research / "B7_w8_21_small_block_synthesis.md"),
             "b7_w8_21_broad_skeleton_search": str(research / "B7_w8_21_broad_skeleton_search.md"),
             "b7_w8_21_euler_local_search": str(research / "B7_w8_21_euler_local_search.md"),
@@ -9512,6 +9611,12 @@ def markdown_report(report: dict) -> str:
             f"- Nonlocal template min STV / gcm_h6 occurrence target for 1.20x: {report['b7']['nonlocal_template_block_scan'].get('portfolio_min_space_time_volume_reduction')} / {report['b7']['nonlocal_template_block_scan'].get('first_gcm_h6_1_20_removed_arbitrary_occurrences')}",
             f"- Nonlocal template all-variant 1.20x by gcm_h6-only removals: {report['b7']['nonlocal_template_block_scan'].get('all_variant_1_20_by_gcm_h6_only')}",
             f"- Nonlocal template block scan result exists: {report['b7']['nonlocal_template_block_scan'].get('result_exists')}",
+            f"- Template priority gate status: {report['b7']['template_priority_gate'].get('status')}",
+            f"- Template priority gate templates / target removed arbitrary / one-angle clear count: {report['b7']['template_priority_gate'].get('template_count')} / {report['b7']['template_priority_gate'].get('target_removed_arbitrary_occurrences_for_gcm_h6_1_20')} / {report['b7']['template_priority_gate'].get('single_template_one_angle_clear_count')}",
+            f"- Template priority gate best template / required removals per occurrence / one-angle shortfall: {report['b7']['template_priority_gate'].get('best_template_id')} / {report['b7']['template_priority_gate'].get('best_template_required_arbitrary_removed_per_occurrence')} / {report['b7']['template_priority_gate'].get('best_template_one_angle_shortfall')}",
+            f"- Template priority gate w8_21 prior optimizer runs / exact rewrite found: {report['b7']['template_priority_gate'].get('w8_21_prior_optimizer_runs')} / {report['b7']['template_priority_gate'].get('w8_21_prior_exact_rewrite_found')}",
+            f"- Template priority gate all-variant 1.20x / physical claim / global lower bound: {report['b7']['template_priority_gate'].get('all_variant_1_20_by_gcm_h6_only')} / {report['b7']['template_priority_gate'].get('physical_resource_reduction_claimed')} / {report['b7']['template_priority_gate'].get('global_lower_bound_claimed')}",
+            f"- Template priority gate validation errors / result/markdown exists: {report['b7']['template_priority_gate'].get('validation_error_count')} / {report['b7']['template_priority_gate'].get('result_exists')} / {report['b7']['template_priority_gate'].get('markdown_exists')}",
             f"- w8_21 small-block synthesis status: {report['b7']['w8_21_small_block_synthesis'].get('status')}",
             f"- w8_21 synthesis attempts / passing candidates: {report['b7']['w8_21_small_block_synthesis'].get('candidate_attempt_count')} / {report['b7']['w8_21_small_block_synthesis'].get('passing_candidate_count')}",
             f"- w8_21 best fixed parameter/label/residual: {report['b7']['w8_21_small_block_synthesis'].get('best_fixed_parameter')} / {report['b7']['w8_21_small_block_synthesis'].get('best_fixed_label')} / {report['b7']['w8_21_small_block_synthesis'].get('best_residual_norm')}",
