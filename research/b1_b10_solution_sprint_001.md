@@ -265,6 +265,21 @@ introduces 1 failure. The improvement gate is still false, the route remains
 demoted, and the next useful gate is `T-B2-009d`: calibrated leakage/flag
 observations or a hardware-like leakage model.
 
+**Sprint update 49:** `T-B2-009d` is now merged as a hardware-like leakage
+observation model gate, and it is another negative boundary. The new tool
+`tools/b2_hardware_like_leakage_model_gate.py` consumes the T-B2-009a detector
+bitstrings without consuming the synthetic flag fixture, generates
+deterministic hardware-like leakage observations from challenge-level
+leakage/false-positive parameters, and maps those observations onto
+Stim/PyMatching DEM edges. It evaluates 3 observation profiles over 1,728
+profile-shots, including 864 holdout profile-shots. The best conservative
+hardware-like profile generates 415 model flag events, changes 0 predictions,
+fixes 0 failures, introduces 0 failures, and leaves 22 injected failures; its
+holdout failure delta is also 0. The stress profile generates 727 model flag
+events and still fixes 0 failures. The route remains demoted until
+`T-B2-009e` supplies real calibrated leakage/flag observations or independent
+hardware traces.
+
 ## B3: Molecular Reaction Dynamics
 
 **Technical target:** produce a reaction-coordinate quantum observable estimate

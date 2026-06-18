@@ -1320,6 +1320,9 @@ def audit(root: Path) -> dict:
     b2_dem_edge_semantics_gate = b2_results.get(
         "dem_informed_detector_edge_semantics_gate_v0"
     )
+    b2_hardware_like_leakage_gate = b2_results.get(
+        "hardware_like_leakage_model_gate_v0"
+    )
     b2_status = {}
     if not b2_baseline:
         warnings.append("B2 manifest has no repetition-code control baseline result")
@@ -2742,6 +2745,168 @@ def audit(root: Path) -> dict:
                 errors.append(f"B2 DEM edge semantics gate must keep {key}=False")
         if len(payload.get("validation_errors", [])) != 0:
             errors.append("B2 DEM edge semantics gate validation errors must be zero")
+
+    b2_hardware_like_leakage_gate_status = {}
+    if not b2_hardware_like_leakage_gate:
+        warnings.append("B2 manifest has no hardware-like leakage model gate")
+    else:
+        result_path = b2_hardware_like_leakage_gate.get("result")
+        markdown_path = b2_hardware_like_leakage_gate.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B2 hardware-like leakage gate result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B2 hardware-like leakage gate markdown missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        claims = payload.get("claim_boundary", {})
+        by_profile = summary.get("by_profile", {})
+        stress_profile = by_profile.get("stress_hardware_like_leakage", {})
+        b2_hardware_like_leakage_gate_status = {
+            "status": b2_hardware_like_leakage_gate.get("status"),
+            "method": b2_hardware_like_leakage_gate.get("method"),
+            "model_status": payload.get("model_status"),
+            "source_challenge_count": summary.get("source_challenge_count"),
+            "observation_profile_count": summary.get("observation_profile_count"),
+            "profile_result_count": summary.get("profile_result_count"),
+            "total_profile_shots": summary.get("total_profile_shots"),
+            "holdout_profile_shots": summary.get("holdout_profile_shots"),
+            "baseline_total_failures": summary.get("baseline_total_failures"),
+            "best_profile": summary.get("best_profile"),
+            "best_profile_injected_failures": summary.get("best_profile_injected_failures"),
+            "best_profile_failure_delta": summary.get("best_profile_failure_delta"),
+            "best_profile_fixed_failures": summary.get("best_profile_fixed_failures"),
+            "best_profile_introduced_failures": summary.get("best_profile_introduced_failures"),
+            "best_profile_changed_predictions": summary.get("best_profile_changed_predictions"),
+            "best_profile_model_flag_events": summary.get("best_profile_model_flag_events"),
+            "best_profile_max_adjusted_edge_probability": summary.get(
+                "best_profile_max_adjusted_edge_probability"
+            ),
+            "best_profile_holdout_baseline_failures": summary.get(
+                "best_profile_holdout_baseline_failures"
+            ),
+            "best_profile_holdout_injected_failures": summary.get(
+                "best_profile_holdout_injected_failures"
+            ),
+            "best_profile_holdout_failure_delta": summary.get(
+                "best_profile_holdout_failure_delta"
+            ),
+            "best_profile_holdout_fixed_failures": summary.get(
+                "best_profile_holdout_fixed_failures"
+            ),
+            "best_profile_holdout_introduced_failures": summary.get(
+                "best_profile_holdout_introduced_failures"
+            ),
+            "best_profile_holdout_changed_predictions": summary.get(
+                "best_profile_holdout_changed_predictions"
+            ),
+            "stress_profile_model_flag_events": stress_profile.get("model_flag_events"),
+            "hardware_like_leakage_model_used": summary.get("hardware_like_leakage_model_used"),
+            "detector_bitstrings_consumed": summary.get("detector_bitstrings_consumed"),
+            "synthetic_flag_fixture_consumed": summary.get("synthetic_flag_fixture_consumed"),
+            "calibrated_flag_data_used": summary.get("calibrated_flag_data_used"),
+            "real_hardware_trace_used": summary.get("real_hardware_trace_used"),
+            "holdout_improvement_gate_passed": summary.get("holdout_improvement_gate_passed"),
+            "holdout_nonregression_gate_passed": summary.get("holdout_nonregression_gate_passed"),
+            "route_demotion_recommended": summary.get("route_demotion_recommended"),
+            "hardware_like_leakage_model_built": claims.get("hardware_like_leakage_model_built"),
+            "production_decoder_claimed": claims.get("production_decoder_claimed"),
+            "threshold_claimed": claims.get("threshold_claimed"),
+            "new_code_claimed": claims.get("new_code_claimed"),
+            "hardware_result_claimed": claims.get("hardware_result_claimed"),
+            "calibrated_device_claimed": claims.get("calibrated_device_claimed"),
+            "quantum_advantage_claimed": claims.get("quantum_advantage_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("status") != b2_hardware_like_leakage_gate.get("status"):
+            errors.append("B2 hardware-like leakage gate status mismatch")
+        if payload.get("method") != b2_hardware_like_leakage_gate.get("method"):
+            errors.append("B2 hardware-like leakage gate method mismatch")
+        if payload.get("model_status") != b2_hardware_like_leakage_gate.get("model_status"):
+            errors.append("B2 hardware-like leakage gate model-status mismatch")
+        for key in [
+            "source_challenge_count",
+            "observation_profile_count",
+            "profile_result_count",
+            "total_profile_shots",
+            "holdout_profile_shots",
+            "baseline_total_failures",
+            "best_profile",
+            "best_profile_injected_failures",
+            "best_profile_failure_delta",
+            "best_profile_fixed_failures",
+            "best_profile_introduced_failures",
+            "best_profile_changed_predictions",
+            "best_profile_model_flag_events",
+            "best_profile_max_adjusted_edge_probability",
+            "best_profile_holdout_baseline_failures",
+            "best_profile_holdout_injected_failures",
+            "best_profile_holdout_failure_delta",
+            "best_profile_holdout_fixed_failures",
+            "best_profile_holdout_introduced_failures",
+            "best_profile_holdout_changed_predictions",
+            "hardware_like_leakage_model_used",
+            "detector_bitstrings_consumed",
+            "synthetic_flag_fixture_consumed",
+            "calibrated_flag_data_used",
+            "real_hardware_trace_used",
+            "holdout_improvement_gate_passed",
+            "holdout_nonregression_gate_passed",
+            "route_demotion_recommended",
+        ]:
+            if summary.get(key) != b2_hardware_like_leakage_gate.get(key):
+                errors.append(f"B2 hardware-like leakage gate {key} mismatch")
+        if stress_profile.get("model_flag_events") != b2_hardware_like_leakage_gate.get(
+            "stress_profile_model_flag_events"
+        ):
+            errors.append("B2 hardware-like leakage gate stress flag-event mismatch")
+        if summary.get("source_challenge_count") != 3:
+            errors.append("B2 hardware-like leakage gate should consume three challenge rows")
+        if summary.get("observation_profile_count") != 3:
+            errors.append("B2 hardware-like leakage gate should evaluate three observation profiles")
+        if summary.get("total_profile_shots") != 1728:
+            errors.append("B2 hardware-like leakage gate should evaluate 1728 profile shots")
+        if summary.get("holdout_profile_shots") != 864:
+            errors.append("B2 hardware-like leakage gate should evaluate 864 holdout profile shots")
+        if summary.get("hardware_like_leakage_model_used") is not True:
+            errors.append("B2 hardware-like leakage gate must use hardware-like leakage model")
+        if summary.get("detector_bitstrings_consumed") is not True:
+            errors.append("B2 hardware-like leakage gate must consume detector bitstrings")
+        if summary.get("synthetic_flag_fixture_consumed") is not False:
+            errors.append("B2 hardware-like leakage gate must not consume synthetic flag fixture")
+        if summary.get("calibrated_flag_data_used") is not False:
+            errors.append("B2 hardware-like leakage gate must not claim calibrated flag data")
+        if summary.get("real_hardware_trace_used") is not False:
+            errors.append("B2 hardware-like leakage gate must not claim real hardware traces")
+        if summary.get("holdout_improvement_gate_passed") is not False:
+            errors.append("B2 hardware-like leakage gate must not pass holdout improvement gate")
+        if summary.get("route_demotion_recommended") is not True:
+            errors.append("B2 hardware-like leakage gate must keep route demoted")
+        if claims.get("hardware_like_leakage_model_built") is not True:
+            errors.append("B2 hardware-like leakage gate must disclose model construction")
+        if claims.get("hardware_like_leakage_model_used") is not True:
+            errors.append("B2 hardware-like leakage gate must disclose model execution")
+        if claims.get("synthetic_flag_fixture_consumed") is not False:
+            errors.append("B2 hardware-like leakage gate must not claim synthetic fixture consumption")
+        if claims.get("real_flag_events_claimed") is not False:
+            errors.append("B2 hardware-like leakage gate must not claim real flag events")
+        for key in [
+            "production_decoder_claimed",
+            "threshold_claimed",
+            "new_code_claimed",
+            "hardware_result_claimed",
+            "calibrated_device_claimed",
+            "quantum_advantage_claimed",
+        ]:
+            if claims.get(key) is not False:
+                errors.append(f"B2 hardware-like leakage gate must keep {key}=False")
+        if len(payload.get("validation_errors", [])) != 0:
+            errors.append("B2 hardware-like leakage gate validation errors must be zero")
 
     b3_manifest = yaml.safe_load(read(b3_manifest_path))
     b3_results = b3_manifest.get("current_results", {})
@@ -8214,6 +8379,7 @@ def audit(root: Path) -> dict:
             "per_shot_decoder_trace_packet": b2_per_shot_trace_packet_status,
             "posterior_likelihood_decoder_injection_gate": b2_posterior_injection_gate_status,
             "dem_informed_detector_edge_semantics_gate": b2_dem_edge_semantics_gate_status,
+            "hardware_like_leakage_model_gate": b2_hardware_like_leakage_gate_status,
         },
         "b3": {
             "manifest": str(b3_manifest_path),
@@ -8370,6 +8536,9 @@ def audit(root: Path) -> dict:
             ),
             "b2_dem_informed_detector_edge_semantics_gate": str(
                 research / "B2_dem_informed_detector_edge_semantics_gate.md"
+            ),
+            "b2_hardware_like_leakage_model_gate": str(
+                research / "B2_hardware_like_leakage_model_gate.md"
             ),
             "b3_quantum_observable_fci_comparison": str(research / "B3_quantum_observable_fci_comparison.md"),
             "b3_quantum_observable_fci_qasm_directory": str(
@@ -8908,6 +9077,16 @@ def markdown_report(report: dict) -> str:
             f"- DEM edge semantics gate production decoder / threshold / hardware: {report['b2']['dem_informed_detector_edge_semantics_gate'].get('production_decoder_claimed')} / {report['b2']['dem_informed_detector_edge_semantics_gate'].get('threshold_claimed')} / {report['b2']['dem_informed_detector_edge_semantics_gate'].get('hardware_result_claimed')}",
             f"- DEM edge semantics gate validation errors: {report['b2']['dem_informed_detector_edge_semantics_gate'].get('validation_error_count')}",
             f"- DEM edge semantics gate result/markdown exists: {report['b2']['dem_informed_detector_edge_semantics_gate'].get('result_exists')} / {report['b2']['dem_informed_detector_edge_semantics_gate'].get('markdown_exists')}",
+            f"- Hardware-like leakage gate status: {report['b2']['hardware_like_leakage_model_gate'].get('status')}",
+            f"- Hardware-like leakage gate challenges / profiles / shots / holdout shots: {report['b2']['hardware_like_leakage_model_gate'].get('source_challenge_count')} / {report['b2']['hardware_like_leakage_model_gate'].get('observation_profile_count')} / {report['b2']['hardware_like_leakage_model_gate'].get('total_profile_shots')} / {report['b2']['hardware_like_leakage_model_gate'].get('holdout_profile_shots')}",
+            f"- Hardware-like leakage gate best profile / injected failures / delta: {report['b2']['hardware_like_leakage_model_gate'].get('best_profile')} / {report['b2']['hardware_like_leakage_model_gate'].get('best_profile_injected_failures')} / {report['b2']['hardware_like_leakage_model_gate'].get('best_profile_failure_delta')}",
+            f"- Hardware-like leakage gate holdout injected / delta / introduced: {report['b2']['hardware_like_leakage_model_gate'].get('best_profile_holdout_injected_failures')} / {report['b2']['hardware_like_leakage_model_gate'].get('best_profile_holdout_failure_delta')} / {report['b2']['hardware_like_leakage_model_gate'].get('best_profile_holdout_introduced_failures')}",
+            f"- Hardware-like leakage gate model flags best / stress: {report['b2']['hardware_like_leakage_model_gate'].get('best_profile_model_flag_events')} / {report['b2']['hardware_like_leakage_model_gate'].get('stress_profile_model_flag_events')}",
+            f"- Hardware-like leakage gate model / detector bits / synthetic fixture / calibrated data / hardware: {report['b2']['hardware_like_leakage_model_gate'].get('hardware_like_leakage_model_used')} / {report['b2']['hardware_like_leakage_model_gate'].get('detector_bitstrings_consumed')} / {report['b2']['hardware_like_leakage_model_gate'].get('synthetic_flag_fixture_consumed')} / {report['b2']['hardware_like_leakage_model_gate'].get('calibrated_flag_data_used')} / {report['b2']['hardware_like_leakage_model_gate'].get('real_hardware_trace_used')}",
+            f"- Hardware-like leakage gate holdout improvement / non-regression / demotion: {report['b2']['hardware_like_leakage_model_gate'].get('holdout_improvement_gate_passed')} / {report['b2']['hardware_like_leakage_model_gate'].get('holdout_nonregression_gate_passed')} / {report['b2']['hardware_like_leakage_model_gate'].get('route_demotion_recommended')}",
+            f"- Hardware-like leakage gate production decoder / threshold / hardware: {report['b2']['hardware_like_leakage_model_gate'].get('production_decoder_claimed')} / {report['b2']['hardware_like_leakage_model_gate'].get('threshold_claimed')} / {report['b2']['hardware_like_leakage_model_gate'].get('hardware_result_claimed')}",
+            f"- Hardware-like leakage gate validation errors: {report['b2']['hardware_like_leakage_model_gate'].get('validation_error_count')}",
+            f"- Hardware-like leakage gate result/markdown exists: {report['b2']['hardware_like_leakage_model_gate'].get('result_exists')} / {report['b2']['hardware_like_leakage_model_gate'].get('markdown_exists')}",
             "",
             "## B3 Resource Proxy Status",
             "",

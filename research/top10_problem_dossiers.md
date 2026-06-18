@@ -154,17 +154,22 @@ improvement gate is false, and route demotion remains recommended. T-B2-009c
 adds a DEM-informed detector-to-edge semantics gate: 3 semantic profiles /
 1,728 profile-shots, best conservative profile changes 0 predictions, fixes 0
 failures, introduces 0 failures, and leaves 22 injected failures, while the
-aggressive DEM profile introduces 1 failure. No circuit-level production
-decoder, threshold, hardware, calibrated-device, quantum-advantage, or new-code
-claim is made.
+aggressive DEM profile introduces 1 failure. T-B2-009d adds a hardware-like
+leakage observation model gate: 3 observation profiles / 1,728 profile-shots,
+864 holdout profile-shots, best conservative hardware-like profile generates
+415 model flag events, changes 0 predictions, fixes 0 failures, introduces 0
+failures, and has holdout failure delta 0. No circuit-level production decoder,
+threshold, hardware, calibrated-device, quantum-advantage, or new-code claim is
+made.
 
 **Remaining path to a serious solution:** replace synthetic detector/tick flag
-events with calibrated leakage/flag observations or a hardware-like leakage
-model; rerun posterior-likelihood decoding and require improvement plus
-all-challenge non-regression; re-test d=5/d=7 rows under strict high-purity and
-all-profile robustness gates before feeding B7.
+events and hardware-like observation models with real calibrated leakage/flag
+observations or independent hardware traces; rerun posterior-likelihood
+decoding and require holdout improvement plus all-challenge non-regression;
+re-test d=5/d=7 rows under strict high-purity and all-profile robustness gates
+before feeding B7.
 
-**Current internal maturity:** 47/100.
+**Current internal maturity:** 48/100.
 
 ## B3: Quantum Algorithms for Molecular Reaction Dynamics
 

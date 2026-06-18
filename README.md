@@ -107,15 +107,16 @@ B2 now also has a Stim HERALDED_ERASE / DEPOLARIZE1 stress boundary, a
 false-positive overhead stress, a posterior-calibrated shot-conditioned leakage
 boundary, a posterior-weighted decoder-risk ledger, a decoder-input contract
 feasibility gate, a per-shot decoder trace packet, a posterior-likelihood
-injection gate, and a DEM-informed detector-to-edge semantics gate. The latest
-B2 gate consumes three strict challenge rows across three semantic profiles /
-1,728 profile-shots. The best conservative profile changes 0 predictions,
-fixes 0 failures, introduces 0 failures, and leaves 22 injected failures; the
-aggressive DEM profile introduces 1 failure. The improvement gate remains
-false, the route remains demoted, and the synthetic flag events are still not
-calibrated or hardware-derived. This is still not a circuit-level decoder,
-production decoder, threshold, hardware result, quantum-advantage result, or
-new-code claim.
+injection gate, a DEM-informed detector-to-edge semantics gate, and a
+hardware-like leakage observation model gate. The latest B2 gate consumes three
+strict challenge rows across three observation profiles / 1,728 profile-shots,
+with 864 holdout profile-shots. The best conservative hardware-like profile
+generates 415 model flag events, changes 0 predictions, fixes 0 failures,
+introduces 0 failures, and leaves 22 injected failures; holdout failure delta is
+also 0. The improvement gate remains false, the route remains demoted, and the
+model is still not calibrated or hardware-derived. This is still not a
+circuit-level decoder, production decoder, threshold, hardware result,
+quantum-advantage result, or new-code claim.
 
 ## Repository Layout
 

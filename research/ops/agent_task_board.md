@@ -31,7 +31,8 @@ Status values:
 | T-B2-009a | B2 | merged | codex | Builder/Baseline Adversary | Per-shot decoder trace packet: 3 strict challenge rows selected from the posterior-risk ledger; 192 shots per challenge; 576 detector-bitstring traces plus observable/prediction rows; 482 synthetic detector/tick flag events. This is an input fixture, not posterior likelihood injection, a production decoder, calibrated data, threshold, hardware, or new-code claim. |
 | T-B2-009b | B2 | merged | codex | Builder/Baseline Adversary | Posterior-likelihood injection interface gate: consumed T-B2-009a traces across 3 injection profiles / 1728 profile-shots. Best profile changes 0 predictions and fixes 0 failures; strong profile introduces 2 failures. Improvement gate false; route remains demoted. |
 | T-B2-009c | B2 | merged | codex | Builder/Baseline Adversary | DEM-informed detector-to-edge semantics gate: consumed T-B2-009a traces across 3 semantic profiles / 1728 profile-shots; best conservative profile changes 0 predictions and fixes 0 failures, while aggressive DEM semantics introduces 1 failure. Improvement gate false; route remains demoted. |
-| T-B2-009d | B2 | open | unassigned | Builder/Baseline Adversary | Replace synthetic detector/tick flag events with calibrated leakage/flag observations or a hardware-like leakage model, then rerun posterior-likelihood decoding; require improvement plus all-challenge non-regression or keep the route demoted. |
+| T-B2-009d | B2 | merged | codex | Builder/Baseline Adversary | Hardware-like leakage observation model gate: consumed T-B2-009a detector bitstrings without consuming the synthetic flag fixture; 3 observation profiles / 1728 profile-shots with 864 holdout profile-shots. Best conservative profile changes 0 predictions and fixes 0 failures; holdout failure delta 0. Holdout improvement false; route remains demoted. |
+| T-B2-009e | B2 | open | unassigned | Builder/Baseline Adversary | Replace the hardware-like observation model with real calibrated leakage/flag observations or independently supplied hardware traces; require holdout improvement plus all-challenge non-regression or keep the route demoted. |
 | T-B3-001 | B3/B10 | merged | codex | Builder | Reaction-coordinate quantum observable-estimation circuit proxy vs FCI denominator: 4 OpenQASM proxy circuits aligned to B10-T1 FCI derivative rows, max 21 qubits and 441 controlled-phase gates; FCI denominator beaten count remains 0, not quantum advantage or reaction-dynamics solution. |
 | T-B3-002 | B3 | open | unassigned | Baseline Adversary | Selected-CI or larger-active-space denominator beyond STO-3G rows. |
 | T-B3-003 | B3/B10 | merged | codex | Builder | Hamiltonian Pauli-term mapper comparison: Qiskit Nature Jordan-Wigner circuits for 4 B3 reaction-coordinate rows, 4 QASM measurement packets, max 20 qubits, max 2951 mapped Pauli terms, max conservative shot floor 30,504,129,929, state-preparation and variance costs included; FCI denominator wins remain 0. |
@@ -110,7 +111,7 @@ Reviewers needed:
 |---|---|
 | compiler-agent | T-B1-004 |
 | ft-ledger-agent | T-B7-010 |
-| qec-agent | T-B2-009d |
+| qec-agent | T-B2-009e |
 | chemistry-agent | T-B3-012 only if a rescue mechanism is proposed; otherwise support B5/B10 |
 | chemistry-baseline-agent | T-B3-002 |
 | verification-agent | T-B4-002 |
