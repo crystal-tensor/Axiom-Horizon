@@ -93,10 +93,10 @@ surgery, minimum-weight matching, belief propagation, and learned decoders.
 Stim and PyMatching made large baseline studies much easier to reproduce.
 
 **Our proposed route:** establish a Wilson-bounded target-volume baseline first,
-then require each candidate code, schedule, or decoder to beat that baseline on
-the same metrics. The proxy and operation-class sweeps are now followed by
-same-hardware candidate tests plus explicit artifact-boundary checks before any
-B2 result may feed B7.
+then require each candidate code, schedule, decoder, or leakage-mitigation
+mechanism to beat that baseline on the same metrics. Reduced-round signals are
+now explicitly boundary-checked; the active new route is leakage-flagged erasure
+information that may lower required distance without reducing syndrome rounds.
 
 **Completed here:** Stim/PyMatching rotated surface-code baseline with 30
 configurations, 90,000 shots, distances 3/5/7, X/Z memory bases; Wilson
@@ -114,15 +114,22 @@ profiles, but all 88 come from aggressive d-4 schedules and 0 come from
 non-aggressive d-2 variants. The reduced-round artifact boundary confirms all
 original and stress-preserved improved rows are aggressive, distance-3,
 one-round candidates, so this lever is closed as a small-distance/aggressive-
-schedule artifact boundary rather than a low-overhead QEC claim.
+schedule artifact boundary rather than a low-overhead QEC claim. T-B2-003 adds
+a different non-aggressive leakage-flagged erasure analytic boundary: 480
+configurations, 335 candidate-met rows vs 264 baseline-met rows, 42 proxy
+target-volume improved rows, 33 distance-5/7 improved rows, 19 high-efficiency
+distance-5/7 rows, max reduction 23.904x, mean reduction 4.837x, validation
+errors 0, no reduced rounds, no d=3 candidates, and no new-code, threshold,
+device, or circuit-level claim.
 
-**Remaining path to a serious solution:** start a different non-aggressive
-schedule or code-family mechanism; require distance-5/7 Wilson target-volume
-reductions before promotion; add leakage/correlated-noise fields; run
-noise-mismatch Wilson target-volume stress on the new mechanism; connect only
-non-artifact B2 rows into the B7 resource ledger.
+**Remaining path to a serious solution:** replace the analytic leakage-flagged
+erasure proxy with a circuit-level leakage/erasure decoder experiment; calibrate
+or stress the leakage model under noise mismatch and correlated leakage; verify
+that distance-5/7 Wilson target-volume reductions survive stronger baselines;
+measure decoder/runtime overhead and flag false-positive cost; connect only
+circuit-level non-artifact B2 rows into the B7 resource ledger.
 
-**Current internal maturity:** 32/100.
+**Current internal maturity:** 36/100.
 
 ## B3: Quantum Algorithms for Molecular Reaction Dynamics
 

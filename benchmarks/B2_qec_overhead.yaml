@@ -256,6 +256,34 @@ current_results:
     caveat: boundary_note_not_new_code_threshold_or_calibrated_device_claim
     result: ../results/B2_reduced_round_artifact_boundary_v0.json
     markdown_report: ../research/B2_reduced_round_artifact_boundary.md
+  leakage_flagged_erasure_boundary_v0:
+    status: leakage_flagged_erasure_boundary_proxy_not_new_code_claim
+    method: b2_leakage_flagged_erasure_boundary_v0
+    model_status: analytic_leakage_proxy_not_circuit_level_decoder
+    physical_error_rates: [0.001, 0.003, 0.005, 0.007, 0.009]
+    leakage_fractions: [0.0, 0.03, 0.06, 0.10, 0.15, 0.20]
+    detection_efficiencies: [0.50, 0.75, 0.90, 0.97]
+    target_logical_errors: [0.1, 0.05, 0.01, 0.001]
+    distances: [5, 7, 9, 11, 13, 15]
+    flag_overhead: 1.15
+    configurations: 480
+    baseline_met_count: 264
+    candidate_met_count: 335
+    improved_volume_count: 42
+    distance_5_7_improved_count: 33
+    high_efficiency_distance_5_7_improved_count: 19
+    max_volume_reduction: 23.904170363797693
+    mean_volume_reduction_on_improved: 4.836897786181641
+    minimum_detection_efficiency_with_improvement: 0.5
+    non_aggressive_mechanism: true
+    reduced_rounds_used: false
+    new_code_claimed: false
+    threshold_claimed: false
+    calibrated_device_claimed: false
+    interpretation: analytic_leakage_flag_to_erasure_boundary_finds_distance_5_7_target_volume_pressure_without_reduced_rounds
+    caveat: proxy_not_circuit_level_decoder_threshold_or_hardware_leakage_claim
+    result: ../results/B2_leakage_flagged_erasure_boundary_v0.json
+    markdown_report: ../research/B2_leakage_flagged_erasure_boundary.md
 prototype_artifacts:
   baseline_runner: ../tools/b2_repetition_code_baseline.py
   target_volume_estimator: ../tools/b2_target_volume.py

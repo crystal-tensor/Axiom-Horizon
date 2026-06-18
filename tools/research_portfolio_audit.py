@@ -1307,6 +1307,7 @@ def audit(root: Path) -> dict:
     b2_same_hardware_schedule = b2_results.get("same_hardware_schedule_candidate_v0")
     b2_same_hardware_robustness = b2_results.get("same_hardware_schedule_robustness_v0")
     b2_reduced_round_boundary = b2_results.get("reduced_round_artifact_boundary_v0")
+    b2_leakage_flagged_erasure = b2_results.get("leakage_flagged_erasure_boundary_v0")
     b2_status = {}
     if not b2_baseline:
         warnings.append("B2 manifest has no repetition-code control baseline result")
@@ -1739,6 +1740,88 @@ def audit(root: Path) -> dict:
             errors.append("B2 reduced-round artifact boundary must not claim calibrated device evidence")
         if len(payload.get("validation_errors", [])) != 0:
             errors.append("B2 reduced-round artifact boundary validation errors must be zero")
+
+    b2_leakage_flagged_erasure_status = {}
+    if not b2_leakage_flagged_erasure:
+        warnings.append("B2 manifest has no leakage-flagged erasure boundary")
+    else:
+        result_path = b2_leakage_flagged_erasure.get("result")
+        markdown_path = b2_leakage_flagged_erasure.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B2 leakage-flagged erasure boundary result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B2 leakage-flagged erasure boundary markdown missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        claims = payload.get("claim_boundary", {})
+        b2_leakage_flagged_erasure_status = {
+            "status": b2_leakage_flagged_erasure.get("status"),
+            "method": b2_leakage_flagged_erasure.get("method"),
+            "model_status": payload.get("model_status"),
+            "configuration_count": summary.get("configuration_count"),
+            "baseline_met_count": summary.get("baseline_met_count"),
+            "candidate_met_count": summary.get("candidate_met_count"),
+            "improved_volume_count": summary.get("improved_volume_count"),
+            "distance_5_7_improved_count": summary.get("distance_5_7_improved_count"),
+            "high_efficiency_distance_5_7_improved_count": summary.get(
+                "high_efficiency_distance_5_7_improved_count"
+            ),
+            "max_volume_reduction": summary.get("max_volume_reduction"),
+            "mean_volume_reduction_on_improved": summary.get("mean_volume_reduction_on_improved"),
+            "minimum_detection_efficiency_with_improvement": summary.get(
+                "minimum_detection_efficiency_with_improvement"
+            ),
+            "non_aggressive_mechanism": claims.get("non_aggressive_mechanism"),
+            "reduced_rounds_used": claims.get("reduced_rounds_used"),
+            "distance_3_candidate_used": claims.get("distance_3_candidate_used"),
+            "new_code_claimed": claims.get("new_code_claimed"),
+            "threshold_claimed": claims.get("threshold_claimed"),
+            "calibrated_device_claimed": claims.get("calibrated_device_claimed"),
+            "circuit_level_decoder_claimed": claims.get("circuit_level_decoder_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("status") != b2_leakage_flagged_erasure.get("status"):
+            errors.append("B2 leakage-flagged erasure boundary status mismatch")
+        if payload.get("method") != b2_leakage_flagged_erasure.get("method"):
+            errors.append("B2 leakage-flagged erasure boundary method mismatch")
+        if payload.get("model_status") != b2_leakage_flagged_erasure.get("model_status"):
+            errors.append("B2 leakage-flagged erasure boundary model-status mismatch")
+        if summary.get("configuration_count") != b2_leakage_flagged_erasure.get("configurations"):
+            errors.append("B2 leakage-flagged erasure boundary configuration count mismatch")
+        if summary.get("candidate_met_count") != b2_leakage_flagged_erasure.get("candidate_met_count"):
+            errors.append("B2 leakage-flagged erasure boundary candidate met count mismatch")
+        if summary.get("improved_volume_count") != b2_leakage_flagged_erasure.get("improved_volume_count"):
+            errors.append("B2 leakage-flagged erasure boundary improved-volume count mismatch")
+        if summary.get("distance_5_7_improved_count") != b2_leakage_flagged_erasure.get(
+            "distance_5_7_improved_count"
+        ):
+            errors.append("B2 leakage-flagged erasure boundary d5/d7 count mismatch")
+        if int(summary.get("improved_volume_count", 0)) < 1:
+            errors.append("B2 leakage-flagged erasure boundary should show at least one proxy volume improvement")
+        if int(summary.get("distance_5_7_improved_count", 0)) < 1:
+            errors.append("B2 leakage-flagged erasure boundary should include distance-5/7 improvements")
+        if claims.get("non_aggressive_mechanism") is not True:
+            errors.append("B2 leakage-flagged erasure boundary must be marked non-aggressive")
+        if claims.get("reduced_rounds_used") is not False:
+            errors.append("B2 leakage-flagged erasure boundary must not use reduced rounds")
+        if claims.get("distance_3_candidate_used") is not False:
+            errors.append("B2 leakage-flagged erasure boundary must not use distance-3 candidates")
+        if claims.get("new_code_claimed") is not False:
+            errors.append("B2 leakage-flagged erasure boundary must not claim a new code")
+        if claims.get("threshold_claimed") is not False:
+            errors.append("B2 leakage-flagged erasure boundary must not claim a threshold")
+        if claims.get("calibrated_device_claimed") is not False:
+            errors.append("B2 leakage-flagged erasure boundary must not claim calibrated device evidence")
+        if claims.get("circuit_level_decoder_claimed") is not False:
+            errors.append("B2 leakage-flagged erasure boundary must not claim circuit-level decoder evidence")
+        if len(payload.get("validation_errors", [])) != 0:
+            errors.append("B2 leakage-flagged erasure boundary validation errors must be zero")
 
     b3_manifest = yaml.safe_load(read(b3_manifest_path))
     b3_results = b3_manifest.get("current_results", {})
@@ -6325,6 +6408,7 @@ def audit(root: Path) -> dict:
             "same_hardware_schedule_candidate": b2_same_hardware_status,
             "same_hardware_schedule_robustness": b2_same_hardware_robustness_status,
             "reduced_round_artifact_boundary": b2_reduced_round_boundary_status,
+            "leakage_flagged_erasure_boundary": b2_leakage_flagged_erasure_status,
         },
         "b3": {
             "manifest": str(b3_manifest_path),
@@ -6450,6 +6534,7 @@ def audit(root: Path) -> dict:
             "b2_same_hardware_schedule_candidate": str(research / "B2_same_hardware_schedule_candidate.md"),
             "b2_same_hardware_schedule_robustness": str(research / "B2_same_hardware_schedule_robustness.md"),
             "b2_reduced_round_artifact_boundary": str(research / "B2_reduced_round_artifact_boundary.md"),
+            "b2_leakage_flagged_erasure_boundary": str(research / "B2_leakage_flagged_erasure_boundary.md"),
             "b3_quantum_observable_fci_comparison": str(research / "B3_quantum_observable_fci_comparison.md"),
             "b3_quantum_observable_fci_qasm_directory": str(
                 results / "b3_quantum_observable_fci_comparison" / "circuits"
@@ -6886,6 +6971,16 @@ def markdown_report(report: dict) -> str:
             f"- Reduced-round artifact boundary new-code/threshold/device claims: {report['b2']['reduced_round_artifact_boundary'].get('new_code_claimed')} / {report['b2']['reduced_round_artifact_boundary'].get('threshold_claimed')} / {report['b2']['reduced_round_artifact_boundary'].get('calibrated_device_claimed')}",
             f"- Reduced-round artifact boundary validation errors: {report['b2']['reduced_round_artifact_boundary'].get('validation_error_count')}",
             f"- Reduced-round artifact boundary result/markdown exists: {report['b2']['reduced_round_artifact_boundary'].get('result_exists')} / {report['b2']['reduced_round_artifact_boundary'].get('markdown_exists')}",
+            f"- Leakage-flagged erasure boundary status: {report['b2']['leakage_flagged_erasure_boundary'].get('status')}",
+            f"- Leakage-flagged erasure boundary configurations: {report['b2']['leakage_flagged_erasure_boundary'].get('configuration_count')}",
+            f"- Leakage-flagged erasure boundary baseline/candidate met: {report['b2']['leakage_flagged_erasure_boundary'].get('baseline_met_count')} / {report['b2']['leakage_flagged_erasure_boundary'].get('candidate_met_count')}",
+            f"- Leakage-flagged erasure boundary improved rows / d5-d7 rows: {report['b2']['leakage_flagged_erasure_boundary'].get('improved_volume_count')} / {report['b2']['leakage_flagged_erasure_boundary'].get('distance_5_7_improved_count')}",
+            f"- Leakage-flagged erasure boundary high-efficiency d5-d7 rows: {report['b2']['leakage_flagged_erasure_boundary'].get('high_efficiency_distance_5_7_improved_count')}",
+            f"- Leakage-flagged erasure boundary max/mean volume reduction: {report['b2']['leakage_flagged_erasure_boundary'].get('max_volume_reduction')} / {report['b2']['leakage_flagged_erasure_boundary'].get('mean_volume_reduction_on_improved')}",
+            f"- Leakage-flagged erasure boundary non-aggressive/reduced-round flags: {report['b2']['leakage_flagged_erasure_boundary'].get('non_aggressive_mechanism')} / {report['b2']['leakage_flagged_erasure_boundary'].get('reduced_rounds_used')}",
+            f"- Leakage-flagged erasure boundary new-code/threshold/device/circuit claims: {report['b2']['leakage_flagged_erasure_boundary'].get('new_code_claimed')} / {report['b2']['leakage_flagged_erasure_boundary'].get('threshold_claimed')} / {report['b2']['leakage_flagged_erasure_boundary'].get('calibrated_device_claimed')} / {report['b2']['leakage_flagged_erasure_boundary'].get('circuit_level_decoder_claimed')}",
+            f"- Leakage-flagged erasure boundary validation errors: {report['b2']['leakage_flagged_erasure_boundary'].get('validation_error_count')}",
+            f"- Leakage-flagged erasure boundary result/markdown exists: {report['b2']['leakage_flagged_erasure_boundary'].get('result_exists')} / {report['b2']['leakage_flagged_erasure_boundary'].get('markdown_exists')}",
             "",
             "## B3 Resource Proxy Status",
             "",

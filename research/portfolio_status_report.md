@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 37, 'B2': 32, 'B3': 30, 'B4': 20, 'B5': 21, 'B6': 16, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 39}
+- Maturity scores: {'B1': 37, 'B2': 36, 'B3': 30, 'B4': 20, 'B5': 21, 'B6': 16, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 39}
 
 ## Technical Resolution Program
 
@@ -317,6 +317,16 @@ Overall audit: PASS
 - Reduced-round artifact boundary new-code/threshold/device claims: False / False / False
 - Reduced-round artifact boundary validation errors: 0
 - Reduced-round artifact boundary result/markdown exists: True / True
+- Leakage-flagged erasure boundary status: leakage_flagged_erasure_boundary_proxy_not_new_code_claim
+- Leakage-flagged erasure boundary configurations: 480
+- Leakage-flagged erasure boundary baseline/candidate met: 264 / 335
+- Leakage-flagged erasure boundary improved rows / d5-d7 rows: 42 / 33
+- Leakage-flagged erasure boundary high-efficiency d5-d7 rows: 19
+- Leakage-flagged erasure boundary max/mean volume reduction: 23.904170363797693 / 4.836897786181641
+- Leakage-flagged erasure boundary non-aggressive/reduced-round flags: True / False
+- Leakage-flagged erasure boundary new-code/threshold/device/circuit claims: False / False / False / False
+- Leakage-flagged erasure boundary validation errors: 0
+- Leakage-flagged erasure boundary result/markdown exists: True / True
 
 ## B3 Resource Proxy Status
 

@@ -88,6 +88,11 @@ materials leakage audit: 26 records across 12 families, explicit post-2008
 time split, family-prior comparison, and no material-discovery or solved
 mechanism claim.
 
+B2 has moved past the closed reduced-round artifact into a leakage-flagged
+erasure analytic boundary: 480 configurations, 42 proxy target-volume improved
+rows, 33 distance-5/7 improved rows, no reduced rounds, and no new-code,
+threshold, device, or circuit-level decoder claim.
+
 ## Repository Layout
 
 ```text
