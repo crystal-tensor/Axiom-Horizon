@@ -2,7 +2,7 @@
   "schema_version": "0.1",
   "last_updated": "2026-06-18",
   "purpose": "Execution board for turning the Top 10 quantum attack directions from v0 artifacts into a one-year technical-resolution portfolio.",
-  "portfolio_state": "stage 1q evidence hardening; B2 now has a decoder-input contract feasibility gate, B5 has a canonical DMRG readiness gate, B6 has a structural/electronic proxy boundary, and B10 remains a denominator-boundary track",
+  "portfolio_state": "stage 1r evidence hardening; B2 now has a per-shot decoder trace packet but still lacks posterior likelihood injection, B5 has a canonical DMRG readiness gate, B6 has a structural/electronic proxy boundary, and B10 remains a denominator-boundary track",
   "decision_rules": {
     "monthly_keep_rule": "Keep a direction only if the next 30-day artifact can falsify or improve a concrete claim.",
     "merge_rule": "Merge directions when their validation stack is shared, such as B4 plus B8 or B1 plus B7.",
@@ -50,17 +50,17 @@
       "problem_id": 22,
       "title": "Low-overhead quantum error-correcting codes",
       "priority_lane": "technical_system_spine",
-      "current_maturity": "decoder_input_contract_failed_calibrated_data_or_decoder_required",
-      "strongest_evidence": "Stim/PyMatching baseline plus closed reduced-round artifact boundary; leakage-erasure proxy/stress rows; posterior calibration; posterior-weighted risk ledger; and T-B2-008 decoder-input contract gate. The gate finds 4/10 decoder inputs available, 6 missing, 4/9 gates passed, 5 critical gates failed, strict high-purity survivors 0, and all-profile robustness false.",
-      "30_day_gate": "Persist per-shot syndrome and flag traces, inject posterior flag probabilities into a real circuit-level decoder, or collect calibrated leakage/flag data; otherwise keep the heralded-erasure route demoted.",
-      "next_artifact": "B2 T-B2-009 per-shot posterior decoder trace plus PyMatching/Stim likelihood-injection decoder, or calibrated leakage/flag dataset.",
-      "kill_condition": "Keep the leakage-erasure route demoted if per-shot decoder inputs or calibrated leakage/flag data remain unavailable, or if strict high-purity/all-profile survival remains zero/false.",
+      "current_maturity": "per_shot_trace_packet_available_decoder_injection_still_missing",
+      "strongest_evidence": "Stim/PyMatching baseline plus closed reduced-round artifact boundary; leakage-erasure proxy/stress rows; posterior calibration; posterior-weighted risk ledger; T-B2-008 decoder-input contract gate; and T-B2-009a per-shot trace packet. The trace packet persists 3 strict challenge rows, 576 detector-bitstring traces, observable/prediction rows, and 482 synthetic detector/tick flag events, but posterior likelihood injection and calibrated flag data remain missing.",
+      "30_day_gate": "Use the persisted per-shot traces in a posterior-likelihood PyMatching/Stim decoder, or replace synthetic flag events with calibrated leakage/flag data; otherwise keep the heralded-erasure route demoted.",
+      "next_artifact": "B2 T-B2-009b posterior-likelihood decoder injection over the persisted per-shot trace packet, or calibrated leakage/flag dataset.",
+      "kill_condition": "Keep the leakage-erasure route demoted if posterior injection or calibrated leakage/flag data remain unavailable, or if strict high-purity/all-profile survival remains zero/false.",
       "downstream_translation_route": "Deferred until B2 shows Wilson-bounded target-volume reduction under shot-conditioned or calibrated leakage/erasure evidence, without relying on the closed reduced-round artifact.",
       "dependencies": [
         "B1",
         "B7"
       ],
-      "kill_or_merge_condition": "Keep the leakage-erasure route demoted if per-shot decoder inputs or calibrated leakage/flag data remain unavailable, or if strict high-purity/all-profile survival remains zero/false."
+      "kill_or_merge_condition": "Keep the leakage-erasure route demoted if posterior injection or calibrated leakage/flag data remain unavailable, or if strict high-purity/all-profile survival remains zero/false."
     },
     {
       "b_id": "B3",
@@ -194,11 +194,7 @@
     }
   ],
   "next_30_days": {
-    "week_1": [
-      "Freeze B1 proof-log report outline.",
-      "B2 T-B2-008 closes the current posterior-risk route as a decoder-input contract failure; next gate is per-shot posterior decoder traces or calibrated leakage/flag data.",
-      "Pair B4 and B8 into one verification protocol lane."
-    ],
+    "week_1": "Freeze B1 proof-log report outline; B2 T-B2-009a now supplies per-shot detector traces, so the next B2 gate is posterior-likelihood decoder injection or calibrated leakage/flag data; pair B4 and B8 into one verification lane.",
     "week_2": [
       "Run B1 on one broader benchmark family or document why the verifier blocks scale.",
       "Upgrade the B7 dependency bridge to a real workload DAG.",

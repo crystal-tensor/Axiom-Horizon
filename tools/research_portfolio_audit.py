@@ -1313,6 +1313,7 @@ def audit(root: Path) -> dict:
     b2_shot_conditioned_erasure = b2_results.get("shot_conditioned_erasure_decoder_boundary_v0")
     b2_posterior_risk_ledger = b2_results.get("posterior_weighted_decoder_risk_ledger_v0")
     b2_decoder_input_contract = b2_results.get("decoder_input_contract_feasibility_gate_v0")
+    b2_per_shot_trace_packet = b2_results.get("per_shot_decoder_trace_packet_v0")
     b2_status = {}
     if not b2_baseline:
         warnings.append("B2 manifest has no repetition-code control baseline result")
@@ -2343,6 +2344,132 @@ def audit(root: Path) -> dict:
         ]:
             if claims.get(key) is not False:
                 errors.append(f"B2 decoder input contract must keep {key}=False")
+
+    b2_per_shot_trace_packet_status = {}
+    if not b2_per_shot_trace_packet:
+        warnings.append("B2 manifest has no per-shot decoder trace packet result")
+    else:
+        result_path = b2_per_shot_trace_packet.get("result")
+        markdown_path = b2_per_shot_trace_packet.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B2 per-shot trace packet result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B2 per-shot trace packet markdown missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        claims = payload.get("claim_boundary", {})
+        b2_per_shot_trace_packet_status = {
+            "status": b2_per_shot_trace_packet.get("status"),
+            "method": b2_per_shot_trace_packet.get("method"),
+            "model_status": payload.get("model_status"),
+            "challenge_count": summary.get("challenge_count"),
+            "shots_per_challenge": summary.get("shots_per_challenge"),
+            "total_shot_traces": summary.get("total_shot_traces"),
+            "total_logical_failures": summary.get("total_logical_failures"),
+            "max_detector_count": summary.get("max_detector_count"),
+            "total_synthetic_flag_events": summary.get("total_synthetic_flag_events"),
+            "mean_synthetic_flag_events_per_shot": summary.get(
+                "mean_synthetic_flag_events_per_shot"
+            ),
+            "max_decoder_runtime_seconds_per_shot": summary.get(
+                "max_decoder_runtime_seconds_per_shot"
+            ),
+            "per_shot_detector_bitstrings_persisted": summary.get(
+                "per_shot_detector_bitstrings_persisted"
+            ),
+            "stim_observable_bitstrings_persisted": summary.get(
+                "stim_observable_bitstrings_persisted"
+            ),
+            "synthetic_detector_tick_flag_events_persisted": summary.get(
+                "synthetic_detector_tick_flag_events_persisted"
+            ),
+            "real_hardware_or_calibrated_flag_events": summary.get(
+                "real_hardware_or_calibrated_flag_events"
+            ),
+            "posterior_likelihood_decoder_injection_performed": summary.get(
+                "posterior_likelihood_decoder_injection_performed"
+            ),
+            "per_shot_trace_packet_built": claims.get("per_shot_trace_packet_built"),
+            "circuit_level_decoder_claimed": claims.get("circuit_level_decoder_claimed"),
+            "posterior_likelihood_decoder_claimed": claims.get(
+                "posterior_likelihood_decoder_claimed"
+            ),
+            "production_decoder_claimed": claims.get("production_decoder_claimed"),
+            "threshold_claimed": claims.get("threshold_claimed"),
+            "new_code_claimed": claims.get("new_code_claimed"),
+            "hardware_result_claimed": claims.get("hardware_result_claimed"),
+            "calibrated_device_claimed": claims.get("calibrated_device_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("status") != b2_per_shot_trace_packet.get("status"):
+            errors.append("B2 per-shot trace packet status mismatch")
+        if payload.get("method") != b2_per_shot_trace_packet.get("method"):
+            errors.append("B2 per-shot trace packet method mismatch")
+        if payload.get("model_status") != b2_per_shot_trace_packet.get("model_status"):
+            errors.append("B2 per-shot trace packet model-status mismatch")
+        for key in [
+            "challenge_count",
+            "shots_per_challenge",
+            "total_shot_traces",
+            "total_logical_failures",
+            "max_detector_count",
+            "total_synthetic_flag_events",
+            "mean_synthetic_flag_events_per_shot",
+            "max_decoder_runtime_seconds_per_shot",
+            "per_shot_detector_bitstrings_persisted",
+            "stim_observable_bitstrings_persisted",
+            "synthetic_detector_tick_flag_events_persisted",
+            "real_hardware_or_calibrated_flag_events",
+            "posterior_likelihood_decoder_injection_performed",
+        ]:
+            if summary.get(key) != b2_per_shot_trace_packet.get(key):
+                errors.append(f"B2 per-shot trace packet {key} mismatch")
+        if summary.get("challenge_count") != 3:
+            errors.append("B2 per-shot trace packet should include three strict challenge rows")
+        if summary.get("shots_per_challenge") != 192:
+            errors.append("B2 per-shot trace packet should use 192 shots per challenge")
+        if summary.get("total_shot_traces") != 576:
+            errors.append("B2 per-shot trace packet should persist 576 shot traces")
+        if summary.get("per_shot_detector_bitstrings_persisted") is not True:
+            errors.append("B2 per-shot trace packet must persist detector bitstrings")
+        if summary.get("stim_observable_bitstrings_persisted") is not True:
+            errors.append("B2 per-shot trace packet must persist observable bitstrings")
+        if summary.get("synthetic_detector_tick_flag_events_persisted") is not True:
+            errors.append("B2 per-shot trace packet must persist synthetic detector/tick flag events")
+        if summary.get("real_hardware_or_calibrated_flag_events") is not False:
+            errors.append("B2 per-shot trace packet must not claim real calibrated flag events")
+        if summary.get("posterior_likelihood_decoder_injection_performed") is not False:
+            errors.append("B2 per-shot trace packet must not claim posterior decoder injection")
+        if len(payload.get("challenge_packets", [])) != summary.get("challenge_count"):
+            errors.append("B2 per-shot trace packet challenge packet count mismatch")
+        for packet in payload.get("challenge_packets", []):
+            if len(packet.get("shot_traces", [])) != summary.get("shots_per_challenge"):
+                errors.append("B2 per-shot trace packet shot trace count mismatch")
+            detector_count = packet.get("circuit_summary", {}).get("detectors")
+            for trace in packet.get("shot_traces", [])[:5]:
+                if len(trace.get("detector_bitstring", "")) != detector_count:
+                    errors.append("B2 per-shot trace packet detector bitstring length mismatch")
+        if claims.get("per_shot_trace_packet_built") is not True:
+            errors.append("B2 per-shot trace packet must disclose trace packet construction")
+        if claims.get("real_flag_events_claimed") is not False:
+            errors.append("B2 per-shot trace packet must not claim real flag events")
+        for key in [
+            "circuit_level_decoder_claimed",
+            "posterior_likelihood_decoder_claimed",
+            "production_decoder_claimed",
+            "threshold_claimed",
+            "new_code_claimed",
+            "hardware_result_claimed",
+            "calibrated_device_claimed",
+        ]:
+            if claims.get(key) is not False:
+                errors.append(f"B2 per-shot trace packet must keep {key}=False")
         if len(payload.get("validation_errors", [])) != 0:
             errors.append("B2 decoder input contract validation errors must be zero")
 
@@ -7814,6 +7941,7 @@ def audit(root: Path) -> dict:
             "shot_conditioned_erasure_decoder_boundary": b2_shot_conditioned_erasure_status,
             "posterior_weighted_decoder_risk_ledger": b2_posterior_risk_ledger_status,
             "decoder_input_contract_feasibility_gate": b2_decoder_input_contract_status,
+            "per_shot_decoder_trace_packet": b2_per_shot_trace_packet_status,
         },
         "b3": {
             "manifest": str(b3_manifest_path),
@@ -7961,6 +8089,9 @@ def audit(root: Path) -> dict:
             ),
             "b2_decoder_input_contract_feasibility_gate": str(
                 research / "B2_decoder_input_contract_feasibility_gate.md"
+            ),
+            "b2_per_shot_decoder_trace_packet": str(
+                research / "B2_per_shot_decoder_trace_packet.md"
             ),
             "b3_quantum_observable_fci_comparison": str(research / "B3_quantum_observable_fci_comparison.md"),
             "b3_quantum_observable_fci_qasm_directory": str(
@@ -8472,6 +8603,14 @@ def markdown_report(report: dict) -> str:
             f"- Decoder input contract circuit decoder / production decoder / threshold / hardware: {report['b2']['decoder_input_contract_feasibility_gate'].get('circuit_level_decoder_claimed')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('production_decoder_claimed')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('threshold_claimed')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('hardware_result_claimed')}",
             f"- Decoder input contract validation errors: {report['b2']['decoder_input_contract_feasibility_gate'].get('validation_error_count')}",
             f"- Decoder input contract result/markdown exists: {report['b2']['decoder_input_contract_feasibility_gate'].get('result_exists')} / {report['b2']['decoder_input_contract_feasibility_gate'].get('markdown_exists')}",
+            f"- Per-shot trace packet status: {report['b2']['per_shot_decoder_trace_packet'].get('status')}",
+            f"- Per-shot trace packet challenges / shots each / total traces: {report['b2']['per_shot_decoder_trace_packet'].get('challenge_count')} / {report['b2']['per_shot_decoder_trace_packet'].get('shots_per_challenge')} / {report['b2']['per_shot_decoder_trace_packet'].get('total_shot_traces')}",
+            f"- Per-shot trace packet failures / max detectors / synthetic flags: {report['b2']['per_shot_decoder_trace_packet'].get('total_logical_failures')} / {report['b2']['per_shot_decoder_trace_packet'].get('max_detector_count')} / {report['b2']['per_shot_decoder_trace_packet'].get('total_synthetic_flag_events')}",
+            f"- Per-shot trace packet detector bits / observables / synthetic flags persisted: {report['b2']['per_shot_decoder_trace_packet'].get('per_shot_detector_bitstrings_persisted')} / {report['b2']['per_shot_decoder_trace_packet'].get('stim_observable_bitstrings_persisted')} / {report['b2']['per_shot_decoder_trace_packet'].get('synthetic_detector_tick_flag_events_persisted')}",
+            f"- Per-shot trace packet posterior injection / real calibrated flags: {report['b2']['per_shot_decoder_trace_packet'].get('posterior_likelihood_decoder_injection_performed')} / {report['b2']['per_shot_decoder_trace_packet'].get('real_hardware_or_calibrated_flag_events')}",
+            f"- Per-shot trace packet circuit decoder / production decoder / threshold / hardware: {report['b2']['per_shot_decoder_trace_packet'].get('circuit_level_decoder_claimed')} / {report['b2']['per_shot_decoder_trace_packet'].get('production_decoder_claimed')} / {report['b2']['per_shot_decoder_trace_packet'].get('threshold_claimed')} / {report['b2']['per_shot_decoder_trace_packet'].get('hardware_result_claimed')}",
+            f"- Per-shot trace packet validation errors: {report['b2']['per_shot_decoder_trace_packet'].get('validation_error_count')}",
+            f"- Per-shot trace packet result/markdown exists: {report['b2']['per_shot_decoder_trace_packet'].get('result_exists')} / {report['b2']['per_shot_decoder_trace_packet'].get('markdown_exists')}",
             "",
             "## B3 Resource Proxy Status",
             "",

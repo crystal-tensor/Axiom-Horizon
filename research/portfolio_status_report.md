@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 37, 'B2': 44, 'B3': 30, 'B4': 20, 'B5': 25, 'B6': 21, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 49}
+- Maturity scores: {'B1': 37, 'B2': 45, 'B3': 30, 'B4': 20, 'B5': 25, 'B6': 21, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 49}
 
 ## Technical Resolution Program
 
@@ -370,6 +370,14 @@ Overall audit: PASS
 - Decoder input contract circuit decoder / production decoder / threshold / hardware: False / False / False / False
 - Decoder input contract validation errors: 0
 - Decoder input contract result/markdown exists: True / True
+- Per-shot trace packet status: per_shot_trace_packet_available_decoder_injection_still_missing
+- Per-shot trace packet challenges / shots each / total traces: 3 / 192 / 576
+- Per-shot trace packet failures / max detectors / synthetic flags: 22 / 120 / 482
+- Per-shot trace packet detector bits / observables / synthetic flags persisted: True / True / True
+- Per-shot trace packet posterior injection / real calibrated flags: False / False
+- Per-shot trace packet circuit decoder / production decoder / threshold / hardware: False / False / False / False
+- Per-shot trace packet validation errors: 0
+- Per-shot trace packet result/markdown exists: True / True
 
 ## B3 Resource Proxy Status
 

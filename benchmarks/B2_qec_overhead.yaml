@@ -446,6 +446,36 @@ current_results:
     caveat: requires_per_shot_syndrome_flag_traces_decoder_likelihood_injection_and_calibrated_leakage_data
     result: ../results/B2_decoder_input_contract_feasibility_gate_v0.json
     markdown_report: ../research/B2_decoder_input_contract_feasibility_gate.md
+  per_shot_decoder_trace_packet_v0:
+    status: per_shot_trace_packet_available_decoder_injection_still_missing
+    method: b2_per_shot_decoder_trace_packet_v0
+    source: posterior_weighted_decoder_risk_ledger_v0
+    model_status: stim_sampled_detector_bitstrings_with_synthetic_flag_events_not_posterior_decoder
+    toolchain: Stim generated rotated surface-code memory circuits plus PyMatching replay and synthetic detector-indexed flag events
+    challenge_count: 3
+    shots_per_challenge: 192
+    total_shot_traces: 576
+    total_logical_failures: 22
+    max_detector_count: 120
+    total_synthetic_flag_events: 482
+    mean_synthetic_flag_events_per_shot: 0.8368055555555556
+    max_decoder_runtime_seconds_per_shot: 3.089630202642487e-06
+    per_shot_detector_bitstrings_persisted: true
+    stim_observable_bitstrings_persisted: true
+    synthetic_detector_tick_flag_events_persisted: true
+    real_hardware_or_calibrated_flag_events: false
+    posterior_likelihood_decoder_injection_performed: false
+    new_code_claimed: false
+    threshold_claimed: false
+    calibrated_device_claimed: false
+    production_decoder_claimed: false
+    circuit_level_decoder_claimed: false
+    posterior_likelihood_decoder_claimed: false
+    hardware_result_claimed: false
+    interpretation: per_shot_detector_traces_are_now_available_for_selected_strict_challenge_rows_but_decoder_likelihood_injection_remains_missing
+    caveat: synthetic_flag_events_are_interface_fixtures_not_calibrated_hardware_or_posterior_decoder_evidence
+    result: ../results/B2_per_shot_decoder_trace_packet_v0.json
+    markdown_report: ../research/B2_per_shot_decoder_trace_packet.md
 prototype_artifacts:
   baseline_runner: ../tools/b2_repetition_code_baseline.py
   target_volume_estimator: ../tools/b2_target_volume.py
@@ -462,4 +492,5 @@ prototype_artifacts:
   shot_conditioned_erasure_decoder_boundary: ../tools/b2_shot_conditioned_erasure_decoder_boundary.py
   posterior_weighted_decoder_risk_ledger: ../tools/b2_posterior_weighted_decoder_risk_ledger.py
   decoder_input_contract_feasibility_gate: ../tools/b2_decoder_input_contract_feasibility_gate.py
+  per_shot_decoder_trace_packet: ../tools/b2_per_shot_decoder_trace_packet.py
   prototype_notes: ../research/B2_prototype_notes.md

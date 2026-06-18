@@ -224,9 +224,22 @@ available and 6 are missing; 9 feasibility gates are evaluated, 4 pass, and 5
 critical gates fail. Strict high-purity adjusted survivors remain 0, robust
 all-profile adjusted survival remains false, and the route is explicitly
 demoted until a real decoder or calibrated leakage/flag dataset exists. Next:
-`T-B2-009` must persist per-shot syndrome/flag traces and inject posterior flag
-likelihoods into a PyMatching/Stim circuit-level decoder, or collect calibrated
-leakage/flag data.
+`T-B2-009a` should first persist per-shot syndrome/flag traces; `T-B2-009b`
+must then inject posterior flag likelihoods into a PyMatching/Stim circuit-level
+decoder, or collect calibrated leakage/flag data.
+
+**Sprint update 46:** `T-B2-009a` is now merged as a per-shot decoder trace
+packet, not a posterior-likelihood decoder. The new tool
+`tools/b2_per_shot_decoder_trace_packet.py` selects three strict challenge rows
+from the posterior-risk ledger, replays Stim generated rotated surface-code
+memory circuits, and persists 576 detector-bitstring traces with observable and
+baseline PyMatching prediction rows. It also emits 482 synthetic detector/tick
+flag events as an interface fixture. This closes part of the input gap found by
+T-B2-008, but it does not claim real calibrated flag events, posterior
+likelihood injection, a circuit-level shot-conditioned decoder, a threshold,
+hardware evidence, or a new code. Next: `T-B2-009b` must consume these traces in
+a posterior-likelihood PyMatching/Stim decoder or replace the synthetic flag
+fixture with calibrated leakage/flag data.
 
 ## B3: Molecular Reaction Dynamics
 

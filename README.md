@@ -106,12 +106,14 @@ threshold, device, or circuit-level decoder claim.
 B2 now also has a Stim HERALDED_ERASE / DEPOLARIZE1 stress boundary, a
 false-positive overhead stress, a posterior-calibrated shot-conditioned leakage
 boundary, a posterior-weighted decoder-risk ledger, and a decoder-input
-contract feasibility gate. The latest B2 gate maps the current posterior/risk
-rows into 10 decoder contract inputs: 4 are available, 6 are missing, 4 of 9
-feasibility gates pass, 5 critical gates fail, strict high-purity adjusted
-survivors remain 0, and all-profile robustness is still false. This is still
-not a circuit-level decoder, production decoder, threshold, hardware result, or
-new-code claim.
+contract feasibility gate. The latest B2 increment adds a per-shot decoder
+trace packet for three strict challenge rows: 576 detector bitstring traces,
+576 observable/prediction rows, and 482 synthetic detector/tick flag events are
+now persisted as an input fixture. Posterior likelihood injection is still
+missing, the flag events are not calibrated or hardware-derived, strict
+high-purity adjusted survivors remain 0, and all-profile robustness is still
+false. This is still not a circuit-level decoder, production decoder,
+threshold, hardware result, or new-code claim.
 
 ## Repository Layout
 

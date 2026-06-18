@@ -144,17 +144,19 @@ shot-conditioned decoder, production decoder, threshold result, hardware result,
 or new code. T-B2-008 adds a decoder-input contract feasibility gate: 10
 required decoder inputs, 4 available, 6 missing; 9 feasibility gates, 4 passed,
 5 failed critical gates; strict high-purity adjusted survivors remain 0; robust
-all-profile adjusted survival remains false; and no circuit-level decoder,
-production decoder, threshold, hardware, or new-code claim is made.
+all-profile adjusted survival remains false. T-B2-009a adds a per-shot decoder
+trace packet: 3 strict challenge rows, 192 shots per challenge, 576
+detector-bitstring traces, observable/prediction rows, and 482 synthetic
+detector/tick flag events. No circuit-level posterior decoder, production
+decoder, threshold, hardware, calibrated-device, or new-code claim is made.
 
-**Remaining path to a serious solution:** persist per-shot syndrome bitstrings
-and detector/tick-indexed flag events from Stim or hardware; implement
-posterior likelihood injection in a PyMatching/Stim circuit-level decoder;
-collect calibrated leakage/flag confusion data or a holdout validation split;
-re-test d=5/d=7 rows under strict high-purity and all-profile robustness gates
-before feeding B7.
+**Remaining path to a serious solution:** consume the persisted per-shot traces
+in a posterior-likelihood PyMatching/Stim decoder; replace synthetic
+detector/tick flag events with calibrated leakage/flag confusion data or a
+holdout validation split; re-test d=5/d=7 rows under strict high-purity and
+all-profile robustness gates before feeding B7.
 
-**Current internal maturity:** 44/100.
+**Current internal maturity:** 45/100.
 
 ## B3: Quantum Algorithms for Molecular Reaction Dynamics
 
