@@ -86,10 +86,14 @@ cache-reuse signal, but the accepted occurrence ledger still counts 0 removed
 occurrences and 0 proxy-T reduction. This is a guardrail, not a resource-saving
 claim.
 The physical cost-model gate then checks whether that cache signal can already
-be promoted into countable B7 savings. Current evidence passes 0/8 acceptance
-gates: there is no shared synthesis object, replay verifier, layout/routing
-model, factory-amortization ledger, shared-error budget, independent baseline,
-or refreshed B7 ledger.
+be promoted into countable B7 savings. A follow-up shared-theta synthesis object
+gate now defines 4 machine-readable object proposals covering all 35 windows,
+which upgrades the cost-model scaffold from 0/8 to 1/8 acceptance gates by
+passing CM-02 object existence. The cost model remains unaccepted: there are
+still no 30 occurrence-removing certificates, no replay verifier, no
+layout/routing model, no factory-amortization ledger, no shared-error budget, no
+independent baseline, and no refreshed B7 ledger. Accepted B7 reduction remains
+0.
 
 **Remaining path to a serious solution:** connect to calibrated/live-like
 heavy-hex baselines; cover dynamic circuits and reset/measurement semantics;
@@ -97,7 +101,7 @@ turn `cone_01` into a broader replayable semantic rewrite certificate,
 KAK/Clifford scaffold, or scoped obstruction report that explicitly carries,
 shares, or eliminates theta while addressing at least 30 arbitrary rotation
 occurrences / 600
-proxy-T units, or satisfy CM-01 through CM-08 for a new physical theta-sharing cost model; broaden benchmarks; package certificates for independent
+proxy-T units, or satisfy the remaining CM gates for the shared-theta physical cost model after CM-02; broaden benchmarks; package certificates for independent
 reproduction.
 
 **Current internal maturity:** 44/100.
@@ -566,13 +570,16 @@ The theta-sharing ledger gate adds the next guardrail: the 4 theta groups imply
 31 duplicate theta occurrences and 620 optimistic cache-reuse proxy-T units, but
 the occurrence-based FT ledger still accepts 0 occurrence removal and 0 proxy-T
 reduction.
-The physical cost-model gate then rejects current theta-sharing accounting with
-0/8 acceptance gates passed, leaving B7 ledger reduction at 0.
+The physical cost-model gate first rejected theta-sharing accounting at 0/8
+gates. A follow-up shared-theta synthesis object gate now defines 4 object
+proposals covering all 35 `cone_01` windows, so the updated cost-model scaffold
+passes CM-02 and is 1/8 passed, 7/8 failed. It is still not accepted, and B7
+ledger reduction remains 0.
 
 **Remaining path to a serious solution:** produce a symbolic KAK/Clifford-
 scaffold proof, scoped obstruction, or certified broader `cone_01`
 occurrence-removing rewrite for `gcm_h6` with explicit theta-carrier
-accounting, or satisfy CM-01 through CM-08 for a new physical theta-sharing cost model; strengthen B1 non-Clifford/T-depth
+accounting, or satisfy the remaining CM gates for the shared-theta physical cost model after CM-02; strengthen B1 non-Clifford/T-depth
 optimization until a certified occurrence-removing rewrite improves minimum
 factory STV;
 separate claims by data-path versus T-factory dominated regimes; include

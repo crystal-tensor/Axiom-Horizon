@@ -236,11 +236,13 @@ produce at least 30 occurrence-removing certificates or justify a new physical
 theta-sharing cost model before B7 can count a resource delta.
 
 The follow-up `cone_01` physical cost-model gate now makes that second route
-explicit. The optimistic 620 proxy-T cache signal remains present, but 0/8
-cost-model acceptance gates pass: there is no shared synthesis object, replay
-verifier, layout/routing model, factory-amortization ledger, shared-error budget,
-independent baseline, or refreshed B7 ledger. The cost model is therefore not
-accepted and the counted B7 ledger reduction remains 0.
+explicit. A shared-theta synthesis object proposal gate defines 4 machine-readable
+objects covering all 35 candidate windows, so the cost-model scaffold has moved
+from 0/8 to 1/8 acceptance gates by passing CM-02 object existence. The model is
+still not accepted: there are no 30 occurrence-removing certificates, no replay
+verifier, no layout/routing model, no factory-amortization ledger, no shared-error
+budget, no independent baseline, and no refreshed B7 ledger. The counted B7
+ledger reduction remains 0.
 
 ## Repository Layout
 

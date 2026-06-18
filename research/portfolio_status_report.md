@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 44, 'B2': 48, 'B3': 30, 'B4': 25, 'B5': 27, 'B6': 21, 'B7': 41, 'B8': 37, 'B9': 13, 'B10': 50}
+- Maturity scores: {'B1': 45, 'B2': 48, 'B3': 30, 'B4': 25, 'B5': 27, 'B6': 21, 'B7': 42, 'B8': 37, 'B9': 13, 'B10': 50}
 
 ## Technical Resolution Program
 
@@ -316,16 +316,29 @@ Overall audit: PASS
 - Rewrite/resource/semantic/physical/B7-ledger claims: False / False / False / False / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Shared-Theta Synthesis Object Gate
+
+- Exists: True
+- Status: cone01_shared_theta_synthesis_object_proposal
+- Candidate windows / shared objects / covered occurrences: 35 / 4 / 35
+- Duplicate theta occurrences / optimistic cache signal: 31 / 620
+- Object existence / all windows covered: True / True
+- Replay/layout/B7-accepted object counts: 0 / 0 / 0
+- Occurrence-ledger removed occurrences / proxy-T reduction: 0 / 0
+- Cost model accepted: False
+- Rewrite/resource/semantic/physical/B7-ledger claims: False / False / False / False / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Theta-Sharing Cost-Model Gate
 
 - Exists: True
 - Status: cone01_theta_sharing_cost_model_not_accepted
 - Candidate windows / theta groups / duplicate theta occurrences: 35 / 4 / 31
 - Optimistic cache signal / target proxy-T: 620 / 600
-- Acceptance gates passed / failed / total: 0 / 8 / 8
+- Acceptance gates passed / failed / total: 1 / 7 / 8
 - Cost model accepted: False
 - B7 ledger proxy-T reduction after cost model: 0
-- Additional occurrence certificates / cost-model gates required: 30 / 8
+- Additional occurrence certificates / cost-model gates required: 30 / 7
 - Rewrite/resource/semantic/physical/B7-ledger claims: False / False / False / False / False
 - Validation errors: 0
 

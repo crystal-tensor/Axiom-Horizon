@@ -7,10 +7,10 @@
     "resource_saving_claimed": false,
     "rewrite_claimed": false,
     "semantic_certificate_claimed": false,
-    "supported_claim": "A physical theta-sharing cost model is not acceptable under the current evidence; the optimistic 620 proxy-T cache signal remains an unaccepted proposal signal.",
+    "supported_claim": "A shared-theta synthesis object proposal now exists for all cone_01 windows, but the physical theta-sharing cost model is still not acceptable under the current evidence; the optimistic 620 proxy-T cache signal remains unaccepted.",
     "unsupported_claims": [
-      "No physical shared-theta synthesis object is defined.",
       "No occurrence-removing semantic certificates are produced.",
+      "No shared-theta replay verifier is produced.",
       "No layout, factory, or error-budget ledger accepts theta sharing.",
       "No B7 min-row resource improvement is counted."
     ]
@@ -25,11 +25,11 @@
       "requirement": "At least 30 replayable occurrence-removing semantic certificates."
     },
     {
-      "current_evidence": false,
-      "failure_reason": "No physical shared-theta synthesis object is defined.",
+      "current_evidence": 4,
+      "failure_reason": "Shared-theta object proposals now exist, but this gate alone does not replay-verify or physically accept the cost model.",
       "gate_id": "CM-02",
-      "passed": false,
-      "required_evidence": true,
+      "passed": true,
+      "required_evidence": 4,
       "requirement": "A shared synthesis object that replaces repeated theta occurrences, not only a classical template label."
     },
     {
@@ -84,19 +84,20 @@
   "last_updated": "2026-06-18",
   "linked_b7_problem_id": 21,
   "method": "b1_b7_cone01_theta_sharing_cost_model_gate_v0",
-  "model_status": "physical_theta_sharing_cost_model_requirements_failed",
+  "model_status": "physical_theta_sharing_cost_model_requirements_partially_scaffolded",
   "problem_id": 25,
+  "source_shared_theta_synthesis_object_gate": "results/B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json",
   "source_theta_sharing_ledger_gate": "results/B1_B7_cone01_theta_sharing_ledger_gate_v0.json",
   "status": "cone01_theta_sharing_cost_model_not_accepted",
   "summary": {
-    "additional_cost_model_gates_required": 8,
+    "additional_cost_model_gates_required": 7,
     "additional_occurrence_certificates_required": 30,
     "b7_ledger_improvement_claimed": false,
     "b7_ledger_proxy_t_reduction_after_cost_model": 0,
     "candidate_window_count": 35,
-    "cost_model_acceptance_fail_count": 8,
+    "cost_model_acceptance_fail_count": 7,
     "cost_model_acceptance_gate_count": 8,
-    "cost_model_acceptance_pass_count": 0,
+    "cost_model_acceptance_pass_count": 1,
     "cost_model_accepted": false,
     "distinct_theta_group_count": 4,
     "duplicate_theta_occurrence_count": 31,
@@ -108,6 +109,9 @@
     "resource_saving_claimed": false,
     "rewrite_claimed": false,
     "semantic_certificate_claimed": false,
+    "shared_object_all_windows_covered": true,
+    "shared_object_existence_gate_passed": true,
+    "shared_synthesis_object_count": 4,
     "target_proxy_t_ledger_reduction_for_gcm_h6_1_20": 600,
     "validation_error_count": 0
   },

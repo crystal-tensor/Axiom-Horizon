@@ -19,7 +19,7 @@ from typing import Any
 
 METHOD = "b1_b7_cone01_theta_sharing_cost_model_gate_v0"
 STATUS = "cone01_theta_sharing_cost_model_not_accepted"
-MODEL_STATUS = "physical_theta_sharing_cost_model_requirements_failed"
+MODEL_STATUS = "physical_theta_sharing_cost_model_requirements_partially_scaffolded"
 VERSION = "0.1"
 
 
@@ -46,8 +46,19 @@ def display_path(path: Path) -> str:
         return str(path)
 
 
-def build_requirement_rows(theta_summary: dict[str, Any]) -> list[dict[str, Any]]:
+def build_requirement_rows(theta_summary: dict[str, Any], shared_summary: dict[str, Any] | None) -> list[dict[str, Any]]:
     """Return current acceptance gates for a physical theta-sharing model."""
+    shared_object_count = 0
+    shared_object_gate_passed = False
+    if shared_summary:
+        shared_object_count = int(shared_summary["shared_synthesis_object_count"])
+        shared_object_gate_passed = (
+            shared_summary["shared_object_existence_gate_passed"] is True
+            and shared_summary["all_candidate_windows_covered"] is True
+            and int(shared_summary["semantic_replay_verified_object_count"]) == 0
+            and int(shared_summary["physical_layout_assigned_object_count"]) == 0
+            and int(shared_summary["b7_ledger_accepted_object_count"]) == 0
+        )
     return [
         {
             "gate_id": "CM-01",
@@ -60,10 +71,15 @@ def build_requirement_rows(theta_summary: dict[str, Any]) -> list[dict[str, Any]
         {
             "gate_id": "CM-02",
             "requirement": "A shared synthesis object that replaces repeated theta occurrences, not only a classical template label.",
-            "current_evidence": False,
-            "required_evidence": True,
-            "passed": False,
-            "failure_reason": "No physical shared-theta synthesis object is defined.",
+            "current_evidence": shared_object_count,
+            "required_evidence": 4,
+            "passed": shared_object_gate_passed,
+            "failure_reason": (
+                "Shared-theta object proposals now exist, but this gate alone does not replay-verify "
+                "or physically accept the cost model."
+                if shared_object_gate_passed
+                else "No complete shared-theta synthesis object proposal covers the cone_01 windows."
+            ),
         },
         {
             "gate_id": "CM-03",
@@ -118,8 +134,10 @@ def build_requirement_rows(theta_summary: dict[str, Any]) -> list[dict[str, Any]
 
 def build_payload(args: argparse.Namespace) -> dict[str, Any]:
     theta_gate = read_json(args.theta_sharing_gate)
+    shared_object_gate = read_json(args.shared_object_gate) if args.shared_object_gate.exists() else None
     theta_summary = theta_gate["summary"]
-    rows = build_requirement_rows(theta_summary)
+    shared_summary = shared_object_gate["summary"] if shared_object_gate else None
+    rows = build_requirement_rows(theta_summary, shared_summary)
     passed_count = sum(1 for row in rows if row["passed"])
     failed_count = len(rows) - passed_count
     optimistic_cache_signal_present = (
@@ -139,6 +157,9 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
         "model_status": MODEL_STATUS,
         "method": METHOD,
         "source_theta_sharing_ledger_gate": display_path(args.theta_sharing_gate),
+        "source_shared_theta_synthesis_object_gate": (
+            display_path(args.shared_object_gate) if shared_object_gate else None
+        ),
         "workload": "qasmbench_medium_exact/gcm_h6.qasm",
         "summary": {
             "candidate_window_count": int(theta_summary["candidate_window_count"]),
@@ -149,6 +170,13 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
                 theta_summary["target_proxy_t_ledger_reduction_for_gcm_h6_1_20"]
             ),
             "optimistic_cache_signal_present": optimistic_cache_signal_present,
+            "shared_synthesis_object_count": int(shared_summary["shared_synthesis_object_count"]) if shared_summary else 0,
+            "shared_object_existence_gate_passed": (
+                bool(shared_summary["shared_object_existence_gate_passed"]) if shared_summary else False
+            ),
+            "shared_object_all_windows_covered": (
+                bool(shared_summary["all_candidate_windows_covered"]) if shared_summary else False
+            ),
             "cost_model_acceptance_gate_count": len(rows),
             "cost_model_acceptance_pass_count": passed_count,
             "cost_model_acceptance_fail_count": failed_count,
@@ -175,12 +203,13 @@ def build_payload(args: argparse.Namespace) -> dict[str, Any]:
             "physical_resource_reduction_claimed": False,
             "b7_ledger_improvement_claimed": False,
             "supported_claim": (
-                "A physical theta-sharing cost model is not acceptable under the current evidence; "
-                "the optimistic 620 proxy-T cache signal remains an unaccepted proposal signal."
+                "A shared-theta synthesis object proposal now exists for all cone_01 windows, "
+                "but the physical theta-sharing cost model is still not acceptable under the "
+                "current evidence; the optimistic 620 proxy-T cache signal remains unaccepted."
             ),
             "unsupported_claims": [
-                "No physical shared-theta synthesis object is defined.",
                 "No occurrence-removing semantic certificates are produced.",
+                "No shared-theta replay verifier is produced.",
                 "No layout, factory, or error-budget ledger accepts theta sharing.",
                 "No B7 min-row resource improvement is counted.",
             ],
@@ -218,16 +247,25 @@ def validate(payload: dict[str, Any]) -> list[str]:
         errors.append("optimistic cache signal should be present")
     if summary["cost_model_acceptance_gate_count"] != 8:
         errors.append("expected 8 cost-model acceptance gates")
-    if summary["cost_model_acceptance_pass_count"] != 0:
-        errors.append("current cost-model acceptance passes must be 0")
-    if summary["cost_model_acceptance_fail_count"] != 8:
-        errors.append("current cost-model acceptance failures must be 8")
+    if summary["shared_synthesis_object_count"] != 4:
+        errors.append("expected 4 shared synthesis object proposals")
+    if summary["shared_object_existence_gate_passed"] is not True:
+        errors.append("shared object existence gate should now pass")
+    if summary["shared_object_all_windows_covered"] is not True:
+        errors.append("shared objects should cover all cone_01 windows")
+    if summary["cost_model_acceptance_pass_count"] != 1:
+        errors.append("current cost-model acceptance passes must be 1")
+    if summary["cost_model_acceptance_fail_count"] != 7:
+        errors.append("current cost-model acceptance failures must be 7")
     if summary["cost_model_accepted"] is not False:
         errors.append("cost model must not be accepted")
     if summary["b7_ledger_proxy_t_reduction_after_cost_model"] != 0:
         errors.append("B7 ledger reduction after unaccepted cost model must be 0")
     for row in payload["cost_model_acceptance_gates"]:
-        if row.get("passed") is not False:
+        if row.get("gate_id") == "CM-02":
+            if row.get("passed") is not True:
+                errors.append("CM-02 should pass after shared object proposal gate")
+        elif row.get("passed") is not False:
             errors.append(f"{row.get('gate_id')} must not pass under current evidence")
     for field in [
         "rewrite_claimed",
@@ -252,10 +290,9 @@ def markdown(payload: dict[str, Any]) -> str:
         "",
         "This artifact asks whether the repeated-theta cache signal from T-B1-004f "
         "can already be promoted into a physical B7 cost model. The answer is no. "
-        "The optimistic cache signal is real as an accounting prompt, but the "
-        "current evidence does not define a shared synthesis object, replay "
-        "certificates, layout, factory amortization, error budget, independent "
-        "baseline, or refreshed B7 ledger.",
+        "A shared synthesis object proposal now exists for the four theta groups, "
+        "but the current evidence still lacks replay certificates, layout, factory "
+        "amortization, error budget, independent baseline, and refreshed B7 ledger.",
         "",
         "It is not a rewrite certificate, not a resource-saving claim, and not a "
         "physical cost-model acceptance.",
@@ -268,6 +305,8 @@ def markdown(payload: dict[str, Any]) -> str:
         f"- Optimistic cache proxy-T signal: `{summary['optimistic_cache_proxy_t_reuse']}`",
         f"- Target proxy-T reduction: `{summary['target_proxy_t_ledger_reduction_for_gcm_h6_1_20']}`",
         f"- Optimistic cache signal present: `{summary['optimistic_cache_signal_present']}`",
+        f"- Shared synthesis object proposals: `{summary['shared_synthesis_object_count']}`",
+        f"- Shared object existence gate passed: `{summary['shared_object_existence_gate_passed']}`",
         f"- Acceptance gates passed / total: `{summary['cost_model_acceptance_pass_count']}` / `{summary['cost_model_acceptance_gate_count']}`",
         f"- Cost model accepted: `{summary['cost_model_accepted']}`",
         f"- B7 ledger proxy-T reduction after cost model: `{summary['b7_ledger_proxy_t_reduction_after_cost_model']}`",
@@ -291,9 +330,10 @@ def markdown(payload: dict[str, Any]) -> str:
             "## Interpretation",
             "",
             "The repeated-theta structure is valuable because it identifies where a "
-            "future physical-sharing proposal would have leverage. It is not enough "
-            "by itself. A future PR must satisfy CM-01 through CM-08, or bypass the "
-            "cost-model route by producing 30 occurrence-removing certificates.",
+            "future physical-sharing proposal would have leverage. The shared object "
+            "proposal closes the object-existence gap, but it is not enough by itself. "
+            "A future PR must satisfy the remaining gates, or bypass the cost-model "
+            "route by producing 30 occurrence-removing certificates.",
             "",
         ]
     )
@@ -312,6 +352,11 @@ def main() -> None:
         "--json-output",
         type=Path,
         default=root / "results" / "B1_B7_cone01_theta_sharing_cost_model_gate_v0.json",
+    )
+    parser.add_argument(
+        "--shared-object-gate",
+        type=Path,
+        default=root / "results" / "B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json",
     )
     parser.add_argument(
         "--markdown-output",

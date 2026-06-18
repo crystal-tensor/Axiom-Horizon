@@ -810,12 +810,21 @@ model before B7 can count a resource delta.
 feasibility gate for `cone_01` theta sharing. The new artifact
 `research/B1_B7_cone01_theta_sharing_cost_model_gate.md` keeps the optimistic
 620 proxy-T cache signal visible, but checks the eight requirements that would
-make theta sharing physically countable. Current evidence passes 0/8 gates:
-there is no shared synthesis object, replay verifier, layout/routing model,
+make theta sharing physically countable. This initial gate passed 0/8 gates:
+there was no shared synthesis object, replay verifier, layout/routing model,
 factory-amortization ledger, shared-error budget, independent baseline, or
-refreshed B7 ledger. The cost model is not accepted, B7 ledger reduction remains
-0, and the next `T-B1-004` work must either produce 30 occurrence-removing
-certificates or satisfy CM-01 through CM-08.
+refreshed B7 ledger. The follow-up `T-B1-004h` now supplies the shared object
+proposal and moves the scaffold to 1/8 gates passed, but the cost model is still
+not accepted and B7 ledger reduction remains 0.
+
+**Sprint update 18i:** `T-B1-004h` is now merged as a shared-theta synthesis object
+proposal gate. The new artifact `research/B1_B7_cone01_shared_theta_synthesis_object_gate.md`
+defines 4 machine-readable shared objects covering all 35 `cone_01` candidate
+windows. This upgrades the cost-model scaffold to 1/8 passed gates by satisfying
+CM-02 object existence, but it does not provide replay verification, layout,
+factory amortization, error budget, independent baseline, refreshed B7 ledger,
+or occurrence-removing certificates. The cost model remains unaccepted and B7
+ledger reduction remains 0.
 
 ## B8: Classical Verification of Quantum Outputs
 
