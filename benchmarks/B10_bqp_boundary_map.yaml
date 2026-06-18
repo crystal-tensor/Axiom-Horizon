@@ -403,6 +403,34 @@ current_results:
     caveat: fci_small_basis_classical_reference_not_quantum_advantage_or_reaction_solution
     result: ../results/B10_t1_d5_b3_fci_reference_table_v0.json
     markdown_report: ../research/B10_t1_d5_b3_fci_reference_table.md
+  b10_t1_b3_b5_denominator_boundary_comparison_v0:
+    status: b3_b5_denominator_boundary_comparison_not_bqp_separation
+    method: b10_t1_b3_b5_denominator_boundary_comparison_v0
+    source: b10_t1_d5_b3_fci_reference_table_v0
+    source_target_id: B10-T1
+    dependency_benchmarks:
+      - B3
+      - B5
+      - B10
+    route_count: 4
+    negative_boundary_route_count: 1
+    b3_selected_ci_larger_basis_denominator_beaten_count: 0
+    b3_max_optimizer_loop_total_shots_lower_bound: 475043013690000
+    b3_max_optimizer_loop_two_qubit_executions_lower_bound: 281225464104480000
+    b5_non_oracle_rows_beating_oracle_boundary_field: 4
+    b5_seeded_mps_rows_beating_non_oracle_embedding: 6
+    b5_variational_mps_rows_beating_seeded_mps_pressure_reference: 0
+    b10_d5_b5_instance_count: 9
+    b10_d5_b3_reaction_instance_count: 4
+    b10_d5_b3_fci_instance_count: 4
+    b3_demoted: true
+    b5_positive_claim_ready: false
+    bqp_separation_claimed: false
+    quantum_advantage_claimed: false
+    validation_error_count: 0
+    caveat: denominator_boundary_comparison_not_dequantization_theorem_or_quantum_advantage
+    result: ../results/B10_t1_b3_b5_denominator_boundary_comparison_v0.json
+    markdown_report: ../research/B10_t1_b3_b5_denominator_boundary_comparison.md
 prototype_artifacts:
   boundary_graph_builder: ../tools/b10_bqp_boundary_graph.py
   formal_theorem_target_builder: ../tools/b10_formal_theorem_targets.py
@@ -414,6 +442,7 @@ prototype_artifacts:
   t1_d5_b3_reaction_observable_table_builder: ../tools/b10_t1_d5_b3_reaction_observable_table.py
   t1_d5_b3_correlated_reference_table_builder: ../tools/b10_t1_d5_b3_correlated_reference_table.py
   t1_d5_b3_fci_reference_table_builder: ../tools/b10_t1_d5_b3_fci_reference_table.py
+  t1_b3_b5_denominator_boundary_comparison_builder: ../tools/b10_t1_b3_b5_denominator_boundary_comparison.py
   t2_refresh_proof_obligation_gate_builder: ../tools/b10_t2_refresh_proof_obligation_gate.py
   t2_restricted_soundness_lemma_builder: ../tools/b10_t2_restricted_soundness_lemma.py
   t2_transcript_leakage_simulator_builder: ../tools/b10_t2_transcript_leakage_simulator.py

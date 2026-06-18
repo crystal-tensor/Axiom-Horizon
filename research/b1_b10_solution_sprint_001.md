@@ -766,13 +766,21 @@ input, oracle, loading, verification, precision, or output-cost assumptions.
 BQP/classical separation. It is an explicit boundary theorem or denominator
 comparison for one advantage claim linked to B3/B5/B8.
 
-**Algorithmic move:** compare a concrete B3 quantum observable-estimation
-circuit against the FCI reference denominator, and in parallel move B10-T2 from
-GenericBackendV2 calibration-style simulator evidence into real-backend
-properties or hardware randomized-measurement verification.
+**Algorithmic move:** use the completed B3/B5 denominator boundary comparison
+as a theorem-note scaffold, and in parallel move B10-T2 from GenericBackendV2
+calibration-style simulator evidence into real-backend properties or hardware
+randomized-measurement verification.
 
-**Next PR:** `T-B10-009` or `T-B10-001`. Expected artifacts:
+**Current evidence:** `T-B10-001` is merged: 4 B3/B5 route cards, B3
+selected-CI larger-basis denominator wins 0, B3 max optimizer-loop shots lower
+bound 475,043,013,690,000, B5 non-oracle-over-oracle rows 4,
+seeded-MPS-over-non-oracle rows 6, variational MPS/ALS-over-seeded rows 0, and
+no BQP separation or quantum advantage claim.
 
+**Next PR:** `T-B10-010` or `T-B10-009`. Expected artifacts:
+
+- `research/B10_t1_dequantization_theorem_note.md` or `research/B10_t1_missing_assumption_note.md`
+- `results/B10_t1_dequantization_theorem_note_v0.json` or `results/B10_t1_missing_assumption_note_v0.json`
 - `research/B4_B8_hardware_randomized_verifier.md` or `research/B10_t2_real_backend_verifier_bridge.md`
 - `results/B4_B8_hardware_randomized_verifier_v0.json` or `results/B10_t2_real_backend_verifier_bridge_v0.json`
 - optional update to `research/B10_formal_theorem_targets.md`

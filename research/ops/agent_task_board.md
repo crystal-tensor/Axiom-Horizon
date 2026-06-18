@@ -63,7 +63,7 @@ Status values:
 | T-B9-002 | B9/B10 | merged | codex | Theorist/Builder | Symbolic/proof-assistant skeleton: Lean-style file with 5 symbolic definitions, 3 theorem skeletons, 5 carried proof obligations, inherited 4 strict counterexamples and 9 dense locality traps; explicitly not proof-assistant checked, not a formal theorem, not Quantum PCP proof, and not global impossibility. |
 | T-B9-003 | B9/B10 | merged | codex | Theorist/Builder | Named-family width/locality bound skeleton: `cluster_stabilizer_open_uniform_reweight` rows n=4,5,6 show all terms uniformly scaled by 1.35, max locality preserved at 3, raw gap amplifies, normalized gap is invariant, and the certificate is rejected; proof-check attempted but current `lean` command is not a usable Lean/mathlib checker. |
 | T-B9-004 | B9/B10 | open | unassigned | Theorist/Builder | Create a real Lean/mathlib project or other proof-checkable environment for the open-boundary cluster-stabilizer family, then formalize support-size, uniform-scaling, spectral-width, and normalized-gap invariance lemmas for all n >= 4. |
-| T-B10-001 | B10 | open | unassigned | Theorist | B10-T2 leakage/soundness proof-pressure memo or B3/B5 denominator boundary comparison. |
+| T-B10-001 | B10 | merged | codex | Theorist | B3/B5 denominator boundary comparison for B10-T1: 4 route cards; B3 one-parameter UCC/ADAPT + QWC stays negative-boundary with 0 selected-CI larger-basis denominator wins and max optimizer-loop shots lower bound 475,043,013,690,000; B5 has non-oracle and seeded-MPS classical pressure but variational MPS/ALS has 0 rows beating seeded pressure. No BQP separation or quantum advantage claim. |
 | T-B10-002 | B10/B8 | merged | codex | Theorist | B10-T2 refresh proof-obligation gate: rejects no-refresh high-leakage soundness claims in the current proxy, records projection/challenge refresh as admissible next-proof conditions, and explicitly shows the proxy cannot support a general soundness lemma yet. |
 | T-B10-003 | B10/B8 | merged | codex | Theorist | Restricted B10-T2 refresh-independence soundness lemma: under a declared bounded-leakage model with at least one refreshed predicate unknown and independent, Hoeffding gives single-unknown-mask soundness <= 8.94e-44 for current proxy parameters; explicitly not hardware verifier, sampling hardness, cryptographic soundness, or BQP separation. |
 | T-B10-004 | B10/B8 | merged | codex | Theorist/Verification Agent | Transcript leakage simulator: 192 configs, honest completeness 1.0, no-refresh unsafe, refreshed high leakage modes retain >=6 unknown independent predicates, max refreshed high-leakage soundness 0.025; not hardware verifier/sampling hardness/BQP separation. |
@@ -72,6 +72,7 @@ Status values:
 | T-B10-007 | B10/B8 | merged | codex | Verification Agent/Builder | Noisy Aer circuit-level verifier bridge: 9600 randomized parity-verifier circuits from the 12-qubit task, honest plus 4 circuit-level adversary input families, 5 noise profiles, safe refresh modes challenge_refresh/refresh_plus_rotation; bridge-safe noisy honest acceptance 1.0, adversary acceptance 0.0, max honest predicate-bit error 0.1125; calibration_side_channel rejected; not calibrated backend/hardware execution/sampling hardness/BQP separation. |
 | T-B10-008 | B10/B8 | merged | codex | Verification Agent/Builder | Backend-calibrated-style verifier bridge: 5760 randomized parity-verifier circuits using Qiskit GenericBackendV2 target InstructionProperties for per-qubit/per-edge Aer noise; safe calibrated honest acceptance 1.0, adversary acceptance 0.25, max honest predicate-bit error 0.0703125; no-refresh remains unsafe; not real backend properties, hardware execution, sampling hardness, or BQP separation. |
 | T-B10-009 | B10/B8 | open | unassigned | Verification Agent/Builder | Replace GenericBackendV2 calibration snapshots with real backend properties or run hardware randomized-measurement verifier execution for B10-T2. |
+| T-B10-010 | B10/B3/B5 | open | unassigned | Theorist/Baseline Adversary | Turn the B3/B5 denominator boundary comparison into a dequantization or sampling-access theorem-note skeleton, or identify the precise missing assumption that prevents such a theorem. |
 | T-AUDIT-001 | all | open | unassigned | Audit Agent | CI-style audit script and status-page refresh command. |
 
 ## Task Template
@@ -101,7 +102,7 @@ Reviewers needed:
 | verification-agent | T-B4-002 |
 | correlated-matter-agent | T-B5-003 |
 | materials-agent | T-B6-003 |
-| theory-agent | T-B9-004, T-B10-001, or T-B10-009 |
+| theory-agent | T-B9-004, T-B10-009, or T-B10-010 |
 | audit-agent | T-AUDIT-001 |
 
 ## Sprint 001 Work Packages

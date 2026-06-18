@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 37, 'B2': 39, 'B3': 30, 'B4': 20, 'B5': 21, 'B6': 19, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 39}
+- Maturity scores: {'B1': 37, 'B2': 39, 'B3': 30, 'B4': 20, 'B5': 21, 'B6': 19, 'B7': 33, 'B8': 32, 'B9': 12, 'B10': 41}
 
 ## Technical Resolution Program
 
@@ -884,6 +884,13 @@ Overall audit: PASS
 - B10-T1 D5-B3 FCI table validation errors: 0
 - B10-T1 D5-B3 FCI table explicitly not BQP separation: True
 - B10-T1 D5-B3 FCI table result exists: True
+- B10-T1 B3/B5 denominator comparison status: b3_b5_denominator_boundary_comparison_not_bqp_separation
+- B10-T1 B3/B5 routes / negative-boundary routes: 4 / 1
+- B10-T1 B3 denominator wins / max optimizer-loop shots: 0 / 475043013690000
+- B10-T1 B5 non-oracle wins / seeded MPS wins / variational-over-seeded wins: 4 / 6 / 0
+- B10-T1 B3 demoted / B5 positive-ready / BQP separation / quantum advantage: True / False / False / False
+- B10-T1 B3/B5 comparison validation errors: 0
+- B10-T1 B3/B5 comparison result/markdown exists: True / True
 
 ## Errors
 

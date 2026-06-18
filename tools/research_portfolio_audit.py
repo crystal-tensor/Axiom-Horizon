@@ -5566,6 +5566,7 @@ def audit(root: Path) -> dict:
     b10_t1_d5_b3_reaction_table = b10_results.get("b10_t1_d5_b3_reaction_observable_table_v0")
     b10_t1_d5_b3_correlated_table = b10_results.get("b10_t1_d5_b3_correlated_reference_table_v0")
     b10_t1_d5_b3_fci_table = b10_results.get("b10_t1_d5_b3_fci_reference_table_v0")
+    b10_t1_b3_b5_comparison = b10_results.get("b10_t1_b3_b5_denominator_boundary_comparison_v0")
     b10_status = {}
     if not b10_graph:
         warnings.append("B10 manifest has no BQP-boundary graph result")
@@ -6524,6 +6525,85 @@ def audit(root: Path) -> dict:
         if summary.get("max_abs_fci_derivative_shift_vs_rhf", 0.0) <= 0.0:
             errors.append("B10-T1 D5 B3 FCI reference table has no nonzero FCI-vs-RHF derivative shift")
 
+    b10_t1_b3_b5_comparison_status = {}
+    if not b10_t1_b3_b5_comparison:
+        warnings.append("B10 manifest has no B10-T1 B3/B5 denominator boundary comparison")
+    else:
+        result_path = b10_t1_b3_b5_comparison.get("result")
+        markdown_path = b10_t1_b3_b5_comparison.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"B10-T1 B3/B5 denominator comparison result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"B10-T1 B3/B5 denominator comparison markdown path missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        b10_t1_b3_b5_comparison_status = {
+            "status": b10_t1_b3_b5_comparison.get("status"),
+            "method": b10_t1_b3_b5_comparison.get("method"),
+            "source_target_id": payload.get("source_target_id"),
+            "dependency_benchmarks": payload.get("dependency_benchmarks"),
+            "route_count": summary.get("route_count"),
+            "negative_boundary_route_count": summary.get("negative_boundary_route_count"),
+            "b3_selected_ci_larger_basis_denominator_beaten_count": summary.get(
+                "b3_selected_ci_larger_basis_denominator_beaten_count"
+            ),
+            "b3_max_optimizer_loop_total_shots_lower_bound": summary.get(
+                "b3_max_optimizer_loop_total_shots_lower_bound"
+            ),
+            "b5_non_oracle_rows_beating_oracle_boundary_field": summary.get(
+                "b5_non_oracle_rows_beating_oracle_boundary_field"
+            ),
+            "b5_seeded_mps_rows_beating_non_oracle_embedding": summary.get(
+                "b5_seeded_mps_rows_beating_non_oracle_embedding"
+            ),
+            "b5_variational_mps_rows_beating_seeded_mps_pressure_reference": summary.get(
+                "b5_variational_mps_rows_beating_seeded_mps_pressure_reference"
+            ),
+            "b3_demoted": summary.get("b3_demoted"),
+            "b5_positive_claim_ready": summary.get("b5_positive_claim_ready"),
+            "bqp_separation_claimed": summary.get("bqp_separation_claimed"),
+            "quantum_advantage_claimed": summary.get("quantum_advantage_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("status") != "b3_b5_denominator_boundary_comparison_not_bqp_separation":
+            errors.append("B10-T1 B3/B5 denominator comparison status must avoid BQP-separation claims")
+        if payload.get("method") != b10_t1_b3_b5_comparison.get("method"):
+            errors.append("B10-T1 B3/B5 denominator comparison method mismatch")
+        if payload.get("source_target_id") != b10_t1_b3_b5_comparison.get("source_target_id"):
+            errors.append("B10-T1 B3/B5 denominator comparison source target mismatch")
+        if summary.get("route_count") != b10_t1_b3_b5_comparison.get("route_count"):
+            errors.append("B10-T1 B3/B5 denominator comparison route count mismatch")
+        for field in [
+            "b3_selected_ci_larger_basis_denominator_beaten_count",
+            "b3_max_optimizer_loop_total_shots_lower_bound",
+            "b5_non_oracle_rows_beating_oracle_boundary_field",
+            "b5_seeded_mps_rows_beating_non_oracle_embedding",
+            "b5_variational_mps_rows_beating_seeded_mps_pressure_reference",
+        ]:
+            if summary.get(field) != b10_t1_b3_b5_comparison.get(field):
+                errors.append(f"B10-T1 B3/B5 denominator comparison {field} mismatch")
+        if summary.get("b3_demoted") is not True:
+            errors.append("B10-T1 B3/B5 denominator comparison must keep B3 demoted")
+        if summary.get("b5_positive_claim_ready") is not False:
+            errors.append("B10-T1 B3/B5 denominator comparison must not mark B5 positive-ready")
+        if summary.get("bqp_separation_claimed") is not False:
+            errors.append("B10-T1 B3/B5 denominator comparison must not claim BQP separation")
+        if summary.get("quantum_advantage_claimed") is not False:
+            errors.append("B10-T1 B3/B5 denominator comparison must not claim quantum advantage")
+        if len(payload.get("validation_errors", [])) != b10_t1_b3_b5_comparison.get("validation_error_count"):
+            errors.append("B10-T1 B3/B5 denominator comparison validation-error count mismatch")
+        claim_boundary = payload.get("claim_boundary", {})
+        if claim_boundary.get("bqp_separation_claimed") is not False:
+            errors.append("B10-T1 B3/B5 denominator comparison payload claims BQP separation")
+        if claim_boundary.get("quantum_advantage_claimed") is not False:
+            errors.append("B10-T1 B3/B5 denominator comparison payload claims quantum advantage")
+
     for path in [roadmap_path, status_html_path]:
         if not path.exists():
             errors.append(f"missing status artifact: {path}")
@@ -6699,6 +6779,7 @@ def audit(root: Path) -> dict:
             "t1_d5_b3_reaction_observable_table": b10_t1_d5_b3_reaction_table_status,
             "t1_d5_b3_correlated_reference_table": b10_t1_d5_b3_correlated_table_status,
             "t1_d5_b3_fci_reference_table": b10_t1_d5_b3_fci_table_status,
+            "t1_b3_b5_denominator_boundary_comparison": b10_t1_b3_b5_comparison_status,
         },
         "status_artifacts": {
             "roadmap": str(roadmap_path),
@@ -6801,6 +6882,9 @@ def audit(root: Path) -> dict:
             "b10_t1_d5_b3_reaction_observable_table": str(research / "B10_t1_d5_b3_reaction_observable_table.md"),
             "b10_t1_d5_b3_correlated_reference_table": str(research / "B10_t1_d5_b3_correlated_reference_table.md"),
             "b10_t1_d5_b3_fci_reference_table": str(research / "B10_t1_d5_b3_fci_reference_table.md"),
+            "b10_t1_b3_b5_denominator_boundary_comparison": str(
+                research / "B10_t1_b3_b5_denominator_boundary_comparison.md"
+            ),
             "b9_failed_gap_amplification_lemma": str(research / "B9_failed_gap_amplification_lemma.md"),
             "b9_symbolic_gap_skeleton": str(research / "B9_symbolic_gap_skeleton.md"),
             "b9_symbolic_gap_lean_skeleton": str(
@@ -7738,6 +7822,13 @@ def markdown_report(report: dict) -> str:
             f"- B10-T1 D5-B3 FCI table validation errors: {report['b10']['t1_d5_b3_fci_reference_table'].get('validation_error_count')}",
             f"- B10-T1 D5-B3 FCI table explicitly not BQP separation: {report['b10']['t1_d5_b3_fci_reference_table'].get('explicit_not_bqp_separation')}",
             f"- B10-T1 D5-B3 FCI table result exists: {report['b10']['t1_d5_b3_fci_reference_table'].get('result_exists')}",
+            f"- B10-T1 B3/B5 denominator comparison status: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('status')}",
+            f"- B10-T1 B3/B5 routes / negative-boundary routes: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('route_count')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('negative_boundary_route_count')}",
+            f"- B10-T1 B3 denominator wins / max optimizer-loop shots: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('b3_selected_ci_larger_basis_denominator_beaten_count')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('b3_max_optimizer_loop_total_shots_lower_bound')}",
+            f"- B10-T1 B5 non-oracle wins / seeded MPS wins / variational-over-seeded wins: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('b5_non_oracle_rows_beating_oracle_boundary_field')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('b5_seeded_mps_rows_beating_non_oracle_embedding')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('b5_variational_mps_rows_beating_seeded_mps_pressure_reference')}",
+            f"- B10-T1 B3 demoted / B5 positive-ready / BQP separation / quantum advantage: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('b3_demoted')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('b5_positive_claim_ready')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('bqp_separation_claimed')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('quantum_advantage_claimed')}",
+            f"- B10-T1 B3/B5 comparison validation errors: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('validation_error_count')}",
+            f"- B10-T1 B3/B5 comparison result/markdown exists: {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('result_exists')} / {report['b10']['t1_b3_b5_denominator_boundary_comparison'].get('markdown_exists')}",
             "",
         ]
     )

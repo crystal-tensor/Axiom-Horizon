@@ -678,16 +678,23 @@ three calibration snapshots, bridge-safe calibrated honest acceptance 1.0,
 bridge-safe calibrated adversary acceptance 0.25, max honest predicate-bit
 error 0.0703125, no-refresh rejection, and explicit non-claim of real backend
 properties or hardware execution.
+T-B10-001 now adds a B3/B5 denominator boundary comparison with 4 route cards:
+B3 remains demoted with 0 selected-CI larger-basis denominator wins and max
+optimizer-loop shots lower bound 475,043,013,690,000; B5 has classical
+denominator pressure with 4 non-oracle-over-oracle rows and 6 seeded-MPS rows
+beating non-oracle embedding, but 0 variational MPS/ALS rows beat seeded MPS
+pressure. The comparison makes no BQP separation or quantum advantage claim.
 
 **Remaining path to a serious solution:** treat B3 as demoted unless a
-multi-parameter UCCSD/ADAPT or stronger measurement rescue succeeds; promote
-the B5 MPS/ALS prototype with real variational DMRG/MPS evidence or compare a
-real candidate B5 response subroutine against the D5 table; extend
-the boundary to a dequantization/sampling-access theorem note; turn the B10-T2 noisy Aer bridge
-into real backend-property verifier execution or hardware randomized
-measurements; connect B4/B8 verification burdens back into the boundary map.
+multi-parameter UCCSD/ADAPT or stronger measurement rescue succeeds; promote the
+B5 MPS/ALS prototype with real variational DMRG/MPS evidence or compare a real
+candidate B5 response subroutine against the D5 table; run T-B10-010 to turn
+the B3/B5 comparison into a dequantization/sampling-access theorem-note
+skeleton or expose the missing assumption; turn the B10-T2 bridge into real
+backend-property verifier execution or hardware randomized measurements; connect
+B4/B8 verification burdens back into the boundary map.
 
-**Current internal maturity:** 39/100.
+**Current internal maturity:** 41/100.
 
 ## Cross-Portfolio Process
 
