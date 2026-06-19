@@ -1,0 +1,131 @@
+{
+  "benchmark_id": "B1",
+  "claim_boundary": {
+    "b7_ledger_improvement_claimed": false,
+    "full_circuit_rewrite_claimed": false,
+    "partial_packet_repair_claimed_as_b7_saving": false,
+    "resource_saving_claimed": false,
+    "supported_claim": "Exhaustive exactly-three-parameter repair over the two unresolved T-B1-004ai packets exactifies line 268, while line 1381 remains unrepaired.",
+    "symbolic_exact_decomposition_claimed": false,
+    "unsupported_claims": [
+      "The repaired packets are not accepted as full-circuit rewrites.",
+      "No symbolic exact decomposition or absorption certificate is emitted.",
+      "No B7 occurrence or proxy-T ledger reduction is accepted."
+    ]
+  },
+  "linked_b7_problem_id": 21,
+  "method": "b1_b7_cone01_three_parameter_local_u3_repair_gate_v0",
+  "model_status": "two_packets_repaired_one_packet_remains_unrepaired",
+  "source_packet_synthesis_result": "results/B1_B7_cone01_packet_synthesis_search_gate_v0.json",
+  "source_semantic_packet_result": "results/B1_B7_cone01_semantic_replay_packet_gate_v0.json",
+  "source_sparse_local_u3_repair_result": "results/B1_B7_cone01_sparse_local_u3_repair_gate_v0.json",
+  "status": "cone01_three_parameter_local_u3_repair_partial_not_ledger_accepted",
+  "summary": {
+    "accepted_occurrence_removal": 0,
+    "accepted_proxy_t_reduction": 0,
+    "accepted_three_parameter_repair_as_full_circuit_rewrite_count": 0,
+    "b7_ledger_improvement_claimed": false,
+    "candidate_cnot_reduction_if_all_packets_accepted": 9,
+    "full_circuit_rewrite_claimed": false,
+    "missing_occurrences_after_gate": 30,
+    "missing_proxy_t_after_gate": 600,
+    "partial_candidate_cnot_reduction_if_accepted": 6,
+    "partial_packet_repair_claimed_as_b7_saving": false,
+    "remaining_unrepaired_replacement_off_pi_over_four_parameter_count": 15,
+    "resource_saving_claimed": false,
+    "source_semantic_method": "b1_b7_cone01_semantic_replay_packet_gate_v0",
+    "source_sparse_repair_exact_packet_count": 1,
+    "source_sparse_repair_method": "b1_b7_cone01_sparse_local_u3_repair_gate_v0",
+    "source_sparse_repair_unresolved_packet_count": 2,
+    "source_synthesis_method": "b1_b7_cone01_packet_synthesis_search_gate_v0",
+    "symbolic_exact_decomposition_claimed": false,
+    "three_parameter_candidate_count": 1632,
+    "three_parameter_exact_packet_count": 1,
+    "three_parameter_exact_repair_off_pi_over_four_parameter_count": 0,
+    "three_parameter_free_count": 3,
+    "three_parameter_packet_count": 2,
+    "three_parameter_unresolved_packet_count": 1,
+    "total_packet_exact_after_three_parameter_gate": 2,
+    "total_packet_unresolved_after_three_parameter_gate": 1,
+    "validation_error_count": 0
+  },
+  "three_parameter_local_u3_repair_rows": [
+    {
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "accepted_three_parameter_repair_as_full_circuit_rewrite": false,
+      "best_three_parameter_free_indices": [
+        5,
+        9,
+        15
+      ],
+      "best_three_parameter_off_pi_over_four_parameter_count": 3,
+      "best_three_parameter_residual_norm": 0.049865177666770955,
+      "candidate_cnot_reduction": 3,
+      "candidate_line_number": 1381,
+      "exact_three_parameter_free_indices": null,
+      "exact_three_parameter_free_values": null,
+      "exact_three_parameter_off_pi_over_four_parameter_count": null,
+      "exact_three_parameter_residual_norm": null,
+      "pattern_id": "flat_pattern_01",
+      "replacement_cnot_count": 2,
+      "replacement_off_pi_over_four_parameter_count": 15,
+      "replacement_parameter_count": 18,
+      "snapped_residual_norm": 0.47574352650518004,
+      "source_best_one_parameter_residual_norm": 0.340569806503644,
+      "source_best_two_parameter_residual_norm": 0.2653546506191377,
+      "source_cnot_count": 5,
+      "support_qubits": [
+        4,
+        8
+      ],
+      "three_parameter_candidate_count": 816,
+      "three_parameter_exact_pass": false,
+      "window_end_line": 1379,
+      "window_start_line": 1369
+    },
+    {
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "accepted_three_parameter_repair_as_full_circuit_rewrite": false,
+      "best_three_parameter_free_indices": [
+        1,
+        8,
+        13
+      ],
+      "best_three_parameter_off_pi_over_four_parameter_count": 0,
+      "best_three_parameter_residual_norm": 6.398929014192638e-13,
+      "candidate_cnot_reduction": 3,
+      "candidate_line_number": 268,
+      "exact_three_parameter_free_indices": [
+        1,
+        8,
+        13
+      ],
+      "exact_three_parameter_free_values": [
+        1.3322676295501878e-15,
+        -0.7853981633974474,
+        -0.7853981633974505
+      ],
+      "exact_three_parameter_off_pi_over_four_parameter_count": 0,
+      "exact_three_parameter_residual_norm": 6.398929014192638e-13,
+      "pattern_id": "flat_pattern_01",
+      "replacement_cnot_count": 2,
+      "replacement_off_pi_over_four_parameter_count": 15,
+      "replacement_parameter_count": 18,
+      "snapped_residual_norm": 0.7803612880645754,
+      "source_best_one_parameter_residual_norm": 0.5463155141039824,
+      "source_best_two_parameter_residual_norm": 0.3989908322476067,
+      "source_cnot_count": 5,
+      "support_qubits": [
+        2,
+        14
+      ],
+      "three_parameter_candidate_count": 816,
+      "three_parameter_exact_pass": true,
+      "window_end_line": 267,
+      "window_start_line": 256
+    }
+  ],
+  "workload": "qasmbench_medium_exact/gcm_h6.qasm"
+}

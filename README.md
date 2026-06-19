@@ -325,6 +325,14 @@ with two free parameters. This is partial packet evidence only. It is not a
 full-circuit rewrite, not a symbolic decomposition, and not a B7 ledger saving.
 Accepted occurrence removal, proxy-T reduction, and B7 improvement remain 0.
 
+The three-parameter local-U3 repair continuation now exhaustively searches the
+two unresolved packets from that gate. It checks 1,632 exactly-three-parameter
+repairs and exactifies line 268, while line 1381 remains unrepaired with best
+residual 0.049865177666770955. The portfolio now has 2/3 bounded packet
+repairs, with candidate CNOT reduction 6 if those packets were later accepted.
+They are not accepted yet: symbolic decomposition, full-circuit replay,
+occurrence removal, proxy-T reduction, and B7 ledger improvement remain 0.
+
 ## Repository Layout
 
 ```text

@@ -204,6 +204,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_sparse_local_u3_repair_path = (
         results / "B1_B7_cone01_sparse_local_u3_repair_gate_v0.json"
     )
+    b1_b7_cone01_three_parameter_local_u3_repair_path = (
+        results / "B1_B7_cone01_three_parameter_local_u3_repair_gate_v0.json"
+    )
     b1_b7_cone01_theta_sharing_path = results / "B1_B7_cone01_theta_sharing_ledger_gate_v0.json"
     b1_b7_cone01_shared_theta_synthesis_object_path = (
         results / "B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json"
@@ -763,6 +766,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_sparse_local_u3_repair_manifest = current_results.get(
         "b1_b7_cone01_sparse_local_u3_repair_gate_v0"
+    )
+    b1_b7_cone01_three_parameter_local_u3_repair_manifest = current_results.get(
+        "b1_b7_cone01_three_parameter_local_u3_repair_gate_v0"
     )
     b1_b7_cone01_theta_sharing_manifest = current_results.get(
         "b1_b7_cone01_theta_sharing_ledger_gate_v0"
@@ -5413,6 +5419,199 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 sparse local-U3 repair report: "
             f"{b1_b7_cone01_sparse_local_u3_repair_path}"
+        )
+
+    b1_b7_cone01_three_parameter_local_u3_repair = {
+        "path": str(b1_b7_cone01_three_parameter_local_u3_repair_path),
+        "exists": b1_b7_cone01_three_parameter_local_u3_repair_path.exists(),
+    }
+    if not b1_b7_cone01_three_parameter_local_u3_repair_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_three_parameter_local_u3_repair_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_three_parameter_local_u3_repair_manifest.get("status")
+            != "cone01_three_parameter_local_u3_repair_partial_not_ledger_accepted"
+        ):
+            errors.append("B1/B7 cone_01 three-parameter local-U3 repair gate status mismatch")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_three_parameter_local_u3_repair_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 three-parameter local-U3 repair gate missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_three_parameter_local_u3_repair_path.exists():
+        three_payload = json.loads(read(b1_b7_cone01_three_parameter_local_u3_repair_path))
+        three_summary = three_payload.get("summary", {})
+        three_claims = three_payload.get("claim_boundary", {})
+        b1_b7_cone01_three_parameter_local_u3_repair.update(
+            {
+                "status": three_payload.get("status"),
+                "model_status": three_payload.get("model_status"),
+                "method": three_payload.get("method"),
+                "workload": three_payload.get("workload"),
+                "source_sparse_repair_method": three_summary.get("source_sparse_repair_method"),
+                "source_sparse_repair_exact_packet_count": three_summary.get(
+                    "source_sparse_repair_exact_packet_count"
+                ),
+                "source_sparse_repair_unresolved_packet_count": three_summary.get(
+                    "source_sparse_repair_unresolved_packet_count"
+                ),
+                "three_parameter_free_count": three_summary.get("three_parameter_free_count"),
+                "three_parameter_packet_count": three_summary.get("three_parameter_packet_count"),
+                "three_parameter_candidate_count": three_summary.get("three_parameter_candidate_count"),
+                "three_parameter_exact_packet_count": three_summary.get(
+                    "three_parameter_exact_packet_count"
+                ),
+                "three_parameter_unresolved_packet_count": three_summary.get(
+                    "three_parameter_unresolved_packet_count"
+                ),
+                "total_packet_exact_after_three_parameter_gate": three_summary.get(
+                    "total_packet_exact_after_three_parameter_gate"
+                ),
+                "total_packet_unresolved_after_three_parameter_gate": three_summary.get(
+                    "total_packet_unresolved_after_three_parameter_gate"
+                ),
+                "candidate_cnot_reduction_if_all_packets_accepted": three_summary.get(
+                    "candidate_cnot_reduction_if_all_packets_accepted"
+                ),
+                "partial_candidate_cnot_reduction_if_accepted": three_summary.get(
+                    "partial_candidate_cnot_reduction_if_accepted"
+                ),
+                "remaining_unrepaired_replacement_off_pi_over_four_parameter_count": three_summary.get(
+                    "remaining_unrepaired_replacement_off_pi_over_four_parameter_count"
+                ),
+                "three_parameter_exact_repair_off_pi_over_four_parameter_count": three_summary.get(
+                    "three_parameter_exact_repair_off_pi_over_four_parameter_count"
+                ),
+                "accepted_three_parameter_repair_as_full_circuit_rewrite_count": three_summary.get(
+                    "accepted_three_parameter_repair_as_full_circuit_rewrite_count"
+                ),
+                "accepted_occurrence_removal": three_summary.get("accepted_occurrence_removal"),
+                "accepted_proxy_t_reduction": three_summary.get("accepted_proxy_t_reduction"),
+                "missing_occurrences_after_gate": three_summary.get("missing_occurrences_after_gate"),
+                "missing_proxy_t_after_gate": three_summary.get("missing_proxy_t_after_gate"),
+                "partial_packet_repair_claimed_as_b7_saving": three_summary.get(
+                    "partial_packet_repair_claimed_as_b7_saving"
+                ),
+                "symbolic_exact_decomposition_claimed": three_summary.get(
+                    "symbolic_exact_decomposition_claimed"
+                ),
+                "full_circuit_rewrite_claimed": three_summary.get("full_circuit_rewrite_claimed"),
+                "resource_saving_claimed": three_summary.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": three_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "validation_error_count": three_summary.get("validation_error_count"),
+                "three_parameter_local_u3_repair_row_count": len(
+                    three_payload.get("three_parameter_local_u3_repair_rows", [])
+                ),
+            }
+        )
+        if three_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 three-parameter local-U3 repair report must have benchmark_id B1")
+        if three_payload.get("method") != "b1_b7_cone01_three_parameter_local_u3_repair_gate_v0":
+            errors.append("B1/B7 cone_01 three-parameter local-U3 repair method mismatch")
+        if (
+            three_payload.get("status")
+            != "cone01_three_parameter_local_u3_repair_partial_not_ledger_accepted"
+        ):
+            errors.append("B1/B7 cone_01 three-parameter local-U3 repair status mismatch")
+        if three_payload.get("model_status") != "two_packets_repaired_one_packet_remains_unrepaired":
+            errors.append("B1/B7 cone_01 three-parameter local-U3 repair model_status mismatch")
+        for field in [
+            "source_sparse_repair_exact_packet_count",
+            "source_sparse_repair_unresolved_packet_count",
+            "three_parameter_free_count",
+            "three_parameter_packet_count",
+            "three_parameter_candidate_count",
+            "three_parameter_exact_packet_count",
+            "three_parameter_unresolved_packet_count",
+            "total_packet_exact_after_three_parameter_gate",
+            "total_packet_unresolved_after_three_parameter_gate",
+            "candidate_cnot_reduction_if_all_packets_accepted",
+            "partial_candidate_cnot_reduction_if_accepted",
+            "remaining_unrepaired_replacement_off_pi_over_four_parameter_count",
+            "three_parameter_exact_repair_off_pi_over_four_parameter_count",
+            "accepted_three_parameter_repair_as_full_circuit_rewrite_count",
+            "accepted_occurrence_removal",
+            "accepted_proxy_t_reduction",
+            "missing_occurrences_after_gate",
+            "missing_proxy_t_after_gate",
+            "partial_packet_repair_claimed_as_b7_saving",
+            "symbolic_exact_decomposition_claimed",
+            "full_circuit_rewrite_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+            "validation_error_count",
+        ]:
+            if (
+                three_summary.get(field)
+                != b1_b7_cone01_three_parameter_local_u3_repair_manifest.get(field)
+            ):
+                errors.append(f"B1/B7 cone_01 three-parameter local-U3 repair {field} mismatch")
+        expected_three_fields = {
+            "source_sparse_repair_exact_packet_count": 1,
+            "source_sparse_repair_unresolved_packet_count": 2,
+            "three_parameter_free_count": 3,
+            "three_parameter_packet_count": 2,
+            "three_parameter_candidate_count": 1632,
+            "three_parameter_exact_packet_count": 1,
+            "three_parameter_unresolved_packet_count": 1,
+            "total_packet_exact_after_three_parameter_gate": 2,
+            "total_packet_unresolved_after_three_parameter_gate": 1,
+            "candidate_cnot_reduction_if_all_packets_accepted": 9,
+            "partial_candidate_cnot_reduction_if_accepted": 6,
+            "remaining_unrepaired_replacement_off_pi_over_four_parameter_count": 15,
+            "three_parameter_exact_repair_off_pi_over_four_parameter_count": 0,
+            "accepted_three_parameter_repair_as_full_circuit_rewrite_count": 0,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_three_fields.items():
+            if three_summary.get(field) != value:
+                errors.append(
+                    f"B1/B7 cone_01 three-parameter local-U3 repair expected {field}={value}"
+                )
+        for field in [
+            "partial_packet_repair_claimed_as_b7_saving",
+            "symbolic_exact_decomposition_claimed",
+            "full_circuit_rewrite_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if three_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 three-parameter local-U3 repair must not claim {field}")
+            if three_claims.get(field) is not False:
+                errors.append(
+                    f"B1/B7 cone_01 three-parameter local-U3 repair claim boundary must not claim {field}"
+                )
+        rows = three_payload.get("three_parameter_local_u3_repair_rows", [])
+        if len(rows) != 2:
+            errors.append("B1/B7 cone_01 three-parameter local-U3 repair row count must be 2")
+        exact_lines = [row.get("candidate_line_number") for row in rows if row.get("three_parameter_exact_pass")]
+        if exact_lines != [268]:
+            errors.append("B1/B7 cone_01 three-parameter local-U3 repair must exact-repair only line 268")
+        unresolved_lines = [
+            row.get("candidate_line_number") for row in rows if not row.get("three_parameter_exact_pass")
+        ]
+        if unresolved_lines != [1381]:
+            errors.append("B1/B7 cone_01 three-parameter local-U3 repair must leave only line 1381")
+        for row in rows:
+            if row.get("accepted_three_parameter_repair_as_full_circuit_rewrite") is not False:
+                errors.append("B1/B7 cone_01 three-parameter local-U3 repair rows must not accept rewrites")
+            if row.get("accepted_occurrence_removal") != 0:
+                errors.append("B1/B7 cone_01 three-parameter local-U3 repair rows must not remove occurrences")
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 three-parameter local-U3 repair report: "
+            f"{b1_b7_cone01_three_parameter_local_u3_repair_path}"
         )
 
     b1_b7_cone01_theta_sharing = {
@@ -15336,6 +15535,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_packet_replay_resource_gate": b1_b7_cone01_packet_replay_resource,
             "b7_cone01_local_u3_exactification_gate": b1_b7_cone01_local_u3_exactification,
             "b7_cone01_sparse_local_u3_repair_gate": b1_b7_cone01_sparse_local_u3_repair,
+            "b7_cone01_three_parameter_local_u3_repair_gate": (
+                b1_b7_cone01_three_parameter_local_u3_repair
+            ),
             "b7_cone01_theta_sharing_ledger_gate": b1_b7_cone01_theta_sharing,
             "b7_cone01_shared_theta_synthesis_object_gate": b1_b7_cone01_shared_theta_synthesis_object,
             "b7_cone01_shared_theta_replay_verifier_gate": b1_b7_cone01_shared_theta_replay_verifier,
@@ -15579,6 +15781,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_sparse_local_u3_repair_gate": str(
                 b1_b7_cone01_sparse_local_u3_repair_path
+            ),
+            "b1_b7_cone01_three_parameter_local_u3_repair_gate": str(
+                b1_b7_cone01_three_parameter_local_u3_repair_path
             ),
             "b1_b7_cone01_theta_sharing_ledger_gate": str(b1_b7_cone01_theta_sharing_path),
             "b1_b7_cone01_shared_theta_synthesis_object_gate": str(
@@ -16371,6 +16576,17 @@ def markdown_report(report: dict) -> str:
             f"- Replacement off-grid params / exact-repair off-grid params / unrepaired off-grid params: {report['b1']['b7_cone01_sparse_local_u3_repair_gate'].get('replacement_off_pi_over_four_parameter_count')} / {report['b1']['b7_cone01_sparse_local_u3_repair_gate'].get('sparse_exact_repair_off_pi_over_four_parameter_count')} / {report['b1']['b7_cone01_sparse_local_u3_repair_gate'].get('unrepaired_replacement_off_pi_over_four_parameter_count')}",
             f"- Accepted rewrite / occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_sparse_local_u3_repair_gate'].get('accepted_sparse_repair_as_full_circuit_rewrite_count')} / {report['b1']['b7_cone01_sparse_local_u3_repair_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_sparse_local_u3_repair_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_sparse_local_u3_repair_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_sparse_local_u3_repair_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Three-Parameter Local-U3 Repair Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('status')}",
+            f"- Three-parameter candidates / exact packets / unresolved packets: {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('three_parameter_candidate_count')} / {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('three_parameter_exact_packet_count')} / {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('three_parameter_unresolved_packet_count')}",
+            f"- Total exact packets after gate / total unresolved after gate: {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('total_packet_exact_after_three_parameter_gate')} / {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('total_packet_unresolved_after_three_parameter_gate')}",
+            f"- All-packet candidate CNOT reduction / partial candidate CNOT reduction: {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('candidate_cnot_reduction_if_all_packets_accepted')} / {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('partial_candidate_cnot_reduction_if_accepted')}",
+            f"- Remaining unrepaired off-grid params / exact-repair off-grid params: {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('remaining_unrepaired_replacement_off_pi_over_four_parameter_count')} / {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('three_parameter_exact_repair_off_pi_over_four_parameter_count')}",
+            f"- Accepted rewrite / occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('accepted_three_parameter_repair_as_full_circuit_rewrite_count')} / {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_three_parameter_local_u3_repair_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Theta-Sharing Ledger Gate",
             "",

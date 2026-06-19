@@ -253,7 +253,7 @@
         <span class="chip">工作区：/Users/avalok/work/FurturePlan</span>
         <span class="chip">目标状态：active，未完成</span>
         <span class="chip">当前阶段：B1-B10 技术解决推进</span>
-        <span class="chip">最新动作：T-B1-004ai sparse local-U3 repair gate</span>
+        <span class="chip">最新动作：T-B1-004aj three-parameter local-U3 repair gate</span>
         <span class="chip">组合审计：PASS / 0 warnings</span>
       </div>
     </header>
@@ -389,6 +389,9 @@
       </p>
       <p style="margin-top: 10px;">
         最新推进 88：B1/B7/T-B1-004ai 已完成 <code>cone_01</code> sparse local-U3 repair gate。新增 <code>tools/b1_b7_cone01_sparse_local_u3_repair_gate.py</code>、<code>results/B1_B7_cone01_sparse_local_u3_repair_gate_v0.json</code> 和 <code>research/B1_B7_cone01_sparse_local_u3_repair_gate.md</code>。结果：在 pi/4-snapped scaffold 上只释放 1 或 2 个 local-U3 参数，共搜索 420 个 sparse repair candidates；line 1378 可通过一个 grid-choice repair 恢复 exact bounded replay，但 line 1381 和 line 268 即使释放 2 个参数仍未修复。因此这是 partial packet evidence，不是 full-circuit rewrite、不是 symbolic decomposition、不是 B7 ledger saving；accepted occurrence removal、proxy-T reduction 和 B7 improvement 仍为 0。
+      </p>
+      <p style="margin-top: 10px;">
+        最新推进 89：B1/B7/T-B1-004aj 已完成 <code>cone_01</code> three-parameter local-U3 repair gate。新增 <code>tools/b1_b7_cone01_three_parameter_local_u3_repair_gate.py</code>、<code>results/B1_B7_cone01_three_parameter_local_u3_repair_gate_v0.json</code> 和 <code>research/B1_B7_cone01_three_parameter_local_u3_repair_gate.md</code>。结果：对 T-B1-004ai 剩下的 2 个 unresolved packets 穷举 exactly-three-parameter repair，共搜索 1,632 个 candidates；line 268 可 exact repair，residual 为 6.398929014192638e-13；line 1381 仍 unresolved，best residual 为 0.049865177666770955。现在 bounded packet repairs 为 2/3，但仍不是 full-circuit rewrite、不是 symbolic decomposition、不是 B7 ledger saving；accepted occurrence removal、proxy-T reduction 和 B7 improvement 仍为 0。
       </p>
       <p style="margin-top: 10px;">
         最新推进 50：B1/T-B1-004e 已完成 <code>cone_01</code> parameter-transfer obligation gate。新增 <code>tools/b1_b7_cone01_parameter_transfer_gate.py</code>、<code>results/B1_B7_cone01_parameter_transfer_gate_v0.json</code> 和 <code>research/B1_B7_cone01_parameter_transfer_gate.md</code>，检查同一组 35 个 <code>cone_01</code> candidate windows：35/35 个原始 <code>RY(theta)</code> 都有非零 projective unitary sensitivity，0 个角落在 pi/4 exact grid 上，35 个 occurrences 归成 4 个 distinct theta groups，最大组覆盖 16 个 occurrences。结论：无 parameter carrier 的删除路线不能清 B7 的 30-window / 600 proxy-T 目标；后续 broader two-qubit synthesis、KAK/Clifford scaffold 或 scoped obstruction 必须显式说明 theta 是被转移、共享还是被证书化消除。这仍不是 rewrite certificate、不是 resource saving、不是 KAK lower bound，也不是 B7 ledger improvement。
@@ -1116,6 +1119,7 @@
         <li>最新 T-B1-004ag：packet replay/resource accounting gate 已完成；3 个 reduced-CNOT candidates 在 bounded packet 层面保持 numerical replay-consistent，但 40 个 replacement off-pi/4 local-U3 parameters 相比 source 的 1 个 off-pi/4 parameter 产生 780 proxy-T pressure 增量，因此当前 B7 ledger 不接受该路线。下一步必须 exactify/absorb 这些 U3 layers，或放弃该 scaffold 寻找真正降低 ledger 的 occurrence-removing route。</li>
         <li>最新 T-B1-004ah：local-U3 exactification gate 已完成；把 40 个 replacement off-pi/4 local-U3 parameters 全部 snap 到 pi/4 grid 后，exact snapped pass 为 0/3，residual range 为 0.4757435265-0.7803612881。cheap snapping 路线关闭，accepted occurrence removal、proxy-T reduction 和 B7 improvement 仍为 0。</li>
         <li>最新 T-B1-004ai：sparse local-U3 repair gate 已完成；在 pi/4-snapped scaffold 上释放 1 或 2 个 local-U3 参数搜索 420 个 candidates，line 1378 可 exact repair，但 line 1381 / 268 仍 unrepaired。partial packet evidence 不能计入 B7，accepted occurrence removal、proxy-T reduction 和 B7 improvement 仍为 0。</li>
+        <li>最新 T-B1-004aj：three-parameter local-U3 repair gate 已完成；对剩余 line 1381 / 268 穷举 1,632 个 exactly-three-parameter candidates，line 268 exact repair，但 line 1381 仍 unresolved。现在 bounded packet repairs 为 2/3；partial packet evidence 仍不能计入 B7，accepted occurrence removal、proxy-T reduction 和 B7 improvement 仍为 0。</li>
         <li>最新 T-B2-006：posterior-calibrated shot-conditioned leakage boundary 已完成；读取 T-B2-005 的 288 target comparisons，评估 4 calibration profiles / 1152 profile rows，3 profiles 保留部分 d=5/d=7 rows，单 profile 最多 4 行，strict high-purity survival 0，robust all-profile survival false；随后 T-B2-007 已把这些 posterior rows 接入 decoder-risk ledger。</li>
         <li>最新 T-B2-007：posterior-weighted decoder-risk ledger 已完成；读取 T-B2-006 的 1152 profile rows，评估 4 risk budgets / 4608 budget-profile rows，raw profile survivors 6，mild/nominal/conservative/strict adjusted survivors 6/5/3/3，strict high-purity adjusted survivors 0，robust all-profile adjusted survival false。</li>
         <li>最新 T-B2-008：decoder-input contract feasibility gate 已完成；10 个 decoder inputs 中 4 个可用、6 个缺失，9 个 feasibility gates 中 4 个通过、5 个关键 gate 失败；随后 T-B2-009a 先补 per-shot trace input fixture。</li>

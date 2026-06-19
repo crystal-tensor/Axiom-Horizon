@@ -1560,6 +1560,17 @@ reduction, and B7 improvement remain 0. The next route must broaden the repair
 scaffold for the two unresolved packets, convert the line-1378 repair into a
 symbolic full-circuit replay certificate, or abandon this reduced-CNOT scaffold.
 
+**Sprint update 18aj:** `T-B1-004aj` is now merged as a three-parameter
+local-U3 repair continuation. The new artifact
+`research/B1_B7_cone01_three_parameter_local_u3_repair_gate.md` consumes
+T-B1-004ai and exhaustively searches exactly-three-parameter repairs for the
+two unresolved packets. It checks 1,632 candidates, exactifies line 268 with
+residual 6.398929014192638e-13, and leaves line 1381 unresolved with best
+residual 0.049865177666770955. The route now has 2/3 bounded packet repairs
+and a partial candidate CNOT reduction of 6 if later accepted, but accepted
+full-circuit rewrite, occurrence removal, proxy-T reduction, and B7 improvement
+remain 0.
+
 ## Sprint Promotion Matrix
 
 | Track | Can become paper after this sprint? | Can become patent after this sprint? | Can become fundable/tool after this sprint? |

@@ -563,6 +563,17 @@ Overall audit: PASS
 - Accepted rewrite / occurrence / proxy-T reduction / B7 claim: 0 / 0 / 0 / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Three-Parameter Local-U3 Repair Gate
+
+- Exists: True
+- Status: cone01_three_parameter_local_u3_repair_partial_not_ledger_accepted
+- Three-parameter candidates / exact packets / unresolved packets: 1632 / 1 / 1
+- Total exact packets after gate / total unresolved after gate: 2 / 1
+- All-packet candidate CNOT reduction / partial candidate CNOT reduction: 9 / 6
+- Remaining unrepaired off-grid params / exact-repair off-grid params: 15 / 0
+- Accepted rewrite / occurrence / proxy-T reduction / B7 claim: 0 / 0 / 0 / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Theta-Sharing Ledger Gate
 
 - Exists: True
