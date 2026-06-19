@@ -1,0 +1,332 @@
+{
+  "benchmark_id": "B1",
+  "claim_boundary": {
+    "absorption_certificate_claimed": false,
+    "b7_ledger_improvement_claimed": false,
+    "exactification_certificate_claimed": false,
+    "resource_saving_claimed": false,
+    "rewrite_claimed": false,
+    "semantic_certificate_claimed": false,
+    "shared_dressing_certificate_claimed": false,
+    "supported_claim": "Nearest pi/4-grid exactification, shared grid signatures, and single-parameter snap checks do not turn the T-B1-004r numerical dressings into accepted occurrence-removing certificates.",
+    "unsupported_claims": [
+      "This does not prove that no other exact local dressing exists.",
+      "This does not provide a replayable circuit rewrite certificate.",
+      "This does not provide accepted B7 resource reduction."
+    ]
+  },
+  "linked_b7_problem_id": 21,
+  "method": "b1_b7_cone01_dressing_absorption_gate_v0",
+  "model_status": "off_grid_local_dressing_not_absorbed_or_exactified",
+  "pattern_absorption_results": [
+    {
+      "absorption_certificate_claimed": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "best_single_parameter_snap_residual_norm": 0.03618747009506323,
+      "exactification_certificate_claimed": false,
+      "far_off_grid_parameter_count": 9,
+      "grid_signature": [
+        2,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        -3,
+        -1,
+        -1,
+        0
+      ],
+      "max_grid_distance": 0.37827123210868496,
+      "near_grid_parameter_count": 0,
+      "nearest_grid_label": "-7*pi/4",
+      "occurrence_count": 8,
+      "off_grid_parameter_count": 9,
+      "off_grid_parameter_indices": [
+        0,
+        2,
+        3,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11
+      ],
+      "pattern_id": "flat_pattern_01",
+      "pi_over_four_projected_residual_norm": 0.3071530575340254,
+      "pi_over_four_projection_exact_pass": false,
+      "shared_dressing_certificate_claimed": false,
+      "single_parameter_snap_exact_pass_count": 0,
+      "single_parameter_snap_trials": [
+        {
+          "grid_distance_before_snap": 0.036187963745391016,
+          "parameter_index": 0,
+          "residual_norm_after_single_snap": 0.03618747009506323
+        },
+        {
+          "grid_distance_before_snap": 0.09247298499992773,
+          "parameter_index": 3,
+          "residual_norm_after_single_snap": 0.09246474813789365
+        },
+        {
+          "grid_distance_before_snap": 0.10044887226920762,
+          "parameter_index": 5,
+          "residual_norm_after_single_snap": 0.1004383150322576
+        },
+        {
+          "grid_distance_before_snap": 0.12175706904793682,
+          "parameter_index": 11,
+          "residual_norm_after_single_snap": 0.12173826760405972
+        },
+        {
+          "grid_distance_before_snap": 0.12366480548557712,
+          "parameter_index": 8,
+          "residual_norm_after_single_snap": 0.12364510638634538
+        },
+        {
+          "grid_distance_before_snap": 0.15314629736745466,
+          "parameter_index": 10,
+          "residual_norm_after_single_snap": 0.1531088848924244
+        },
+        {
+          "grid_distance_before_snap": 0.1751335791022104,
+          "parameter_index": 9,
+          "residual_norm_after_single_snap": 0.17507762970529148
+        },
+        {
+          "grid_distance_before_snap": 0.2907943903684984,
+          "parameter_index": 6,
+          "residual_norm_after_single_snap": 0.2905383124828622
+        },
+        {
+          "grid_distance_before_snap": 0.37827123210868496,
+          "parameter_index": 2,
+          "residual_norm_after_single_snap": 0.37770766646359155
+        }
+      ],
+      "source_local_dressing_residual_norm": 3.521787733787174e-16,
+      "sum_grid_distance": 1.4718771944948887
+    },
+    {
+      "absorption_certificate_claimed": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "best_single_parameter_snap_residual_norm": 0.00929797101659801,
+      "exactification_certificate_claimed": false,
+      "far_off_grid_parameter_count": 8,
+      "grid_signature": [
+        0,
+        0,
+        -1,
+        -1,
+        3,
+        -4,
+        3,
+        0,
+        2,
+        -1,
+        -4,
+        0
+      ],
+      "max_grid_distance": 0.283216122339919,
+      "near_grid_parameter_count": 1,
+      "nearest_grid_label": "-7*pi/4",
+      "occurrence_count": 2,
+      "off_grid_parameter_count": 9,
+      "off_grid_parameter_indices": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        11
+      ],
+      "pattern_id": "flat_pattern_02",
+      "pi_over_four_projected_residual_norm": 0.3000426259967881,
+      "pi_over_four_projection_exact_pass": false,
+      "shared_dressing_certificate_claimed": false,
+      "single_parameter_snap_exact_pass_count": 0,
+      "single_parameter_snap_trials": [
+        {
+          "grid_distance_before_snap": 0.00929797938985466,
+          "parameter_index": 4,
+          "residual_norm_after_single_snap": 0.00929797101659801
+        },
+        {
+          "grid_distance_before_snap": 0.0364588859299495,
+          "parameter_index": 11,
+          "residual_norm_after_single_snap": 0.03645838110926288
+        },
+        {
+          "grid_distance_before_snap": 0.07543055664999088,
+          "parameter_index": 5,
+          "residual_norm_after_single_snap": 0.07542608607913251
+        },
+        {
+          "grid_distance_before_snap": 0.13926167016928126,
+          "parameter_index": 8,
+          "residual_norm_after_single_snap": 0.13923353838721386
+        },
+        {
+          "grid_distance_before_snap": 0.20690360712954448,
+          "parameter_index": 0,
+          "residual_norm_after_single_snap": 0.20681135532843212
+        },
+        {
+          "grid_distance_before_snap": 0.21003181193156717,
+          "parameter_index": 3,
+          "residual_norm_after_single_snap": 0.20993531263790532
+        },
+        {
+          "grid_distance_before_snap": 0.21557418537965578,
+          "parameter_index": 6,
+          "residual_norm_after_single_snap": 0.2154698441484619
+        },
+        {
+          "grid_distance_before_snap": 0.23224403007757477,
+          "parameter_index": 9,
+          "residual_norm_after_single_snap": 0.23211356651252352
+        },
+        {
+          "grid_distance_before_snap": 0.283216122339919,
+          "parameter_index": 2,
+          "residual_norm_after_single_snap": 0.2829795446303583
+        }
+      ],
+      "source_local_dressing_residual_norm": 4.710277376051325e-16,
+      "sum_grid_distance": 1.4084188489973375
+    },
+    {
+      "absorption_certificate_claimed": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "best_single_parameter_snap_residual_norm": 0.005944481594476424,
+      "exactification_certificate_claimed": false,
+      "far_off_grid_parameter_count": 7,
+      "grid_signature": [
+        0,
+        0,
+        3,
+        -2,
+        0,
+        -3,
+        -1,
+        0,
+        -3,
+        3,
+        0,
+        0
+      ],
+      "max_grid_distance": 0.37592468549894065,
+      "near_grid_parameter_count": 1,
+      "nearest_grid_label": "-4*pi/4",
+      "occurrence_count": 1,
+      "off_grid_parameter_count": 8,
+      "off_grid_parameter_indices": [
+        0,
+        2,
+        4,
+        5,
+        6,
+        8,
+        9,
+        11
+      ],
+      "pattern_id": "flat_pattern_03",
+      "pi_over_four_projected_residual_norm": 0.8415525963596902,
+      "pi_over_four_projection_exact_pass": false,
+      "shared_dressing_certificate_claimed": false,
+      "single_parameter_snap_exact_pass_count": 0,
+      "single_parameter_snap_trials": [
+        {
+          "grid_distance_before_snap": 0.005944483782596599,
+          "parameter_index": 5,
+          "residual_norm_after_single_snap": 0.005944481594476424
+        },
+        {
+          "grid_distance_before_snap": 0.02374417173334198,
+          "parameter_index": 8,
+          "residual_norm_after_single_snap": 0.02374403228958433
+        },
+        {
+          "grid_distance_before_snap": 0.1619853853872728,
+          "parameter_index": 2,
+          "residual_norm_after_single_snap": 0.1619411142522878
+        },
+        {
+          "grid_distance_before_snap": 0.22065685838995597,
+          "parameter_index": 11,
+          "residual_norm_after_single_snap": 0.22054496228257098
+        },
+        {
+          "grid_distance_before_snap": 0.2237439207778933,
+          "parameter_index": 0,
+          "residual_norm_after_single_snap": 0.22362726276959072
+        },
+        {
+          "grid_distance_before_snap": 0.226601342172553,
+          "parameter_index": 9,
+          "residual_norm_after_single_snap": 0.2264801578296993
+        },
+        {
+          "grid_distance_before_snap": 0.32812420574918777,
+          "parameter_index": 4,
+          "residual_norm_after_single_snap": 0.3277563331389186
+        },
+        {
+          "grid_distance_before_snap": 0.37592468549894065,
+          "parameter_index": 6,
+          "residual_norm_after_single_snap": 0.3753715398434715
+        }
+      ],
+      "source_local_dressing_residual_norm": 3.920321537349984e-16,
+      "sum_grid_distance": 1.566725053491742
+    }
+  ],
+  "problem_id": 25,
+  "source_method": "b1_b7_cone01_local_dressing_search_gate_v0",
+  "source_packet_result": "results/B1_B7_cone01_flat_pattern_kak_packet_v0.json",
+  "source_result": "results/B1_B7_cone01_local_dressing_search_gate_v0.json",
+  "status": "cone01_dressing_absorption_negative_gate",
+  "summary": {
+    "absorption_certificate_claimed": false,
+    "accepted_occurrence_removal": 0,
+    "accepted_proxy_t_reduction": 0,
+    "all_pi_over_four_projections_exact": false,
+    "b7_ledger_improvement_claimed": false,
+    "covered_invariant_flat_occurrence_count": 11,
+    "exactification_certificate_claimed": false,
+    "max_grid_distance": 0.37827123210868496,
+    "max_pi_over_four_projected_residual_norm": 0.8415525963596902,
+    "min_pi_over_four_projected_residual_norm": 0.3000426259967881,
+    "missing_occurrences_after_gate": 30,
+    "missing_proxy_t_after_gate": 600,
+    "pattern_group_count": 3,
+    "pi_over_four_projection_exact_pass_count": 0,
+    "required_occurrence_removals_for_b7_target": 30,
+    "resource_saving_claimed": false,
+    "rewrite_claimed": false,
+    "semantic_certificate_claimed": false,
+    "shared_dressing_certificate_claimed": false,
+    "shared_grid_signature_across_patterns": false,
+    "single_parameter_snap_exact_pass_count": 0,
+    "source_local_dressing_exact_pass_count": 3,
+    "source_method": "b1_b7_cone01_local_dressing_search_gate_v0",
+    "source_status": "cone01_local_dressing_search_not_resource_certificate",
+    "total_far_off_grid_local_dressing_parameter_count": 24,
+    "total_near_grid_local_dressing_parameter_count": 2,
+    "total_off_grid_local_dressing_parameter_count": 26,
+    "unique_grid_signature_count": 3,
+    "validation_error_count": 0
+  },
+  "title": "B1/B7 cone_01 dressing absorption and exactification gate",
+  "validation_errors": [],
+  "workload": "qasmbench_medium_exact/gcm_h6.qasm"
+}

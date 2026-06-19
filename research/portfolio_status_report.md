@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 56, 'B2': 48, 'B3': 30, 'B4': 27, 'B5': 27, 'B6': 21, 'B7': 53, 'B8': 39, 'B9': 15, 'B10': 50}
+- Maturity scores: {'B1': 57, 'B2': 48, 'B3': 30, 'B4': 27, 'B5': 27, 'B6': 21, 'B7': 54, 'B8': 39, 'B9': 15, 'B10': 50}
 
 ## Technical Resolution Program
 
@@ -353,6 +353,21 @@ Overall audit: PASS
 - Accepted occurrence/proxy-T reduction: 0 / 0
 - Missing occurrences/proxy-T after gate: 30 / 600
 - Rewrite/semantic/KAK/resource/B7-ledger claims: False / False / False / False / False
+- Validation errors: 0
+
+## B1/B7 cone_01 Dressing Absorption Gate
+
+- Exists: True
+- Status: cone01_dressing_absorption_negative_gate
+- Pattern groups / covered occurrences: 3 / 11
+- Source local-dressing exact passes / pi-over-four projection exact passes: 3 / 0
+- Projected residual min/max: 0.3000426259967881 / 0.8415525963596902
+- Unique grid signatures / shared signature flag: 3 / False
+- Off-grid / near-grid / far-off-grid local dressing parameters: 26 / 2 / 24
+- Single-parameter snap exact passes: 0
+- Accepted occurrence/proxy-T reduction: 0 / 0
+- Missing occurrences/proxy-T after gate: 30 / 600
+- Absorption/exactification/shared-dressing/rewrite/semantic/resource/B7-ledger claims: False / False / False / False / False / False / False
 - Validation errors: 0
 
 ## B1/B7 cone_01 Theta-Sharing Ledger Gate

@@ -961,6 +961,18 @@ removal remains 0, and accepted proxy-T reduction remains 0. The next route must
 absorb, share, exactify, or replay-certify those dressing parameters before B7
 can count anything.
 
+**Sprint update 18s:** `T-B1-004s` is now merged as the dressing
+absorption/exactification negative gate. The new artifact
+`research/B1_B7_cone01_dressing_absorption_gate.md` projects the three
+T-B1-004r numerical dressings onto the pi/4 grid and gets 0/3 exact passes,
+projected residuals from 0.3000426259967881 to 0.8415525963596902, three
+distinct grid signatures, 26 off-grid local dressing parameters, and 0
+single-parameter snap exact passes. This closes the cheap route where the
+continuous local dressing is simply rounded or shared as one exact object. The
+remaining route must be a stronger exact local-dressing theorem, a replayable
+rewrite certificate, a broader 30-occurrence certificate set, or an accepted
+physical cost-model path.
+
 ## B8: Classical Verification of Quantum Outputs
 
 **Technical target:** keep verifier soundness low under adaptive leakage by

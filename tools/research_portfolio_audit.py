@@ -153,6 +153,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_local_dressing_search_path = (
         results / "B1_B7_cone01_local_dressing_search_gate_v0.json"
     )
+    b1_b7_cone01_dressing_absorption_path = (
+        results / "B1_B7_cone01_dressing_absorption_gate_v0.json"
+    )
     b1_b7_cone01_theta_sharing_path = results / "B1_B7_cone01_theta_sharing_ledger_gate_v0.json"
     b1_b7_cone01_shared_theta_synthesis_object_path = (
         results / "B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json"
@@ -661,6 +664,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_local_dressing_search_manifest = current_results.get(
         "b1_b7_cone01_local_dressing_search_gate_v0"
+    )
+    b1_b7_cone01_dressing_absorption_manifest = current_results.get(
+        "b1_b7_cone01_dressing_absorption_gate_v0"
     )
     b1_b7_cone01_theta_sharing_manifest = current_results.get(
         "b1_b7_cone01_theta_sharing_ledger_gate_v0"
@@ -2268,6 +2274,182 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 local-dressing search report: "
             f"{b1_b7_cone01_local_dressing_search_path}"
+        )
+
+    b1_b7_cone01_dressing_absorption = {
+        "path": str(b1_b7_cone01_dressing_absorption_path),
+        "exists": b1_b7_cone01_dressing_absorption_path.exists(),
+    }
+    if not b1_b7_cone01_dressing_absorption_manifest:
+        errors.append("B1 manifest missing current result: b1_b7_cone01_dressing_absorption_gate_v0")
+    else:
+        if (
+            b1_b7_cone01_dressing_absorption_manifest.get("status")
+            != "cone01_dressing_absorption_negative_gate"
+        ):
+            errors.append("B1/B7 cone_01 dressing absorption gate must remain negative evidence")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_dressing_absorption_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(f"B1/B7 cone_01 dressing absorption missing existing {field} path: {value}")
+    if b1_b7_cone01_dressing_absorption_path.exists():
+        absorption_payload = json.loads(read(b1_b7_cone01_dressing_absorption_path))
+        absorption_summary = absorption_payload.get("summary", {})
+        absorption_claims = absorption_payload.get("claim_boundary", {})
+        b1_b7_cone01_dressing_absorption.update(
+            {
+                "status": absorption_payload.get("status"),
+                "model_status": absorption_payload.get("model_status"),
+                "method": absorption_payload.get("method"),
+                "workload": absorption_payload.get("workload"),
+                "source_method": absorption_payload.get("source_method"),
+                "pattern_group_count": absorption_summary.get("pattern_group_count"),
+                "covered_invariant_flat_occurrence_count": absorption_summary.get(
+                    "covered_invariant_flat_occurrence_count"
+                ),
+                "source_local_dressing_exact_pass_count": absorption_summary.get(
+                    "source_local_dressing_exact_pass_count"
+                ),
+                "pi_over_four_projection_exact_pass_count": absorption_summary.get(
+                    "pi_over_four_projection_exact_pass_count"
+                ),
+                "all_pi_over_four_projections_exact": absorption_summary.get(
+                    "all_pi_over_four_projections_exact"
+                ),
+                "max_pi_over_four_projected_residual_norm": absorption_summary.get(
+                    "max_pi_over_four_projected_residual_norm"
+                ),
+                "min_pi_over_four_projected_residual_norm": absorption_summary.get(
+                    "min_pi_over_four_projected_residual_norm"
+                ),
+                "unique_grid_signature_count": absorption_summary.get("unique_grid_signature_count"),
+                "shared_grid_signature_across_patterns": absorption_summary.get(
+                    "shared_grid_signature_across_patterns"
+                ),
+                "total_off_grid_local_dressing_parameter_count": absorption_summary.get(
+                    "total_off_grid_local_dressing_parameter_count"
+                ),
+                "total_near_grid_local_dressing_parameter_count": absorption_summary.get(
+                    "total_near_grid_local_dressing_parameter_count"
+                ),
+                "total_far_off_grid_local_dressing_parameter_count": absorption_summary.get(
+                    "total_far_off_grid_local_dressing_parameter_count"
+                ),
+                "max_grid_distance": absorption_summary.get("max_grid_distance"),
+                "single_parameter_snap_exact_pass_count": absorption_summary.get(
+                    "single_parameter_snap_exact_pass_count"
+                ),
+                "accepted_occurrence_removal": absorption_summary.get("accepted_occurrence_removal"),
+                "accepted_proxy_t_reduction": absorption_summary.get("accepted_proxy_t_reduction"),
+                "missing_occurrences_after_gate": absorption_summary.get("missing_occurrences_after_gate"),
+                "missing_proxy_t_after_gate": absorption_summary.get("missing_proxy_t_after_gate"),
+                "absorption_certificate_claimed": absorption_claims.get("absorption_certificate_claimed"),
+                "exactification_certificate_claimed": absorption_claims.get(
+                    "exactification_certificate_claimed"
+                ),
+                "shared_dressing_certificate_claimed": absorption_claims.get(
+                    "shared_dressing_certificate_claimed"
+                ),
+                "rewrite_claimed": absorption_claims.get("rewrite_claimed"),
+                "semantic_certificate_claimed": absorption_claims.get("semantic_certificate_claimed"),
+                "resource_saving_claimed": absorption_claims.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": absorption_claims.get("b7_ledger_improvement_claimed"),
+                "validation_error_count": absorption_summary.get("validation_error_count"),
+                "pattern_absorption_result_count": len(
+                    absorption_payload.get("pattern_absorption_results", [])
+                ),
+            }
+        )
+        if absorption_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 dressing absorption report must have benchmark_id B1")
+        if absorption_payload.get("method") != "b1_b7_cone01_dressing_absorption_gate_v0":
+            errors.append("B1/B7 cone_01 dressing absorption method mismatch")
+        if absorption_payload.get("status") != "cone01_dressing_absorption_negative_gate":
+            errors.append("B1/B7 cone_01 dressing absorption status mismatch")
+        if absorption_payload.get("model_status") != "off_grid_local_dressing_not_absorbed_or_exactified":
+            errors.append("B1/B7 cone_01 dressing absorption model_status mismatch")
+        if absorption_payload.get("source_method") != "b1_b7_cone01_local_dressing_search_gate_v0":
+            errors.append("B1/B7 cone_01 dressing absorption source method mismatch")
+        for field in [
+            "pattern_group_count",
+            "covered_invariant_flat_occurrence_count",
+            "source_local_dressing_exact_pass_count",
+            "pi_over_four_projection_exact_pass_count",
+            "all_pi_over_four_projections_exact",
+            "max_pi_over_four_projected_residual_norm",
+            "min_pi_over_four_projected_residual_norm",
+            "unique_grid_signature_count",
+            "shared_grid_signature_across_patterns",
+            "total_off_grid_local_dressing_parameter_count",
+            "total_near_grid_local_dressing_parameter_count",
+            "total_far_off_grid_local_dressing_parameter_count",
+            "max_grid_distance",
+            "single_parameter_snap_exact_pass_count",
+            "accepted_occurrence_removal",
+            "accepted_proxy_t_reduction",
+            "missing_occurrences_after_gate",
+            "missing_proxy_t_after_gate",
+            "absorption_certificate_claimed",
+            "exactification_certificate_claimed",
+            "shared_dressing_certificate_claimed",
+            "rewrite_claimed",
+            "semantic_certificate_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+            "validation_error_count",
+        ]:
+            if absorption_summary.get(field) != b1_b7_cone01_dressing_absorption_manifest.get(field):
+                errors.append(f"B1/B7 cone_01 dressing absorption {field} mismatch")
+        if absorption_summary.get("pattern_group_count") != 3:
+            errors.append("B1/B7 cone_01 dressing absorption must contain 3 pattern groups")
+        if absorption_summary.get("covered_invariant_flat_occurrence_count") != 11:
+            errors.append("B1/B7 cone_01 dressing absorption must cover 11 occurrences")
+        if absorption_summary.get("source_local_dressing_exact_pass_count") != 3:
+            errors.append("B1/B7 cone_01 dressing absorption must inherit 3 source exact passes")
+        if absorption_summary.get("pi_over_four_projection_exact_pass_count") != 0:
+            errors.append("B1/B7 cone_01 dressing absorption pi/4 projection must not exact-pass")
+        if absorption_summary.get("all_pi_over_four_projections_exact") is not False:
+            errors.append("B1/B7 cone_01 dressing absorption all projection flag must be false")
+        if absorption_summary.get("unique_grid_signature_count") != 3:
+            errors.append("B1/B7 cone_01 dressing absorption must retain 3 distinct grid signatures")
+        if absorption_summary.get("shared_grid_signature_across_patterns") is not False:
+            errors.append("B1/B7 cone_01 dressing absorption shared signature flag must be false")
+        if absorption_summary.get("total_off_grid_local_dressing_parameter_count", 0) <= 0:
+            errors.append("B1/B7 cone_01 dressing absorption must retain off-grid parameters")
+        if absorption_summary.get("single_parameter_snap_exact_pass_count") != 0:
+            errors.append("B1/B7 cone_01 dressing absorption single-parameter snap count must be 0")
+        if absorption_summary.get("accepted_occurrence_removal") != 0:
+            errors.append("B1/B7 cone_01 dressing absorption must not accept occurrence removal")
+        if absorption_summary.get("accepted_proxy_t_reduction") != 0:
+            errors.append("B1/B7 cone_01 dressing absorption must not accept proxy-T reduction")
+        if absorption_summary.get("missing_occurrences_after_gate") != 30:
+            errors.append("B1/B7 cone_01 dressing absorption must leave 30 missing occurrences")
+        if absorption_summary.get("missing_proxy_t_after_gate") != 600:
+            errors.append("B1/B7 cone_01 dressing absorption must leave 600 missing proxy-T")
+        if len(absorption_payload.get("pattern_absorption_results", [])) != 3:
+            errors.append("B1/B7 cone_01 dressing absorption pattern result count must remain 3")
+        for row in absorption_payload.get("pattern_absorption_results", []):
+            if row.get("pi_over_four_projection_exact_pass") is not False:
+                errors.append(f"B1/B7 cone_01 dressing absorption projection unexpectedly passed for {row.get('pattern_id')}")
+            if row.get("accepted_occurrence_removal") != 0:
+                errors.append(f"B1/B7 cone_01 dressing absorption accepted removal nonzero for {row.get('pattern_id')}")
+        for field in [
+            "absorption_certificate_claimed",
+            "exactification_certificate_claimed",
+            "shared_dressing_certificate_claimed",
+            "rewrite_claimed",
+            "semantic_certificate_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if absorption_summary.get(field) is not False or absorption_claims.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 dressing absorption must not claim {field}")
+        if absorption_summary.get("validation_error_count") != 0:
+            errors.append("B1/B7 cone_01 dressing absorption validation errors must remain zero")
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 dressing absorption report: "
+            f"{b1_b7_cone01_dressing_absorption_path}"
         )
 
     b1_b7_cone01_theta_sharing = {
@@ -12170,6 +12352,7 @@ def audit(root: Path) -> dict:
             "b7_cone01_invariant_flat_residual_gate": b1_b7_cone01_invariant_flat_residual,
             "b7_cone01_flat_pattern_kak_packet": b1_b7_cone01_flat_pattern_kak_packet,
             "b7_cone01_local_dressing_search_gate": b1_b7_cone01_local_dressing_search,
+            "b7_cone01_dressing_absorption_gate": b1_b7_cone01_dressing_absorption,
             "b7_cone01_theta_sharing_ledger_gate": b1_b7_cone01_theta_sharing,
             "b7_cone01_shared_theta_synthesis_object_gate": b1_b7_cone01_shared_theta_synthesis_object,
             "b7_cone01_shared_theta_replay_verifier_gate": b1_b7_cone01_shared_theta_replay_verifier,
@@ -12362,6 +12545,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_local_dressing_search_gate": str(
                 b1_b7_cone01_local_dressing_search_path
+            ),
+            "b1_b7_cone01_dressing_absorption_gate": str(
+                b1_b7_cone01_dressing_absorption_path
             ),
             "b1_b7_cone01_theta_sharing_ledger_gate": str(b1_b7_cone01_theta_sharing_path),
             "b1_b7_cone01_shared_theta_synthesis_object_gate": str(
@@ -12946,6 +13132,21 @@ def markdown_report(report: dict) -> str:
             f"- Missing occurrences/proxy-T after gate: {report['b1']['b7_cone01_local_dressing_search_gate'].get('missing_occurrences_after_gate')} / {report['b1']['b7_cone01_local_dressing_search_gate'].get('missing_proxy_t_after_gate')}",
             f"- Rewrite/semantic/KAK/resource/B7-ledger claims: {report['b1']['b7_cone01_local_dressing_search_gate'].get('rewrite_claimed')} / {report['b1']['b7_cone01_local_dressing_search_gate'].get('semantic_certificate_claimed')} / {report['b1']['b7_cone01_local_dressing_search_gate'].get('kak_theorem_claimed')} / {report['b1']['b7_cone01_local_dressing_search_gate'].get('resource_saving_claimed')} / {report['b1']['b7_cone01_local_dressing_search_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_local_dressing_search_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Dressing Absorption Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_dressing_absorption_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_dressing_absorption_gate'].get('status')}",
+            f"- Pattern groups / covered occurrences: {report['b1']['b7_cone01_dressing_absorption_gate'].get('pattern_group_count')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('covered_invariant_flat_occurrence_count')}",
+            f"- Source local-dressing exact passes / pi-over-four projection exact passes: {report['b1']['b7_cone01_dressing_absorption_gate'].get('source_local_dressing_exact_pass_count')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('pi_over_four_projection_exact_pass_count')}",
+            f"- Projected residual min/max: {report['b1']['b7_cone01_dressing_absorption_gate'].get('min_pi_over_four_projected_residual_norm')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('max_pi_over_four_projected_residual_norm')}",
+            f"- Unique grid signatures / shared signature flag: {report['b1']['b7_cone01_dressing_absorption_gate'].get('unique_grid_signature_count')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('shared_grid_signature_across_patterns')}",
+            f"- Off-grid / near-grid / far-off-grid local dressing parameters: {report['b1']['b7_cone01_dressing_absorption_gate'].get('total_off_grid_local_dressing_parameter_count')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('total_near_grid_local_dressing_parameter_count')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('total_far_off_grid_local_dressing_parameter_count')}",
+            f"- Single-parameter snap exact passes: {report['b1']['b7_cone01_dressing_absorption_gate'].get('single_parameter_snap_exact_pass_count')}",
+            f"- Accepted occurrence/proxy-T reduction: {report['b1']['b7_cone01_dressing_absorption_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('accepted_proxy_t_reduction')}",
+            f"- Missing occurrences/proxy-T after gate: {report['b1']['b7_cone01_dressing_absorption_gate'].get('missing_occurrences_after_gate')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('missing_proxy_t_after_gate')}",
+            f"- Absorption/exactification/shared-dressing/rewrite/semantic/resource/B7-ledger claims: {report['b1']['b7_cone01_dressing_absorption_gate'].get('absorption_certificate_claimed')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('exactification_certificate_claimed')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('shared_dressing_certificate_claimed')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('rewrite_claimed')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('semantic_certificate_claimed')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('resource_saving_claimed')} / {report['b1']['b7_cone01_dressing_absorption_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_dressing_absorption_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Theta-Sharing Ledger Gate",
             "",
