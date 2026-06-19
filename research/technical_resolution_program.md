@@ -52,3 +52,5 @@ exist as parking-lot notes, but they do not define current success.
 
 
 B1/B7 update: T-B1-004ad adds a carrier interleaving-commutation gate. Across 3 blocked source-aligned candidates it finds 18 interleaving single-qubit ops on 13 unique lines: 7 cheap control-side phase commutations, 4 target-side phase obstructions, and 7 non-diagonal obstructions. Accepted commutation clearance, occurrence removal, proxy-T reduction, and B7 ledger improvement remain 0. Future work must beat the T-B1-004ad boundary with real semantic CNOT-stack synthesis/replay, broader occurrence-removing certificates, or accepted physical-model evidence.
+
+B1/B7 update: T-B1-004ae constructs exact semantic replay packets for the 3 blocked cone_01 carrier CNOT stacks. All 3 packets are 2-qubit 4x4 matrix targets with stable fingerprints, covering 32 window gates total (14 CNOT and 18 single-qubit gates). This is not a solution: semantic replay certificates, shorter rewrites, accepted occurrence removal, proxy-T reduction, and B7 ledger improvement remain 0. Next work must consume these packets in a real synthesis/replay gate.

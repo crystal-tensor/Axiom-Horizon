@@ -189,6 +189,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_carrier_interleaving_commutation_path = (
         results / "B1_B7_cone01_carrier_interleaving_commutation_gate_v0.json"
     )
+    b1_b7_cone01_semantic_replay_packet_path = (
+        results / "B1_B7_cone01_semantic_replay_packet_gate_v0.json"
+    )
     b1_b7_cone01_theta_sharing_path = results / "B1_B7_cone01_theta_sharing_ledger_gate_v0.json"
     b1_b7_cone01_shared_theta_synthesis_object_path = (
         results / "B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json"
@@ -733,6 +736,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_carrier_interleaving_commutation_manifest = current_results.get(
         "b1_b7_cone01_carrier_interleaving_commutation_gate_v0"
+    )
+    b1_b7_cone01_semantic_replay_packet_manifest = current_results.get(
+        "b1_b7_cone01_semantic_replay_packet_gate_v0"
     )
     b1_b7_cone01_theta_sharing_manifest = current_results.get(
         "b1_b7_cone01_theta_sharing_ledger_gate_v0"
@@ -4463,6 +4469,175 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 carrier interleaving-commutation report: "
             f"{b1_b7_cone01_carrier_interleaving_commutation_path}"
+        )
+
+    b1_b7_cone01_semantic_replay_packet = {
+        "path": str(b1_b7_cone01_semantic_replay_packet_path),
+        "exists": b1_b7_cone01_semantic_replay_packet_path.exists(),
+    }
+    if not b1_b7_cone01_semantic_replay_packet_manifest:
+        errors.append("B1 manifest missing current result: b1_b7_cone01_semantic_replay_packet_gate_v0")
+    else:
+        if (
+            b1_b7_cone01_semantic_replay_packet_manifest.get("status")
+            != "cone01_semantic_replay_packet_constructed_not_solved"
+        ):
+            errors.append("B1/B7 cone_01 semantic replay packet gate status mismatch")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_semantic_replay_packet_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    f"B1/B7 cone_01 semantic replay packet gate missing existing {field} path: {value}"
+                )
+    if b1_b7_cone01_semantic_replay_packet_path.exists():
+        semantic_replay_payload = json.loads(read(b1_b7_cone01_semantic_replay_packet_path))
+        semantic_replay_summary = semantic_replay_payload.get("summary", {})
+        semantic_replay_claims = semantic_replay_payload.get("claim_boundary", {})
+        b1_b7_cone01_semantic_replay_packet.update(
+            {
+                "status": semantic_replay_payload.get("status"),
+                "model_status": semantic_replay_payload.get("model_status"),
+                "method": semantic_replay_payload.get("method"),
+                "workload": semantic_replay_payload.get("workload"),
+                "source_method": semantic_replay_payload.get("source_method"),
+                "semantic_replay_packet_count": semantic_replay_summary.get(
+                    "semantic_replay_packet_count"
+                ),
+                "two_qubit_packet_count": semantic_replay_summary.get("two_qubit_packet_count"),
+                "min_support_qubit_count": semantic_replay_summary.get("min_support_qubit_count"),
+                "max_support_qubit_count": semantic_replay_summary.get("max_support_qubit_count"),
+                "total_window_gate_count": semantic_replay_summary.get("total_window_gate_count"),
+                "total_cx_count": semantic_replay_summary.get("total_cx_count"),
+                "total_single_qubit_gate_count": semantic_replay_summary.get(
+                    "total_single_qubit_gate_count"
+                ),
+                "unique_semantic_fingerprint_count": semantic_replay_summary.get(
+                    "unique_semantic_fingerprint_count"
+                ),
+                "all_packets_have_single_cx_edge_family": semantic_replay_summary.get(
+                    "all_packets_have_single_cx_edge_family"
+                ),
+                "all_packets_have_exact_matrix_target": semantic_replay_summary.get(
+                    "all_packets_have_exact_matrix_target"
+                ),
+                "semantic_replay_targets_constructed": semantic_replay_summary.get(
+                    "semantic_replay_targets_constructed"
+                ),
+                "semantic_replay_certificate_claimed": semantic_replay_summary.get(
+                    "semantic_replay_certificate_claimed"
+                ),
+                "shorter_rewrite_claimed": semantic_replay_summary.get("shorter_rewrite_claimed"),
+                "resource_saving_claimed": semantic_replay_summary.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": semantic_replay_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "accepted_occurrence_removal": semantic_replay_summary.get(
+                    "accepted_occurrence_removal"
+                ),
+                "accepted_proxy_t_reduction": semantic_replay_summary.get(
+                    "accepted_proxy_t_reduction"
+                ),
+                "missing_occurrences_after_gate": semantic_replay_summary.get(
+                    "missing_occurrences_after_gate"
+                ),
+                "missing_proxy_t_after_gate": semantic_replay_summary.get(
+                    "missing_proxy_t_after_gate"
+                ),
+                "validation_error_count": semantic_replay_summary.get("validation_error_count"),
+                "semantic_replay_packet_row_count": len(
+                    semantic_replay_payload.get("semantic_replay_packets", [])
+                ),
+            }
+        )
+        if semantic_replay_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 semantic replay packet report must have benchmark_id B1")
+        if semantic_replay_payload.get("method") != "b1_b7_cone01_semantic_replay_packet_gate_v0":
+            errors.append("B1/B7 cone_01 semantic replay packet method mismatch")
+        if semantic_replay_payload.get("status") != "cone01_semantic_replay_packet_constructed_not_solved":
+            errors.append("B1/B7 cone_01 semantic replay packet status mismatch")
+        if (
+            semantic_replay_payload.get("model_status")
+            != "blocked_carrier_cnot_stacks_are_bounded_two_qubit_semantic_replay_targets"
+        ):
+            errors.append("B1/B7 cone_01 semantic replay packet model_status mismatch")
+        if (
+            semantic_replay_payload.get("source_method")
+            != "b1_b7_cone01_carrier_interleaving_commutation_gate_v0"
+        ):
+            errors.append("B1/B7 cone_01 semantic replay packet source method mismatch")
+        for field in [
+            "semantic_replay_packet_count",
+            "two_qubit_packet_count",
+            "min_support_qubit_count",
+            "max_support_qubit_count",
+            "total_window_gate_count",
+            "total_cx_count",
+            "total_single_qubit_gate_count",
+            "unique_semantic_fingerprint_count",
+            "all_packets_have_single_cx_edge_family",
+            "all_packets_have_exact_matrix_target",
+            "semantic_replay_targets_constructed",
+            "semantic_replay_certificate_claimed",
+            "shorter_rewrite_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+            "accepted_occurrence_removal",
+            "accepted_proxy_t_reduction",
+            "missing_occurrences_after_gate",
+            "missing_proxy_t_after_gate",
+            "validation_error_count",
+        ]:
+            if semantic_replay_summary.get(field) != b1_b7_cone01_semantic_replay_packet_manifest.get(field):
+                errors.append(f"B1/B7 cone_01 semantic replay packet {field} mismatch")
+        expected_semantic_replay_fields = {
+            "semantic_replay_packet_count": 3,
+            "two_qubit_packet_count": 3,
+            "min_support_qubit_count": 2,
+            "max_support_qubit_count": 2,
+            "total_window_gate_count": 32,
+            "total_cx_count": 14,
+            "total_single_qubit_gate_count": 18,
+            "unique_semantic_fingerprint_count": 3,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_semantic_replay_fields.items():
+            if semantic_replay_summary.get(field) != value:
+                errors.append(f"B1/B7 cone_01 semantic replay packet expected {field}={value}")
+        for field in [
+            "all_packets_have_single_cx_edge_family",
+            "all_packets_have_exact_matrix_target",
+            "semantic_replay_targets_constructed",
+        ]:
+            if semantic_replay_summary.get(field) is not True:
+                errors.append(f"B1/B7 cone_01 semantic replay packet {field} must be true")
+        for field in [
+            "semantic_replay_certificate_claimed",
+            "shorter_rewrite_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if (
+                semantic_replay_summary.get(field) is not False
+                or semantic_replay_claims.get(field) is not False
+            ):
+                errors.append(f"B1/B7 cone_01 semantic replay packet must not claim {field}")
+        if len(semantic_replay_payload.get("semantic_replay_packets", [])) != 3:
+            errors.append("B1/B7 cone_01 semantic replay packet row count must be 3")
+        for packet in semantic_replay_payload.get("semantic_replay_packets", []):
+            if packet.get("support_qubit_count") != 2:
+                errors.append("B1/B7 cone_01 semantic replay packets must remain two-qubit")
+            if packet.get("semantic_matrix", {}).get("dimension") != 4:
+                errors.append("B1/B7 cone_01 semantic replay packet matrix dimension must be 4")
+            if packet.get("accepted_occurrence_removal") != 0:
+                errors.append("B1/B7 cone_01 semantic replay packets must not remove occurrences")
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 semantic replay packet report: "
+            f"{b1_b7_cone01_semantic_replay_packet_path}"
         )
 
     b1_b7_cone01_theta_sharing = {
@@ -14381,6 +14556,7 @@ def audit(root: Path) -> dict:
             "b7_cone01_carrier_interleaving_commutation_gate": (
                 b1_b7_cone01_carrier_interleaving_commutation
             ),
+            "b7_cone01_semantic_replay_packet_gate": b1_b7_cone01_semantic_replay_packet,
             "b7_cone01_theta_sharing_ledger_gate": b1_b7_cone01_theta_sharing,
             "b7_cone01_shared_theta_synthesis_object_gate": b1_b7_cone01_shared_theta_synthesis_object,
             "b7_cone01_shared_theta_replay_verifier_gate": b1_b7_cone01_shared_theta_replay_verifier,
@@ -14609,6 +14785,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_carrier_interleaving_commutation_gate": str(
                 b1_b7_cone01_carrier_interleaving_commutation_path
+            ),
+            "b1_b7_cone01_semantic_replay_packet_gate": str(
+                b1_b7_cone01_semantic_replay_packet_path
             ),
             "b1_b7_cone01_theta_sharing_ledger_gate": str(b1_b7_cone01_theta_sharing_path),
             "b1_b7_cone01_shared_theta_synthesis_object_gate": str(
@@ -15346,6 +15525,17 @@ def markdown_report(report: dict) -> str:
             f"- Interleaving gate passed / accepted occurrence / proxy-T reduction: {report['b1']['b7_cone01_carrier_interleaving_commutation_gate'].get('interleaving_commutation_gate_passed')} / {report['b1']['b7_cone01_carrier_interleaving_commutation_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_carrier_interleaving_commutation_gate'].get('accepted_proxy_t_reduction')}",
             f"- Commutation/semantic/rewrite/resource/B7 claims: {report['b1']['b7_cone01_carrier_interleaving_commutation_gate'].get('commutation_clearance_claimed')} / {report['b1']['b7_cone01_carrier_interleaving_commutation_gate'].get('semantic_certificate_claimed')} / {report['b1']['b7_cone01_carrier_interleaving_commutation_gate'].get('rewrite_claimed')} / {report['b1']['b7_cone01_carrier_interleaving_commutation_gate'].get('resource_saving_claimed')} / {report['b1']['b7_cone01_carrier_interleaving_commutation_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_carrier_interleaving_commutation_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Semantic Replay Packet Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('status')}",
+            f"- Replay packets / two-qubit packets / support range: {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('semantic_replay_packet_count')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('two_qubit_packet_count')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('min_support_qubit_count')}-{report['b1']['b7_cone01_semantic_replay_packet_gate'].get('max_support_qubit_count')}",
+            f"- Window gates / CNOT / 1Q gates: {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('total_window_gate_count')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('total_cx_count')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('total_single_qubit_gate_count')}",
+            f"- Unique semantic fingerprints / exact matrix targets: {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('unique_semantic_fingerprint_count')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('all_packets_have_exact_matrix_target')}",
+            f"- Targets constructed / certificate / rewrite / resource / B7 claims: {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('semantic_replay_targets_constructed')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('semantic_replay_certificate_claimed')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('shorter_rewrite_claimed')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('resource_saving_claimed')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Accepted occurrence / proxy-T reduction: {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('accepted_proxy_t_reduction')}",
+            f"- Validation errors: {report['b1']['b7_cone01_semantic_replay_packet_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Theta-Sharing Ledger Gate",
             "",

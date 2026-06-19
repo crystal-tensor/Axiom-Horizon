@@ -280,6 +280,18 @@ certified windows. There is still no KAK theorem, no occurrence-removing
 rewrite certificate, no semantic certificate, no accepted physical cost model,
 and no B7 resource-saving claim.
 
+B1/B7 has now pushed that `cone_01` carrier route through blocker-stack,
+motif, CNOT-parity, interleaving-commutation, and semantic-replay-packet gates.
+The cheap routes are rejected: the current blocked source-aligned candidates
+have 11 repeated same-edge blocker pairs, 0 clean adjacent CNOT cancellations,
+18 interleaving single-qubit operations, 4 target-side phase obstructions, and
+7 non-diagonal interleaving obstructions. The latest packet gate is constructive
+but still not a solution: it turns the 3 blocked carrier CNOT stacks into exact
+bounded two-qubit replay targets with 4x4 matrix fingerprints, covering 32
+window gates total, 14 CNOTs, 18 single-qubit gates, and 3 distinct semantic
+fingerprints. No shorter replay, occurrence removal, proxy-T reduction, B7
+ledger improvement, or solved-problem claim is made.
+
 ## Repository Layout
 
 ```text

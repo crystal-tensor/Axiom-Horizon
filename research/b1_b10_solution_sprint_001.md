@@ -1500,6 +1500,18 @@ occurrence removal, proxy-T reduction, and B7 ledger improvement remain 0. The
 next `T-B1-004` route must stop relying on cheap CNOT/local-gate clearance and
 move into real CNOT-stack semantic synthesis/replay.
 
+**Sprint update 18ae:** `T-B1-004ae` is now merged as a semantic replay packet
+construction gate. The new artifact
+`research/B1_B7_cone01_semantic_replay_packet_gate.md` consumes the
+interleaving-commutation gate and turns the 3 blocked source-aligned carrier
+CNOT stacks into exact bounded replay targets. All 3 packets are two-qubit
+targets with exact 4x4 matrix fingerprints, covering 32 window gates total: 14
+CNOTs and 18 single-qubit gates. The 3 packets have 3 distinct semantic
+fingerprints. This is progress because the next synthesis/search step now has
+precise local unitary targets. It is not a solution: semantic replay
+certificates, shorter rewrites, accepted occurrence removal, proxy-T reduction,
+and B7 ledger improvement remain 0.
+
 ## Sprint Promotion Matrix
 
 | Track | Can become paper after this sprint? | Can become patent after this sprint? | Can become fundable/tool after this sprint? |

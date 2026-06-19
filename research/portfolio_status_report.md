@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 59, 'B2': 48, 'B3': 30, 'B4': 27, 'B5': 27, 'B6': 21, 'B7': 56, 'B8': 39, 'B9': 15, 'B10': 50}
+- Maturity scores: {'B1': 60, 'B2': 48, 'B3': 30, 'B4': 27, 'B5': 27, 'B6': 21, 'B7': 57, 'B8': 39, 'B9': 15, 'B10': 50}
 
 ## Technical Resolution Program
 
@@ -506,6 +506,17 @@ Overall audit: PASS
 - Candidates with non-diagonal interleavings / accepted commutation clearances: 3 / 0
 - Interleaving gate passed / accepted occurrence / proxy-T reduction: False / 0 / 0
 - Commutation/semantic/rewrite/resource/B7 claims: False / False / False / False / False
+- Validation errors: 0
+
+## B1/B7 cone_01 Semantic Replay Packet Gate
+
+- Exists: True
+- Status: cone01_semantic_replay_packet_constructed_not_solved
+- Replay packets / two-qubit packets / support range: 3 / 3 / 2-2
+- Window gates / CNOT / 1Q gates: 32 / 14 / 18
+- Unique semantic fingerprints / exact matrix targets: 3 / True
+- Targets constructed / certificate / rewrite / resource / B7 claims: True / False / False / False / False
+- Accepted occurrence / proxy-T reduction: 0 / 0
 - Validation errors: 0
 
 ## B1/B7 cone_01 Theta-Sharing Ledger Gate
