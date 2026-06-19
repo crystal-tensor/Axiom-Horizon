@@ -144,6 +144,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_local_invariant_obligation_path = (
         results / "B1_B7_cone01_local_invariant_obligation_gate_v0.json"
     )
+    b1_b7_cone01_invariant_flat_residual_path = (
+        results / "B1_B7_cone01_invariant_flat_residual_gate_v0.json"
+    )
     b1_b7_cone01_theta_sharing_path = results / "B1_B7_cone01_theta_sharing_ledger_gate_v0.json"
     b1_b7_cone01_shared_theta_synthesis_object_path = (
         results / "B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json"
@@ -643,6 +646,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_local_invariant_obligation_manifest = current_results.get(
         "b1_b7_cone01_local_invariant_obligation_gate_v0"
+    )
+    b1_b7_cone01_invariant_flat_residual_manifest = current_results.get(
+        "b1_b7_cone01_invariant_flat_residual_gate_v0"
     )
     b1_b7_cone01_theta_sharing_manifest = current_results.get(
         "b1_b7_cone01_theta_sharing_ledger_gate_v0"
@@ -1813,6 +1819,162 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 local-invariant gate report: "
             f"{b1_b7_cone01_local_invariant_obligation_path}"
+        )
+
+    b1_b7_cone01_invariant_flat_residual = {
+        "path": str(b1_b7_cone01_invariant_flat_residual_path),
+        "exists": b1_b7_cone01_invariant_flat_residual_path.exists(),
+    }
+    if not b1_b7_cone01_invariant_flat_residual_manifest:
+        errors.append("B1 manifest missing current result: b1_b7_cone01_invariant_flat_residual_gate_v0")
+    else:
+        if (
+            b1_b7_cone01_invariant_flat_residual_manifest.get("status")
+            != "cone01_invariant_flat_residual_obligation_not_rewrite_certificate"
+        ):
+            errors.append("B1/B7 cone_01 invariant-flat residual gate must remain an obligation packet")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_invariant_flat_residual_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    f"B1/B7 cone_01 invariant-flat residual gate missing existing {field} path: {value}"
+                )
+    if b1_b7_cone01_invariant_flat_residual_path.exists():
+        flat_payload = json.loads(read(b1_b7_cone01_invariant_flat_residual_path))
+        flat_summary = flat_payload.get("summary", {})
+        flat_claims = flat_payload.get("claim_boundary", {})
+        b1_b7_cone01_invariant_flat_residual.update(
+            {
+                "status": flat_payload.get("status"),
+                "model_status": flat_payload.get("model_status"),
+                "method": flat_payload.get("method"),
+                "workload": flat_payload.get("workload"),
+                "source_method": flat_payload.get("source_method"),
+                "candidate_window_count": flat_summary.get("candidate_window_count"),
+                "local_equivalence_sensitive_count": flat_summary.get(
+                    "local_equivalence_sensitive_count"
+                ),
+                "invariant_flat_window_count": flat_summary.get("invariant_flat_window_count"),
+                "distinct_flat_theta_count": flat_summary.get("distinct_flat_theta_count"),
+                "distinct_flat_pattern_count": flat_summary.get("distinct_flat_pattern_count"),
+                "largest_flat_theta_group_count": flat_summary.get("largest_flat_theta_group_count"),
+                "all_flat_windows_share_single_partner": flat_summary.get(
+                    "all_flat_windows_share_single_partner"
+                ),
+                "flat_window_partner_counts": flat_summary.get("flat_window_partner_counts"),
+                "required_occurrence_removals_for_b7_target": flat_summary.get(
+                    "required_occurrence_removals_for_b7_target"
+                ),
+                "proxy_t_per_occurrence": flat_summary.get("proxy_t_per_occurrence"),
+                "target_proxy_t_ledger_reduction_for_gcm_h6_1_20": flat_summary.get(
+                    "target_proxy_t_ledger_reduction_for_gcm_h6_1_20"
+                ),
+                "max_occurrence_removal_if_all_flat_windows_solved": flat_summary.get(
+                    "max_occurrence_removal_if_all_flat_windows_solved"
+                ),
+                "max_proxy_t_reduction_if_all_flat_windows_solved": flat_summary.get(
+                    "max_proxy_t_reduction_if_all_flat_windows_solved"
+                ),
+                "all_flat_windows_solved_clears_b7_target": flat_summary.get(
+                    "all_flat_windows_solved_clears_b7_target"
+                ),
+                "missing_occurrences_after_all_flat_windows_solved": flat_summary.get(
+                    "missing_occurrences_after_all_flat_windows_solved"
+                ),
+                "missing_proxy_t_after_all_flat_windows_solved": flat_summary.get(
+                    "missing_proxy_t_after_all_flat_windows_solved"
+                ),
+                "rewrite_claimed": flat_claims.get("rewrite_claimed"),
+                "resource_saving_claimed": flat_claims.get("resource_saving_claimed"),
+                "semantic_certificate_claimed": flat_claims.get("semantic_certificate_claimed"),
+                "kak_theorem_claimed": flat_claims.get("kak_theorem_claimed"),
+                "b7_ledger_improvement_claimed": flat_claims.get("b7_ledger_improvement_claimed"),
+                "validation_error_count": flat_summary.get("validation_error_count"),
+                "residual_window_packet_count": len(flat_payload.get("residual_window_packets", [])),
+                "flat_pattern_group_count": len(flat_payload.get("flat_pattern_groups", [])),
+            }
+        )
+        if flat_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 invariant-flat residual gate report must have benchmark_id B1")
+        if flat_payload.get("method") != "b1_b7_cone01_invariant_flat_residual_gate_v0":
+            errors.append("B1/B7 cone_01 invariant-flat residual gate method mismatch")
+        if flat_payload.get("status") != "cone01_invariant_flat_residual_obligation_not_rewrite_certificate":
+            errors.append("B1/B7 cone_01 invariant-flat residual gate status mismatch")
+        if flat_payload.get("model_status") != "residual_flat_window_work_packet_not_semantic_certificate":
+            errors.append("B1/B7 cone_01 invariant-flat residual gate model_status mismatch")
+        if flat_payload.get("source_method") != "b1_b7_cone01_local_invariant_obligation_gate_v0":
+            errors.append("B1/B7 cone_01 invariant-flat residual gate source method mismatch")
+        for field in [
+            "candidate_window_count",
+            "local_equivalence_sensitive_count",
+            "invariant_flat_window_count",
+            "distinct_flat_theta_count",
+            "distinct_flat_pattern_count",
+            "largest_flat_theta_group_count",
+            "all_flat_windows_share_single_partner",
+            "flat_window_partner_counts",
+            "required_occurrence_removals_for_b7_target",
+            "proxy_t_per_occurrence",
+            "target_proxy_t_ledger_reduction_for_gcm_h6_1_20",
+            "max_occurrence_removal_if_all_flat_windows_solved",
+            "max_proxy_t_reduction_if_all_flat_windows_solved",
+            "all_flat_windows_solved_clears_b7_target",
+            "missing_occurrences_after_all_flat_windows_solved",
+            "missing_proxy_t_after_all_flat_windows_solved",
+            "rewrite_claimed",
+            "resource_saving_claimed",
+            "semantic_certificate_claimed",
+            "kak_theorem_claimed",
+            "b7_ledger_improvement_claimed",
+            "validation_error_count",
+        ]:
+            if flat_summary.get(field) != b1_b7_cone01_invariant_flat_residual_manifest.get(field):
+                errors.append(f"B1/B7 cone_01 invariant-flat residual gate {field} mismatch")
+        if flat_summary.get("candidate_window_count") != 35:
+            errors.append("B1/B7 cone_01 invariant-flat residual gate must inspect 35 windows")
+        if flat_summary.get("local_equivalence_sensitive_count") != 24:
+            errors.append("B1/B7 cone_01 invariant-flat residual gate must preserve 24 sensitive windows")
+        if flat_summary.get("invariant_flat_window_count") != 11:
+            errors.append("B1/B7 cone_01 invariant-flat residual gate must isolate 11 flat windows")
+        if flat_summary.get("distinct_flat_theta_count") != 3:
+            errors.append("B1/B7 cone_01 invariant-flat residual gate must expose 3 flat theta groups")
+        if flat_summary.get("distinct_flat_pattern_count") != 3:
+            errors.append("B1/B7 cone_01 invariant-flat residual gate must expose 3 flat pattern groups")
+        if flat_summary.get("largest_flat_theta_group_count") != 8:
+            errors.append("B1/B7 cone_01 invariant-flat residual gate largest theta group must be 8")
+        if flat_summary.get("all_flat_windows_share_single_partner") is not True:
+            errors.append("B1/B7 cone_01 invariant-flat windows must share partner q[14]")
+        if flat_summary.get("flat_window_partner_counts") != {"14": 11}:
+            errors.append("B1/B7 cone_01 invariant-flat partner count must remain {'14': 11}")
+        if flat_summary.get("max_occurrence_removal_if_all_flat_windows_solved") != 11:
+            errors.append("B1/B7 cone_01 invariant-flat max occurrence removal must remain 11")
+        if flat_summary.get("max_proxy_t_reduction_if_all_flat_windows_solved") != 220:
+            errors.append("B1/B7 cone_01 invariant-flat max proxy-T reduction must remain 220")
+        if flat_summary.get("all_flat_windows_solved_clears_b7_target") is not False:
+            errors.append("B1/B7 cone_01 invariant-flat residual gate must not clear the B7 target")
+        if flat_summary.get("missing_occurrences_after_all_flat_windows_solved") != 19:
+            errors.append("B1/B7 cone_01 invariant-flat missing occurrence count must remain 19")
+        if flat_summary.get("missing_proxy_t_after_all_flat_windows_solved") != 380:
+            errors.append("B1/B7 cone_01 invariant-flat missing proxy-T count must remain 380")
+        if len(flat_payload.get("residual_window_packets", [])) != 11:
+            errors.append("B1/B7 cone_01 invariant-flat residual packet count must remain 11")
+        if len(flat_payload.get("flat_pattern_groups", [])) != 3:
+            errors.append("B1/B7 cone_01 invariant-flat pattern group count must remain 3")
+        for field in [
+            "rewrite_claimed",
+            "resource_saving_claimed",
+            "semantic_certificate_claimed",
+            "kak_theorem_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if flat_summary.get(field) is not False or flat_claims.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 invariant-flat residual gate must not claim {field}")
+        if flat_summary.get("validation_error_count") != 0:
+            errors.append("B1/B7 cone_01 invariant-flat residual gate validation errors must remain zero")
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 invariant-flat residual gate report: "
+            f"{b1_b7_cone01_invariant_flat_residual_path}"
         )
 
     b1_b7_cone01_theta_sharing = {
@@ -11712,6 +11874,7 @@ def audit(root: Path) -> dict:
             "b7_cone01_euler_reabsorption_gate": b1_b7_cone01_euler_reabsorption,
             "b7_cone01_parameter_transfer_gate": b1_b7_cone01_parameter_transfer,
             "b7_cone01_local_invariant_obligation_gate": b1_b7_cone01_local_invariant_obligation,
+            "b7_cone01_invariant_flat_residual_gate": b1_b7_cone01_invariant_flat_residual,
             "b7_cone01_theta_sharing_ledger_gate": b1_b7_cone01_theta_sharing,
             "b7_cone01_shared_theta_synthesis_object_gate": b1_b7_cone01_shared_theta_synthesis_object,
             "b7_cone01_shared_theta_replay_verifier_gate": b1_b7_cone01_shared_theta_replay_verifier,
@@ -11895,6 +12058,9 @@ def audit(root: Path) -> dict:
             "b1_b7_cone01_parameter_transfer_gate": str(b1_b7_cone01_parameter_transfer_path),
             "b1_b7_cone01_local_invariant_obligation_gate": str(
                 b1_b7_cone01_local_invariant_obligation_path
+            ),
+            "b1_b7_cone01_invariant_flat_residual_gate": str(
+                b1_b7_cone01_invariant_flat_residual_path
             ),
             "b1_b7_cone01_theta_sharing_ledger_gate": str(b1_b7_cone01_theta_sharing_path),
             "b1_b7_cone01_shared_theta_synthesis_object_gate": str(
@@ -12440,6 +12606,20 @@ def markdown_report(report: dict) -> str:
             f"- Nearest-grid invariant distance min / median / max: {report['b1']['b7_cone01_local_invariant_obligation_gate'].get('min_nearest_grid_invariant_distance')} / {report['b1']['b7_cone01_local_invariant_obligation_gate'].get('median_nearest_grid_invariant_distance')} / {report['b1']['b7_cone01_local_invariant_obligation_gate'].get('max_nearest_grid_invariant_distance')}",
             f"- Rewrite/resource/semantic/KAK/obstruction claims: {report['b1']['b7_cone01_local_invariant_obligation_gate'].get('rewrite_claimed')} / {report['b1']['b7_cone01_local_invariant_obligation_gate'].get('resource_saving_claimed')} / {report['b1']['b7_cone01_local_invariant_obligation_gate'].get('semantic_certificate_claimed')} / {report['b1']['b7_cone01_local_invariant_obligation_gate'].get('kak_theorem_claimed')} / {report['b1']['b7_cone01_local_invariant_obligation_gate'].get('obstruction_theorem_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_local_invariant_obligation_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Invariant-Flat Residual Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('status')}",
+            f"- Candidate / sensitive / invariant-flat windows: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('candidate_window_count')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('local_equivalence_sensitive_count')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('invariant_flat_window_count')}",
+            f"- Flat theta groups / flat pattern groups / largest theta group: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('distinct_flat_theta_count')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('distinct_flat_pattern_count')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('largest_flat_theta_group_count')}",
+            f"- Shared flat-window partner / partner counts: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('all_flat_windows_share_single_partner')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('flat_window_partner_counts')}",
+            f"- Max occurrence/proxy-T reduction if all flat windows are solved: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('max_occurrence_removal_if_all_flat_windows_solved')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('max_proxy_t_reduction_if_all_flat_windows_solved')}",
+            f"- All flat windows solved clears B7 target: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('all_flat_windows_solved_clears_b7_target')}",
+            f"- Missing occurrences/proxy-T after all flat windows are solved: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('missing_occurrences_after_all_flat_windows_solved')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('missing_proxy_t_after_all_flat_windows_solved')}",
+            f"- Residual packets / pattern groups: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('residual_window_packet_count')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('flat_pattern_group_count')}",
+            f"- Rewrite/resource/semantic/KAK/B7-ledger claims: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('rewrite_claimed')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('resource_saving_claimed')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('semantic_certificate_claimed')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('kak_theorem_claimed')} / {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_invariant_flat_residual_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Theta-Sharing Ledger Gate",
             "",

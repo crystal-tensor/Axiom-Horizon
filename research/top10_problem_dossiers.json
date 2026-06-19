@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "last_updated": "2026-06-18",
+  "last_updated": "2026-06-19",
   "purpose": "Structured dossiers for the Top 10 quantum research attack directions.",
   "progress_scale": {
     "0_10": "Problem framed; no credible reproducible artifact yet.",
@@ -29,17 +29,18 @@
         "SABRE mapping"
       ],
       "our_solution": "Proof-logged local rewrites plus measurement-aware virtual-SWAP elimination, followed by post-virtual-SWAP 1Q resynthesis to test whether B1 can also touch non-Clifford/T-resource proxies.",
-      "completed": "Shared-theta object, replay, logical layout/routing, factory-amortization, shared-error budget, independent-baseline, and refreshed-B7-ledger rejection scaffolds are present: 4 objects, 35 replayed occurrences, 35 route packets, total/max logical hops 139/11, 35-to-4 synthesis-request sharing, 31 amortized saved compiles, gross proxy-T pressure delta 620, 1e-6 aggregate synthesis-error budget, 4 correlation groups, 0 double-counted occurrences/proxy-T pressure, and an explicit CM-08 rejection. Cost-model gate is 6/8 passed and 2/8 failed, with no B7 ledger reduction. The local-equivalence invariant obligation gate adds a magic-basis determinant-normalized trace fingerprint: 24/35 cone_01 windows are invariant-sensitive, 24 mismatch the nearest pi/4-grid invariant, and 11 remain invariant-flat. This blocks local-only absorption for 24 windows but is not a rewrite, KAK theorem, obstruction theorem, semantic certificate, or resource-saving claim.",
+      "completed": "Shared-theta object, replay, logical layout/routing, factory-amortization, shared-error budget, independent-baseline, and refreshed-B7-ledger rejection scaffolds are present: 4 objects, 35 replayed occurrences, 35 route packets, total/max logical hops 139/11, 35-to-4 synthesis-request sharing, 31 amortized saved compiles, gross proxy-T pressure delta 620, 1e-6 aggregate synthesis-error budget, 4 correlation groups, 0 double-counted occurrences/proxy-T pressure, and an explicit CM-08 rejection. Cost-model gate is 6/8 passed and 2/8 failed, with no B7 ledger reduction. The local-equivalence invariant obligation gate adds a magic-basis determinant-normalized trace fingerprint: 24/35 cone_01 windows are invariant-sensitive, 24 mismatch the nearest pi/4-grid invariant, and 11 remain invariant-flat. This blocks local-only absorption for 24 windows but is not a rewrite, KAK theorem, obstruction theorem, semantic certificate, or resource-saving claim. The invariant-flat residual gate turns the 11 flat windows into 3 normalized work packets, all sharing partner q[14], and proves that solving this subset alone can remove at most 11 occurrences / 220 proxy-T, leaving 19 occurrences / 380 proxy-T missing for the B7 target.",
       "remaining_steps": [
         "calibrated/live-like heavy-hex baseline",
         "dynamic circuit and measurement/reset semantics",
         "broader replayable cone_01 semantic rewrite certificate, KAK/Clifford scaffold, scoped obstruction report, or CM-08 for the shared-theta physical cost model while explicitly carrying, sharing, or eliminating theta across at least 30 arbitrary rotation occurrences / 600 proxy-T units",
         "close the 11 invariant-flat windows with stronger invariant or synthesis evidence",
         "broader benchmarks",
-        "independent certificate package"
+        "independent certificate package",
+        "solve the 3 invariant-flat residual pattern groups only as part of a larger 30-occurrence certificate set"
       ],
-      "maturity_score": 53,
-      "remaining": "Need occurrence-removing semantic certificates, closure of the 11 invariant-flat windows, or a reversed CM-08 with accepted physical model evidence before any physical theta-sharing cost model can count."
+      "maturity_score": 54,
+      "remaining": "Need occurrence-removing semantic certificates, including the 3 invariant-flat residual pattern groups plus at least 19 additional occurrences, or a reversed CM-08 with accepted physical model evidence before any physical theta-sharing cost model can count."
     },
     {
       "b_id": "B2",
@@ -189,7 +190,7 @@
         "compiler-resource co-design"
       ],
       "our_solution": "Bridge B1 circuit savings and B2 target-volume assumptions into a workload-level dependency schedule, then add workload-DAG, factory-throughput, logical T-resource, FT synthesis, and occurrence-level rewrite-certification pressure tests.",
-      "completed": "B1/B7 shared-theta scaffolding now includes object proposals, replay verification, logical layout/routing packets, factory-amortization accounting, shared-error budget accounting, independent-baseline accounting, and an explicit refreshed-B7-ledger rejection. CM-02 through CM-07 pass, CM-08 fails, cost model remains unaccepted at 6/8 passed and 2/8 failed, B7 ledger reduction 0. The local-equivalence invariant obligation gate now blocks local-only absorption for 24/35 cone_01 windows, but 11 windows remain invariant-flat and B7 ledger reduction stays 0.",
+      "completed": "B1/B7 shared-theta scaffolding now includes object proposals, replay verification, logical layout/routing packets, factory-amortization accounting, shared-error budget accounting, independent-baseline accounting, and an explicit refreshed-B7-ledger rejection. CM-02 through CM-07 pass, CM-08 fails, cost model remains unaccepted at 6/8 passed and 2/8 failed, B7 ledger reduction 0. The local-equivalence invariant obligation gate now blocks local-only absorption for 24/35 cone_01 windows, but 11 windows remain invariant-flat and B7 ledger reduction stays 0. The B1-linked invariant-flat residual gate isolates the remaining 11 cone_01 windows into 3 work packets and proves this subset alone cannot clear the 30-occurrence B7 target.",
       "remaining_steps": [
         "symbolic KAK/Clifford-scaffold proof, scoped obstruction, certified broader cone_01 occurrence-removing rewrite for gcm_h6 with explicit theta-carrier accounting, or the remaining CM gates for the shared-theta physical cost model after CM-02/CM-03",
         "close the 11 invariant-flat windows with stronger invariant or synthesis evidence",
@@ -197,10 +198,11 @@
         "data-path versus T-factory claim separation",
         "physical layout constraints",
         "feed-forward modeling",
-        "full algorithm resource ledger"
+        "full algorithm resource ledger",
+        "accepted 30-occurrence cone_01 certificate set, with the 3 flat residual pattern groups counted only if semantic/resource certificates are supplied"
       ],
-      "maturity_score": 50,
-      "remaining": "Need accepted physical device layout, physical factory schedule, device-calibrated validation, a passing refreshed B7 ledger, closure of the 11 invariant-flat windows, or a certified occurrence-removing cone_01 rewrite."
+      "maturity_score": 51,
+      "remaining": "Need occurrence-removing certificates for at least 30 cone_01 windows or an accepted physical cost model; the 11-window invariant-flat residual subset is explicit but insufficient alone."
     },
     {
       "b_id": "B8",

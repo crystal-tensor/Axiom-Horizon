@@ -1,6 +1,6 @@
 # Top 10 Problem Dossiers v0.1
 
-Last updated: 2026-06-17
+Last updated: 2026-06-19
 
 Purpose: turn the Top 10 attack directions into reviewable research dossiers.
 Each dossier states what we are trying to solve, why the problem remains hard,
@@ -110,6 +110,10 @@ remain invariant-flat. This blocks a local-only absorption interpretation for
 24 windows, but it does not reach the 30-window B7 target and is not a KAK
 theorem, rewrite certificate, semantic certificate, obstruction theorem, or
 resource-saving claim.
+The invariant-flat residual gate then turns those 11 flat windows into 3
+normalized work packets, all sharing partner q[14]. Even if all 11 were solved,
+they would remove at most 11 occurrences / 220 proxy-T units and would still
+miss the B7 1.20x target by 19 occurrences / 380 proxy-T units.
 
 **Remaining path to a serious solution:** connect to calibrated/live-like
 heavy-hex baselines; cover dynamic circuits and reset/measurement semantics;
@@ -118,11 +122,11 @@ KAK/Clifford scaffold, or scoped obstruction report that explicitly carries,
 shares, or eliminates theta while addressing at least 30 arbitrary rotation
 occurrences / 600
 proxy-T units, close the 11 invariant-flat windows with stronger invariant or
-synthesis evidence, or reverse the rejected CM-08 with accepted physical model
+synthesis evidence only as part of a larger 30-occurrence certificate set, or reverse the rejected CM-08 with accepted physical model
 evidence after CM-02/CM-07; broaden benchmarks; package certificates for independent
 reproduction.
 
-**Current internal maturity:** 53/100.
+**Current internal maturity:** 54/100.
 
 ## B2: Low-Overhead Quantum Error Correction
 
@@ -609,19 +613,22 @@ The local-equivalence invariant obligation gate now blocks local-only
 absorption for 24 of the 35 `cone_01` windows using a magic-basis
 determinant-normalized trace fingerprint, but 11 windows remain invariant-flat
 and the 30-window B7 threshold remains uncleared.
+The invariant-flat residual gate now isolates those 11 windows into 3 normalized
+work packets and proves that this subset alone can cover only 11/30 required
+occurrence removals, leaving 19 occurrences / 380 proxy-T missing.
 
 **Remaining path to a serious solution:** produce a symbolic KAK/Clifford-
 scaffold proof, scoped obstruction, or certified broader `cone_01`
 occurrence-removing rewrite for `gcm_h6` with explicit theta-carrier
-accounting, close the 11 invariant-flat windows with stronger invariant or
-synthesis evidence, or reverse the rejected CM-08 with accepted physical model evidence after CM-02/CM-07; strengthen B1 non-Clifford/T-depth
+accounting, solve the 3 invariant-flat residual pattern groups only as part of
+a larger 30-occurrence certificate set, or reverse the rejected CM-08 with accepted physical model evidence after CM-02/CM-07; strengthen B1 non-Clifford/T-depth
 optimization until a certified occurrence-removing rewrite improves minimum
 factory STV;
 separate claims by data-path versus T-factory dominated regimes; include
 physical layout, routing, and feed-forward constraints; run a full algorithm
 resource ledger.
 
-**Current internal maturity:** 50/100.
+**Current internal maturity:** 51/100.
 
 ## B8: Classical Verification of Quantum Outputs
 

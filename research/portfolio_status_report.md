@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 53, 'B2': 48, 'B3': 30, 'B4': 27, 'B5': 27, 'B6': 21, 'B7': 50, 'B8': 39, 'B9': 15, 'B10': 50}
+- Maturity scores: {'B1': 54, 'B2': 48, 'B3': 30, 'B4': 27, 'B5': 27, 'B6': 21, 'B7': 51, 'B8': 39, 'B9': 15, 'B10': 50}
 
 ## Technical Resolution Program
 
@@ -314,6 +314,20 @@ Overall audit: PASS
 - Invariant derivative min / median / max: 0.0 / 0.7128046122151909 / 2.006347280726594
 - Nearest-grid invariant distance min / median / max: 0.0 / 0.13555913939041783 / 0.6976885899513073
 - Rewrite/resource/semantic/KAK/obstruction claims: False / False / False / False / False
+- Validation errors: 0
+
+## B1/B7 cone_01 Invariant-Flat Residual Gate
+
+- Exists: True
+- Status: cone01_invariant_flat_residual_obligation_not_rewrite_certificate
+- Candidate / sensitive / invariant-flat windows: 35 / 24 / 11
+- Flat theta groups / flat pattern groups / largest theta group: 3 / 3 / 8
+- Shared flat-window partner / partner counts: True / {'14': 11}
+- Max occurrence/proxy-T reduction if all flat windows are solved: 11 / 220
+- All flat windows solved clears B7 target: False
+- Missing occurrences/proxy-T after all flat windows are solved: 19 / 380
+- Residual packets / pattern groups: 11 / 3
+- Rewrite/resource/semantic/KAK/B7-ledger claims: False / False / False / False / False
 - Validation errors: 0
 
 ## B1/B7 cone_01 Theta-Sharing Ledger Gate

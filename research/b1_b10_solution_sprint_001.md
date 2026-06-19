@@ -924,6 +924,18 @@ next route must either certify at least 30 occurrence removals, resolve the 11
 invariant-flat windows with a stronger invariant/synthesis scaffold, or produce
 a genuinely accepted physical cost model.
 
+**Sprint update 18p:** `T-B1-004p` is now merged as the invariant-flat residual
+gate for `cone_01`. The new artifact
+`research/B1_B7_cone01_invariant_flat_residual_gate.md` consumes the 11
+invariant-flat windows from `T-B1-004o`, groups them into 3 normalized pattern
+families, and shows that all of them share partner q[14]. The largest flat
+theta group has 8 occurrences, but the important ledger result is negative:
+even if all 11 flat windows were solved, they would remove at most 11
+occurrences / 220 proxy-T units and would still miss the B7 1.20x target by 19
+occurrences / 380 proxy-T units. This keeps the flat-window route as a concrete
+work packet while preventing it from being counted as a rewrite, KAK theorem,
+semantic certificate, resource saving, or B7 ledger improvement.
+
 ## B8: Classical Verification of Quantum Outputs
 
 **Technical target:** keep verifier soundness low under adaptive leakage by
