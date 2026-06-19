@@ -400,6 +400,18 @@ acceptance is 1.0, so public support membership is rejected as protocol
 soundness. The next B4 gate must add verifier-private acceptance predicates,
 real backend properties, or hardware randomized-measurement execution.
 
+**Sprint update 59:** `T-B8-003e` is now merged back into B4 as a
+verifier-private predicate pressure gate. The new tool
+`tools/b4_b8_verifier_private_predicate_gate.py` consumes the support-aware
+spoofer boundary and adds four late-bound private predicate bits to all 36 pilot
+circuits and four spoofer families. Public support-only acceptance was 1.0; the
+hidden-private-predicate analytic acceptance is now 0.0625, a 16x guessing
+burden. The leakage boundary is explicit: one private bit leaked raises
+acceptance to 0.125, and full predicate leakage returns acceptance to 1.0. This
+is useful protocol pressure, but it is not hardware execution, cryptographic
+soundness, protocol soundness, sampling hardness, quantum advantage, or BQP
+separation.
+
 ## B5: Strongly Correlated Matter
 
 **Technical target:** show an accuracy-per-resource improvement on a meaningful
@@ -1122,6 +1134,18 @@ checks the public support template has support acceptance 1.0 under four
 support-aware spoofer families. This keeps the exact-transcript blocker while
 rejecting support-membership soundness. The next B8 gate must add a
 verifier-private predicate, real backend properties, or hardware execution.
+
+**Sprint update 59:** `T-B8-003e` is now merged as the verifier-private
+predicate pressure gate. The result
+`results/B4_B8_verifier_private_predicate_gate_v0.json` and report
+`research/B4_B8_verifier_private_predicate_gate.md` add four private predicate
+bits to the same 36 circuits and four support-aware spoofer families. The
+public support-only verifier had acceptance 1.0; the hidden-private-predicate
+model lowers acceptance to 0.0625, while one-bit leakage raises it to 0.125 and
+full predicate leakage restores 1.0. The next B8 gate must replace this
+analytic pressure model with a formal private challenge protocol, real backend
+properties, or hardware randomized-measurement execution and then rerun
+learned/generative spoofers.
 
 ## B9: Quantum PCP / Local Hamiltonian Hardness
 

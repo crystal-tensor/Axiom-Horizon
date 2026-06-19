@@ -6558,6 +6558,126 @@ def audit(root: Path) -> dict:
             errors.append(f"{label} support-spoofer payload validation-error count mismatch")
         return status
 
+    def audit_verifier_private_predicate(entry, label):
+        status = {}
+        if not entry:
+            warnings.append(f"{label} manifest has no verifier-private predicate gate")
+            return status
+        result_path = entry.get("result")
+        markdown_path = entry.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"{label} private-predicate result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"{label} private-predicate markdown missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        status = {
+            "status": entry.get("status"),
+            "method": entry.get("method"),
+            "circuit_count": payload.get("circuit_count"),
+            "spoofer_count": payload.get("spoofer_count"),
+            "attack_row_count": payload.get("attack_row_count"),
+            "private_predicate_bit_count": payload.get("private_predicate_bit_count"),
+            "max_public_support_acceptance_rate": payload.get("max_public_support_acceptance_rate"),
+            "max_hidden_private_predicate_acceptance_rate": payload.get(
+                "max_hidden_private_predicate_acceptance_rate"
+            ),
+            "max_one_private_bit_leaked_acceptance_rate": payload.get(
+                "max_one_private_bit_leaked_acceptance_rate"
+            ),
+            "max_full_private_predicate_leaked_acceptance_rate": payload.get(
+                "max_full_private_predicate_leaked_acceptance_rate"
+            ),
+            "support_only_to_private_predicate_suppression_factor": payload.get(
+                "support_only_to_private_predicate_suppression_factor"
+            ),
+            "private_predicate_suppresses_support_spoofer": payload.get(
+                "private_predicate_suppresses_support_spoofer"
+            ),
+            "full_predicate_leakage_breaks_private_gate": payload.get(
+                "full_predicate_leakage_breaks_private_gate"
+            ),
+            "hardware_execution_performed": payload.get("hardware_execution_performed"),
+            "quantum_advantage_claimed": payload.get("quantum_advantage_claimed"),
+            "bqp_separation_claimed": payload.get("bqp_separation_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("benchmark_id") != "B4_B8":
+            errors.append(f"{label} private-predicate benchmark_id must be B4_B8")
+        if payload.get("status") != entry.get("status"):
+            errors.append(f"{label} private-predicate status mismatch")
+        if payload.get("method") != entry.get("method"):
+            errors.append(f"{label} private-predicate method mismatch")
+        if payload.get("source_method") != "b4_b8_nonstabilizer_support_spoofer_gate_v0":
+            errors.append(f"{label} private-predicate source method mismatch")
+        for field in [
+            "circuit_count",
+            "spoofer_count",
+            "attack_row_count",
+            "private_predicate_bit_count",
+            "max_public_support_acceptance_rate",
+            "max_hidden_private_predicate_acceptance_rate",
+            "min_hidden_private_predicate_acceptance_rate",
+            "max_one_private_bit_leaked_acceptance_rate",
+            "max_full_private_predicate_leaked_acceptance_rate",
+            "support_only_to_private_predicate_suppression_factor",
+            "private_predicate_suppresses_support_spoofer",
+            "full_predicate_leakage_breaks_private_gate",
+            "verifier_private_predicates_added",
+            "predicate_material_public_to_spoofer",
+            "hardware_execution_performed",
+            "real_backend_properties_used",
+            "quantum_advantage_claimed",
+            "bqp_separation_claimed",
+            "sampling_hardness_proved",
+            "cryptographic_soundness_proved",
+            "protocol_soundness_proved",
+            "acceptance_gate_count",
+            "passed_gate_count",
+            "failed_gate_count",
+        ]:
+            if payload.get(field) != entry.get(field):
+                errors.append(f"{label} private-predicate {field} mismatch")
+        if payload.get("circuit_count") != 36:
+            errors.append(f"{label} private-predicate should cover 36 pilot circuits")
+        if payload.get("spoofer_count") != 4:
+            errors.append(f"{label} private-predicate should cover four spoofer families")
+        if payload.get("attack_row_count") != 144:
+            errors.append(f"{label} private-predicate should emit 144 attack rows")
+        if payload.get("private_predicate_bit_count") != 4:
+            errors.append(f"{label} private-predicate should use four predicate bits")
+        if payload.get("max_public_support_acceptance_rate") != 1.0:
+            errors.append(f"{label} private-predicate source support acceptance should be 1.0")
+        if payload.get("max_hidden_private_predicate_acceptance_rate") != 0.0625:
+            errors.append(f"{label} private-predicate hidden acceptance should be 1/16")
+        if payload.get("support_only_to_private_predicate_suppression_factor") != 16.0:
+            errors.append(f"{label} private-predicate suppression factor should be 16x")
+        if payload.get("private_predicate_suppresses_support_spoofer") is not True:
+            errors.append(f"{label} private-predicate must suppress support spoofers")
+        if payload.get("full_predicate_leakage_breaks_private_gate") is not True:
+            errors.append(f"{label} private-predicate must expose full leakage boundary")
+        for field in [
+            "hardware_execution_performed",
+            "real_backend_properties_used",
+            "quantum_advantage_claimed",
+            "bqp_separation_claimed",
+            "sampling_hardness_proved",
+            "cryptographic_soundness_proved",
+            "protocol_soundness_proved",
+        ]:
+            if payload.get(field) is not False:
+                errors.append(f"{label} private-predicate must keep {field}=False")
+        if len(payload.get("validation_errors", [])) != entry.get("validation_error_count"):
+            errors.append(f"{label} private-predicate validation-error count mismatch")
+        if payload.get("validation_error_count") != len(payload.get("validation_errors", [])):
+            errors.append(f"{label} private-predicate payload validation-error count mismatch")
+        return status
+
     b4_manifest = yaml.safe_load(read(b4_manifest_path))
     b4_results = b4_manifest.get("current_results", {})
     b4_trap = b4_results.get("toy_hidden_trap_protocol_sim_v0")
@@ -6567,6 +6687,7 @@ def audit(root: Path) -> dict:
     b4_late_bound_contract = b4_results.get("late_bound_private_challenge_contract_gate_v0")
     b4_nonstabilizer_pilot = b4_results.get("nonstabilizer_late_bound_transcript_pilot_v0")
     b4_support_spoofer = b4_results.get("nonstabilizer_support_spoofer_gate_v0")
+    b4_private_predicate = b4_results.get("verifier_private_predicate_gate_v0")
     b4_status = {}
     if not b4_trap:
         warnings.append("B4 manifest has no toy hidden-trap protocol result")
@@ -6818,6 +6939,7 @@ def audit(root: Path) -> dict:
     b4_late_bound_contract_status = audit_late_bound_contract(b4_late_bound_contract, "B4")
     b4_nonstabilizer_pilot_status = audit_nonstabilizer_pilot(b4_nonstabilizer_pilot, "B4")
     b4_support_spoofer_status = audit_nonstabilizer_support_spoofer(b4_support_spoofer, "B4")
+    b4_private_predicate_status = audit_verifier_private_predicate(b4_private_predicate, "B4")
 
     b5_manifest = yaml.safe_load(read(b5_manifest_path))
     b5_results = b5_manifest.get("current_results", {})
@@ -9366,6 +9488,7 @@ def audit(root: Path) -> dict:
     b8_late_bound_contract = b8_results.get("late_bound_private_challenge_contract_gate_v0")
     b8_nonstabilizer_pilot = b8_results.get("nonstabilizer_late_bound_transcript_pilot_v0")
     b8_support_spoofer = b8_results.get("nonstabilizer_support_spoofer_gate_v0")
+    b8_private_predicate = b8_results.get("verifier_private_predicate_gate_v0")
     b8_generative_spoofer = b8_results.get("generative_spoofer_refresh_stress_v0")
     b8_status = {}
     if not b8_verifier:
@@ -9662,6 +9785,7 @@ def audit(root: Path) -> dict:
     b8_late_bound_contract_status = audit_late_bound_contract(b8_late_bound_contract, "B8")
     b8_nonstabilizer_pilot_status = audit_nonstabilizer_pilot(b8_nonstabilizer_pilot, "B8")
     b8_support_spoofer_status = audit_nonstabilizer_support_spoofer(b8_support_spoofer, "B8")
+    b8_private_predicate_status = audit_verifier_private_predicate(b8_private_predicate, "B8")
 
     b8_generative_spoofer_status = {}
     if not b8_generative_spoofer:
@@ -11550,6 +11674,7 @@ def audit(root: Path) -> dict:
             "late_bound_private_challenge_contract_gate": b4_late_bound_contract_status,
             "nonstabilizer_late_bound_transcript_pilot": b4_nonstabilizer_pilot_status,
             "nonstabilizer_support_spoofer_gate": b4_support_spoofer_status,
+            "verifier_private_predicate_gate": b4_private_predicate_status,
         },
         "b5": {
             "manifest": str(b5_manifest_path),
@@ -11606,6 +11731,7 @@ def audit(root: Path) -> dict:
             "late_bound_private_challenge_contract_gate": b8_late_bound_contract_status,
             "nonstabilizer_late_bound_transcript_pilot": b8_nonstabilizer_pilot_status,
             "nonstabilizer_support_spoofer_gate": b8_support_spoofer_status,
+            "verifier_private_predicate_gate": b8_private_predicate_status,
             "generative_spoofer_refresh": b8_generative_spoofer_status,
         },
         "b9": {
@@ -11876,6 +12002,9 @@ def audit(root: Path) -> dict:
             ),
             "b4_b8_nonstabilizer_support_spoofer_gate": str(
                 research / "B4_B8_nonstabilizer_support_spoofer_gate.md"
+            ),
+            "b4_b8_verifier_private_predicate_gate": str(
+                research / "B4_B8_verifier_private_predicate_gate.md"
             ),
             "b8_generative_spoofer_refresh": str(research / "B8_generative_spoofer_refresh.md"),
             "b8_adaptive_leakage_spoofer": str(research / "B8_adaptive_leakage_spoofer.md"),
@@ -12648,6 +12777,10 @@ def markdown_report(report: dict) -> str:
             f"- Support-spoofer exact success / support acceptance: {report['b4']['nonstabilizer_support_spoofer_gate'].get('max_exact_transcript_success_probability')} / {report['b4']['nonstabilizer_support_spoofer_gate'].get('max_support_acceptance_rate')}",
             f"- Support-spoofer support-only soundness rejected / exact blocker survives: {report['b4']['nonstabilizer_support_spoofer_gate'].get('support_only_verifier_soundness_rejected')} / {report['b4']['nonstabilizer_support_spoofer_gate'].get('deterministic_exact_transcript_blocker_survives')}",
             f"- Support-spoofer result/markdown exists: {report['b4']['nonstabilizer_support_spoofer_gate'].get('result_exists')} / {report['b4']['nonstabilizer_support_spoofer_gate'].get('markdown_exists')}",
+            f"- Private-predicate gate status: {report['b4']['verifier_private_predicate_gate'].get('status')}",
+            f"- Private-predicate public support / hidden acceptance: {report['b4']['verifier_private_predicate_gate'].get('max_public_support_acceptance_rate')} / {report['b4']['verifier_private_predicate_gate'].get('max_hidden_private_predicate_acceptance_rate')}",
+            f"- Private-predicate suppression / full leakage breaks gate: {report['b4']['verifier_private_predicate_gate'].get('support_only_to_private_predicate_suppression_factor')} / {report['b4']['verifier_private_predicate_gate'].get('full_predicate_leakage_breaks_private_gate')}",
+            f"- Private-predicate result/markdown exists: {report['b4']['verifier_private_predicate_gate'].get('result_exists')} / {report['b4']['verifier_private_predicate_gate'].get('markdown_exists')}",
             "",
             "## B5 Hubbard Embedding Status",
             "",
@@ -12959,6 +13092,10 @@ def markdown_report(report: dict) -> str:
             f"- Support-spoofer exact success / support acceptance: {report['b8']['nonstabilizer_support_spoofer_gate'].get('max_exact_transcript_success_probability')} / {report['b8']['nonstabilizer_support_spoofer_gate'].get('max_support_acceptance_rate')}",
             f"- Support-spoofer support-only soundness rejected / exact blocker survives: {report['b8']['nonstabilizer_support_spoofer_gate'].get('support_only_verifier_soundness_rejected')} / {report['b8']['nonstabilizer_support_spoofer_gate'].get('deterministic_exact_transcript_blocker_survives')}",
             f"- Support-spoofer result/markdown exists: {report['b8']['nonstabilizer_support_spoofer_gate'].get('result_exists')} / {report['b8']['nonstabilizer_support_spoofer_gate'].get('markdown_exists')}",
+            f"- Private-predicate gate status: {report['b8']['verifier_private_predicate_gate'].get('status')}",
+            f"- Private-predicate public support / hidden acceptance: {report['b8']['verifier_private_predicate_gate'].get('max_public_support_acceptance_rate')} / {report['b8']['verifier_private_predicate_gate'].get('max_hidden_private_predicate_acceptance_rate')}",
+            f"- Private-predicate suppression / full leakage breaks gate: {report['b8']['verifier_private_predicate_gate'].get('support_only_to_private_predicate_suppression_factor')} / {report['b8']['verifier_private_predicate_gate'].get('full_predicate_leakage_breaks_private_gate')}",
+            f"- Private-predicate result/markdown exists: {report['b8']['verifier_private_predicate_gate'].get('result_exists')} / {report['b8']['verifier_private_predicate_gate'].get('markdown_exists')}",
             f"- Generative spoofer status: {report['b8']['generative_spoofer_refresh'].get('status')}",
             f"- Generative spoofer configurations: {report['b8']['generative_spoofer_refresh'].get('configuration_count')}",
             f"- Generative spoofer maximum learned soundness: {report['b8']['generative_spoofer_refresh'].get('maximum_learned_soundness')}",

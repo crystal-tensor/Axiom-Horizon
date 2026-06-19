@@ -387,13 +387,20 @@ advantage, or BQP separation. T-B8-003d adds a support-aware spoofer gate: four
 public-support spoofer families attack all 36 non-stabilizer pilot circuits;
 exact transcript success remains capped at 0.0625, but support-only verifier
 acceptance is 1.0, so support-membership soundness is rejected.
+T-B8-003e adds a verifier-private predicate pressure gate: four late-bound
+private predicate bits reduce support-aware spoofer acceptance from public
+support-only 1.0 to hidden-private-predicate acceptance 0.0625, while one-bit
+leakage raises acceptance to 0.125 and full predicate leakage restores 1.0.
+This is an analytic verifier-burden gate, not hardware execution or protocol
+soundness.
 
-**Remaining path to a serious solution:** add verifier-private acceptance
-predicates, real backend properties, or hardware randomized-measurement
-execution beyond public support membership; attack the resulting non-public
-transcript; then prove completeness and soundness under explicit assumptions.
+**Remaining path to a serious solution:** replace the analytic private
+predicate pressure gate with a formal private challenge protocol, real backend
+properties, or hardware randomized-measurement execution; attack the resulting
+non-public transcript; then prove completeness and soundness under explicit
+assumptions.
 
-**Current internal maturity:** 25/100.
+**Current internal maturity:** 27/100.
 
 ## B5: Strongly Correlated Matter via Hybrid Quantum-Tensor Solvers
 
@@ -678,6 +685,10 @@ T-B8-003d adds the support-aware spoofer gate: four public-support spoofer
 families attack all 36 non-stabilizer pilot circuits; exact transcript success
 remains 0.0625, but support-only verifier acceptance is 1.0, rejecting
 support-membership soundness while preserving the exact-transcript blocker.
+T-B8-003e adds the verifier-private predicate pressure gate: hidden private
+predicate acceptance is 0.0625 instead of public support-only acceptance 1.0;
+one-bit leakage raises acceptance to 0.125, and full predicate leakage restores
+acceptance to 1.0.
 The device-noise transcript bridge now adds 480 configurations across five
 noise profiles: bounded bridge profiles preserve honest completeness 1.0, and
 challenge_refresh / refresh_plus_rotation stay at max high-leakage soundness
@@ -699,12 +710,13 @@ acceptance at 1.0, calibrated adversary acceptance at 0.25, max honest
 predicate-bit error at 0.0703125, and at least 7 unknown independent
 predicates; no-refresh remains unsafe.
 
-**Remaining path to a serious solution:** move beyond public support membership
-by adding verifier-private predicates, real backend properties, or hardware
-randomized-measurement execution; then attack that non-public transcript with
-stronger learned/generative spoofers.
+**Remaining path to a serious solution:** replace the analytic private
+predicate model with a formal verifier-private protocol, real backend
+properties, or hardware randomized-measurement execution; then attack that
+non-public transcript with stronger learned/generative spoofers and explicit
+leakage models.
 
-**Current internal maturity:** 37/100.
+**Current internal maturity:** 39/100.
 
 ## B9: Quantum PCP and Local Hamiltonian Hardness
 

@@ -183,6 +183,38 @@ current_results:
     validation_error_count: 0
     result: ../results/B4_B8_nonstabilizer_support_spoofer_gate_v0.json
     markdown_report: ../research/B4_B8_nonstabilizer_support_spoofer_gate.md
+  verifier_private_predicate_gate_v0:
+    status: verifier_private_predicate_pressure_not_protocol_soundness
+    model_status: analytic_private_predicate_gate_not_hardware_or_soundness_proof
+    method: b4_b8_verifier_private_predicate_gate_v0
+    source_method: b4_b8_nonstabilizer_support_spoofer_gate_v0
+    circuit_count: 36
+    spoofer_count: 4
+    attack_row_count: 144
+    private_predicate_bit_count: 4
+    max_public_support_acceptance_rate: 1.0
+    max_hidden_private_predicate_acceptance_rate: 0.0625
+    min_hidden_private_predicate_acceptance_rate: 0.0625
+    max_one_private_bit_leaked_acceptance_rate: 0.125
+    max_full_private_predicate_leaked_acceptance_rate: 1.0
+    support_only_to_private_predicate_suppression_factor: 16.0
+    private_predicate_suppresses_support_spoofer: true
+    full_predicate_leakage_breaks_private_gate: true
+    verifier_private_predicates_added: true
+    predicate_material_public_to_spoofer: false
+    hardware_execution_performed: false
+    real_backend_properties_used: false
+    quantum_advantage_claimed: false
+    bqp_separation_claimed: false
+    sampling_hardness_proved: false
+    cryptographic_soundness_proved: false
+    protocol_soundness_proved: false
+    acceptance_gate_count: 8
+    passed_gate_count: 5
+    failed_gate_count: 3
+    validation_error_count: 0
+    result: ../results/B4_B8_verifier_private_predicate_gate_v0.json
+    markdown_report: ../research/B4_B8_verifier_private_predicate_gate.md
   toy_hidden_invariant_output_verifier_v0:
     status: toy_invariant_property_test
     model_status: toy_invariant_property_test_not_full_distribution_verification
@@ -320,3 +352,4 @@ prototype_artifacts:
   late_bound_private_challenge_contract_gate: ../tools/b4_b8_late_bound_private_challenge_contract_gate.py
   nonstabilizer_late_bound_transcript_pilot: ../tools/b4_b8_nonstabilizer_late_bound_transcript_pilot.py
   nonstabilizer_support_spoofer_gate: ../tools/b4_b8_nonstabilizer_support_spoofer_gate.py
+  verifier_private_predicate_gate: ../tools/b4_b8_verifier_private_predicate_gate.py

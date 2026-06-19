@@ -139,6 +139,16 @@ That rejects support-membership soundness and forces the next protocol step
 toward verifier-private predicates, real backend properties, or hardware
 randomized-measurement execution.
 
+B4/B8 now has the first verifier-private predicate pressure gate on top of
+that support-spoofer boundary. The gate adds four late-bound private predicate
+bits to the same 36 pilot circuits and 4 spoofer families. In the no-leakage
+analytic model, public support-only acceptance falls from 1.0 to 0.0625, a
+16x guessing burden. The leakage boundary remains explicit: leaking one private
+predicate bit raises acceptance to 0.125, and full predicate leakage returns
+acceptance to 1.0. This is useful protocol pressure, not hardware execution,
+not cryptographic or protocol soundness, not sampling hardness, not quantum
+advantage, and not a BQP separation claim.
+
 B6 has moved from a synthetic descriptor toy to curated leakage audits and a
 structural/electronic proxy boundary. The latest B6 screen keeps 38 records
 across 22 families with 12 expanded negative controls; structural/electronic

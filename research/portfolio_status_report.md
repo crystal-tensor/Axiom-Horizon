@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 53, 'B2': 48, 'B3': 30, 'B4': 25, 'B5': 27, 'B6': 21, 'B7': 50, 'B8': 37, 'B9': 13, 'B10': 50}
+- Maturity scores: {'B1': 53, 'B2': 48, 'B3': 30, 'B4': 27, 'B5': 27, 'B6': 21, 'B7': 50, 'B8': 39, 'B9': 13, 'B10': 50}
 
 ## Technical Resolution Program
 
@@ -750,6 +750,10 @@ Overall audit: PASS
 - Support-spoofer exact success / support acceptance: 0.0625 / 1.0
 - Support-spoofer support-only soundness rejected / exact blocker survives: True / True
 - Support-spoofer result/markdown exists: True / True
+- Private-predicate gate status: verifier_private_predicate_pressure_not_protocol_soundness
+- Private-predicate public support / hidden acceptance: 1.0 / 0.0625
+- Private-predicate suppression / full leakage breaks gate: 16.0 / True
+- Private-predicate result/markdown exists: True / True
 
 ## B5 Hubbard Embedding Status
 
@@ -1061,6 +1065,10 @@ Overall audit: PASS
 - Support-spoofer exact success / support acceptance: 0.0625 / 1.0
 - Support-spoofer support-only soundness rejected / exact blocker survives: True / True
 - Support-spoofer result/markdown exists: True / True
+- Private-predicate gate status: verifier_private_predicate_pressure_not_protocol_soundness
+- Private-predicate public support / hidden acceptance: 1.0 / 0.0625
+- Private-predicate suppression / full leakage breaks gate: 16.0 / True
+- Private-predicate result/markdown exists: True / True
 - Generative spoofer status: trained_generative_spoofer_refresh_boundary_not_soundness_proof
 - Generative spoofer configurations: 144
 - Generative spoofer maximum learned soundness: 1.0
