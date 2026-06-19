@@ -373,6 +373,17 @@ does not prove a global obstruction; the next route must use broader symbolic
 synthesis, context-aware absorption, or full-circuit replay with honest
 resource pricing.
 
+The follow-up line-1381 context-absorption gate checks whether those same five
+parameters can be absorbed by exact inventory matches or one-step same-support
+context cancellation in the native optimized `gcm_h6` QASM. It reviews 2,049
+rotation arguments overall and 44 same-support context rotation arguments
+inside the configured +/-64-line neighborhood. The result is still negative:
+0/5 parameters have exact or absolute-angle inventory matches, 0/5 have
+same-support context matches, 0/5 exactly cancel back to the pi/4 grid, and B7
+accepted occurrence/proxy-T reduction remains 0. This closes only a cheap
+single-step context route; multi-rotation symbolic absorption and full-circuit
+replay remain open.
+
 ## Repository Layout
 
 ```text

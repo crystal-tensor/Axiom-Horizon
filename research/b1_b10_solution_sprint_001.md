@@ -1615,6 +1615,17 @@ exact-decomposition route is now closed; the next sprint gate must move to
 broader symbolic synthesis, context-aware absorption, or full-circuit replay
 with honest resource pricing.
 
+Sprint update 18ao: T-B1-004ao now consumes T-B1-004an and checks whether the
+same five line-1381 parameters can be absorbed by the native optimized
+`gcm_h6` context. The gate reviews 2,049 rotation arguments overall and 44
+same-support context rotation arguments in the +/-64-line neighborhood around
+the source packet. The result is still negative: 0/5 parameters have exact or
+absolute-angle inventory matches, 0/5 have same-support context matches, 0/5
+exactly cancel back to the pi/4 grid with one context rotation, and accepted
+full-circuit replay, occurrence removal, proxy-T reduction, and B7 improvement
+remain 0. The next sprint gate must move to multi-rotation/context-symbolic
+absorption, full-circuit replay, or another occurrence-removing scaffold.
+
 ## Sprint Promotion Matrix
 
 | Track | Can become paper after this sprint? | Can become patent after this sprint? | Can become fundable/tool after this sprint? |

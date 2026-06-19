@@ -624,6 +624,19 @@ Overall audit: PASS
 - Accepted replay / occurrence / proxy-T reduction / B7 claim: 0 / 0 / 0 / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Line-1381 Context Absorption Gate
+
+- Exists: True
+- Status: cone01_line1381_context_absorption_not_accepted
+- Target line / support qubits: 1381 / [4, 8]
+- Window / context radius: 1369-1379 / 64
+- Full inventory / context rotation arguments: 2049 / 44
+- Tested parameters / inventory abs matches / context abs matches: 5 / 0 / 0
+- One-step context grid-cancellation exact parameters: 0
+- Min / max best context grid-cancellation error: 0.0027465552120480297 / 0.09773822449711567
+- Accepted replay / occurrence / proxy-T reduction / B7 claim: 0 / 0 / 0 / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Theta-Sharing Ledger Gate
 
 - Exists: True
