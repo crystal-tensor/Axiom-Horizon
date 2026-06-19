@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Axiom Horizon - Multi-Agent Quantum Research Lattice</title>
+  <meta name="description" content="Axiom Horizon is a multi-agent quantum research lattice for reproducible B1-B10 frontier research.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050607;
+      --panel: #101314;
+      --panel-2: #0b0e10;
+      --line: rgba(158, 240, 255, 0.18);
+      --cyan: #9ef0ff;
+      --gold: #f7d96b;
+      --pink: #ff78d6;
+      --lime: #b8ff8a;
+      --text: #f4f7f8;
+      --muted: #a4afb7;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(158, 240, 255, 0.16), transparent 28rem),
+        radial-gradient(circle at 82% 0%, rgba(255, 120, 214, 0.12), transparent 24rem),
+        linear-gradient(180deg, #050607 0%, #070909 48%, #030404 100%);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.65;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        linear-gradient(rgba(158, 240, 255, 0.28) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(247, 217, 107, 0.18) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, #000 0%, transparent 86%);
+    }
+
+    main {
+      position: relative;
+      width: min(1220px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 58px 0 72px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(158, 240, 255, 0.36);
+      background: rgba(0, 0, 0, 0.36);
+      padding: 8px 11px;
+      color: var(--cyan);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      min-height: 620px;
+      display: grid;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero h1 {
+      margin-top: 24px;
+      max-width: 980px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(48px, 9vw, 108px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--cyan);
+    }
+
+    .lead {
+      max-width: 850px;
+      margin-top: 28px;
+      color: #cbd4d8;
+      font-size: clamp(16px, 2vw, 19px);
+    }
+
+    .metrics,
+    .cards,
+    .updates,
+    .frontiers {
+      display: grid;
+      gap: 14px;
+    }
+
+    .metrics {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 34px;
+    }
+
+    .metric,
+    .card,
+    .update,
+    .frontier {
+      border: 1px solid var(--line);
+      background: rgba(14, 17, 18, 0.82);
+    }
+
+    .metric {
+      min-height: 112px;
+      padding: 18px;
+    }
+
+    .metric strong {
+      display: block;
+      color: white;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 32px;
+      line-height: 1;
+    }
+
+    .metric span {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 24px;
+    }
+
+    .card,
+    .update,
+    .frontier {
+      padding: 22px;
+    }
+
+    .card h3,
+    .update h3,
+    .frontier h3 {
+      color: white;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .card p,
+    .update p,
+    .frontier p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    section {
+      padding: 54px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 560px);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin-top: 11px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.05;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .updates {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 18px;
+      border: 1px solid rgba(247, 217, 107, 0.34);
+      background: rgba(247, 217, 107, 0.1);
+      padding: 5px 8px;
+      color: #fff0a4;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .label {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--lime);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .frontiers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 20px;
+    }
+
+    .frontier {
+      transition: border-color 160ms ease, transform 160ms ease;
+    }
+
+    .frontier:hover {
+      border-color: rgba(158, 240, 255, 0.55);
+      transform: translateY(-2px);
+    }
+
+    .date {
+      display: inline-flex;
+      margin-bottom: 14px;
+      border: 1px solid rgba(158, 240, 255, 0.32);
+      background: rgba(158, 240, 255, 0.1);
+      padding: 4px 8px;
+      color: var(--cyan);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+    }
+
+    .source {
+      margin-left: 8px;
+      color: #77838c;
+      font-size: 12px;
+    }
+
+    footer {
+      padding-top: 36px;
+      color: #7b858d;
+      font-size: 13px;
+    }
+
+    @media (max-width: 960px) {
+      .metrics,
+      .updates,
+      .frontiers,
+      .cards,
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 24px 0 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Axiom Horizon / multi-agent quantum research lattice</div>
+        <h1>公理视界计划<span>Axiom Horizon</span></h1>
+        <p class="lead">
+          这里展示 Axiom Horizon 为未来量子计算研究建立的完整战场图：100 个世界级难题冻结版、Top 10 攻关方向、
+          B1-B10 技术门槛、多智能体 PR 协作协议，以及从技术证据到论文、专利、融资、工具化的后置路径。
+          当前策略先解决 B1-B10 的技术门槛，商业化与发表转化暂时停在后置停车场。
+        </p>
+
+        <div class="metrics" aria-label="Research metrics">
+          <div class="metric"><strong>100</strong><span>Hard Problems</span></div>
+          <div class="metric"><strong>B1-B10</strong><span>Attack Tracks</span></div>
+          <div class="metric"><strong>100-Lock</strong><span>Catalog Lock</span></div>
+          <div class="metric"><strong>12M</strong><span>Goal Window</span></div>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <h3>Agent PR Flow</h3>
+            <p>Issue -> Branch -> Benchmark -> Result -> Audit -> Review，每一步都能被复现。</p>
+          </article>
+          <article class="card">
+            <h3>Claim Boundary</h3>
+            <p>任何“突破”都必须说明尚未解决的边界，避免把 proxy 当成最终答案。</p>
+          </article>
+          <article class="card">
+            <h3>Translation Parking Lot</h3>
+            <p>论文、专利、融资、工具化只在 B1-B10 技术门槛之后启动。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Latest Research Update / 2026-06-19</div>
+          <h2>最新研究更新</h2>
+        </div>
+        <p>
+          这组更新把本地 B1-B10 最新任务板和 2026 公开前沿放在同一张仪表板里。绿色信号不会自动升格为“突破”，每条都保留下一道证据门槛。
+        </p>
+      </div>
+
+      <div class="updates">
+        <article class="update">
+          <span class="tag">B1/B7 / merged</span>
+          <h3>gcm_h6 从 w8_21 数值搜索转入 symbolic scaffold</h3>
+          <p>T-B7-009 与 T-B7-010a 已把 local-search 空间压到明确边界：43,480 次 w8_21 optimizer runs 后仍无 exact occurrence-removing certificate。</p>
+          <div class="label">Evidence</div>
+          <p>12 个 retained templates 中 0 个 single-template one-angle route 清除 1.20x STV 边界；最佳 w8_21 仍至少需要每 occurrence 移除 2 个 arbitrary rotations。</p>
+          <div class="label">Next Gate</div>
+          <p>停止继续堆同类 numerical search；下一步只接受 symbolic KAK/Clifford scaffold 或不同 occurrence-removing rewrite。</p>
+        </article>
+
+        <article class="update">
+          <span class="tag">B2 / negative boundary</span>
+          <h3>leakage-aware decoder 路线已进入硬件式观测模型压力测试</h3>
+          <p>最新 hardware-like leakage model gate 消耗 detector bitstrings，不再只依赖 synthetic flag fixture，但仍不是 calibrated hardware 或 production decoder。</p>
+          <div class="label">Evidence</div>
+          <p>3 个 strict challenge rows、3 个 observation profiles、1,728 profile-shots 与 864 holdout shots；best conservative profile 415 flag events，0 prediction changes，0 fixed failures，22 injected failures 保持不变。</p>
+          <div class="label">Next Gate</div>
+          <p>需要真实/校准 leakage traces、shot-conditioned decoder contract，或证明当前 DEM-edge posterior 注入机制为什么应当改变 PyMatching 决策。</p>
+        </article>
+
+        <article class="update">
+          <span class="tag">B10/B8 / verifier bridge</span>
+          <h3>量子优势验证从 toy leakage 进入 noisy circuit bridge</h3>
+          <p>B10-T2 已完成 Qiskit/Aer circuit-level、noisy Aer 和 backend-calibrated-style 三层桥接；refresh mode 仍是必要防线。</p>
+          <div class="label">Evidence</div>
+          <p>9,600 noisy Aer parity-verifier circuits：safe refresh modes 下 honest acceptance 1.0、adversary acceptance 0.0；GenericBackendV2-style bridge 中 adversary acceptance 升到 0.25，暴露校准敏感性。</p>
+          <div class="label">Next Gate</div>
+          <p>把 GenericBackendV2 快照替换成真实 backend properties，或直接做 hardware randomized-measurement verifier execution。</p>
+        </article>
+
+        <article class="update">
+          <span class="tag">B5/B10 / same-access guardrail</span>
+          <h3>response-sampler cost stress 继续拒绝轻率量子优势叙事</h3>
+          <p>同 9 个 D5 Hubbard response rows 上，乐观 bounded-density finite-difference sampler 仍无法追平 exact-state-seeded MPS pressure。</p>
+          <div class="label">Evidence</div>
+          <p>匹配 seeded-MPS pressure 的 shot lower bound 为 min/median/max 3.861e9 / 7.645e12 / 2.849e29；0 rows by shots beat explicit D5 matvec ops。</p>
+          <div class="label">Next Gate</div>
+          <p>要么补 mature canonical-environment production DMRG/MPS，要么给出真实 same-access response oracle 的 state-preparation、mixing、measurement 与 confidence 成本。</p>
+        </article>
+      </div>
+
+      <div class="frontiers">
+        <a class="frontier" href="https://thequantuminsider.com/2026/06/13/microsoft-and-quantinuum-report-on-major-gains-in-quantum-error-correction/">
+          <span class="date">2026-06-13</span><span class="source">Nature coverage via The Quantum Insider</span>
+          <h3>Microsoft + Quantinuum: mid-computation QEC shows 11x-800x error suppression</h3>
+          <p>carbon code 与 tesseract subsystem code 在 trapped-ion hardware 上展示 repeated error correction；但 post-selection、real-time decoding 和 feed-forward 仍是未闭合门槛。</p>
+        </a>
+
+        <a class="frontier" href="https://www.nature.com/articles/s41567-026-03220-8">
+          <span class="date">2026-04-02</span><span class="source">Nature Physics</span>
+          <h3>Low-overhead FTQC by gauging logical operators</h3>
+          <p>给 B2/B7 一个明确研究分叉：除了 surface-code schedule/decoder，还要追踪 gauged logical measurement 是否能降低 logical operation overhead。</p>
+        </a>
+
+        <a class="frontier" href="https://www.nature.com/articles/s41467-026-68533-x">
+          <span class="date">2026-02</span><span class="source">Nature Communications</span>
+          <h3>Measurement-free universal logical quantum computation</h3>
+          <p>如果 measurement-free route 可扩展，部分架构账本中的测量/反馈瓶颈需要重计价。</p>
+        </a>
+
+        <a class="frontier" href="https://www.ibm.com/quantum/blog/large-scale-ftqc">
+          <span class="date">2025-06-10</span><span class="source">IBM Quantum</span>
+          <h3>IBM Starling roadmap frames 2029 FTQC target</h3>
+          <p>近期研究要产出的是 resource ledger、compiler/QEC gates 与验证协议，而不是泛化商业承诺。</p>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      Axiom Horizon is an open, audit-first research operating system. Claims remain bounded until reproducible evidence clears the next technical gate.
+    </footer>
+  </main>
+</body>
+</html>
