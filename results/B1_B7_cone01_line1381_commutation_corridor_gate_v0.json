@@ -1,0 +1,2436 @@
+{
+  "benchmark_id": "B1",
+  "claim_boundary": {
+    "b7_ledger_improvement_claimed": false,
+    "commutation_corridor_replay_claimed": false,
+    "full_circuit_rewrite_claimed": false,
+    "resource_saving_claimed": false,
+    "supported_claim": "The best bounded two-/three-/four-rotation line-1381 context hints do not form a cheap commutation corridor into the target packet under the declared model.",
+    "unsupported_claims": [
+      "This is not a symbolic/full-circuit replay proof.",
+      "This is not a global obstruction theorem for line 1381.",
+      "This does not reject non-cheap commutation, resynthesis, or a different scaffold.",
+      "No B7 occurrence or proxy-T ledger reduction is accepted."
+    ]
+  },
+  "inventory_qasm": "results/b1_native_t_resource_optimizer/qasmbench_medium_exact/gcm_h6.qasm",
+  "line1381_commutation_corridor_rows": [
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 21,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1329,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1331,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1333,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1335,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1337,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1340,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 46,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1323,
+          "gate": "rz",
+          "line_number": 1322,
+          "qubit": 4,
+          "raw_angle": "pi/2",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/2) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 1,
+          "blocker_count": 9,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1350,
+              "qubits": [
+                4,
+                8
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[8];"
+            },
+            {
+              "blocker_type": "support_touching_non_diagonal_single_qubit",
+              "line_number": 1351,
+              "qubits": [
+                8
+              ],
+              "reason": "Non-diagonal single-qubit gate on support qubit blocks cheap rotation transport.",
+              "text": "u3(pi/4,pi,0) q[8];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1353,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1355,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1357,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1359,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1361,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1364,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 19,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1350,
+          "gate": "u3",
+          "line_number": 1349,
+          "qubit": 8,
+          "raw_angle": "pi",
+          "rejection_reason": "context reference is not a standalone RZ-like rotation under the cheap corridor model",
+          "rotation_kind": "embedded_u3_z_phase",
+          "text": "u3(pi/4,pi,-3*pi/4) q[8];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 7,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1353,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1355,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1357,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1359,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1361,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1364,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1366,
+              "qubits": [
+                4,
+                8
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[8];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 16,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1353,
+          "gate": "rz",
+          "line_number": 1352,
+          "qubit": 4,
+          "raw_angle": "0.95458522166231319",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(0.95458522166231319) q[4];"
+        }
+      ],
+      "context_reference_count": 3,
+      "distance_to_pi_over_four_grid": 0.026659551749408372,
+      "parameter_index": 3,
+      "source_gate": "T-B1-004ap",
+      "width": 3
+    },
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 27,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1312,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1314,
+              "qubits": [
+                14,
+                4
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[14],q[4];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1315,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1316,
+              "qubits": [
+                4,
+                15
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[15];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1317,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1321,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 57,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1312,
+          "gate": "rz",
+          "line_number": 1311,
+          "qubit": 4,
+          "raw_angle": "pi/4",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/4) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1379,
+          "corridor_line_count": 0,
+          "corridor_position": "inside_packet",
+          "corridor_start_line": 1369,
+          "gate": "u3",
+          "line_number": 1378,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627743",
+          "rejection_reason": "context reference is inside the target packet and cannot be counted as external absorption",
+          "rotation_kind": "embedded_u3_non_diagonal_theta",
+          "text": "u3(0.36485735178627743,pi,-pi/4) q[8];"
+        }
+      ],
+      "context_reference_count": 2,
+      "distance_to_pi_over_four_grid": 0.0027465552120480297,
+      "parameter_index": 4,
+      "source_gate": "T-B1-004ap",
+      "width": 2
+    },
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 7,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1353,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1355,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1357,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1359,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1361,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1364,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1366,
+              "qubits": [
+                4,
+                8
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[8];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 16,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1353,
+          "gate": "rz",
+          "line_number": 1352,
+          "qubit": 4,
+          "raw_angle": "0.95458522166231319",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(0.95458522166231319) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1379,
+          "corridor_line_count": 0,
+          "corridor_position": "inside_packet",
+          "corridor_start_line": 1369,
+          "gate": "u3",
+          "line_number": 1378,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627743",
+          "rejection_reason": "context reference is inside the target packet and cannot be counted as external absorption",
+          "rotation_kind": "embedded_u3_non_diagonal_theta",
+          "text": "u3(0.36485735178627743,pi,-pi/4) q[8];"
+        }
+      ],
+      "context_reference_count": 2,
+      "distance_to_pi_over_four_grid": 0.015765373942855376,
+      "parameter_index": 9,
+      "source_gate": "T-B1-004ap",
+      "width": 2
+    },
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 7,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1353,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1355,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1357,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1359,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1361,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1364,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1366,
+              "qubits": [
+                4,
+                8
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[8];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 16,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1353,
+          "gate": "rz",
+          "line_number": 1352,
+          "qubit": 4,
+          "raw_angle": "0.95458522166231319",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(0.95458522166231319) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1379,
+          "corridor_line_count": 0,
+          "corridor_position": "inside_packet",
+          "corridor_start_line": 1369,
+          "gate": "u3",
+          "line_number": 1378,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627743",
+          "rejection_reason": "context reference is inside the target packet and cannot be counted as external absorption",
+          "rotation_kind": "embedded_u3_non_diagonal_theta",
+          "text": "u3(0.36485735178627743,pi,-pi/4) q[8];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 1,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": true,
+          "corridor_end_line": 1380,
+          "corridor_line_count": 1,
+          "corridor_position": "after_packet",
+          "corridor_start_line": 1380,
+          "gate": "u3",
+          "line_number": 1381,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627726",
+          "rejection_reason": "context reference is not a standalone RZ-like rotation under the cheap corridor model",
+          "rotation_kind": "embedded_u3_z_phase",
+          "text": "u3(pi/2,0.36485735178627726,pi/2) q[8];"
+        }
+      ],
+      "context_reference_count": 3,
+      "distance_to_pi_over_four_grid": 0.0015819911093339911,
+      "parameter_index": 16,
+      "source_gate": "T-B1-004ap",
+      "width": 3
+    },
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 21,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1329,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1331,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1333,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1335,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1337,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1340,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 46,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1323,
+          "gate": "rz",
+          "line_number": 1322,
+          "qubit": 4,
+          "raw_angle": "pi/2",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/2) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 1,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": true,
+          "corridor_end_line": 1380,
+          "corridor_line_count": 1,
+          "corridor_position": "after_packet",
+          "corridor_start_line": 1380,
+          "gate": "u3",
+          "line_number": 1381,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627726",
+          "rejection_reason": "context reference is not a standalone RZ-like rotation under the cheap corridor model",
+          "rotation_kind": "embedded_u3_z_phase",
+          "text": "u3(pi/2,0.36485735178627726,pi/2) q[8];"
+        }
+      ],
+      "context_reference_count": 2,
+      "distance_to_pi_over_four_grid": 0.0027465552123517867,
+      "parameter_index": 17,
+      "source_gate": "T-B1-004ap",
+      "width": 2
+    },
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 27,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1312,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1314,
+              "qubits": [
+                14,
+                4
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[14],q[4];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1315,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1316,
+              "qubits": [
+                4,
+                15
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[15];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1317,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1321,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 57,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1312,
+          "gate": "rz",
+          "line_number": 1311,
+          "qubit": 4,
+          "raw_angle": "pi/4",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/4) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 22,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1321,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1329,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1331,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1333,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1335,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1337,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 50,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1319,
+          "gate": "rz",
+          "line_number": 1318,
+          "qubit": 4,
+          "raw_angle": "pi/4",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/4) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 1,
+          "blocker_count": 9,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1350,
+              "qubits": [
+                4,
+                8
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[8];"
+            },
+            {
+              "blocker_type": "support_touching_non_diagonal_single_qubit",
+              "line_number": 1351,
+              "qubits": [
+                8
+              ],
+              "reason": "Non-diagonal single-qubit gate on support qubit blocks cheap rotation transport.",
+              "text": "u3(pi/4,pi,0) q[8];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1353,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1355,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1357,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1359,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1361,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1364,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 19,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1350,
+          "gate": "u3",
+          "line_number": 1349,
+          "qubit": 8,
+          "raw_angle": "pi",
+          "rejection_reason": "context reference is not a standalone RZ-like rotation under the cheap corridor model",
+          "rotation_kind": "embedded_u3_z_phase",
+          "text": "u3(pi/4,pi,-3*pi/4) q[8];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 7,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1353,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1355,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1357,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1359,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1361,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1364,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1366,
+              "qubits": [
+                4,
+                8
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[8];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 16,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1353,
+          "gate": "rz",
+          "line_number": 1352,
+          "qubit": 4,
+          "raw_angle": "0.95458522166231319",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(0.95458522166231319) q[4];"
+        }
+      ],
+      "context_reference_count": 4,
+      "distance_to_pi_over_four_grid": 0.026659551749408372,
+      "parameter_index": 3,
+      "source_gate": "T-B1-004aq",
+      "width": 4
+    },
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 27,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1312,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1314,
+              "qubits": [
+                14,
+                4
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[14],q[4];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1315,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1316,
+              "qubits": [
+                4,
+                15
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[15];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1317,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1321,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 57,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1312,
+          "gate": "rz",
+          "line_number": 1311,
+          "qubit": 4,
+          "raw_angle": "pi/4",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/4) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 22,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1321,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1329,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1331,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1333,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1335,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1337,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 50,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1319,
+          "gate": "rz",
+          "line_number": 1318,
+          "qubit": 4,
+          "raw_angle": "pi/4",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/4) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 21,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1329,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1331,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1333,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1335,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1337,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1340,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 46,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1323,
+          "gate": "rz",
+          "line_number": 1322,
+          "qubit": 4,
+          "raw_angle": "pi/2",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/2) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1379,
+          "corridor_line_count": 0,
+          "corridor_position": "inside_packet",
+          "corridor_start_line": 1369,
+          "gate": "u3",
+          "line_number": 1378,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627743",
+          "rejection_reason": "context reference is inside the target packet and cannot be counted as external absorption",
+          "rotation_kind": "embedded_u3_non_diagonal_theta",
+          "text": "u3(0.36485735178627743,pi,-pi/4) q[8];"
+        }
+      ],
+      "context_reference_count": 4,
+      "distance_to_pi_over_four_grid": 0.0027465552120480297,
+      "parameter_index": 4,
+      "source_gate": "T-B1-004aq",
+      "width": 4
+    },
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 7,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1353,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1355,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1357,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1359,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1361,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1364,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1366,
+              "qubits": [
+                4,
+                8
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[8];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 16,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1353,
+          "gate": "rz",
+          "line_number": 1352,
+          "qubit": 4,
+          "raw_angle": "0.95458522166231319",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(0.95458522166231319) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1379,
+          "corridor_line_count": 0,
+          "corridor_position": "inside_packet",
+          "corridor_start_line": 1369,
+          "gate": "u3",
+          "line_number": 1378,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627743",
+          "rejection_reason": "context reference is inside the target packet and cannot be counted as external absorption",
+          "rotation_kind": "embedded_u3_non_diagonal_theta",
+          "text": "u3(0.36485735178627743,pi,-pi/4) q[8];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 1,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": true,
+          "corridor_end_line": 1380,
+          "corridor_line_count": 1,
+          "corridor_position": "after_packet",
+          "corridor_start_line": 1380,
+          "gate": "u3",
+          "line_number": 1381,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627726",
+          "rejection_reason": "context reference is not a standalone RZ-like rotation under the cheap corridor model",
+          "rotation_kind": "embedded_u3_z_phase",
+          "text": "u3(pi/2,0.36485735178627726,pi/2) q[8];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 17,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_non_diagonal_single_qubit",
+              "line_number": 1381,
+              "qubits": [
+                8
+              ],
+              "reason": "Non-diagonal single-qubit gate on support qubit blocks cheap rotation transport.",
+              "text": "u3(pi/2,0.36485735178627726,pi/2) q[8];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1382,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1384,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1387,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1389,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1391,
+              "qubits": [
+                4,
+                15
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[15];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1393,
+              "qubits": [
+                4,
+                15
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[15];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1396,
+              "qubits": [
+                4,
+                15
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[15];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1423,
+          "corridor_line_count": 44,
+          "corridor_position": "after_packet",
+          "corridor_start_line": 1380,
+          "gate": "rz",
+          "line_number": 1424,
+          "qubit": 4,
+          "raw_angle": "0.95458522166231319",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(0.95458522166231319) q[4];"
+        }
+      ],
+      "context_reference_count": 4,
+      "distance_to_pi_over_four_grid": 0.0155715294156753,
+      "parameter_index": 9,
+      "source_gate": "T-B1-004aq",
+      "width": 4
+    },
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 27,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1312,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1314,
+              "qubits": [
+                14,
+                4
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[14],q[4];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1315,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1316,
+              "qubits": [
+                4,
+                15
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[15];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1317,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1321,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 57,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1312,
+          "gate": "rz",
+          "line_number": 1311,
+          "qubit": 4,
+          "raw_angle": "pi/4",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/4) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 7,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1353,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1355,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1357,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1359,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1361,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1364,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1366,
+              "qubits": [
+                4,
+                8
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[8];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 16,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1353,
+          "gate": "rz",
+          "line_number": 1352,
+          "qubit": 4,
+          "raw_angle": "0.95458522166231319",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(0.95458522166231319) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1379,
+          "corridor_line_count": 0,
+          "corridor_position": "inside_packet",
+          "corridor_start_line": 1369,
+          "gate": "u3",
+          "line_number": 1378,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627743",
+          "rejection_reason": "context reference is inside the target packet and cannot be counted as external absorption",
+          "rotation_kind": "embedded_u3_non_diagonal_theta",
+          "text": "u3(0.36485735178627743,pi,-pi/4) q[8];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 1,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": true,
+          "corridor_end_line": 1380,
+          "corridor_line_count": 1,
+          "corridor_position": "after_packet",
+          "corridor_start_line": 1380,
+          "gate": "u3",
+          "line_number": 1381,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627726",
+          "rejection_reason": "context reference is not a standalone RZ-like rotation under the cheap corridor model",
+          "rotation_kind": "embedded_u3_z_phase",
+          "text": "u3(pi/2,0.36485735178627726,pi/2) q[8];"
+        }
+      ],
+      "context_reference_count": 4,
+      "distance_to_pi_over_four_grid": 0.0015819911093339911,
+      "parameter_index": 16,
+      "source_gate": "T-B1-004aq",
+      "width": 4
+    },
+    {
+      "accepted_cheap_corridor_reference_count": 0,
+      "accepted_commutation_corridor_replay_candidate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_context_references_corridor_accepted": false,
+      "claim_boundary": "A clear cheap corridor would still be only a movement precondition. It is not a symbolic/full-circuit replay certificate or B7 ledger saving.",
+      "context_reference_checks": [
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 27,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1312,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1314,
+              "qubits": [
+                14,
+                4
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[14],q[4];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1315,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1316,
+              "qubits": [
+                4,
+                15
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[15];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1317,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1321,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 57,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1312,
+          "gate": "rz",
+          "line_number": 1311,
+          "qubit": 4,
+          "raw_angle": "pi/4",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/4) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 22,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1321,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1329,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1331,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1333,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1335,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1337,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 50,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1319,
+          "gate": "rz",
+          "line_number": 1318,
+          "qubit": 4,
+          "raw_angle": "pi/4",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/4) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 21,
+          "blockers_sample": [
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1324,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1326,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1329,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1331,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1333,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1335,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1337,
+              "qubits": [
+                8,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[8],q[14];"
+            },
+            {
+              "blocker_type": "support_touching_cx",
+              "line_number": 1340,
+              "qubits": [
+                4,
+                14
+              ],
+              "reason": "CNOT touching a support qubit blocks cheap movement without semantic replay.",
+              "text": "cx q[4],q[14];"
+            }
+          ],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1368,
+          "corridor_line_count": 46,
+          "corridor_position": "before_packet",
+          "corridor_start_line": 1323,
+          "gate": "rz",
+          "line_number": 1322,
+          "qubit": 4,
+          "raw_angle": "pi/2",
+          "rejection_reason": "support-touching CNOT or non-diagonal single-qubit blockers prevent cheap movement",
+          "rotation_kind": "standalone_z_rotation",
+          "text": "rz(pi/2) q[4];"
+        },
+        {
+          "accepted_cheap_corridor_reference": false,
+          "argument_index": 0,
+          "blocker_count": 0,
+          "blockers_sample": [],
+          "cheap_commutation_corridor_clear": false,
+          "corridor_end_line": 1379,
+          "corridor_line_count": 0,
+          "corridor_position": "inside_packet",
+          "corridor_start_line": 1369,
+          "gate": "u3",
+          "line_number": 1378,
+          "qubit": 8,
+          "raw_angle": "0.36485735178627743",
+          "rejection_reason": "context reference is inside the target packet and cannot be counted as external absorption",
+          "rotation_kind": "embedded_u3_non_diagonal_theta",
+          "text": "u3(0.36485735178627743,pi,-pi/4) q[8];"
+        }
+      ],
+      "context_reference_count": 4,
+      "distance_to_pi_over_four_grid": 0.0027465552123517867,
+      "parameter_index": 17,
+      "source_gate": "T-B1-004aq",
+      "width": 4
+    }
+  ],
+  "linked_b7_problem_id": 21,
+  "method": "b1_b7_cone01_line1381_commutation_corridor_gate_v0",
+  "model_status": "best_line1381_context_hints_have_no_replay_safe_commutation_corridor",
+  "source_five_parameter_line1381_exact_repair_result": "results/B1_B7_cone01_five_parameter_line1381_exact_repair_gate_v0.json",
+  "source_four_rotation_context_result": "results/B1_B7_cone01_line1381_four_rotation_context_gate_v0.json",
+  "source_multi_rotation_context_result": "results/B1_B7_cone01_line1381_multi_rotation_context_gate_v0.json",
+  "status": "cone01_line1381_commutation_corridor_not_accepted",
+  "summary": {
+    "accepted_commutation_corridor_replay_candidate_count": 0,
+    "accepted_full_circuit_replay_certificate_count": 0,
+    "accepted_occurrence_removal": 0,
+    "accepted_proxy_t_reduction": 0,
+    "b7_ledger_improvement_claimed": false,
+    "best_context_candidate_count": 10,
+    "blocked_corridor_reference_count": 21,
+    "candidate_all_references_corridor_accepted_count": 0,
+    "clear_external_standalone_z_reference_count": 0,
+    "commutation_corridor_replay_claimed": false,
+    "context_reference_count": 32,
+    "full_circuit_rewrite_claimed": false,
+    "inside_packet_reference_count": 7,
+    "missing_occurrences_after_gate": 30,
+    "missing_proxy_t_after_gate": 600,
+    "non_standalone_context_reference_count": 13,
+    "resource_saving_claimed": false,
+    "source_five_parameter_line1381_exact_repair_method": "b1_b7_cone01_five_parameter_line1381_exact_repair_gate_v0",
+    "source_four_rotation_context_method": "b1_b7_cone01_line1381_four_rotation_context_gate_v0",
+    "source_multi_rotation_context_method": "b1_b7_cone01_line1381_multi_rotation_context_gate_v0",
+    "support_qubits": [
+      4,
+      8
+    ],
+    "target_candidate_line_number": 1381,
+    "unique_context_reference_line_count": 8,
+    "unique_context_reference_lines": [
+      1311,
+      1318,
+      1322,
+      1349,
+      1352,
+      1378,
+      1381,
+      1424
+    ],
+    "validation_error_count": 0,
+    "window_end_line": 1379,
+    "window_start_line": 1369
+  },
+  "validation": {
+    "required_source_files_present": true,
+    "validation_errors": []
+  },
+  "workload": "qasmbench_medium_exact/gcm_h6.qasm"
+}

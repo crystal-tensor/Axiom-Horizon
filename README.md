@@ -407,6 +407,17 @@ improvement remain 0. This closes an exactly-four-rotation context route; a
 future route must justify five-or-more symbolic absorption, commutation-aware
 full-circuit replay, or a different occurrence-removing scaffold.
 
+The next commutation-corridor gate moves from bounded angle arithmetic toward
+replay pressure. It reviews the 10 best two-/three-/four-rotation context
+candidates from T-B1-004ap/aq, covering 32 context references on 8 unique lines.
+The cheap corridor model accepts 0 candidates: 7 references sit inside the
+target packet, 13 references are not standalone RZ-like rotations, 21 references
+have support-touching CNOT or non-diagonal single-qubit blockers, and 0 external
+standalone-Z references have a clear path into line 1381. Accepted full-circuit
+replay, occurrence removal, proxy-T reduction, and B7 ledger improvement remain
+0. This does not prove a global obstruction, but it closes the cheap
+commutation-corridor interpretation of the current bounded context hints.
+
 ## Repository Layout
 
 ```text

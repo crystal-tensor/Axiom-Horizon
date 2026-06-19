@@ -31,7 +31,7 @@ Overall audit: PASS
 
 - Exists: True
 - B IDs are B1..B10: True
-- Lanes: {'technical_system_spine': ['B1', 'B2', 'B7'], 'coupled_application': ['B3', 'B5', 'B6'], 'verification_protocol': ['B4', 'B8'], 'theory_and_negative_results': ['B9', 'B10']}
+- Lanes: {'coupled_application': ['B3', 'B5', 'B6'], 'technical_system_spine': ['B1', 'B2', 'B7'], 'theory_and_negative_results': ['B9', 'B10'], 'verification_protocol': ['B4', 'B8']}
 
 ## Top 10 Problem Dossiers
 
@@ -661,6 +661,18 @@ Overall audit: PASS
 - Signed combinations per parameter / total tests: 2172016 / 10860080
 - Width-4 exact absorption parameters: 0
 - Min / max best width-4 context grid error: 0.0015819911093339911 / 0.026659551749408372
+- Accepted replay / occurrence / proxy-T reduction / B7 claim: 0 / 0 / 0 / False
+- Validation errors: 0
+
+## B1/B7 cone_01 Line-1381 Commutation Corridor Gate
+
+- Exists: True
+- Status: cone01_line1381_commutation_corridor_not_accepted
+- Target line / support qubits: 1381 / [4, 8]
+- Window: 1369-1379
+- Best candidates / context references / unique context lines: 10 / 32 / 8
+- Inside-packet / non-standalone / blocked references: 7 / 13 / 21
+- Clear external standalone-Z references / all-reference accepted candidates: 0 / 0
 - Accepted replay / occurrence / proxy-T reduction / B7 claim: 0 / 0 / 0 / False
 - Validation errors: 0
 

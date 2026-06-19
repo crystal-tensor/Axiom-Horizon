@@ -1675,3 +1675,5 @@ structural reason than local bounded enumeration.
 
 This sprint is complete only when at least one PR-quality artifact exists for
 each spine and the portfolio audit still passes.
+
+Sprint update 18ar: B1/B7 now has a line-1381 commutation-corridor pressure gate. T-B1-004ar consumes the best bounded context hints from T-B1-004ap/aq and reviews 10 best candidates, 32 context references, and 8 unique context lines. The cheap corridor model accepts 0 candidates: 7 references are inside the target packet, 13 are not standalone RZ-like rotations, 21 are blocked by support-touching CNOT or non-diagonal single-qubit structure, and 0 external standalone-Z references have a clear path into line 1381. This is not a full-circuit replay proof, but it closes the cheap corridor interpretation of the current bounded context hints.

@@ -228,6 +228,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_line1381_four_rotation_context_path = (
         results / "B1_B7_cone01_line1381_four_rotation_context_gate_v0.json"
     )
+    b1_b7_cone01_line1381_commutation_corridor_path = (
+        results / "B1_B7_cone01_line1381_commutation_corridor_gate_v0.json"
+    )
     b1_b7_cone01_theta_sharing_path = results / "B1_B7_cone01_theta_sharing_ledger_gate_v0.json"
     b1_b7_cone01_shared_theta_synthesis_object_path = (
         results / "B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json"
@@ -811,6 +814,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_line1381_four_rotation_context_manifest = current_results.get(
         "b1_b7_cone01_line1381_four_rotation_context_gate_v0"
+    )
+    b1_b7_cone01_line1381_commutation_corridor_manifest = current_results.get(
+        "b1_b7_cone01_line1381_commutation_corridor_gate_v0"
     )
     b1_b7_cone01_theta_sharing_manifest = current_results.get(
         "b1_b7_cone01_theta_sharing_ledger_gate_v0"
@@ -7174,6 +7180,214 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 line-1381 four-rotation context report: "
             f"{b1_b7_cone01_line1381_four_rotation_context_path}"
+        )
+
+    b1_b7_cone01_line1381_commutation_corridor = {
+        "path": str(b1_b7_cone01_line1381_commutation_corridor_path),
+        "exists": b1_b7_cone01_line1381_commutation_corridor_path.exists(),
+    }
+    if not b1_b7_cone01_line1381_commutation_corridor_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_line1381_commutation_corridor_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_line1381_commutation_corridor_manifest.get("status")
+            != "cone01_line1381_commutation_corridor_not_accepted"
+        ):
+            errors.append("B1/B7 cone_01 line-1381 commutation corridor gate status mismatch")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_line1381_commutation_corridor_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 line-1381 commutation corridor gate missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_line1381_commutation_corridor_path.exists():
+        corridor_payload = json.loads(read(b1_b7_cone01_line1381_commutation_corridor_path))
+        corridor_summary = corridor_payload.get("summary", {})
+        corridor_claims = corridor_payload.get("claim_boundary", {})
+        b1_b7_cone01_line1381_commutation_corridor.update(
+            {
+                "status": corridor_payload.get("status"),
+                "model_status": corridor_payload.get("model_status"),
+                "method": corridor_payload.get("method"),
+                "workload": corridor_payload.get("workload"),
+                "target_candidate_line_number": corridor_summary.get(
+                    "target_candidate_line_number"
+                ),
+                "support_qubits": corridor_summary.get("support_qubits"),
+                "window_start_line": corridor_summary.get("window_start_line"),
+                "window_end_line": corridor_summary.get("window_end_line"),
+                "best_context_candidate_count": corridor_summary.get(
+                    "best_context_candidate_count"
+                ),
+                "context_reference_count": corridor_summary.get("context_reference_count"),
+                "unique_context_reference_line_count": corridor_summary.get(
+                    "unique_context_reference_line_count"
+                ),
+                "inside_packet_reference_count": corridor_summary.get(
+                    "inside_packet_reference_count"
+                ),
+                "non_standalone_context_reference_count": corridor_summary.get(
+                    "non_standalone_context_reference_count"
+                ),
+                "blocked_corridor_reference_count": corridor_summary.get(
+                    "blocked_corridor_reference_count"
+                ),
+                "clear_external_standalone_z_reference_count": corridor_summary.get(
+                    "clear_external_standalone_z_reference_count"
+                ),
+                "candidate_all_references_corridor_accepted_count": corridor_summary.get(
+                    "candidate_all_references_corridor_accepted_count"
+                ),
+                "accepted_commutation_corridor_replay_candidate_count": corridor_summary.get(
+                    "accepted_commutation_corridor_replay_candidate_count"
+                ),
+                "accepted_full_circuit_replay_certificate_count": corridor_summary.get(
+                    "accepted_full_circuit_replay_certificate_count"
+                ),
+                "accepted_occurrence_removal": corridor_summary.get(
+                    "accepted_occurrence_removal"
+                ),
+                "accepted_proxy_t_reduction": corridor_summary.get(
+                    "accepted_proxy_t_reduction"
+                ),
+                "missing_occurrences_after_gate": corridor_summary.get(
+                    "missing_occurrences_after_gate"
+                ),
+                "missing_proxy_t_after_gate": corridor_summary.get(
+                    "missing_proxy_t_after_gate"
+                ),
+                "commutation_corridor_replay_claimed": corridor_summary.get(
+                    "commutation_corridor_replay_claimed"
+                ),
+                "full_circuit_rewrite_claimed": corridor_summary.get(
+                    "full_circuit_rewrite_claimed"
+                ),
+                "resource_saving_claimed": corridor_summary.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": corridor_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "validation_error_count": corridor_summary.get("validation_error_count"),
+                "line1381_commutation_corridor_row_count": len(
+                    corridor_payload.get("line1381_commutation_corridor_rows", [])
+                ),
+            }
+        )
+        if corridor_payload.get("benchmark_id") != "B1":
+            errors.append(
+                "B1/B7 cone_01 line-1381 commutation corridor report must have benchmark_id B1"
+            )
+        if (
+            corridor_payload.get("method")
+            != "b1_b7_cone01_line1381_commutation_corridor_gate_v0"
+        ):
+            errors.append("B1/B7 cone_01 line-1381 commutation corridor method mismatch")
+        if (
+            corridor_payload.get("status")
+            != "cone01_line1381_commutation_corridor_not_accepted"
+        ):
+            errors.append("B1/B7 cone_01 line-1381 commutation corridor status mismatch")
+        if (
+            corridor_payload.get("model_status")
+            != "best_line1381_context_hints_have_no_replay_safe_commutation_corridor"
+        ):
+            errors.append("B1/B7 cone_01 line-1381 commutation corridor model_status mismatch")
+        for field in [
+            "target_candidate_line_number",
+            "support_qubits",
+            "window_start_line",
+            "window_end_line",
+            "best_context_candidate_count",
+            "context_reference_count",
+            "unique_context_reference_line_count",
+            "inside_packet_reference_count",
+            "non_standalone_context_reference_count",
+            "blocked_corridor_reference_count",
+            "clear_external_standalone_z_reference_count",
+            "candidate_all_references_corridor_accepted_count",
+            "accepted_commutation_corridor_replay_candidate_count",
+            "accepted_full_circuit_replay_certificate_count",
+            "accepted_occurrence_removal",
+            "accepted_proxy_t_reduction",
+            "missing_occurrences_after_gate",
+            "missing_proxy_t_after_gate",
+            "commutation_corridor_replay_claimed",
+            "full_circuit_rewrite_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+            "validation_error_count",
+        ]:
+            if (
+                corridor_summary.get(field)
+                != b1_b7_cone01_line1381_commutation_corridor_manifest.get(field)
+            ):
+                errors.append(
+                    f"B1/B7 cone_01 line-1381 commutation corridor {field} mismatch"
+                )
+        expected_corridor_fields = {
+            "target_candidate_line_number": 1381,
+            "support_qubits": [4, 8],
+            "window_start_line": 1369,
+            "window_end_line": 1379,
+            "best_context_candidate_count": 10,
+            "context_reference_count": 32,
+            "unique_context_reference_line_count": 8,
+            "inside_packet_reference_count": 7,
+            "non_standalone_context_reference_count": 13,
+            "blocked_corridor_reference_count": 21,
+            "clear_external_standalone_z_reference_count": 0,
+            "candidate_all_references_corridor_accepted_count": 0,
+            "accepted_commutation_corridor_replay_candidate_count": 0,
+            "accepted_full_circuit_replay_certificate_count": 0,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_corridor_fields.items():
+            if corridor_summary.get(field) != value:
+                errors.append(
+                    f"B1/B7 cone_01 line-1381 commutation corridor expected {field}={value}"
+                )
+        for field in [
+            "commutation_corridor_replay_claimed",
+            "full_circuit_rewrite_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if corridor_summary.get(field) is not False:
+                errors.append(
+                    f"B1/B7 cone_01 line-1381 commutation corridor must not claim {field}"
+                )
+            if corridor_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 line-1381 commutation corridor claim boundary "
+                    f"must not claim {field}"
+                )
+        rows = corridor_payload.get("line1381_commutation_corridor_rows", [])
+        if len(rows) != 10:
+            errors.append("B1/B7 cone_01 line-1381 commutation corridor row count must be 10")
+        for row in rows:
+            if row.get("accepted_commutation_corridor_replay_candidate") is not False:
+                errors.append(
+                    "B1/B7 cone_01 line-1381 commutation corridor rows must not accept replay"
+                )
+            if row.get("accepted_occurrence_removal") != 0:
+                errors.append(
+                    "B1/B7 cone_01 line-1381 commutation corridor rows must not remove occurrences"
+                )
+            if row.get("all_context_references_corridor_accepted") is not False:
+                errors.append(
+                    "B1/B7 cone_01 line-1381 commutation corridor rows must not accept all references"
+                )
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 line-1381 commutation corridor report: "
+            f"{b1_b7_cone01_line1381_commutation_corridor_path}"
         )
 
     b1_b7_cone01_theta_sharing = {
@@ -17121,6 +17335,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_line1381_four_rotation_context_gate": (
                 b1_b7_cone01_line1381_four_rotation_context
             ),
+            "b7_cone01_line1381_commutation_corridor_gate": (
+                b1_b7_cone01_line1381_commutation_corridor
+            ),
             "b7_cone01_theta_sharing_ledger_gate": b1_b7_cone01_theta_sharing,
             "b7_cone01_shared_theta_synthesis_object_gate": b1_b7_cone01_shared_theta_synthesis_object,
             "b7_cone01_shared_theta_replay_verifier_gate": b1_b7_cone01_shared_theta_replay_verifier,
@@ -17388,6 +17605,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_line1381_four_rotation_context_gate": str(
                 b1_b7_cone01_line1381_four_rotation_context_path
+            ),
+            "b1_b7_cone01_line1381_commutation_corridor_gate": str(
+                b1_b7_cone01_line1381_commutation_corridor_path
             ),
             "b1_b7_cone01_theta_sharing_ledger_gate": str(b1_b7_cone01_theta_sharing_path),
             "b1_b7_cone01_shared_theta_synthesis_object_gate": str(
@@ -18281,6 +18501,18 @@ def markdown_report(report: dict) -> str:
             f"- Min / max best width-4 context grid error: {report['b1']['b7_cone01_line1381_four_rotation_context_gate'].get('min_best_width4_context_grid_error')} / {report['b1']['b7_cone01_line1381_four_rotation_context_gate'].get('max_best_width4_context_grid_error')}",
             f"- Accepted replay / occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_line1381_four_rotation_context_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_line1381_four_rotation_context_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_line1381_four_rotation_context_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_line1381_four_rotation_context_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_line1381_four_rotation_context_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Line-1381 Commutation Corridor Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('status')}",
+            f"- Target line / support qubits: {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('target_candidate_line_number')} / {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('support_qubits')}",
+            f"- Window: {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('window_start_line')}-{report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('window_end_line')}",
+            f"- Best candidates / context references / unique context lines: {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('best_context_candidate_count')} / {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('context_reference_count')} / {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('unique_context_reference_line_count')}",
+            f"- Inside-packet / non-standalone / blocked references: {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('inside_packet_reference_count')} / {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('non_standalone_context_reference_count')} / {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('blocked_corridor_reference_count')}",
+            f"- Clear external standalone-Z references / all-reference accepted candidates: {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('clear_external_standalone_z_reference_count')} / {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('candidate_all_references_corridor_accepted_count')}",
+            f"- Accepted replay / occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_line1381_commutation_corridor_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Theta-Sharing Ledger Gate",
             "",
