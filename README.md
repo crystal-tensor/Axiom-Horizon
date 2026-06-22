@@ -571,6 +571,16 @@ does not prove global five-parameter minimality, but it blocks a cheap
 single-parameter removal claim. Occurrence removal, proxy-T reduction, local-U3
 acceptance, and B7 ledger credit remain 0.
 
+T-B1-004bi makes that pressure test stricter. It snaps every pair among the
+same five off-pi/4 line-1381 local-U3 parameters back to the pi/4 grid, then
+re-optimizes the remaining three parameters on the same two-CNOT scaffold. All
+10/10 leave-two-out trials fail the exact replay threshold. The best residual
+is 0.13583443746892182 for fixed pair [9, 16], and the worst residual is
+0.41204448255804876 for fixed pair [16, 17]. This blocks a cheap two-parameter
+free-removal claim, but it still does not prove global five-parameter
+minimality. Occurrence removal, proxy-T reduction, local-U3 acceptance, and B7
+ledger credit remain 0.
+
 ## Repository Layout
 
 ```text

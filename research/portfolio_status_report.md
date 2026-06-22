@@ -883,6 +883,18 @@ Overall audit: PASS
 - Single-parameter removal accepted / B7 claim: False / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Line-1381 Leave-Two-Out Parameter Gate
+
+- Exists: True
+- Status: cone01_line1381_no_two_parameter_free_removal
+- Current off-grid parameter indices: [3, 4, 9, 16, 17]
+- Leave-two-out exact pass / fail: 0 / 10
+- Best leave-two-out residual / fixed pair: 0.13583443746892182 / [9, 16]
+- Worst leave-two-out residual / fixed pair: 0.41204448255804876 / [16, 17]
+- Residual ratio to exact tolerance min / max: 13583443.746892182 / 41204448.255804874
+- Two-parameter removal accepted / B7 claim: False / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Theta-Sharing Ledger Gate
 
 - Exists: True

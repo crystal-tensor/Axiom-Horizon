@@ -279,6 +279,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_line1381_leave_one_out_parameter_path = (
         results / "B1_B7_cone01_line1381_leave_one_out_parameter_gate_v0.json"
     )
+    b1_b7_cone01_line1381_leave_two_out_parameter_path = (
+        results / "B1_B7_cone01_line1381_leave_two_out_parameter_gate_v0.json"
+    )
     b1_b7_cone01_theta_sharing_path = results / "B1_B7_cone01_theta_sharing_ledger_gate_v0.json"
     b1_b7_cone01_shared_theta_synthesis_object_path = (
         results / "B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json"
@@ -913,6 +916,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_line1381_leave_one_out_parameter_manifest = current_results.get(
         "b1_b7_cone01_line1381_leave_one_out_parameter_gate_v0"
+    )
+    b1_b7_cone01_line1381_leave_two_out_parameter_manifest = current_results.get(
+        "b1_b7_cone01_line1381_leave_two_out_parameter_gate_v0"
     )
     b1_b7_cone01_theta_sharing_manifest = current_results.get(
         "b1_b7_cone01_theta_sharing_ledger_gate_v0"
@@ -10542,6 +10548,215 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 line-1381 leave-one-out parameter report: "
             f"{b1_b7_cone01_line1381_leave_one_out_parameter_path}"
+        )
+
+    b1_b7_cone01_line1381_leave_two_out_parameter = {
+        "path": str(b1_b7_cone01_line1381_leave_two_out_parameter_path),
+        "exists": b1_b7_cone01_line1381_leave_two_out_parameter_path.exists(),
+    }
+    if not b1_b7_cone01_line1381_leave_two_out_parameter_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_line1381_leave_two_out_parameter_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_line1381_leave_two_out_parameter_manifest.get("status")
+            != "cone01_line1381_no_two_parameter_free_removal"
+        ):
+            errors.append("B1/B7 cone_01 line-1381 leave-two-out parameter status mismatch")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_line1381_leave_two_out_parameter_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 line-1381 leave-two-out parameter missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_line1381_leave_two_out_parameter_path.exists():
+        leave_two_out_payload = json.loads(read(b1_b7_cone01_line1381_leave_two_out_parameter_path))
+        leave_two_out_summary = leave_two_out_payload.get("summary", {})
+        leave_two_out_claims = leave_two_out_payload.get("claim_boundary", {})
+        b1_b7_cone01_line1381_leave_two_out_parameter.update(
+            {
+                "status": leave_two_out_payload.get("status"),
+                "model_status": leave_two_out_payload.get("model_status"),
+                "method": leave_two_out_payload.get("method"),
+                "workload": leave_two_out_payload.get("workload"),
+                "target_candidate_line_number": leave_two_out_summary.get(
+                    "target_candidate_line_number"
+                ),
+                "support_qubits": leave_two_out_summary.get("support_qubits"),
+                "window_start_line": leave_two_out_summary.get("window_start_line"),
+                "window_end_line": leave_two_out_summary.get("window_end_line"),
+                "source_cnot_count": leave_two_out_summary.get("source_cnot_count"),
+                "replacement_cnot_count": leave_two_out_summary.get("replacement_cnot_count"),
+                "candidate_cnot_reduction": leave_two_out_summary.get("candidate_cnot_reduction"),
+                "base_five_parameter_residual_norm": leave_two_out_summary.get(
+                    "base_five_parameter_residual_norm"
+                ),
+                "exact_tolerance": leave_two_out_summary.get("exact_tolerance"),
+                "current_off_grid_parameter_indices": leave_two_out_summary.get(
+                    "current_off_grid_parameter_indices"
+                ),
+                "current_off_grid_parameter_count": leave_two_out_summary.get(
+                    "current_off_grid_parameter_count"
+                ),
+                "leave_two_out_row_count": leave_two_out_summary.get("leave_two_out_row_count"),
+                "leave_two_out_exact_pass_count": leave_two_out_summary.get(
+                    "leave_two_out_exact_pass_count"
+                ),
+                "leave_two_out_exact_fail_count": leave_two_out_summary.get(
+                    "leave_two_out_exact_fail_count"
+                ),
+                "all_two_parameter_removals_fail": leave_two_out_summary.get(
+                    "all_two_parameter_removals_fail"
+                ),
+                "best_leave_two_out_residual_norm": leave_two_out_summary.get(
+                    "best_leave_two_out_residual_norm"
+                ),
+                "best_leave_two_out_fixed_parameter_indices": leave_two_out_summary.get(
+                    "best_leave_two_out_fixed_parameter_indices"
+                ),
+                "worst_leave_two_out_residual_norm": leave_two_out_summary.get(
+                    "worst_leave_two_out_residual_norm"
+                ),
+                "worst_leave_two_out_fixed_parameter_indices": leave_two_out_summary.get(
+                    "worst_leave_two_out_fixed_parameter_indices"
+                ),
+                "min_residual_ratio_to_exact_tolerance": leave_two_out_summary.get(
+                    "min_residual_ratio_to_exact_tolerance"
+                ),
+                "max_residual_ratio_to_exact_tolerance": leave_two_out_summary.get(
+                    "max_residual_ratio_to_exact_tolerance"
+                ),
+                "two_parameter_free_removal_accepted": leave_two_out_summary.get(
+                    "two_parameter_free_removal_accepted"
+                ),
+                "line1381_off_grid_parameters_eliminated": leave_two_out_summary.get(
+                    "line1381_off_grid_parameters_eliminated"
+                ),
+                "line1381_off_grid_parameters_absorbed": leave_two_out_summary.get(
+                    "line1381_off_grid_parameters_absorbed"
+                ),
+                "line1381_off_grid_parameters_symbolically_decomposed": (
+                    leave_two_out_summary.get(
+                        "line1381_off_grid_parameters_symbolically_decomposed"
+                    )
+                ),
+                "accepted_full_circuit_replay_certificate_count": leave_two_out_summary.get(
+                    "accepted_full_circuit_replay_certificate_count"
+                ),
+                "accepted_full_circuit_qasm_patch_count": leave_two_out_summary.get(
+                    "accepted_full_circuit_qasm_patch_count"
+                ),
+                "accepted_occurrence_removal": leave_two_out_summary.get(
+                    "accepted_occurrence_removal"
+                ),
+                "accepted_proxy_t_reduction": leave_two_out_summary.get(
+                    "accepted_proxy_t_reduction"
+                ),
+                "missing_occurrences_after_gate": leave_two_out_summary.get(
+                    "missing_occurrences_after_gate"
+                ),
+                "missing_proxy_t_after_gate": leave_two_out_summary.get(
+                    "missing_proxy_t_after_gate"
+                ),
+                "resource_saving_claimed": leave_two_out_summary.get(
+                    "resource_saving_claimed"
+                ),
+                "b7_ledger_improvement_claimed": leave_two_out_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "validation_error_count": leave_two_out_summary.get("validation_error_count"),
+            }
+        )
+        if leave_two_out_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 line-1381 leave-two-out parameter must have benchmark_id B1")
+        if (
+            leave_two_out_payload.get("method")
+            != "b1_b7_cone01_line1381_leave_two_out_parameter_gate_v0"
+        ):
+            errors.append("B1/B7 cone_01 line-1381 leave-two-out parameter method mismatch")
+        if leave_two_out_payload.get("status") != "cone01_line1381_no_two_parameter_free_removal":
+            errors.append("B1/B7 cone_01 line-1381 leave-two-out parameter status mismatch")
+        if (
+            leave_two_out_payload.get("model_status")
+            != "line1381_off_grid_parameter_pairs_are_leave_two_out_required"
+        ):
+            errors.append("B1/B7 cone_01 line-1381 leave-two-out parameter model_status mismatch")
+        expected_leave_two_out_fields = {
+            "target_candidate_line_number": 1381,
+            "support_qubits": [4, 8],
+            "window_start_line": 1369,
+            "window_end_line": 1379,
+            "source_cnot_count": 5,
+            "replacement_cnot_count": 2,
+            "candidate_cnot_reduction": 3,
+            "base_five_parameter_residual_norm": 6.513210005207597e-13,
+            "exact_tolerance": 1e-08,
+            "current_off_grid_parameter_indices": [3, 4, 9, 16, 17],
+            "current_off_grid_parameter_count": 5,
+            "leave_two_out_row_count": 10,
+            "leave_two_out_exact_pass_count": 0,
+            "leave_two_out_exact_fail_count": 10,
+            "all_two_parameter_removals_fail": True,
+            "best_leave_two_out_residual_norm": 0.13583443746892182,
+            "best_leave_two_out_fixed_parameter_indices": [9, 16],
+            "worst_leave_two_out_residual_norm": 0.41204448255804876,
+            "worst_leave_two_out_fixed_parameter_indices": [16, 17],
+            "min_residual_ratio_to_exact_tolerance": 13583443.746892182,
+            "max_residual_ratio_to_exact_tolerance": 41204448.255804874,
+            "two_parameter_free_removal_accepted": False,
+            "line1381_off_grid_parameters_eliminated": False,
+            "line1381_off_grid_parameters_absorbed": False,
+            "line1381_off_grid_parameters_symbolically_decomposed": False,
+            "accepted_full_circuit_replay_certificate_count": 0,
+            "accepted_full_circuit_qasm_patch_count": 0,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "resource_saving_claimed": False,
+            "b7_ledger_improvement_claimed": False,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_leave_two_out_fields.items():
+            if leave_two_out_summary.get(field) != value:
+                errors.append(
+                    f"B1/B7 cone_01 line-1381 leave-two-out expected {field}={value}"
+                )
+            if (
+                b1_b7_cone01_line1381_leave_two_out_parameter_manifest
+                and field in b1_b7_cone01_line1381_leave_two_out_parameter_manifest
+                and leave_two_out_summary.get(field)
+                != b1_b7_cone01_line1381_leave_two_out_parameter_manifest.get(field)
+            ):
+                errors.append(
+                    f"B1/B7 cone_01 line-1381 leave-two-out {field} mismatch"
+                )
+        rows = leave_two_out_payload.get("line1381_leave_two_out_parameter_rows", [])
+        if len(rows) != 10:
+            errors.append("B1/B7 cone_01 line-1381 leave-two-out must have 10 rows")
+        if any(row.get("exact_pass") is not False for row in rows):
+            errors.append("B1/B7 cone_01 line-1381 leave-two-out rows must all fail exactness")
+        if any(row.get("reoptimized_free_parameter_count") != 3 for row in rows):
+            errors.append("B1/B7 cone_01 line-1381 leave-two-out rows must reoptimize 3 parameters")
+        for field in [
+            "two_parameter_free_removal_accepted",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if leave_two_out_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 line-1381 leave-two-out must not claim {field}")
+            if leave_two_out_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 line-1381 leave-two-out claim boundary "
+                    f"must not claim {field}"
+                )
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 line-1381 leave-two-out parameter report: "
+            f"{b1_b7_cone01_line1381_leave_two_out_parameter_path}"
         )
 
     b1_b7_cone01_theta_sharing = {
@@ -20540,6 +20755,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_line1381_leave_one_out_parameter_gate": (
                 b1_b7_cone01_line1381_leave_one_out_parameter
             ),
+            "b7_cone01_line1381_leave_two_out_parameter_gate": (
+                b1_b7_cone01_line1381_leave_two_out_parameter
+            ),
             "b7_cone01_theta_sharing_ledger_gate": b1_b7_cone01_theta_sharing,
             "b7_cone01_shared_theta_synthesis_object_gate": b1_b7_cone01_shared_theta_synthesis_object,
             "b7_cone01_shared_theta_replay_verifier_gate": b1_b7_cone01_shared_theta_replay_verifier,
@@ -20858,6 +21076,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_line1381_leave_one_out_parameter_gate": str(
                 b1_b7_cone01_line1381_leave_one_out_parameter_path
+            ),
+            "b1_b7_cone01_line1381_leave_two_out_parameter_gate": str(
+                b1_b7_cone01_line1381_leave_two_out_parameter_path
             ),
             "b1_b7_cone01_theta_sharing_ledger_gate": str(b1_b7_cone01_theta_sharing_path),
             "b1_b7_cone01_shared_theta_synthesis_object_gate": str(
@@ -21970,6 +22191,18 @@ def markdown_report(report: dict) -> str:
             f"- Residual ratio to exact tolerance min / max: {report['b1']['b7_cone01_line1381_leave_one_out_parameter_gate'].get('min_residual_ratio_to_exact_tolerance')} / {report['b1']['b7_cone01_line1381_leave_one_out_parameter_gate'].get('max_residual_ratio_to_exact_tolerance')}",
             f"- Single-parameter removal accepted / B7 claim: {report['b1']['b7_cone01_line1381_leave_one_out_parameter_gate'].get('single_parameter_free_removal_accepted')} / {report['b1']['b7_cone01_line1381_leave_one_out_parameter_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_line1381_leave_one_out_parameter_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Line-1381 Leave-Two-Out Parameter Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('status')}",
+            f"- Current off-grid parameter indices: {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('current_off_grid_parameter_indices')}",
+            f"- Leave-two-out exact pass / fail: {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('leave_two_out_exact_pass_count')} / {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('leave_two_out_exact_fail_count')}",
+            f"- Best leave-two-out residual / fixed pair: {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('best_leave_two_out_residual_norm')} / {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('best_leave_two_out_fixed_parameter_indices')}",
+            f"- Worst leave-two-out residual / fixed pair: {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('worst_leave_two_out_residual_norm')} / {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('worst_leave_two_out_fixed_parameter_indices')}",
+            f"- Residual ratio to exact tolerance min / max: {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('min_residual_ratio_to_exact_tolerance')} / {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('max_residual_ratio_to_exact_tolerance')}",
+            f"- Two-parameter removal accepted / B7 claim: {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('two_parameter_free_removal_accepted')} / {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_line1381_leave_two_out_parameter_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Theta-Sharing Ledger Gate",
             "",

@@ -1827,3 +1827,14 @@ parameter index 3, about 9.89e6 times the 1e-8 exact tolerance; the worst is
 free-removal claim, but it is not a global minimality theorem and does not
 eliminate, absorb, symbolically decompose, or price the five line-1381
 parameters. Occurrence removal, proxy-T reduction, and B7 improvement remain 0.
+
+Sprint update 18bi: B1/B7 now has a line-1381 leave-two-out parameter gate.
+T-B1-004bi keeps the same five-parameter exact line-1381 repair, snaps every
+pair of the five off-pi/4 local-U3 parameters back to the pi/4 grid, and
+re-optimizes the remaining three parameters on the same two-CNOT scaffold.
+Exact passes are 0/10. The best leave-two-out residual is
+0.13583443746892182 for fixed pair [9, 16], about 1.36e7 times the 1e-8 exact
+tolerance; the worst is 0.41204448255804876 for fixed pair [16, 17]. This
+blocks a cheap two-parameter free-removal claim, but it is still not a global
+five-parameter minimality theorem. Occurrence removal, proxy-T reduction,
+local-U3 acceptance, and B7 improvement remain 0.
