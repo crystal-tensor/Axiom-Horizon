@@ -1958,3 +1958,14 @@ remains 0.000655799901145393 and the worst best-parameter error is
 0.027779719778975753. This closes the bounded exactly-four-rotation context
 escape hatch for the direct 3-CNOT route; occurrence removal, proxy-T
 reduction, local-U3 pricing acceptance, and B7 ledger improvement remain 0.
+
+Sprint update 18bu: B1/B7 now has an OpenQASM 3 candidate export gate for the
+line-268 plus line-1381 branch. T-B1-004bu consumes the legacy-dialect replay
+candidate and emits
+`results/B1_B7_cone01_openqasm3_candidate_export_gate/gcm_h6_line268_line1381_candidate_openqasm3.qasm`.
+The artifact starts with `OPENQASM 3.0`, uses `stdgates.inc`, declares
+`qubit[19] q` and `bit[1] c`, converts 487 `u3` gates to `U`, converts the
+final measurement into assignment syntax, and preserves operation counts: 789
+`cx`, 601 `rz`, 487 `U`, and 1 measurement. This accepts one QASM3 export
+artifact, but replay proof, local-U3 pricing, occurrence removal, proxy-T
+reduction, and B7 ledger improvement remain 0.

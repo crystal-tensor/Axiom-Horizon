@@ -726,6 +726,20 @@ Overall audit: PASS
 - B7 ledger improvement claimed: False
 - Validation errors: 0
 
+## B1/B7 cone_01 OpenQASM 3 Candidate Export Gate
+
+- Exists: True
+- Status: cone01_openqasm3_candidate_exported_not_replay_certified
+- Source / export dialect: OPENQASM 2.0 / OPENQASM 3.0
+- OpenQASM 3 path: results/B1_B7_cone01_openqasm3_candidate_export_gate/gcm_h6_line268_line1381_candidate_openqasm3.qasm
+- Header / stdgates / operation counts preserved: True / True / True
+- Legacy qelib/qreg/creg/u3/measure-arrow remnants: False / False / False / False
+- u3->U conversions / measurement conversions: 487 / 1
+- Candidate CNOT count / delta: 789 / 6
+- Accepted export / replay / local-U3 pricing / occurrence / proxy-T reduction: 1 / 0 / 0 / 0 / 0
+- B7 ledger improvement claimed: False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Full-Statevector Replay Probe Gate
 
 - Exists: True

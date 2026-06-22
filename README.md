@@ -793,3 +793,16 @@ grid error remains 0.000655799901145393 and the worst best-parameter error is
 0.027779719778975753. This closes the bounded exactly-four-rotation context
 escape hatch for the direct 3-CNOT branch; accepted occurrence removal,
 proxy-T reduction, and B7 ledger credit remain 0.
+
+T-B1-004bu responds to the dialect boundary directly. It consumes the
+legacy-dialect line-268 plus line-1381 candidate and exports an OpenQASM 3.0
+artifact at
+`results/B1_B7_cone01_openqasm3_candidate_export_gate/gcm_h6_line268_line1381_candidate_openqasm3.qasm`.
+The export has a valid `OPENQASM 3.0` header, uses `stdgates.inc`, converts
+487 legacy `u3` gates to `U`, converts the final measurement to modern
+assignment syntax, and preserves operation counts: 789 `cx`, 601 `rz`, 487
+`U`, and 1 measurement. This accepts one OpenQASM 3 export artifact, but it is
+not a new replay proof, not a local-U3 pricing certificate, not occurrence
+removal, and not B7 ledger credit. The next useful gate must parse or replay
+the OpenQASM 3 artifact through a modern toolchain and then connect it to
+symbolic equivalence or honest resource pricing.

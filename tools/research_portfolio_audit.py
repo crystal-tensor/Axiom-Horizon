@@ -243,6 +243,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_qasm2_candidate_rewrite_path = (
         results / "B1_B7_cone01_qasm2_candidate_rewrite_gate_v0.json"
     )
+    b1_b7_cone01_openqasm3_candidate_export_path = (
+        results / "B1_B7_cone01_openqasm3_candidate_export_gate_v0.json"
+    )
     b1_b7_cone01_full_statevector_replay_probe_path = (
         results / "B1_B7_cone01_full_statevector_replay_probe_gate_v0.json"
     )
@@ -913,6 +916,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_qasm2_candidate_rewrite_manifest = current_results.get(
         "b1_b7_cone01_qasm2_candidate_rewrite_gate_v0"
+    )
+    b1_b7_cone01_openqasm3_candidate_export_manifest = current_results.get(
+        "b1_b7_cone01_openqasm3_candidate_export_gate_v0"
     )
     b1_b7_cone01_full_statevector_replay_probe_manifest = current_results.get(
         "b1_b7_cone01_full_statevector_replay_probe_gate_v0"
@@ -8405,6 +8411,176 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 QASM2 candidate rewrite report: "
             f"{b1_b7_cone01_qasm2_candidate_rewrite_path}"
+        )
+
+    b1_b7_cone01_openqasm3_candidate_export = {
+        "path": str(b1_b7_cone01_openqasm3_candidate_export_path),
+        "exists": b1_b7_cone01_openqasm3_candidate_export_path.exists(),
+    }
+    if not b1_b7_cone01_openqasm3_candidate_export_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_openqasm3_candidate_export_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_openqasm3_candidate_export_manifest.get("status")
+            != "cone01_openqasm3_candidate_exported_not_replay_certified"
+        ):
+            errors.append("B1/B7 cone_01 OpenQASM 3 candidate export status mismatch")
+        for field in ["report", "markdown_report", "openqasm3_candidate_path"]:
+            value = b1_b7_cone01_openqasm3_candidate_export_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 OpenQASM 3 candidate export missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_openqasm3_candidate_export_path.exists():
+        qasm3_payload = json.loads(read(b1_b7_cone01_openqasm3_candidate_export_path))
+        qasm3_summary = qasm3_payload.get("summary", {})
+        qasm3_claims = qasm3_payload.get("claim_boundary", {})
+        qasm3_candidate_path_value = qasm3_summary.get("openqasm3_candidate_path")
+        qasm3_candidate_path = root / qasm3_candidate_path_value if qasm3_candidate_path_value else None
+        b1_b7_cone01_openqasm3_candidate_export.update(
+            {
+                "status": qasm3_payload.get("status"),
+                "model_status": qasm3_payload.get("model_status"),
+                "method": qasm3_payload.get("method"),
+                "workload": qasm3_payload.get("workload"),
+                "source_dialect": qasm3_summary.get("source_dialect"),
+                "export_dialect": qasm3_summary.get("export_dialect"),
+                "openqasm3_candidate_path": qasm3_candidate_path_value,
+                "qasm3_header_valid": qasm3_summary.get("qasm3_header_valid"),
+                "stdgates_include_present": qasm3_summary.get("stdgates_include_present"),
+                "legacy_qelib_include_present": qasm3_summary.get("legacy_qelib_include_present"),
+                "legacy_qreg_or_creg_present": qasm3_summary.get("legacy_qreg_or_creg_present"),
+                "legacy_u3_gate_present": qasm3_summary.get("legacy_u3_gate_present"),
+                "legacy_measure_arrow_present": qasm3_summary.get("legacy_measure_arrow_present"),
+                "source_line_count": qasm3_summary.get("source_line_count"),
+                "openqasm3_line_count": qasm3_summary.get("openqasm3_line_count"),
+                "operation_counts_preserved": qasm3_summary.get("operation_counts_preserved"),
+                "source_operation_counts": qasm3_summary.get("source_operation_counts"),
+                "openqasm3_operation_counts": qasm3_summary.get("openqasm3_operation_counts"),
+                "u3_to_U_conversion_count": qasm3_summary.get("u3_to_U_conversion_count"),
+                "measurement_conversion_count": qasm3_summary.get("measurement_conversion_count"),
+                "candidate_cnot_count": qasm3_summary.get("candidate_cnot_count"),
+                "candidate_cnot_delta": qasm3_summary.get("candidate_cnot_delta"),
+                "selected_candidate_line_numbers": qasm3_summary.get("selected_candidate_line_numbers"),
+                "accepted_openqasm3_export_artifact_count": qasm3_summary.get(
+                    "accepted_openqasm3_export_artifact_count"
+                ),
+                "accepted_full_circuit_replay_certificate_count": qasm3_summary.get(
+                    "accepted_full_circuit_replay_certificate_count"
+                ),
+                "accepted_local_u3_pricing_certificate_count": qasm3_summary.get(
+                    "accepted_local_u3_pricing_certificate_count"
+                ),
+                "accepted_occurrence_removal": qasm3_summary.get("accepted_occurrence_removal"),
+                "accepted_proxy_t_reduction": qasm3_summary.get("accepted_proxy_t_reduction"),
+                "missing_occurrences_after_gate": qasm3_summary.get("missing_occurrences_after_gate"),
+                "missing_proxy_t_after_gate": qasm3_summary.get("missing_proxy_t_after_gate"),
+                "openqasm3_export_claimed": qasm3_summary.get("openqasm3_export_claimed"),
+                "full_circuit_rewrite_claimed": qasm3_summary.get("full_circuit_rewrite_claimed"),
+                "full_circuit_replay_claimed": qasm3_summary.get("full_circuit_replay_claimed"),
+                "local_u3_pricing_accepted": qasm3_summary.get("local_u3_pricing_accepted"),
+                "resource_saving_claimed": qasm3_summary.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": qasm3_summary.get("b7_ledger_improvement_claimed"),
+                "validation_error_count": qasm3_summary.get("validation_error_count"),
+            }
+        )
+        if qasm3_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 OpenQASM 3 candidate export must have benchmark_id B1")
+        if qasm3_payload.get("method") != "b1_b7_cone01_openqasm3_candidate_export_gate_v0":
+            errors.append("B1/B7 cone_01 OpenQASM 3 candidate export method mismatch")
+        if (
+            qasm3_payload.get("status")
+            != "cone01_openqasm3_candidate_exported_not_replay_certified"
+        ):
+            errors.append("B1/B7 cone_01 OpenQASM 3 candidate export status mismatch")
+        if (
+            qasm3_payload.get("model_status")
+            != "openqasm3_candidate_export_exists_without_new_b7_credit"
+        ):
+            errors.append("B1/B7 cone_01 OpenQASM 3 candidate export model_status mismatch")
+        expected_qasm3_fields = {
+            "source_dialect": "OPENQASM 2.0",
+            "export_dialect": "OPENQASM 3.0",
+            "qasm3_header_valid": True,
+            "stdgates_include_present": True,
+            "legacy_qelib_include_present": False,
+            "legacy_qreg_or_creg_present": False,
+            "legacy_u3_gate_present": False,
+            "legacy_measure_arrow_present": False,
+            "source_line_count": 1884,
+            "openqasm3_line_count": 1884,
+            "operation_counts_preserved": True,
+            "u3_to_U_conversion_count": 487,
+            "measurement_conversion_count": 1,
+            "candidate_cnot_count": 789,
+            "candidate_cnot_delta": 6,
+            "selected_candidate_line_numbers": [268, 1381],
+            "accepted_openqasm3_export_artifact_count": 1,
+            "accepted_full_circuit_replay_certificate_count": 0,
+            "accepted_local_u3_pricing_certificate_count": 0,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "openqasm3_export_claimed": True,
+            "full_circuit_rewrite_claimed": False,
+            "full_circuit_replay_claimed": False,
+            "local_u3_pricing_accepted": False,
+            "resource_saving_claimed": False,
+            "b7_ledger_improvement_claimed": False,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_qasm3_fields.items():
+            if qasm3_summary.get(field) != value:
+                errors.append(
+                    f"B1/B7 cone_01 OpenQASM 3 candidate export expected {field}={value}"
+                )
+            if (
+                b1_b7_cone01_openqasm3_candidate_export_manifest
+                and field in b1_b7_cone01_openqasm3_candidate_export_manifest
+                and qasm3_summary.get(field)
+                != b1_b7_cone01_openqasm3_candidate_export_manifest.get(field)
+            ):
+                errors.append(f"B1/B7 cone_01 OpenQASM 3 candidate export {field} mismatch")
+        expected_counts = {"u3_or_U": 487, "rz": 601, "cx": 789, "measure": 1, "other_operation": 0}
+        if qasm3_summary.get("source_operation_counts") != expected_counts:
+            errors.append("B1/B7 cone_01 OpenQASM 3 source operation counts mismatch")
+        if qasm3_summary.get("openqasm3_operation_counts") != expected_counts:
+            errors.append("B1/B7 cone_01 OpenQASM 3 export operation counts mismatch")
+        if qasm3_candidate_path is None or not qasm3_candidate_path.exists():
+            errors.append("B1/B7 cone_01 OpenQASM 3 candidate export missing QASM file")
+        else:
+            qasm3_text = read(qasm3_candidate_path)
+            if not qasm3_text.startswith("OPENQASM 3.0;\ninclude \"stdgates.inc\";"):
+                errors.append("B1/B7 cone_01 OpenQASM 3 candidate header/include mismatch")
+            if "qelib1.inc" in qasm3_text or re.search(r"(^|\n)(qreg|creg)\s", qasm3_text):
+                errors.append("B1/B7 cone_01 OpenQASM 3 candidate contains legacy declarations")
+            if re.search(r"(^|\n)u3\(", qasm3_text, re.IGNORECASE):
+                errors.append("B1/B7 cone_01 OpenQASM 3 candidate contains legacy u3 gates")
+            if "->" in qasm3_text:
+                errors.append("B1/B7 cone_01 OpenQASM 3 candidate contains legacy measure arrow")
+        for field in [
+            "full_circuit_rewrite_claimed",
+            "full_circuit_replay_claimed",
+            "local_u3_pricing_accepted",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if qasm3_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 OpenQASM 3 candidate export must not claim {field}")
+            if qasm3_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 OpenQASM 3 candidate export claim boundary "
+                    f"must not claim {field}"
+                )
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 OpenQASM 3 candidate export report: "
+            f"{b1_b7_cone01_openqasm3_candidate_export_path}"
         )
 
     b1_b7_cone01_full_statevector_replay_probe = {
@@ -23169,6 +23345,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_qasm2_candidate_rewrite_gate": (
                 b1_b7_cone01_qasm2_candidate_rewrite
             ),
+            "b7_cone01_openqasm3_candidate_export_gate": (
+                b1_b7_cone01_openqasm3_candidate_export
+            ),
             "b7_cone01_full_statevector_replay_probe_gate": (
                 b1_b7_cone01_full_statevector_replay_probe
             ),
@@ -23523,6 +23702,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_qasm2_candidate_rewrite_gate": str(
                 b1_b7_cone01_qasm2_candidate_rewrite_path
+            ),
+            "b1_b7_cone01_openqasm3_candidate_export_gate": str(
+                b1_b7_cone01_openqasm3_candidate_export_path
             ),
             "b1_b7_cone01_full_statevector_replay_probe_gate": str(
                 b1_b7_cone01_full_statevector_replay_probe_path
@@ -24550,6 +24732,20 @@ def markdown_report(report: dict) -> str:
             f"- Accepted full-circuit patch / replay / occurrence / proxy-T reduction: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('accepted_full_circuit_qasm_patch_count')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('accepted_proxy_t_reduction')}",
             f"- B7 ledger improvement claimed: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 OpenQASM 3 Candidate Export Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('status')}",
+            f"- Source / export dialect: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('source_dialect')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('export_dialect')}",
+            f"- OpenQASM 3 path: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('openqasm3_candidate_path')}",
+            f"- Header / stdgates / operation counts preserved: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('qasm3_header_valid')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('stdgates_include_present')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('operation_counts_preserved')}",
+            f"- Legacy qelib/qreg/creg/u3/measure-arrow remnants: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('legacy_qelib_include_present')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('legacy_qreg_or_creg_present')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('legacy_u3_gate_present')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('legacy_measure_arrow_present')}",
+            f"- u3->U conversions / measurement conversions: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('u3_to_U_conversion_count')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('measurement_conversion_count')}",
+            f"- Candidate CNOT count / delta: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('candidate_cnot_count')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('candidate_cnot_delta')}",
+            f"- Accepted export / replay / local-U3 pricing / occurrence / proxy-T reduction: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('accepted_openqasm3_export_artifact_count')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('accepted_local_u3_pricing_certificate_count')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('accepted_proxy_t_reduction')}",
+            f"- B7 ledger improvement claimed: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_openqasm3_candidate_export_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Full-Statevector Replay Probe Gate",
             "",
