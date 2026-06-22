@@ -450,6 +450,17 @@ emitted yet because the source circuit is OpenQASM 2.0 while the bounded
 replacement snippets are OpenQASM 3 snippets, and no replay certificate,
 occurrence removal, proxy-T reduction, or B7 improvement is accepted.
 
+T-B1-004av now bridges that subset into a concrete OpenQASM 2.0 candidate
+source file at
+`results/B1_B7_cone01_qasm2_candidate_rewrite_gate/gcm_h6_line268_line1381_candidate.qasm`.
+The candidate rewrites the line-268 and line-1381 windows, converts the bounded
+OpenQASM 3 `U` snippets into OpenQASM 2.0 `u3` lines, and lowers structural
+CNOT count from 795 to 789. This is the first replay-consumable source-circuit
+artifact for the branch, but it is still not a full-circuit replay certificate,
+not a recovered line-1378 merge, not a priced local-U3 resource result, and not
+a B7 ledger saving. Accepted full-circuit patch, replay, occurrence removal,
+proxy-T reduction, and B7 improvement remain 0.
+
 ## Repository Layout
 
 ```text

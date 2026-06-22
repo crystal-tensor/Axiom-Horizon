@@ -240,6 +240,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_nonoverlap_patch_subset_path = (
         results / "B1_B7_cone01_nonoverlap_patch_subset_gate_v0.json"
     )
+    b1_b7_cone01_qasm2_candidate_rewrite_path = (
+        results / "B1_B7_cone01_qasm2_candidate_rewrite_gate_v0.json"
+    )
     b1_b7_cone01_theta_sharing_path = results / "B1_B7_cone01_theta_sharing_ledger_gate_v0.json"
     b1_b7_cone01_shared_theta_synthesis_object_path = (
         results / "B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json"
@@ -835,6 +838,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_nonoverlap_patch_subset_manifest = current_results.get(
         "b1_b7_cone01_nonoverlap_patch_subset_gate_v0"
+    )
+    b1_b7_cone01_qasm2_candidate_rewrite_manifest = current_results.get(
+        "b1_b7_cone01_qasm2_candidate_rewrite_gate_v0"
     )
     b1_b7_cone01_theta_sharing_manifest = current_results.get(
         "b1_b7_cone01_theta_sharing_ledger_gate_v0"
@@ -8050,6 +8056,211 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 non-overlap patch subset report: "
             f"{b1_b7_cone01_nonoverlap_patch_subset_path}"
+        )
+
+    b1_b7_cone01_qasm2_candidate_rewrite = {
+        "path": str(b1_b7_cone01_qasm2_candidate_rewrite_path),
+        "exists": b1_b7_cone01_qasm2_candidate_rewrite_path.exists(),
+    }
+    if not b1_b7_cone01_qasm2_candidate_rewrite_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_qasm2_candidate_rewrite_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_qasm2_candidate_rewrite_manifest.get("status")
+            != "cone01_qasm2_candidate_rewrite_emitted_not_replay_certified"
+        ):
+            errors.append("B1/B7 cone_01 QASM2 candidate rewrite gate status mismatch")
+        for field in ["report", "markdown_report", "qasm2_candidate_path"]:
+            value = b1_b7_cone01_qasm2_candidate_rewrite_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 QASM2 candidate rewrite gate missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_qasm2_candidate_rewrite_path.exists():
+        rewrite_payload = json.loads(read(b1_b7_cone01_qasm2_candidate_rewrite_path))
+        rewrite_summary = rewrite_payload.get("summary", {})
+        rewrite_claims = rewrite_payload.get("claim_boundary", {})
+        qasm2_candidate_path_value = rewrite_summary.get("qasm2_candidate_path")
+        qasm2_candidate_path = root / qasm2_candidate_path_value if qasm2_candidate_path_value else None
+        b1_b7_cone01_qasm2_candidate_rewrite.update(
+            {
+                "status": rewrite_payload.get("status"),
+                "model_status": rewrite_payload.get("model_status"),
+                "method": rewrite_payload.get("method"),
+                "workload": rewrite_payload.get("workload"),
+                "selected_candidate_line_numbers": rewrite_summary.get(
+                    "selected_candidate_line_numbers"
+                ),
+                "dropped_overlap_candidate_line_numbers": rewrite_summary.get(
+                    "dropped_overlap_candidate_line_numbers"
+                ),
+                "source_qasm_dialect": rewrite_summary.get("source_qasm_dialect"),
+                "candidate_qasm_dialect": rewrite_summary.get("candidate_qasm_dialect"),
+                "qasm2_candidate_rewrite_emitted": rewrite_summary.get(
+                    "qasm2_candidate_rewrite_emitted"
+                ),
+                "qasm2_candidate_path": qasm2_candidate_path_value,
+                "source_cnot_count": rewrite_summary.get("source_cnot_count"),
+                "candidate_cnot_count": rewrite_summary.get("candidate_cnot_count"),
+                "candidate_cnot_delta": rewrite_summary.get("candidate_cnot_delta"),
+                "selected_candidate_cnot_reduction": rewrite_summary.get(
+                    "selected_candidate_cnot_reduction"
+                ),
+                "replacement_window_count": rewrite_summary.get("replacement_window_count"),
+                "qasm2_bridge_patch_count": rewrite_summary.get("qasm2_bridge_patch_count"),
+                "full_circuit_replay_certificate_count": rewrite_summary.get(
+                    "full_circuit_replay_certificate_count"
+                ),
+                "accepted_full_circuit_qasm_patch_count": rewrite_summary.get(
+                    "accepted_full_circuit_qasm_patch_count"
+                ),
+                "accepted_full_circuit_replay_certificate_count": rewrite_summary.get(
+                    "accepted_full_circuit_replay_certificate_count"
+                ),
+                "accepted_occurrence_removal": rewrite_summary.get(
+                    "accepted_occurrence_removal"
+                ),
+                "accepted_proxy_t_reduction": rewrite_summary.get(
+                    "accepted_proxy_t_reduction"
+                ),
+                "missing_occurrences_after_gate": rewrite_summary.get(
+                    "missing_occurrences_after_gate"
+                ),
+                "missing_proxy_t_after_gate": rewrite_summary.get(
+                    "missing_proxy_t_after_gate"
+                ),
+                "qasm2_candidate_claimed_as_full_circuit_patch": rewrite_summary.get(
+                    "qasm2_candidate_claimed_as_full_circuit_patch"
+                ),
+                "full_circuit_rewrite_claimed": rewrite_summary.get(
+                    "full_circuit_rewrite_claimed"
+                ),
+                "resource_saving_claimed": rewrite_summary.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": rewrite_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "validation_error_count": rewrite_summary.get("validation_error_count"),
+                "replacement_row_count": len(rewrite_payload.get("replacement_rows", [])),
+            }
+        )
+        if rewrite_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 QASM2 candidate rewrite report must have benchmark_id B1")
+        if rewrite_payload.get("method") != "b1_b7_cone01_qasm2_candidate_rewrite_gate_v0":
+            errors.append("B1/B7 cone_01 QASM2 candidate rewrite method mismatch")
+        if (
+            rewrite_payload.get("status")
+            != "cone01_qasm2_candidate_rewrite_emitted_not_replay_certified"
+        ):
+            errors.append("B1/B7 cone_01 QASM2 candidate rewrite status mismatch")
+        if (
+            rewrite_payload.get("model_status")
+            != "qasm2_candidate_rewrite_exists_but_full_circuit_replay_is_pending"
+        ):
+            errors.append("B1/B7 cone_01 QASM2 candidate rewrite model_status mismatch")
+        for field in [
+            "selected_candidate_line_numbers",
+            "dropped_overlap_candidate_line_numbers",
+            "source_qasm_dialect",
+            "candidate_qasm_dialect",
+            "qasm2_candidate_rewrite_emitted",
+            "source_cnot_count",
+            "candidate_cnot_count",
+            "candidate_cnot_delta",
+            "selected_candidate_cnot_reduction",
+            "replacement_window_count",
+            "qasm2_bridge_patch_count",
+            "full_circuit_replay_certificate_count",
+            "accepted_full_circuit_qasm_patch_count",
+            "accepted_full_circuit_replay_certificate_count",
+            "accepted_occurrence_removal",
+            "accepted_proxy_t_reduction",
+            "missing_occurrences_after_gate",
+            "missing_proxy_t_after_gate",
+            "qasm2_candidate_claimed_as_full_circuit_patch",
+            "full_circuit_rewrite_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+            "validation_error_count",
+        ]:
+            if (
+                rewrite_summary.get(field)
+                != b1_b7_cone01_qasm2_candidate_rewrite_manifest.get(field)
+            ):
+                errors.append(f"B1/B7 cone_01 QASM2 candidate rewrite {field} mismatch")
+        expected_rewrite_fields = {
+            "selected_candidate_line_numbers": [268, 1381],
+            "dropped_overlap_candidate_line_numbers": [1378],
+            "source_qasm_dialect": "OPENQASM 2.0",
+            "candidate_qasm_dialect": "OPENQASM 2.0",
+            "qasm2_candidate_rewrite_emitted": True,
+            "source_cnot_count": 795,
+            "candidate_cnot_count": 789,
+            "candidate_cnot_delta": 6,
+            "selected_candidate_cnot_reduction": 6,
+            "replacement_window_count": 2,
+            "qasm2_bridge_patch_count": 2,
+            "full_circuit_replay_certificate_count": 0,
+            "accepted_full_circuit_qasm_patch_count": 0,
+            "accepted_full_circuit_replay_certificate_count": 0,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_rewrite_fields.items():
+            if rewrite_summary.get(field) != value:
+                errors.append(f"B1/B7 cone_01 QASM2 candidate rewrite expected {field}={value}")
+        for field in [
+            "qasm2_candidate_claimed_as_full_circuit_patch",
+            "full_circuit_rewrite_claimed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if rewrite_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 QASM2 candidate rewrite must not claim {field}")
+            if rewrite_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 QASM2 candidate rewrite claim boundary "
+                    f"must not claim {field}"
+                )
+        if qasm2_candidate_path is None or not qasm2_candidate_path.exists():
+            errors.append("B1/B7 cone_01 QASM2 candidate rewrite missing candidate QASM")
+        else:
+            qasm2_text = read(qasm2_candidate_path)
+            if "OPENQASM 3" in qasm2_text:
+                errors.append("B1/B7 cone_01 QASM2 candidate must not contain OpenQASM 3")
+            if re.search(r"^U\(", qasm2_text, re.MULTILINE):
+                errors.append("B1/B7 cone_01 QASM2 candidate must not contain QASM3 U gates")
+            if not qasm2_text.startswith("OPENQASM 2.0;"):
+                errors.append("B1/B7 cone_01 QASM2 candidate must start with OPENQASM 2.0")
+        rewrite_rows = rewrite_payload.get("replacement_rows", [])
+        if [row.get("candidate_line_number") for row in rewrite_rows] != [268, 1381]:
+            errors.append("B1/B7 cone_01 QASM2 candidate rewrite rows must be 268/1381")
+        for row in rewrite_rows:
+            line = row.get("candidate_line_number")
+            if row.get("qasm2_bridge_available") is not True:
+                errors.append(f"B1/B7 cone_01 QASM2 candidate rewrite line {line} bridge missing")
+            if row.get("accepted_full_circuit_qasm_patch") is not False:
+                errors.append(
+                    f"B1/B7 cone_01 QASM2 candidate rewrite line {line} must not accept patch"
+                )
+            if row.get("accepted_full_circuit_replay_certificate") is not False:
+                errors.append(
+                    f"B1/B7 cone_01 QASM2 candidate rewrite line {line} must not accept replay"
+                )
+            if row.get("accepted_occurrence_removal") != 0:
+                errors.append(
+                    f"B1/B7 cone_01 QASM2 candidate rewrite line {line} must not remove occurrences"
+                )
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 QASM2 candidate rewrite report: "
+            f"{b1_b7_cone01_qasm2_candidate_rewrite_path}"
         )
 
     b1_b7_cone01_theta_sharing = {
@@ -18009,6 +18220,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_nonoverlap_patch_subset_gate": (
                 b1_b7_cone01_nonoverlap_patch_subset
             ),
+            "b7_cone01_qasm2_candidate_rewrite_gate": (
+                b1_b7_cone01_qasm2_candidate_rewrite
+            ),
             "b7_cone01_theta_sharing_ledger_gate": b1_b7_cone01_theta_sharing,
             "b7_cone01_shared_theta_synthesis_object_gate": b1_b7_cone01_shared_theta_synthesis_object,
             "b7_cone01_shared_theta_replay_verifier_gate": b1_b7_cone01_shared_theta_replay_verifier,
@@ -18288,6 +18502,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_nonoverlap_patch_subset_gate": str(
                 b1_b7_cone01_nonoverlap_patch_subset_path
+            ),
+            "b1_b7_cone01_qasm2_candidate_rewrite_gate": str(
+                b1_b7_cone01_qasm2_candidate_rewrite_path
             ),
             "b1_b7_cone01_theta_sharing_ledger_gate": str(b1_b7_cone01_theta_sharing_path),
             "b1_b7_cone01_shared_theta_synthesis_object_gate": str(
@@ -19230,6 +19447,19 @@ def markdown_report(report: dict) -> str:
             f"- Full-circuit QASM rewrite emitted / accepted patch count: {report['b1']['b7_cone01_nonoverlap_patch_subset_gate'].get('full_circuit_qasm_rewrite_emitted')} / {report['b1']['b7_cone01_nonoverlap_patch_subset_gate'].get('accepted_full_circuit_qasm_patch_count')}",
             f"- Accepted replay / occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_nonoverlap_patch_subset_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_nonoverlap_patch_subset_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_nonoverlap_patch_subset_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_nonoverlap_patch_subset_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_nonoverlap_patch_subset_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 QASM2 Candidate Rewrite Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('status')}",
+            f"- Selected lines / dropped overlap lines: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('selected_candidate_line_numbers')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('dropped_overlap_candidate_line_numbers')}",
+            f"- Source / candidate dialect: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('source_qasm_dialect')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('candidate_qasm_dialect')}",
+            f"- Candidate QASM emitted / path: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('qasm2_candidate_rewrite_emitted')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('qasm2_candidate_path')}",
+            f"- Source / candidate CNOT count / delta: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('source_cnot_count')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('candidate_cnot_count')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('candidate_cnot_delta')}",
+            f"- Replacement windows / QASM2 bridge patches: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('replacement_window_count')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('qasm2_bridge_patch_count')}",
+            f"- Accepted full-circuit patch / replay / occurrence / proxy-T reduction: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('accepted_full_circuit_qasm_patch_count')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('accepted_proxy_t_reduction')}",
+            f"- B7 ledger improvement claimed: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_qasm2_candidate_rewrite_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Theta-Sharing Ledger Gate",
             "",

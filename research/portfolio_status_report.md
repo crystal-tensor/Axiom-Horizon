@@ -713,6 +713,19 @@ Overall audit: PASS
 - Accepted replay / occurrence / proxy-T reduction / B7 claim: 0 / 0 / 0 / False
 - Validation errors: 0
 
+## B1/B7 cone_01 QASM2 Candidate Rewrite Gate
+
+- Exists: True
+- Status: cone01_qasm2_candidate_rewrite_emitted_not_replay_certified
+- Selected lines / dropped overlap lines: [268, 1381] / [1378]
+- Source / candidate dialect: OPENQASM 2.0 / OPENQASM 2.0
+- Candidate QASM emitted / path: True / results/B1_B7_cone01_qasm2_candidate_rewrite_gate/gcm_h6_line268_line1381_candidate.qasm
+- Source / candidate CNOT count / delta: 795 / 789 / 6
+- Replacement windows / QASM2 bridge patches: 2 / 2
+- Accepted full-circuit patch / replay / occurrence / proxy-T reduction: 0 / 0 / 0 / 0
+- B7 ledger improvement claimed: False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Theta-Sharing Ledger Gate
 
 - Exists: True

@@ -1,0 +1,100 @@
+{
+  "benchmark_id": "B1",
+  "candidate_qasm": "results/B1_B7_cone01_qasm2_candidate_rewrite_gate/gcm_h6_line268_line1381_candidate.qasm",
+  "claim_boundary": {
+    "b7_ledger_improvement_claimed": false,
+    "full_circuit_rewrite_claimed": false,
+    "qasm2_candidate_claimed_as_full_circuit_patch": false,
+    "resource_saving_claimed": false,
+    "supported_claim": "A QASM2 candidate rewrite file now exists for the selected non-overlap bounded patch subset at line 268 and line 1381.",
+    "unsupported_claims": [
+      "The candidate rewrite is not yet a full-circuit replay certificate.",
+      "The candidate rewrite does not recover the dropped line-1378 overlap delta.",
+      "The candidate rewrite does not yet accept a B7 occurrence or proxy-T reduction.",
+      "The remaining line-1381 off-grid local-U3 parameters are not priced or eliminated."
+    ]
+  },
+  "linked_b7_problem_id": 21,
+  "method": "b1_b7_cone01_qasm2_candidate_rewrite_gate_v0",
+  "model_status": "qasm2_candidate_rewrite_exists_but_full_circuit_replay_is_pending",
+  "replacement_rows": [
+    {
+      "accepted_full_circuit_qasm_patch": false,
+      "accepted_full_circuit_replay_certificate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "candidate_cnot_reduction": 3,
+      "candidate_line_number": 268,
+      "qasm2_bridge_available": true,
+      "replacement_cnot_count": 2,
+      "replacement_comment_line_count": 1,
+      "replacement_line_count": 9,
+      "replacement_window_sha256": "0add2060f3d557e61dd6afee7102d039aaed5e8dbe34e88f7ae55e7aeb94740f",
+      "source_cnot_count": 5,
+      "source_window_end_line": 267,
+      "source_window_line_count": 12,
+      "source_window_sha256": "b5c5fc7a7d2e8bdc56b4ed8bd9b07de28dcc396ab6c17df4616872cff6ad2bde",
+      "source_window_start_line": 256
+    },
+    {
+      "accepted_full_circuit_qasm_patch": false,
+      "accepted_full_circuit_replay_certificate": false,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "candidate_cnot_reduction": 3,
+      "candidate_line_number": 1381,
+      "qasm2_bridge_available": true,
+      "replacement_cnot_count": 2,
+      "replacement_comment_line_count": 1,
+      "replacement_line_count": 9,
+      "replacement_window_sha256": "72ff0c8398788eaeeed0e5119d72f9066a117e378a9241701ae1bb956e882f0e",
+      "source_cnot_count": 5,
+      "source_window_end_line": 1379,
+      "source_window_line_count": 11,
+      "source_window_sha256": "1f005905020d5d17ab58cf524aa03fc4cd9d51eda6da9ad0374cb464dcecf1e0",
+      "source_window_start_line": 1369
+    }
+  ],
+  "source_nonoverlap_patch_subset_result": "results/B1_B7_cone01_nonoverlap_patch_subset_gate_v0.json",
+  "source_qasm": "results/b1_native_t_resource_optimizer/qasmbench_medium_exact/gcm_h6.qasm",
+  "status": "cone01_qasm2_candidate_rewrite_emitted_not_replay_certified",
+  "summary": {
+    "accepted_full_circuit_qasm_patch_count": 0,
+    "accepted_full_circuit_replay_certificate_count": 0,
+    "accepted_occurrence_removal": 0,
+    "accepted_proxy_t_reduction": 0,
+    "b7_ledger_improvement_claimed": false,
+    "candidate_cnot_count": 789,
+    "candidate_cnot_delta": 6,
+    "candidate_line_count": 1884,
+    "candidate_qasm_dialect": "OPENQASM 2.0",
+    "candidate_sha256": "2dfd0bee2dcdf02282839a6a5216d1fffda000ebb439581130d57b9cca455a38",
+    "dropped_overlap_candidate_line_numbers": [
+      1378
+    ],
+    "full_circuit_replay_certificate_count": 0,
+    "full_circuit_rewrite_claimed": false,
+    "missing_occurrences_after_gate": 30,
+    "missing_proxy_t_after_gate": 600,
+    "qasm2_bridge_patch_count": 2,
+    "qasm2_candidate_claimed_as_full_circuit_patch": false,
+    "qasm2_candidate_path": "results/B1_B7_cone01_qasm2_candidate_rewrite_gate/gcm_h6_line268_line1381_candidate.qasm",
+    "qasm2_candidate_rewrite_emitted": true,
+    "replacement_window_count": 2,
+    "resource_saving_claimed": false,
+    "selected_candidate_cnot_reduction": 6,
+    "selected_candidate_line_numbers": [
+      268,
+      1381
+    ],
+    "selected_replacement_line_count": 18,
+    "selected_source_window_line_count": 23,
+    "source_cnot_count": 795,
+    "source_line_count": 1889,
+    "source_nonoverlap_method": "b1_b7_cone01_nonoverlap_patch_subset_gate_v0",
+    "source_qasm_dialect": "OPENQASM 2.0",
+    "source_sha256": "150077af51e56d9263f35995726b6c8adfcc6b1cc4ec220ef9d05f4940cfded0",
+    "validation_error_count": 0
+  },
+  "workload": "qasmbench_medium_exact/gcm_h6.qasm"
+}

@@ -1683,3 +1683,14 @@ Sprint update 18as: B1/B7 now has a full-circuit replay obligation gate. T-B1-00
 Sprint update 18at: B1/B7 now has bounded OpenQASM 3 replacement snippets for the repaired reduced-CNOT packets. T-B1-004at emits 3/3 bounded QASM3 snippets and all 3 pass bounded exactness, keeping the candidate 9-CNOT reduction signal alive only as a future-if-accepted number. The source windows for line 1378 and line 1381 overlap on lines 1369-1377, so the snippets are not a composable full-circuit patch set. Accepted full-circuit patch count, replay certificates, occurrence removal, proxy-T reduction, and B7 improvement remain 0; the next step is merged-region resynthesis plus source-circuit replay.
 
 Sprint update 18au: B1/B7 now has a non-overlap patch subset gate. T-B1-004au selects line 268 and line 1381 as the best non-overlapping bounded patch subset, drops line 1378 as contained inside the line-1381 window, and corrects the current composable bounded CNOT delta from 9 to 6. No full-circuit QASM rewrite, replay certificate, occurrence removal, proxy-T reduction, or B7 improvement is accepted; the next step is dialect-bridged full-circuit replay or a merged-region synthesis that recovers the dropped line-1378 delta.
+
+Sprint update 18av: B1/B7 now has a QASM2 candidate rewrite gate. T-B1-004av
+consumes the line-268 plus line-1381 non-overlap subset, converts the bounded
+OpenQASM 3 `U` snippets into OpenQASM 2.0 `u3` syntax, and inserts them into
+the `gcm_h6` source circuit as
+`results/B1_B7_cone01_qasm2_candidate_rewrite_gate/gcm_h6_line268_line1381_candidate.qasm`.
+The source CNOT count is 795 and the candidate CNOT count is 789, preserving
+the current 6-CNOT structural delta. This is a replay-consumable candidate
+artifact only: full-circuit replay, line-1378 merged-region recovery, local-U3
+resource pricing, occurrence removal, proxy-T reduction, and B7 improvement all
+remain unaccepted.
