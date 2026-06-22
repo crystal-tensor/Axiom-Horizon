@@ -1771,3 +1771,17 @@ local-U3 pricing, occurrence removal, proxy-T reduction, and B7 ledger
 improvement remain 0. The next sprint gate must eliminate, absorb, or
 symbolically decompose the five line-1381 parameters, recover the line-1378
 merged-region delta, or find a different occurrence-removing route.
+
+Sprint update 18bd: B1/B7 now has an overlap-additivity bound for the dropped
+line-1378 delta. T-B1-004bd consumes the non-overlap subset and T-B1-004bc
+pricing gate, then checks the line-1378/line-1381 merged-region arithmetic.
+Line 1378's source window [1369, 1377] is contained inside line 1381's source
+window [1369, 1379] on the same [4, 8] support, so the union region has only 5
+source CNOTs. Adding line 1381's 3-CNOT delta and line 1378's 3-CNOT delta
+would require -1 replacement CNOTs. The max possible extra delta versus the
+current line-1381 replacement under nonnegative CNOT accounting is 2, so the
+full dropped line-1378 delta is not additively recoverable. Accepted
+merged-region rewrite, occurrence removal, proxy-T reduction, and B7
+improvement remain 0. The next sprint gate must synthesize a new union-region
+replacement with replay and honest local-U3 pricing, or switch to a different
+occurrence-removing route.

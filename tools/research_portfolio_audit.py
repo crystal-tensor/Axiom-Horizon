@@ -264,6 +264,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_line1381_local_u3_pricing_path = (
         results / "B1_B7_cone01_line1381_local_u3_pricing_gate_v0.json"
     )
+    b1_b7_cone01_overlap_additivity_bound_path = (
+        results / "B1_B7_cone01_overlap_additivity_bound_gate_v0.json"
+    )
     b1_b7_cone01_theta_sharing_path = results / "B1_B7_cone01_theta_sharing_ledger_gate_v0.json"
     b1_b7_cone01_shared_theta_synthesis_object_path = (
         results / "B1_B7_cone01_shared_theta_synthesis_object_gate_v0.json"
@@ -883,6 +886,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_line1381_local_u3_pricing_manifest = current_results.get(
         "b1_b7_cone01_line1381_local_u3_pricing_gate_v0"
+    )
+    b1_b7_cone01_overlap_additivity_bound_manifest = current_results.get(
+        "b1_b7_cone01_overlap_additivity_bound_gate_v0"
     )
     b1_b7_cone01_theta_sharing_manifest = current_results.get(
         "b1_b7_cone01_theta_sharing_ledger_gate_v0"
@@ -9517,6 +9523,187 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 line-1381 local-U3 pricing report: "
             f"{b1_b7_cone01_line1381_local_u3_pricing_path}"
+        )
+
+    b1_b7_cone01_overlap_additivity_bound = {
+        "path": str(b1_b7_cone01_overlap_additivity_bound_path),
+        "exists": b1_b7_cone01_overlap_additivity_bound_path.exists(),
+    }
+    if not b1_b7_cone01_overlap_additivity_bound_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_overlap_additivity_bound_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_overlap_additivity_bound_manifest.get("status")
+            != "cone01_overlap_additivity_bound_blocks_line1378_delta_recovery"
+        ):
+            errors.append("B1/B7 cone_01 overlap additivity bound status mismatch")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_overlap_additivity_bound_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 overlap additivity bound missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_overlap_additivity_bound_path.exists():
+        overlap_payload = json.loads(read(b1_b7_cone01_overlap_additivity_bound_path))
+        overlap_summary = overlap_payload.get("summary", {})
+        overlap_claims = overlap_payload.get("claim_boundary", {})
+        b1_b7_cone01_overlap_additivity_bound.update(
+            {
+                "status": overlap_payload.get("status"),
+                "model_status": overlap_payload.get("model_status"),
+                "method": overlap_payload.get("method"),
+                "workload": overlap_payload.get("workload"),
+                "selected_line_numbers": overlap_summary.get("selected_line_numbers"),
+                "dropped_overlap_candidate_line_numbers": overlap_summary.get(
+                    "dropped_overlap_candidate_line_numbers"
+                ),
+                "line1378_window": overlap_summary.get("line1378_window"),
+                "line1381_window": overlap_summary.get("line1381_window"),
+                "union_window": overlap_summary.get("union_window"),
+                "line1378_window_contained_in_line1381": overlap_summary.get(
+                    "line1378_window_contained_in_line1381"
+                ),
+                "line1378_line1381_same_support": overlap_summary.get(
+                    "line1378_line1381_same_support"
+                ),
+                "support_qubits": overlap_summary.get("support_qubits"),
+                "union_source_cnot_count": overlap_summary.get("union_source_cnot_count"),
+                "line1381_replacement_cnot_count": overlap_summary.get(
+                    "line1381_replacement_cnot_count"
+                ),
+                "line1378_replacement_cnot_count": overlap_summary.get(
+                    "line1378_replacement_cnot_count"
+                ),
+                "line1381_candidate_cnot_delta": overlap_summary.get(
+                    "line1381_candidate_cnot_delta"
+                ),
+                "line1378_candidate_cnot_delta": overlap_summary.get(
+                    "line1378_candidate_cnot_delta"
+                ),
+                "additive_pair_cnot_delta_requested": overlap_summary.get(
+                    "additive_pair_cnot_delta_requested"
+                ),
+                "required_replacement_cnot_for_additive_pair_delta": overlap_summary.get(
+                    "required_replacement_cnot_for_additive_pair_delta"
+                ),
+                "additive_recovery_impossible_by_cnot_bound": overlap_summary.get(
+                    "additive_recovery_impossible_by_cnot_bound"
+                ),
+                "max_additional_delta_vs_line1381_under_nonnegative_cnot": overlap_summary.get(
+                    "max_additional_delta_vs_line1381_under_nonnegative_cnot"
+                ),
+                "full_lost_line1378_delta_recoverable_by_contained_merge": overlap_summary.get(
+                    "full_lost_line1378_delta_recoverable_by_contained_merge"
+                ),
+                "line1378_delta_recovered": overlap_summary.get("line1378_delta_recovered"),
+                "merged_region_rewrite_emitted": overlap_summary.get(
+                    "merged_region_rewrite_emitted"
+                ),
+                "merged_region_replay_certificate_count": overlap_summary.get(
+                    "merged_region_replay_certificate_count"
+                ),
+                "accepted_full_circuit_replay_certificate_count": overlap_summary.get(
+                    "accepted_full_circuit_replay_certificate_count"
+                ),
+                "accepted_full_circuit_qasm_patch_count": overlap_summary.get(
+                    "accepted_full_circuit_qasm_patch_count"
+                ),
+                "accepted_occurrence_removal": overlap_summary.get("accepted_occurrence_removal"),
+                "accepted_proxy_t_reduction": overlap_summary.get("accepted_proxy_t_reduction"),
+                "missing_occurrences_after_gate": overlap_summary.get(
+                    "missing_occurrences_after_gate"
+                ),
+                "missing_proxy_t_after_gate": overlap_summary.get("missing_proxy_t_after_gate"),
+                "resource_saving_claimed": overlap_summary.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": overlap_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "validation_error_count": overlap_summary.get("validation_error_count"),
+            }
+        )
+        if overlap_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 overlap additivity bound must have benchmark_id B1")
+        if overlap_payload.get("method") != "b1_b7_cone01_overlap_additivity_bound_gate_v0":
+            errors.append("B1/B7 cone_01 overlap additivity bound method mismatch")
+        if (
+            overlap_payload.get("status")
+            != "cone01_overlap_additivity_bound_blocks_line1378_delta_recovery"
+        ):
+            errors.append("B1/B7 cone_01 overlap additivity bound status mismatch")
+        if (
+            overlap_payload.get("model_status")
+            != "contained_overlap_window_makes_line1378_delta_nonadditive"
+        ):
+            errors.append("B1/B7 cone_01 overlap additivity bound model_status mismatch")
+        expected_overlap_fields = {
+            "selected_line_numbers": [268, 1381],
+            "dropped_overlap_candidate_line_numbers": [1378],
+            "line1378_window": [1369, 1377],
+            "line1381_window": [1369, 1379],
+            "union_window": [1369, 1379],
+            "line1378_window_contained_in_line1381": True,
+            "line1378_line1381_same_support": True,
+            "support_qubits": [4, 8],
+            "union_source_cnot_count": 5,
+            "line1381_replacement_cnot_count": 2,
+            "line1378_replacement_cnot_count": 1,
+            "line1381_candidate_cnot_delta": 3,
+            "line1378_candidate_cnot_delta": 3,
+            "additive_pair_cnot_delta_requested": 6,
+            "required_replacement_cnot_for_additive_pair_delta": -1,
+            "additive_recovery_impossible_by_cnot_bound": True,
+            "max_additional_delta_vs_line1381_under_nonnegative_cnot": 2,
+            "full_lost_line1378_delta_recoverable_by_contained_merge": False,
+            "line1378_delta_recovered": False,
+            "merged_region_rewrite_emitted": False,
+            "merged_region_replay_certificate_count": 0,
+            "accepted_full_circuit_replay_certificate_count": 1,
+            "accepted_full_circuit_qasm_patch_count": 1,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "resource_saving_claimed": False,
+            "b7_ledger_improvement_claimed": False,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_overlap_fields.items():
+            if overlap_summary.get(field) != value:
+                errors.append(f"B1/B7 cone_01 overlap additivity bound expected {field}={value}")
+            if (
+                b1_b7_cone01_overlap_additivity_bound_manifest
+                and field in b1_b7_cone01_overlap_additivity_bound_manifest
+                and overlap_summary.get(field)
+                != b1_b7_cone01_overlap_additivity_bound_manifest.get(field)
+            ):
+                errors.append(f"B1/B7 cone_01 overlap additivity bound {field} mismatch")
+        if (
+            overlap_summary.get("union_source_cnot_count")
+            - overlap_summary.get("additive_pair_cnot_delta_requested")
+            != overlap_summary.get("required_replacement_cnot_for_additive_pair_delta")
+        ):
+            errors.append("B1/B7 cone_01 overlap additivity bound CNOT arithmetic mismatch")
+        for field in [
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+            "line1378_delta_recovered",
+            "merged_region_rewrite_emitted",
+        ]:
+            if overlap_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 overlap additivity bound must not claim {field}")
+            if overlap_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 overlap additivity bound claim boundary "
+                    f"must not claim {field}"
+                )
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 overlap additivity bound report: "
+            f"{b1_b7_cone01_overlap_additivity_bound_path}"
         )
 
     b1_b7_cone01_theta_sharing = {
@@ -19500,6 +19687,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_line1381_local_u3_pricing_gate": (
                 b1_b7_cone01_line1381_local_u3_pricing
             ),
+            "b7_cone01_overlap_additivity_bound_gate": (
+                b1_b7_cone01_overlap_additivity_bound
+            ),
             "b7_cone01_theta_sharing_ledger_gate": b1_b7_cone01_theta_sharing,
             "b7_cone01_shared_theta_synthesis_object_gate": b1_b7_cone01_shared_theta_synthesis_object,
             "b7_cone01_shared_theta_replay_verifier_gate": b1_b7_cone01_shared_theta_replay_verifier,
@@ -19803,6 +19993,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_line1381_local_u3_pricing_gate": str(
                 b1_b7_cone01_line1381_local_u3_pricing_path
+            ),
+            "b1_b7_cone01_overlap_additivity_bound_gate": str(
+                b1_b7_cone01_overlap_additivity_bound_path
             ),
             "b1_b7_cone01_theta_sharing_ledger_gate": str(b1_b7_cone01_theta_sharing_path),
             "b1_b7_cone01_shared_theta_synthesis_object_gate": str(
@@ -20854,6 +21047,18 @@ def markdown_report(report: dict) -> str:
             f"- Accepted replay / QASM patch artifacts: {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('accepted_full_circuit_qasm_patch_count')}",
             f"- Accepted occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Overlap Additivity Bound Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('status')}",
+            f"- Line-1378 / line-1381 / union windows: {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('line1378_window')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('line1381_window')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('union_window')}",
+            f"- Contained overlap / same support: {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('line1378_window_contained_in_line1381')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('line1378_line1381_same_support')}",
+            f"- Union source CNOT / additive pair delta / required replacement CNOT: {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('union_source_cnot_count')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('additive_pair_cnot_delta_requested')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('required_replacement_cnot_for_additive_pair_delta')}",
+            f"- Additive recovery impossible / max extra delta vs line 1381 / full lost delta recoverable: {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('additive_recovery_impossible_by_cnot_bound')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('max_additional_delta_vs_line1381_under_nonnegative_cnot')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('full_lost_line1378_delta_recoverable_by_contained_merge')}",
+            f"- Accepted replay / QASM patch artifacts: {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('accepted_full_circuit_qasm_patch_count')}",
+            f"- Accepted occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_overlap_additivity_bound_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Theta-Sharing Ledger Gate",
             "",

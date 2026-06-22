@@ -822,6 +822,18 @@ Overall audit: PASS
 - Accepted occurrence / proxy-T reduction / B7 claim: 0 / 0 / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Overlap Additivity Bound Gate
+
+- Exists: True
+- Status: cone01_overlap_additivity_bound_blocks_line1378_delta_recovery
+- Line-1378 / line-1381 / union windows: [1369, 1377] / [1369, 1379] / [1369, 1379]
+- Contained overlap / same support: True / True
+- Union source CNOT / additive pair delta / required replacement CNOT: 5 / 6 / -1
+- Additive recovery impossible / max extra delta vs line 1381 / full lost delta recoverable: True / 2 / False
+- Accepted replay / QASM patch artifacts: 1 / 1
+- Accepted occurrence / proxy-T reduction / B7 claim: 0 / 0 / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Theta-Sharing Ledger Gate
 
 - Exists: True

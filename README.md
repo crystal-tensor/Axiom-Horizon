@@ -525,6 +525,15 @@ remains 3. This is a quantified blocker, not a win: local-U3 pricing is still
 not accepted, line 1378 is not recovered, and B7 occurrence, proxy-T, and
 ledger credit remain 0.
 
+T-B1-004bd now closes the naive overlap-additivity interpretation of that
+dropped line-1378 delta. The line-1378 source window [1369, 1377] is contained
+inside the line-1381 source window [1369, 1379] on the same [4, 8] support, so
+the union region has only 5 source CNOTs. Adding the line-1381 3-CNOT delta and
+the line-1378 3-CNOT delta would require -1 replacement CNOTs. The full dropped
+line-1378 delta is therefore not additively recoverable; a future route must
+synthesize a new union-region replacement with replay and honest local-U3
+pricing, or find a different occurrence-removing certificate.
+
 ## Repository Layout
 
 ```text

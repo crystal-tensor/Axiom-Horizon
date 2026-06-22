@@ -1,0 +1,74 @@
+{
+  "benchmark_id": "B1",
+  "claim_boundary": {
+    "b7_ledger_improvement_claimed": false,
+    "line1378_delta_recovered": false,
+    "merged_region_rewrite_emitted": false,
+    "resource_saving_claimed": false,
+    "supported_claim": "Line 1378 is contained inside the line-1381 replacement window, so its 3-CNOT delta cannot be additively recovered on top of the line-1381 3-CNOT delta without requiring a negative replacement CNOT count for the union region.",
+    "unsupported_claims": [
+      "This does not synthesize a new merged-region replacement.",
+      "This does not recover the dropped line-1378 delta.",
+      "This does not remove the remaining line-1381 local-U3 pricing burden.",
+      "This does not improve the B7 ledger."
+    ]
+  },
+  "linked_b7_problem_id": 21,
+  "method": "b1_b7_cone01_overlap_additivity_bound_gate_v0",
+  "model_status": "contained_overlap_window_makes_line1378_delta_nonadditive",
+  "source_nonoverlap_subset_result": "results/B1_B7_cone01_nonoverlap_patch_subset_gate_v0.json",
+  "source_pricing_result": "results/B1_B7_cone01_line1381_local_u3_pricing_gate_v0.json",
+  "status": "cone01_overlap_additivity_bound_blocks_line1378_delta_recovery",
+  "summary": {
+    "accepted_full_circuit_qasm_patch_count": 1,
+    "accepted_full_circuit_replay_certificate_count": 1,
+    "accepted_occurrence_removal": 0,
+    "accepted_proxy_t_reduction": 0,
+    "additive_pair_cnot_delta_requested": 6,
+    "additive_recovery_impossible_by_cnot_bound": true,
+    "b7_ledger_improvement_claimed": false,
+    "dropped_overlap_candidate_line_numbers": [
+      1378
+    ],
+    "full_lost_line1378_delta_recoverable_by_contained_merge": false,
+    "line1378_candidate_cnot_delta": 3,
+    "line1378_delta_recovered": false,
+    "line1378_line1381_same_support": true,
+    "line1378_replacement_cnot_count": 1,
+    "line1378_window": [
+      1369,
+      1377
+    ],
+    "line1378_window_contained_in_line1381": true,
+    "line1381_candidate_cnot_delta": 3,
+    "line1381_replacement_cnot_count": 2,
+    "line1381_window": [
+      1369,
+      1379
+    ],
+    "max_additional_delta_vs_line1381_under_nonnegative_cnot": 2,
+    "merged_region_replay_certificate_count": 0,
+    "merged_region_rewrite_emitted": false,
+    "missing_occurrences_after_gate": 30,
+    "missing_proxy_t_after_gate": 600,
+    "required_replacement_cnot_for_additive_pair_delta": -1,
+    "resource_saving_claimed": false,
+    "selected_line_numbers": [
+      268,
+      1381
+    ],
+    "source_nonoverlap_subset_method": "b1_b7_cone01_nonoverlap_patch_subset_gate_v0",
+    "source_pricing_method": "b1_b7_cone01_line1381_local_u3_pricing_gate_v0",
+    "support_qubits": [
+      4,
+      8
+    ],
+    "union_source_cnot_count": 5,
+    "union_window": [
+      1369,
+      1379
+    ],
+    "validation_error_count": 0
+  },
+  "workload": "qasmbench_medium_exact/gcm_h6.qasm"
+}

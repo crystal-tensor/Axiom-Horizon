@@ -1981,6 +1981,57 @@ current_results:
     validation_error_count: 0
     report: ../results/B1_B7_cone01_line1381_local_u3_pricing_gate_v0.json
     markdown_report: ../research/B1_B7_cone01_line1381_local_u3_pricing_gate.md
+  b1_b7_cone01_overlap_additivity_bound_gate_v0:
+    circuits: 1
+    status: cone01_overlap_additivity_bound_blocks_line1378_delta_recovery
+    model_status: contained_overlap_window_makes_line1378_delta_nonadditive
+    method: b1_b7_cone01_overlap_additivity_bound_gate_v0
+    source_nonoverlap_subset_gate: b1_b7_cone01_nonoverlap_patch_subset_gate_v0
+    source_line1381_local_u3_pricing_gate: b1_b7_cone01_line1381_local_u3_pricing_gate_v0
+    workload: qasmbench_medium_exact/gcm_h6.qasm
+    selected_line_numbers:
+      - 268
+      - 1381
+    dropped_overlap_candidate_line_numbers:
+      - 1378
+    line1378_window:
+      - 1369
+      - 1377
+    line1381_window:
+      - 1369
+      - 1379
+    union_window:
+      - 1369
+      - 1379
+    line1378_window_contained_in_line1381: true
+    line1378_line1381_same_support: true
+    support_qubits:
+      - 4
+      - 8
+    union_source_cnot_count: 5
+    line1381_replacement_cnot_count: 2
+    line1378_replacement_cnot_count: 1
+    line1381_candidate_cnot_delta: 3
+    line1378_candidate_cnot_delta: 3
+    additive_pair_cnot_delta_requested: 6
+    required_replacement_cnot_for_additive_pair_delta: -1
+    additive_recovery_impossible_by_cnot_bound: true
+    max_additional_delta_vs_line1381_under_nonnegative_cnot: 2
+    full_lost_line1378_delta_recoverable_by_contained_merge: false
+    line1378_delta_recovered: false
+    merged_region_rewrite_emitted: false
+    merged_region_replay_certificate_count: 0
+    accepted_full_circuit_replay_certificate_count: 1
+    accepted_full_circuit_qasm_patch_count: 1
+    accepted_occurrence_removal: 0
+    accepted_proxy_t_reduction: 0
+    missing_occurrences_after_gate: 30
+    missing_proxy_t_after_gate: 600
+    resource_saving_claimed: false
+    b7_ledger_improvement_claimed: false
+    validation_error_count: 0
+    report: ../results/B1_B7_cone01_overlap_additivity_bound_gate_v0.json
+    markdown_report: ../research/B1_B7_cone01_overlap_additivity_bound_gate.md
   b1_b7_cone01_theta_sharing_ledger_gate_v0:
     circuits: 1
     status: cone01_theta_sharing_ledger_guardrail
