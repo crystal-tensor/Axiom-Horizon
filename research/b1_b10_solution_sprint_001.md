@@ -2000,3 +2000,15 @@ max probability delta 5.551115123125783e-16, and measured q[4] marginal delta
 artifact only; Qiskit-loader parse, symbolic/arbitrary-input equivalence,
 local-U3 pricing, occurrence removal, proxy-T reduction, and B7 ledger
 improvement remain 0.
+
+Sprint update 18by: B1/B7 now has a project-local OpenQASM 3 multi-input replay
+gate. T-B1-004by consumes the local semantic replay artifact and checks 8
+deterministic sampled inputs through the parsed OpenQASM 3 candidate and the
+optimized source after final measurement removal. The suite covers 6
+computational-basis preparations and 2 seeded product states; all 8 cases pass.
+Min state fidelity is 0.9999999999999547, max infidelity is
+4.529709940470639e-14, max aligned amplitude delta is
+1.392888964263601e-13, and max probability delta is 1.8214596497756474e-15.
+This accepts one project-local OpenQASM 3 multi-input replay artifact only;
+Qiskit-loader replay, symbolic/arbitrary-input equivalence, local-U3 pricing,
+occurrence removal, proxy-T reduction, and B7 ledger improvement remain 0.

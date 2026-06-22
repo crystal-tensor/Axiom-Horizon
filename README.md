@@ -838,3 +838,14 @@ measured q[4] marginal delta 5.551115123125783e-16. This accepts one
 project-local OpenQASM 3 replay artifact, but it is still not a Qiskit loader
 parse, symbolic equivalence, arbitrary-input equivalence, local-U3 pricing,
 occurrence removal, proxy-T reduction, or B7 ledger credit.
+
+T-B1-004by broadens the same OpenQASM 3 replay branch from the default input to
+8 deterministic sampled inputs. The project-local parser replays 6
+computational-basis preparations and 2 seeded product states against the
+optimized source after final measurement removal. All 8 cases pass with min
+state fidelity 0.9999999999999547, max infidelity 4.529709940470639e-14, max
+aligned amplitude delta 1.392888964263601e-13, and max probability delta
+1.8214596497756474e-15. This accepts one project-local OpenQASM 3 multi-input
+replay artifact, but Qiskit-loader replay, symbolic/arbitrary-input
+equivalence, local-U3 pricing, occurrence removal, proxy-T reduction, and B7
+ledger credit remain 0.
