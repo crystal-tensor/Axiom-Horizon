@@ -249,6 +249,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_openqasm3_parser_readiness_path = (
         results / "B1_B7_cone01_openqasm3_parser_readiness_gate_v0.json"
     )
+    b1_b7_cone01_openqasm3_structural_roundtrip_path = (
+        results / "B1_B7_cone01_openqasm3_structural_roundtrip_gate_v0.json"
+    )
     b1_b7_cone01_full_statevector_replay_probe_path = (
         results / "B1_B7_cone01_full_statevector_replay_probe_gate_v0.json"
     )
@@ -925,6 +928,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_openqasm3_parser_readiness_manifest = current_results.get(
         "b1_b7_cone01_openqasm3_parser_readiness_gate_v0"
+    )
+    b1_b7_cone01_openqasm3_structural_roundtrip_manifest = current_results.get(
+        "b1_b7_cone01_openqasm3_structural_roundtrip_gate_v0"
     )
     b1_b7_cone01_full_statevector_replay_probe_manifest = current_results.get(
         "b1_b7_cone01_full_statevector_replay_probe_gate_v0"
@@ -8764,6 +8770,192 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 OpenQASM 3 parser-readiness report: "
             f"{b1_b7_cone01_openqasm3_parser_readiness_path}"
+        )
+
+    b1_b7_cone01_openqasm3_structural_roundtrip = {
+        "path": str(b1_b7_cone01_openqasm3_structural_roundtrip_path),
+        "exists": b1_b7_cone01_openqasm3_structural_roundtrip_path.exists(),
+    }
+    if not b1_b7_cone01_openqasm3_structural_roundtrip_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_openqasm3_structural_roundtrip_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_openqasm3_structural_roundtrip_manifest.get("status")
+            != "cone01_openqasm3_structural_roundtrip_matches_legacy_candidate"
+        ):
+            errors.append("B1/B7 cone_01 OpenQASM 3 structural roundtrip status mismatch")
+        for field in [
+            "report",
+            "markdown_report",
+            "qasm2_candidate_path",
+            "openqasm3_candidate_path",
+        ]:
+            value = b1_b7_cone01_openqasm3_structural_roundtrip_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 OpenQASM 3 structural roundtrip missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_openqasm3_structural_roundtrip_path.exists():
+        roundtrip_payload = json.loads(read(b1_b7_cone01_openqasm3_structural_roundtrip_path))
+        roundtrip_summary = roundtrip_payload.get("summary", {})
+        roundtrip_claims = roundtrip_payload.get("claim_boundary", {})
+        b1_b7_cone01_openqasm3_structural_roundtrip.update(
+            {
+                "status": roundtrip_payload.get("status"),
+                "model_status": roundtrip_payload.get("model_status"),
+                "method": roundtrip_payload.get("method"),
+                "workload": roundtrip_payload.get("workload"),
+                "qasm2_candidate_path": roundtrip_summary.get("qasm2_candidate_path"),
+                "openqasm3_candidate_path": roundtrip_summary.get("openqasm3_candidate_path"),
+                "qasm2_normalized_instruction_count": roundtrip_summary.get(
+                    "qasm2_normalized_instruction_count"
+                ),
+                "openqasm3_normalized_instruction_count": roundtrip_summary.get(
+                    "openqasm3_normalized_instruction_count"
+                ),
+                "normalized_instruction_count": roundtrip_summary.get(
+                    "normalized_instruction_count"
+                ),
+                "normalized_streams_match": roundtrip_summary.get("normalized_streams_match"),
+                "stream_mismatch_count": roundtrip_summary.get("stream_mismatch_count"),
+                "stream_length_delta": roundtrip_summary.get("stream_length_delta"),
+                "qasm2_normalized_stream_sha256": roundtrip_summary.get(
+                    "qasm2_normalized_stream_sha256"
+                ),
+                "openqasm3_normalized_stream_sha256": roundtrip_summary.get(
+                    "openqasm3_normalized_stream_sha256"
+                ),
+                "normalized_stream_sha256": roundtrip_summary.get("normalized_stream_sha256"),
+                "operation_counts": roundtrip_summary.get("operation_counts"),
+                "expected_operation_counts": roundtrip_summary.get("expected_operation_counts"),
+                "operation_counts_match": roundtrip_summary.get("operation_counts_match"),
+                "first_normalized_instruction": roundtrip_summary.get(
+                    "first_normalized_instruction"
+                ),
+                "last_normalized_instruction": roundtrip_summary.get(
+                    "last_normalized_instruction"
+                ),
+                "accepted_structural_roundtrip_artifact_count": roundtrip_summary.get(
+                    "accepted_structural_roundtrip_artifact_count"
+                ),
+                "accepted_qiskit_loader_parse_artifact_count": roundtrip_summary.get(
+                    "accepted_qiskit_loader_parse_artifact_count"
+                ),
+                "accepted_full_circuit_replay_certificate_count": roundtrip_summary.get(
+                    "accepted_full_circuit_replay_certificate_count"
+                ),
+                "accepted_local_u3_pricing_certificate_count": roundtrip_summary.get(
+                    "accepted_local_u3_pricing_certificate_count"
+                ),
+                "accepted_occurrence_removal": roundtrip_summary.get("accepted_occurrence_removal"),
+                "accepted_proxy_t_reduction": roundtrip_summary.get("accepted_proxy_t_reduction"),
+                "missing_occurrences_after_gate": roundtrip_summary.get(
+                    "missing_occurrences_after_gate"
+                ),
+                "missing_proxy_t_after_gate": roundtrip_summary.get("missing_proxy_t_after_gate"),
+                "structural_roundtrip_claimed": roundtrip_summary.get(
+                    "structural_roundtrip_claimed"
+                ),
+                "qiskit_loader_parse_claimed": roundtrip_summary.get(
+                    "qiskit_loader_parse_claimed"
+                ),
+                "full_circuit_replay_claimed": roundtrip_summary.get(
+                    "full_circuit_replay_claimed"
+                ),
+                "local_u3_pricing_accepted": roundtrip_summary.get("local_u3_pricing_accepted"),
+                "resource_saving_claimed": roundtrip_summary.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": roundtrip_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "validation_error_count": roundtrip_summary.get("validation_error_count"),
+            }
+        )
+        if roundtrip_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 OpenQASM 3 structural roundtrip must have benchmark_id B1")
+        if (
+            roundtrip_payload.get("method")
+            != "b1_b7_cone01_openqasm3_structural_roundtrip_gate_v0"
+        ):
+            errors.append("B1/B7 cone_01 OpenQASM 3 structural roundtrip method mismatch")
+        if (
+            roundtrip_payload.get("status")
+            != "cone01_openqasm3_structural_roundtrip_matches_legacy_candidate"
+        ):
+            errors.append("B1/B7 cone_01 OpenQASM 3 structural roundtrip status mismatch")
+        if (
+            roundtrip_payload.get("model_status")
+            != "openqasm3_candidate_structurally_matches_legacy_instruction_stream_without_replay_credit"
+        ):
+            errors.append("B1/B7 cone_01 OpenQASM 3 structural roundtrip model_status mismatch")
+        expected_roundtrip_fields = {
+            "qasm2_normalized_instruction_count": 1878,
+            "openqasm3_normalized_instruction_count": 1878,
+            "normalized_instruction_count": 1878,
+            "normalized_streams_match": True,
+            "stream_mismatch_count": 0,
+            "stream_length_delta": 0,
+            "operation_counts": {"U": 487, "rz": 601, "cx": 789, "measure": 1},
+            "expected_operation_counts": {"U": 487, "rz": 601, "cx": 789, "measure": 1},
+            "operation_counts_match": True,
+            "first_normalized_instruction": "U(pi,-pi/8,-7*pi/8)|q[1]",
+            "last_normalized_instruction": "measure|q[4]->c[0]",
+            "accepted_structural_roundtrip_artifact_count": 1,
+            "accepted_qiskit_loader_parse_artifact_count": 0,
+            "accepted_full_circuit_replay_certificate_count": 0,
+            "accepted_local_u3_pricing_certificate_count": 0,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "structural_roundtrip_claimed": True,
+            "qiskit_loader_parse_claimed": False,
+            "full_circuit_replay_claimed": False,
+            "local_u3_pricing_accepted": False,
+            "resource_saving_claimed": False,
+            "b7_ledger_improvement_claimed": False,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_roundtrip_fields.items():
+            if roundtrip_summary.get(field) != value:
+                errors.append(
+                    f"B1/B7 cone_01 OpenQASM 3 structural roundtrip expected {field}={value}"
+                )
+            if (
+                b1_b7_cone01_openqasm3_structural_roundtrip_manifest
+                and field in b1_b7_cone01_openqasm3_structural_roundtrip_manifest
+                and roundtrip_summary.get(field)
+                != b1_b7_cone01_openqasm3_structural_roundtrip_manifest.get(field)
+            ):
+                errors.append(f"B1/B7 cone_01 OpenQASM 3 structural roundtrip {field} mismatch")
+        if (
+            roundtrip_summary.get("qasm2_normalized_stream_sha256")
+            != roundtrip_summary.get("openqasm3_normalized_stream_sha256")
+        ):
+            errors.append("B1/B7 cone_01 OpenQASM 3 structural roundtrip stream hashes differ")
+        if roundtrip_payload.get("mismatch_preview"):
+            errors.append("B1/B7 cone_01 OpenQASM 3 structural roundtrip mismatch preview not empty")
+        for field in [
+            "qiskit_loader_parse_claimed",
+            "full_circuit_replay_claimed",
+            "local_u3_pricing_accepted",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if roundtrip_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 OpenQASM 3 structural roundtrip must not claim {field}")
+            if roundtrip_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 OpenQASM 3 structural roundtrip claim boundary "
+                    f"must not claim {field}"
+                )
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 OpenQASM 3 structural roundtrip report: "
+            f"{b1_b7_cone01_openqasm3_structural_roundtrip_path}"
         )
 
     b1_b7_cone01_full_statevector_replay_probe = {
@@ -23534,6 +23726,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_openqasm3_parser_readiness_gate": (
                 b1_b7_cone01_openqasm3_parser_readiness
             ),
+            "b7_cone01_openqasm3_structural_roundtrip_gate": (
+                b1_b7_cone01_openqasm3_structural_roundtrip
+            ),
             "b7_cone01_full_statevector_replay_probe_gate": (
                 b1_b7_cone01_full_statevector_replay_probe
             ),
@@ -23894,6 +24089,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_openqasm3_parser_readiness_gate": str(
                 b1_b7_cone01_openqasm3_parser_readiness_path
+            ),
+            "b1_b7_cone01_openqasm3_structural_roundtrip_gate": str(
+                b1_b7_cone01_openqasm3_structural_roundtrip_path
             ),
             "b1_b7_cone01_full_statevector_replay_probe_gate": str(
                 b1_b7_cone01_full_statevector_replay_probe_path
@@ -24950,6 +25148,19 @@ def markdown_report(report: dict) -> str:
             f"- Accepted replay / local-U3 pricing / occurrence / proxy-T reduction: {report['b1']['b7_cone01_openqasm3_parser_readiness_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_openqasm3_parser_readiness_gate'].get('accepted_local_u3_pricing_certificate_count')} / {report['b1']['b7_cone01_openqasm3_parser_readiness_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_openqasm3_parser_readiness_gate'].get('accepted_proxy_t_reduction')}",
             f"- B7 ledger improvement claimed: {report['b1']['b7_cone01_openqasm3_parser_readiness_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_openqasm3_parser_readiness_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 OpenQASM 3 Structural Roundtrip Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('status')}",
+            f"- QASM2 / OpenQASM 3 paths: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('qasm2_candidate_path')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('openqasm3_candidate_path')}",
+            f"- Normalized instruction counts QASM2 / OpenQASM 3 / selected: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('qasm2_normalized_instruction_count')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('openqasm3_normalized_instruction_count')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('normalized_instruction_count')}",
+            f"- Streams match / mismatch count / length delta: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('normalized_streams_match')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('stream_mismatch_count')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('stream_length_delta')}",
+            f"- Operation counts: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('operation_counts')}",
+            f"- Stream hash: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('normalized_stream_sha256')}",
+            f"- Accepted structural roundtrip / Qiskit loader / replay / local-U3 pricing artifacts: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('accepted_structural_roundtrip_artifact_count')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('accepted_qiskit_loader_parse_artifact_count')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('accepted_local_u3_pricing_certificate_count')}",
+            f"- Accepted occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_openqasm3_structural_roundtrip_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Full-Statevector Replay Probe Gate",
             "",

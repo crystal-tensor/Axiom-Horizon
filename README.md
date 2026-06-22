@@ -817,3 +817,12 @@ not installed, so Qiskit's OpenQASM 3 loader is attempted and rejected with a
 `MissingOptionalLibraryError`. Qiskit loader parse artifacts, replay proof,
 local-U3 pricing, occurrence removal, proxy-T reduction, and B7 ledger credit
 all remain 0.
+
+T-B1-004bw adds a structural roundtrip gate before any new replay or resource
+claim. It normalizes the legacy OpenQASM 2 candidate and the OpenQASM 3 artifact
+into canonical instruction streams and compares them exactly. Both streams have
+1,878 instructions, zero mismatches, identical SHA256 stream hashes, and the
+same operation counts: 789 `cx`, 601 `rz`, 487 `U`, and 1 measurement. This
+accepts one structural roundtrip artifact, but Qiskit-loader artifacts, replay
+proof, local-U3 pricing, occurrence removal, proxy-T reduction, and B7 ledger
+credit remain 0.

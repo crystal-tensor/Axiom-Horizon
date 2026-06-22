@@ -1977,3 +1977,13 @@ of 789 `cx`, 601 `rz`, 487 `U`, and 1 measurement. Qiskit core is installed,
 but the OpenQASM 3 loader cannot run because `qiskit_qasm3_import` is missing,
 so accepted Qiskit-loader parse artifacts remain 0. This is honest progress on
 toolchain readiness, not replay proof or B7 resource credit.
+
+Sprint update 18bw: B1/B7 now has an OpenQASM 3 structural roundtrip gate. The
+gate normalizes the legacy OpenQASM 2 candidate and the OpenQASM 3 artifact into
+canonical instruction streams, then compares them exactly. Both streams have
+1,878 instructions, 0 mismatches, 0 length delta, identical SHA256 stream hash
+`7cd50bea1f5a3c191c5735c0891d3f70f8c07a9cfca9d6e93724e6d49cb36343`, and
+operation counts of 789 `cx`, 601 `rz`, 487 `U`, and 1 measurement. This accepts
+one structural roundtrip artifact only; Qiskit-loader readiness, semantic
+replay, local-U3 pricing, occurrence removal, proxy-T reduction, and B7 ledger
+improvement remain 0.

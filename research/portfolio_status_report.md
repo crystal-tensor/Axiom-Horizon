@@ -755,6 +755,19 @@ Overall audit: PASS
 - B7 ledger improvement claimed: False
 - Validation errors: 0
 
+## B1/B7 cone_01 OpenQASM 3 Structural Roundtrip Gate
+
+- Exists: True
+- Status: cone01_openqasm3_structural_roundtrip_matches_legacy_candidate
+- QASM2 / OpenQASM 3 paths: results/B1_B7_cone01_qasm2_candidate_rewrite_gate/gcm_h6_line268_line1381_candidate.qasm / results/B1_B7_cone01_openqasm3_candidate_export_gate/gcm_h6_line268_line1381_candidate_openqasm3.qasm
+- Normalized instruction counts QASM2 / OpenQASM 3 / selected: 1878 / 1878 / 1878
+- Streams match / mismatch count / length delta: True / 0 / 0
+- Operation counts: {'U': 487, 'cx': 789, 'measure': 1, 'rz': 601}
+- Stream hash: 7cd50bea1f5a3c191c5735c0891d3f70f8c07a9cfca9d6e93724e6d49cb36343
+- Accepted structural roundtrip / Qiskit loader / replay / local-U3 pricing artifacts: 1 / 0 / 0 / 0
+- Accepted occurrence / proxy-T reduction / B7 claim: 0 / 0 / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Full-Statevector Replay Probe Gate
 
 - Exists: True
