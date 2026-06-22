@@ -297,6 +297,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_three_cnot_multi_rotation_context_path = (
         results / "B1_B7_cone01_three_cnot_multi_rotation_context_gate_v0.json"
     )
+    b1_b7_cone01_three_cnot_four_rotation_context_path = (
+        results / "B1_B7_cone01_three_cnot_four_rotation_context_gate_v0.json"
+    )
     b1_b7_cone01_line1381_leave_one_out_parameter_path = (
         results / "B1_B7_cone01_line1381_leave_one_out_parameter_gate_v0.json"
     )
@@ -964,6 +967,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_three_cnot_multi_rotation_context_manifest = current_results.get(
         "b1_b7_cone01_three_cnot_multi_rotation_context_gate_v0"
+    )
+    b1_b7_cone01_three_cnot_four_rotation_context_manifest = current_results.get(
+        "b1_b7_cone01_three_cnot_four_rotation_context_gate_v0"
     )
     b1_b7_cone01_line1381_leave_one_out_parameter_manifest = current_results.get(
         "b1_b7_cone01_line1381_leave_one_out_parameter_gate_v0"
@@ -11933,6 +11939,214 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 three-CNOT multi-rotation context report: "
             f"{b1_b7_cone01_three_cnot_multi_rotation_context_path}"
+        )
+
+    b1_b7_cone01_three_cnot_four_rotation_context = {
+        "path": str(b1_b7_cone01_three_cnot_four_rotation_context_path),
+        "exists": b1_b7_cone01_three_cnot_four_rotation_context_path.exists(),
+    }
+    if not b1_b7_cone01_three_cnot_four_rotation_context_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_three_cnot_four_rotation_context_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_three_cnot_four_rotation_context_manifest.get("status")
+            != "cone01_three_cnot_four_rotation_context_not_accepted"
+        ):
+            errors.append("B1/B7 cone_01 three-CNOT four-rotation context status mismatch")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_three_cnot_four_rotation_context_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 three-CNOT four-rotation context missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_three_cnot_four_rotation_context_path.exists():
+        three_cnot_four_payload = json.loads(
+            read(b1_b7_cone01_three_cnot_four_rotation_context_path)
+        )
+        three_cnot_four_summary = three_cnot_four_payload.get("summary", {})
+        three_cnot_four_claims = three_cnot_four_payload.get("claim_boundary", {})
+        b1_b7_cone01_three_cnot_four_rotation_context.update(
+            {
+                "status": three_cnot_four_payload.get("status"),
+                "model_status": three_cnot_four_payload.get("model_status"),
+                "method": three_cnot_four_payload.get("method"),
+                "workload": three_cnot_four_payload.get("workload"),
+                "target_line_number": three_cnot_four_summary.get("target_line_number"),
+                "union_window": three_cnot_four_summary.get("union_window"),
+                "support_qubits": three_cnot_four_summary.get("support_qubits"),
+                "selected_sequence_id": three_cnot_four_summary.get(
+                    "selected_sequence_id"
+                ),
+                "selected_off_pi_over_four_parameter_count": three_cnot_four_summary.get(
+                    "selected_off_pi_over_four_parameter_count"
+                ),
+                "selected_proxy_t_pressure": three_cnot_four_summary.get(
+                    "selected_proxy_t_pressure"
+                ),
+                "context_rotation_argument_count": three_cnot_four_summary.get(
+                    "context_rotation_argument_count"
+                ),
+                "tested_off_grid_parameter_count": three_cnot_four_summary.get(
+                    "tested_off_grid_parameter_count"
+                ),
+                "search_width": three_cnot_four_summary.get("search_width"),
+                "width4_signed_combination_count_per_parameter": three_cnot_four_summary.get(
+                    "width4_signed_combination_count_per_parameter"
+                ),
+                "total_signed_combination_tests": three_cnot_four_summary.get(
+                    "total_signed_combination_tests"
+                ),
+                "width4_exact_absorption_parameter_count": three_cnot_four_summary.get(
+                    "width4_exact_absorption_parameter_count"
+                ),
+                "four_rotation_exact_absorption_parameter_count": three_cnot_four_summary.get(
+                    "four_rotation_exact_absorption_parameter_count"
+                ),
+                "min_best_width4_context_grid_error": three_cnot_four_summary.get(
+                    "min_best_width4_context_grid_error"
+                ),
+                "max_best_width4_context_grid_error": three_cnot_four_summary.get(
+                    "max_best_width4_context_grid_error"
+                ),
+                "accepted_four_rotation_context_absorption_count": three_cnot_four_summary.get(
+                    "accepted_four_rotation_context_absorption_count"
+                ),
+                "accepted_full_circuit_replay_certificate_count": three_cnot_four_summary.get(
+                    "accepted_full_circuit_replay_certificate_count"
+                ),
+                "accepted_local_u3_pricing_certificate_count": three_cnot_four_summary.get(
+                    "accepted_local_u3_pricing_certificate_count"
+                ),
+                "accepted_occurrence_removal": three_cnot_four_summary.get(
+                    "accepted_occurrence_removal"
+                ),
+                "accepted_proxy_t_reduction": three_cnot_four_summary.get(
+                    "accepted_proxy_t_reduction"
+                ),
+                "missing_occurrences_after_gate": three_cnot_four_summary.get(
+                    "missing_occurrences_after_gate"
+                ),
+                "missing_proxy_t_after_gate": three_cnot_four_summary.get(
+                    "missing_proxy_t_after_gate"
+                ),
+                "four_rotation_context_absorption_claimed": three_cnot_four_summary.get(
+                    "four_rotation_context_absorption_claimed"
+                ),
+                "full_circuit_rewrite_claimed": three_cnot_four_summary.get(
+                    "full_circuit_rewrite_claimed"
+                ),
+                "local_u3_pricing_accepted": three_cnot_four_summary.get(
+                    "local_u3_pricing_accepted"
+                ),
+                "resource_saving_claimed": three_cnot_four_summary.get(
+                    "resource_saving_claimed"
+                ),
+                "b7_ledger_improvement_claimed": three_cnot_four_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "validation_error_count": three_cnot_four_summary.get(
+                    "validation_error_count"
+                ),
+            }
+        )
+        if three_cnot_four_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 three-CNOT four-rotation context must have benchmark_id B1")
+        if (
+            three_cnot_four_payload.get("method")
+            != "b1_b7_cone01_three_cnot_four_rotation_context_gate_v0"
+        ):
+            errors.append("B1/B7 cone_01 three-CNOT four-rotation context method mismatch")
+        if (
+            three_cnot_four_payload.get("status")
+            != "cone01_three_cnot_four_rotation_context_not_accepted"
+        ):
+            errors.append("B1/B7 cone_01 three-CNOT four-rotation context status mismatch")
+        if (
+            three_cnot_four_payload.get("model_status")
+            != "best_three_cnot_candidate_has_no_four_rotation_context_absorption"
+        ):
+            errors.append("B1/B7 cone_01 three-CNOT four-rotation context model_status mismatch")
+        expected_three_cnot_four_fields = {
+            "target_line_number": 1381,
+            "union_window": [1369, 1379],
+            "support_qubits": [4, 8],
+            "selected_sequence_id": "10-10-01",
+            "selected_off_pi_over_four_parameter_count": 18,
+            "selected_proxy_t_pressure": 360,
+            "source_width2_exact_absorption_parameter_count": 0,
+            "source_width3_exact_absorption_parameter_count": 0,
+            "rotation_argument_inventory_count": 2049,
+            "context_radius": 64,
+            "context_start_line": 1305,
+            "context_end_line": 1443,
+            "context_rotation_argument_count": 44,
+            "tested_off_grid_parameter_count": 18,
+            "search_width": 4,
+            "width4_signed_combination_count_per_parameter": 2172016,
+            "total_signed_combination_tests": 39096288,
+            "width4_exact_absorption_parameter_count": 0,
+            "four_rotation_exact_absorption_parameter_count": 0,
+            "min_best_width4_context_grid_error": 0.000655799901145393,
+            "max_best_width4_context_grid_error": 0.027779719778975753,
+            "accepted_four_rotation_context_absorption_count": 0,
+            "accepted_full_circuit_replay_certificate_count": 0,
+            "accepted_local_u3_pricing_certificate_count": 0,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "four_rotation_context_absorption_claimed": False,
+            "full_circuit_rewrite_claimed": False,
+            "local_u3_pricing_accepted": False,
+            "resource_saving_claimed": False,
+            "b7_ledger_improvement_claimed": False,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_three_cnot_four_fields.items():
+            if three_cnot_four_summary.get(field) != value:
+                errors.append(
+                    "B1/B7 cone_01 three-CNOT four-rotation context "
+                    f"expected {field}={value}"
+                )
+            if (
+                b1_b7_cone01_three_cnot_four_rotation_context_manifest
+                and field in b1_b7_cone01_three_cnot_four_rotation_context_manifest
+                and three_cnot_four_summary.get(field)
+                != b1_b7_cone01_three_cnot_four_rotation_context_manifest.get(field)
+            ):
+                errors.append(
+                    "B1/B7 cone_01 three-CNOT four-rotation context "
+                    f"{field} mismatch"
+                )
+        rows = three_cnot_four_payload.get("three_cnot_four_rotation_context_rows", [])
+        if len(rows) != 18:
+            errors.append("B1/B7 cone_01 three-CNOT four-rotation context must have 18 rows")
+        if any(row.get("accepted_four_rotation_context_absorption") is not False for row in rows):
+            errors.append("B1/B7 cone_01 three-CNOT four-rotation rows must not accept absorption")
+        if any(row.get("exact_four_rotation_absorption") is not False for row in rows):
+            errors.append("B1/B7 cone_01 three-CNOT four-rotation rows must not exact-absorb")
+        for field in [
+            "four_rotation_context_absorption_claimed",
+            "full_circuit_rewrite_claimed",
+            "local_u3_pricing_accepted",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if three_cnot_four_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 three-CNOT four-rotation context must not claim {field}")
+            if three_cnot_four_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 three-CNOT four-rotation context claim boundary "
+                    f"must not claim {field}"
+                )
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 three-CNOT four-rotation context report: "
+            f"{b1_b7_cone01_three_cnot_four_rotation_context_path}"
         )
 
     b1_b7_cone01_line1381_leave_one_out_parameter = {
@@ -23009,6 +23223,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_three_cnot_multi_rotation_context_gate": (
                 b1_b7_cone01_three_cnot_multi_rotation_context
             ),
+            "b7_cone01_three_cnot_four_rotation_context_gate": (
+                b1_b7_cone01_three_cnot_four_rotation_context
+            ),
             "b7_cone01_line1381_leave_one_out_parameter_gate": (
                 b1_b7_cone01_line1381_leave_one_out_parameter
             ),
@@ -23360,6 +23577,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_three_cnot_multi_rotation_context_gate": str(
                 b1_b7_cone01_three_cnot_multi_rotation_context_path
+            ),
+            "b1_b7_cone01_three_cnot_four_rotation_context_gate": str(
+                b1_b7_cone01_three_cnot_four_rotation_context_path
             ),
             "b1_b7_cone01_line1381_leave_one_out_parameter_gate": str(
                 b1_b7_cone01_line1381_leave_one_out_parameter_path
@@ -24564,6 +24784,18 @@ def markdown_report(report: dict) -> str:
             f"- Best width-2 / width-3 error ranges: {report['b1']['b7_cone01_three_cnot_multi_rotation_context_gate'].get('min_best_width2_context_grid_error')} to {report['b1']['b7_cone01_three_cnot_multi_rotation_context_gate'].get('max_best_width2_context_grid_error')} / {report['b1']['b7_cone01_three_cnot_multi_rotation_context_gate'].get('min_best_width3_context_grid_error')} to {report['b1']['b7_cone01_three_cnot_multi_rotation_context_gate'].get('max_best_width3_context_grid_error')}",
             f"- Multi-rotation absorption accepted / B7 claim: {report['b1']['b7_cone01_three_cnot_multi_rotation_context_gate'].get('multi_rotation_context_absorption_claimed')} / {report['b1']['b7_cone01_three_cnot_multi_rotation_context_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_three_cnot_multi_rotation_context_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Three-CNOT Four-Rotation Context Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('status')}",
+            f"- Selected sequence / off-grid / proxy-T: {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('selected_sequence_id')} / {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('selected_off_pi_over_four_parameter_count')} / {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('selected_proxy_t_pressure')}",
+            f"- Context rotations / tested off-grid parameters: {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('context_rotation_argument_count')} / {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('tested_off_grid_parameter_count')}",
+            f"- Search width / total signed-combination tests: {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('search_width')} / {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('total_signed_combination_tests')}",
+            f"- Width-4 combinations per parameter / exact absorption parameters: {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('width4_signed_combination_count_per_parameter')} / {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('width4_exact_absorption_parameter_count')}",
+            f"- Best width-4 error range: {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('min_best_width4_context_grid_error')} to {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('max_best_width4_context_grid_error')}",
+            f"- Four-rotation absorption accepted / B7 claim: {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('four_rotation_context_absorption_claimed')} / {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_three_cnot_four_rotation_context_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Line-1381 Leave-One-Out Parameter Gate",
             "",

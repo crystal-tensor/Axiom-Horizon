@@ -446,23 +446,25 @@ non-overlapping bounded patch subsets and selects line 268 plus the larger
 line-1381 window, dropping line 1378 because it is contained in the line-1381
 source window. The candidate CNOT signal is therefore 6 for the current
 composable bounded subset, not the naive 9. No full-circuit QASM rewrite is
-emitted yet because the source circuit is OpenQASM 2.0 while the bounded
-replacement snippets are OpenQASM 3 snippets, and no replay certificate,
-occurrence removal, proxy-T reduction, or B7 improvement is accepted.
+emitted yet because the source benchmark is still a legacy OpenQASM 2.0 fixture
+while the bounded replacement snippets are OpenQASM 3 snippets. The project
+route is OpenQASM 3-facing; no replay certificate, occurrence removal, proxy-T
+reduction, or B7 improvement is accepted.
 
-T-B1-004av now bridges that subset into a concrete OpenQASM 2.0 candidate
-source file at
+T-B1-004av now bridges that subset into a concrete legacy-dialect replay
+candidate at
 `results/B1_B7_cone01_qasm2_candidate_rewrite_gate/gcm_h6_line268_line1381_candidate.qasm`.
-The candidate rewrites the line-268 and line-1381 windows, converts the bounded
-OpenQASM 3 `U` snippets into OpenQASM 2.0 `u3` lines, and lowers structural
-CNOT count from 795 to 789. This is the first replay-consumable source-circuit
-artifact for the branch, but it is still not a full-circuit replay certificate,
-not a recovered line-1378 merge, not a priced local-U3 resource result, and not
-a B7 ledger saving. Accepted full-circuit patch, replay, occurrence removal,
-proxy-T reduction, and B7 improvement remain 0.
+The candidate rewrites the line-268 and line-1381 windows and down-converts the
+bounded OpenQASM 3 `U` snippets only to match the current legacy fixture parser,
+lowering structural CNOT count from 795 to 789. This is the first
+replay-consumable artifact for the branch and a stepping stone toward an
+OpenQASM 3 exporter, but it is still not a full-circuit replay certificate, not
+a recovered line-1378 merge, not a priced local-U3 resource result, and not a B7
+ledger saving. Accepted full-circuit patch, replay, occurrence removal, proxy-T
+reduction, and B7 improvement remain 0.
 
-T-B1-004aw then runs the first full-statevector replay probe on that QASM2
-candidate. After removing final measurements, the source and candidate
+T-B1-004aw then runs the first full-statevector replay probe on that
+legacy-dialect candidate. After removing final measurements, the source and candidate
 19-qubit circuits have statevector dimension 524,288, state fidelity
 0.9999999999999551, max global-phase-aligned amplitude delta
 1.3908205762322243e-13, max probability delta 5.551115123125783e-16, and
@@ -510,10 +512,10 @@ dimensions, so it is not a full Hilbert-space unitary proof; accepted B7
 occurrence, proxy-T, and ledger credit remain 0.
 
 T-B1-004bb turns the selected non-overlap line-268 plus line-1381 patch subset
-into a tolerance-bounded full-circuit semantic patch certificate for the QASM2
-candidate. The two selected windows are non-overlapping, both local-unitary
-replacement certificates pass, the emitted QASM2 candidate exists, and the
-candidate keeps the 795 -> 789 CNOT delta. The certificate accepts 1
+into a tolerance-bounded full-circuit semantic patch certificate for the
+legacy-dialect candidate. The two selected windows are non-overlapping, both
+local-unitary replacement certificates pass, the emitted legacy-dialect candidate
+exists, and the candidate keeps the 795 -> 789 CNOT delta. The certificate accepts 1
 full-circuit replay/QASM patch artifact, but B7 resource credit remains 0
 because line 1378 is still dropped and line 1381 still has 5 unpriced off-grid
 local-U3 parameters.
@@ -781,3 +783,13 @@ width-2 absorption is 0/18, exact width-3 absorption is 0/18, and the best
 width-2/width-3 grid error remains 0.000655799901145393. This closes the
 bounded two-/three-rotation context escape hatch for the direct 3-CNOT branch;
 accepted occurrence removal, proxy-T reduction, and B7 ledger credit remain 0.
+
+T-B1-004bt takes the next bounded step for the same direct 3-CNOT branch by
+testing exactly four same-support context rotations. The gate keeps sequence
+`10-10-01`, 18 off-pi/4 parameters, and 44 context rotations, then evaluates
+2,172,016 width-4 signed combinations per parameter. Across 39,096,288 total
+signed-combination tests, exact width-4 absorption is 0/18. The best width-4
+grid error remains 0.000655799901145393 and the worst best-parameter error is
+0.027779719778975753. This closes the bounded exactly-four-rotation context
+escape hatch for the direct 3-CNOT branch; accepted occurrence removal,
+proxy-T reduction, and B7 ledger credit remain 0.

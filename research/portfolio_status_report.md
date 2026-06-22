@@ -960,6 +960,18 @@ Overall audit: PASS
 - Multi-rotation absorption accepted / B7 claim: False / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Three-CNOT Four-Rotation Context Gate
+
+- Exists: True
+- Status: cone01_three_cnot_four_rotation_context_not_accepted
+- Selected sequence / off-grid / proxy-T: 10-10-01 / 18 / 360
+- Context rotations / tested off-grid parameters: 44 / 18
+- Search width / total signed-combination tests: 4 / 39096288
+- Width-4 combinations per parameter / exact absorption parameters: 2172016 / 0
+- Best width-4 error range: 0.000655799901145393 to 0.027779719778975753
+- Four-rotation absorption accepted / B7 claim: False / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Line-1381 Leave-One-Out Parameter Gate
 
 - Exists: True

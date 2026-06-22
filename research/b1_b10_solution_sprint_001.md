@@ -1947,3 +1947,14 @@ exact width-3 absorption is 0/18, and the best width-2/width-3 grid error
 remains 0.000655799901145393. This closes the bounded two-/three-rotation
 context escape hatch for the direct 3-CNOT route; occurrence removal, proxy-T
 reduction, local-U3 pricing acceptance, and B7 ledger improvement remain 0.
+
+Sprint update 18bt: B1/B7 now has an exactly-four-rotation context gate for the
+same direct 3-CNOT route. T-B1-004bt keeps sequence `10-10-01`, the same 18
+off-pi/4 local-U3 parameters, and the same 44 same-support context rotation
+arguments, then tests signed sums of exactly four context rotations. It checks
+2,172,016 width-4 combinations per parameter, for 39,096,288 signed-combination
+tests overall. Exact width-4 absorption is 0/18; the best width-4 grid error
+remains 0.000655799901145393 and the worst best-parameter error is
+0.027779719778975753. This closes the bounded exactly-four-rotation context
+escape hatch for the direct 3-CNOT route; occurrence removal, proxy-T
+reduction, local-U3 pricing acceptance, and B7 ledger improvement remain 0.
