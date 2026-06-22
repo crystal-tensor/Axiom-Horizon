@@ -872,6 +872,19 @@ Overall audit: PASS
 - Selected replacement changed / adopted for B7 / B7 claim: False / False / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Union-Region Grid-Snap Pricing Gate
+
+- Exists: True
+- Status: cone01_union_region_grid_snap_pricing_rejected
+- Orientation sequences: ['01-01', '01-10', '10-01', '10-10']
+- Grid-snap exact pass / fail: 0 / 4
+- Best grid-snap residual / sequence: 0.36435162331693166 / 10-10
+- Worst grid-snap residual / sequence: 1.021457442072864 / 10-01
+- Best source off-grid / proxy-T pressure: 13 / 260
+- Current line-1381 proxy-T pressure: 100
+- Grid-snap pricing accepted / B7 claim: False / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Line-1381 Leave-One-Out Parameter Gate
 
 - Exists: True

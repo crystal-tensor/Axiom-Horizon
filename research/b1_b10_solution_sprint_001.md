@@ -1869,3 +1869,13 @@ fail is 0/1. The all-grid residual is 0.8415210419190079, about 8.42e7 times
 the 1e-8 exact tolerance. This blocks a cheap all-grid snap interpretation,
 but it is still not a global five-parameter minimality theorem. Occurrence
 removal, proxy-T reduction, local-U3 acceptance, and B7 improvement remain 0.
+
+Sprint update 18bm: B1/B7 now has a union-region grid-snap pricing gate.
+T-B1-004bm consumes the four exact 2-CNOT union-region census candidates from
+T-B1-004bf and snaps every local-U3 parameter in each candidate back to the
+pi/4 grid. Exact pass / fail is 0/4. The best grid-snap residual is
+0.36435162331693166 on sequence `10-10`, about 3.64e7 times the 1e-8 exact
+tolerance; the worst residual is 1.021457442072864 on sequence `10-01`. This
+blocks a cheap grid-priced adoption of the union-census route and keeps
+occurrence removal, proxy-T reduction, local-U3 pricing acceptance, and B7
+improvement at 0.

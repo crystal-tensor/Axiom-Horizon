@@ -562,6 +562,15 @@ The census route is therefore pricing-dominated by the current patch boundary:
 selected replacement changes, accepted occurrence removal, proxy-T reduction,
 and B7 ledger credit all remain 0.
 
+T-B1-004bm checks the cheap grid-pricing escape hatch for the T-B1-004bf
+union-region census candidates. It snaps all local-U3 parameters in each of the
+four exact 2-CNOT union candidates back to the pi/4 grid and replays the union
+target. Exact pass / fail is 0/4. The best grid-snap residual is
+0.36435162331693166 on sequence `10-10`, and the worst is 1.021457442072864 on
+sequence `10-01`. This rejects a free grid-priced adoption of the union census
+route; occurrence removal, proxy-T reduction, local-U3 pricing acceptance, and
+B7 ledger credit remain 0.
+
 T-B1-004bh sharpens the remaining line-1381 blocker. It snaps each one of the
 five current off-pi/4 local-U3 parameters back to the pi/4 grid, then
 re-optimizes the other four parameters on the same two-CNOT scaffold. All 5/5

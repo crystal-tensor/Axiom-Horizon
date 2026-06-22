@@ -276,6 +276,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_union_region_pricing_dominance_path = (
         results / "B1_B7_cone01_union_region_pricing_dominance_gate_v0.json"
     )
+    b1_b7_cone01_union_region_grid_snap_pricing_path = (
+        results / "B1_B7_cone01_union_region_grid_snap_pricing_gate_v0.json"
+    )
     b1_b7_cone01_line1381_leave_one_out_parameter_path = (
         results / "B1_B7_cone01_line1381_leave_one_out_parameter_gate_v0.json"
     )
@@ -922,6 +925,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_union_region_pricing_dominance_manifest = current_results.get(
         "b1_b7_cone01_union_region_pricing_dominance_gate_v0"
+    )
+    b1_b7_cone01_union_region_grid_snap_pricing_manifest = current_results.get(
+        "b1_b7_cone01_union_region_grid_snap_pricing_gate_v0"
     )
     b1_b7_cone01_line1381_leave_one_out_parameter_manifest = current_results.get(
         "b1_b7_cone01_line1381_leave_one_out_parameter_gate_v0"
@@ -10357,6 +10363,201 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 union-region pricing dominance report: "
             f"{b1_b7_cone01_union_region_pricing_dominance_path}"
+        )
+
+    b1_b7_cone01_union_region_grid_snap_pricing = {
+        "path": str(b1_b7_cone01_union_region_grid_snap_pricing_path),
+        "exists": b1_b7_cone01_union_region_grid_snap_pricing_path.exists(),
+    }
+    if not b1_b7_cone01_union_region_grid_snap_pricing_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_union_region_grid_snap_pricing_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_union_region_grid_snap_pricing_manifest.get("status")
+            != "cone01_union_region_grid_snap_pricing_rejected"
+        ):
+            errors.append("B1/B7 cone_01 union-region grid-snap pricing status mismatch")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_union_region_grid_snap_pricing_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 union-region grid-snap pricing missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_union_region_grid_snap_pricing_path.exists():
+        grid_snap_payload = json.loads(read(b1_b7_cone01_union_region_grid_snap_pricing_path))
+        grid_snap_summary = grid_snap_payload.get("summary", {})
+        grid_snap_claims = grid_snap_payload.get("claim_boundary", {})
+        b1_b7_cone01_union_region_grid_snap_pricing.update(
+            {
+                "status": grid_snap_payload.get("status"),
+                "model_status": grid_snap_payload.get("model_status"),
+                "method": grid_snap_payload.get("method"),
+                "workload": grid_snap_payload.get("workload"),
+                "target_line_number": grid_snap_summary.get("target_line_number"),
+                "union_window": grid_snap_summary.get("union_window"),
+                "support_qubits": grid_snap_summary.get("support_qubits"),
+                "source_cnot_count": grid_snap_summary.get("source_cnot_count"),
+                "searched_cnot_count": grid_snap_summary.get("searched_cnot_count"),
+                "orientation_sequence_count": grid_snap_summary.get(
+                    "orientation_sequence_count"
+                ),
+                "orientation_sequence_ids": grid_snap_summary.get(
+                    "orientation_sequence_ids"
+                ),
+                "all_grid_snap_row_count": grid_snap_summary.get(
+                    "all_grid_snap_row_count"
+                ),
+                "all_grid_snap_exact_pass_count": grid_snap_summary.get(
+                    "all_grid_snap_exact_pass_count"
+                ),
+                "all_grid_snap_exact_fail_count": grid_snap_summary.get(
+                    "all_grid_snap_exact_fail_count"
+                ),
+                "all_grid_snaps_fail": grid_snap_summary.get("all_grid_snaps_fail"),
+                "best_grid_snap_sequence_id": grid_snap_summary.get(
+                    "best_grid_snap_sequence_id"
+                ),
+                "best_grid_snap_residual_norm": grid_snap_summary.get(
+                    "best_grid_snap_residual_norm"
+                ),
+                "best_grid_snap_residual_ratio_to_exact_tolerance": grid_snap_summary.get(
+                    "best_grid_snap_residual_ratio_to_exact_tolerance"
+                ),
+                "worst_grid_snap_sequence_id": grid_snap_summary.get(
+                    "worst_grid_snap_sequence_id"
+                ),
+                "worst_grid_snap_residual_norm": grid_snap_summary.get(
+                    "worst_grid_snap_residual_norm"
+                ),
+                "worst_grid_snap_residual_ratio_to_exact_tolerance": grid_snap_summary.get(
+                    "worst_grid_snap_residual_ratio_to_exact_tolerance"
+                ),
+                "best_source_off_pi_over_four_parameter_count": grid_snap_summary.get(
+                    "best_source_off_pi_over_four_parameter_count"
+                ),
+                "best_source_proxy_t_pressure": grid_snap_summary.get(
+                    "best_source_proxy_t_pressure"
+                ),
+                "current_line1381_proxy_t_pressure": grid_snap_summary.get(
+                    "current_line1381_proxy_t_pressure"
+                ),
+                "grid_snap_pricing_accepted": grid_snap_summary.get(
+                    "grid_snap_pricing_accepted"
+                ),
+                "local_u3_pricing_completed": grid_snap_summary.get(
+                    "local_u3_pricing_completed"
+                ),
+                "accepted_full_circuit_replay_certificate_count": grid_snap_summary.get(
+                    "accepted_full_circuit_replay_certificate_count"
+                ),
+                "accepted_full_circuit_qasm_patch_count": grid_snap_summary.get(
+                    "accepted_full_circuit_qasm_patch_count"
+                ),
+                "accepted_occurrence_removal": grid_snap_summary.get(
+                    "accepted_occurrence_removal"
+                ),
+                "accepted_proxy_t_reduction": grid_snap_summary.get(
+                    "accepted_proxy_t_reduction"
+                ),
+                "missing_occurrences_after_gate": grid_snap_summary.get(
+                    "missing_occurrences_after_gate"
+                ),
+                "missing_proxy_t_after_gate": grid_snap_summary.get(
+                    "missing_proxy_t_after_gate"
+                ),
+                "resource_saving_claimed": grid_snap_summary.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": grid_snap_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "validation_error_count": grid_snap_summary.get("validation_error_count"),
+            }
+        )
+        if grid_snap_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 union-region grid-snap pricing must have benchmark_id B1")
+        if grid_snap_payload.get("method") != "b1_b7_cone01_union_region_grid_snap_pricing_gate_v0":
+            errors.append("B1/B7 cone_01 union-region grid-snap pricing method mismatch")
+        if grid_snap_payload.get("status") != "cone01_union_region_grid_snap_pricing_rejected":
+            errors.append("B1/B7 cone_01 union-region grid-snap pricing status mismatch")
+        if (
+            grid_snap_payload.get("model_status")
+            != "two_cnot_union_census_candidates_do_not_become_grid_priced"
+        ):
+            errors.append("B1/B7 cone_01 union-region grid-snap pricing model_status mismatch")
+        expected_grid_snap_fields = {
+            "target_line_number": 1381,
+            "union_window": [1369, 1379],
+            "support_qubits": [4, 8],
+            "source_cnot_count": 5,
+            "searched_cnot_count": 2,
+            "orientation_sequence_count": 4,
+            "orientation_sequence_ids": ["01-01", "01-10", "10-01", "10-10"],
+            "all_grid_snap_row_count": 4,
+            "all_grid_snap_exact_pass_count": 0,
+            "all_grid_snap_exact_fail_count": 4,
+            "all_grid_snaps_fail": True,
+            "best_grid_snap_sequence_id": "10-10",
+            "best_grid_snap_residual_norm": 0.36435162331693166,
+            "best_grid_snap_residual_ratio_to_exact_tolerance": 36435162.331693165,
+            "worst_grid_snap_sequence_id": "10-01",
+            "worst_grid_snap_residual_norm": 1.021457442072864,
+            "worst_grid_snap_residual_ratio_to_exact_tolerance": 102145744.20728639,
+            "best_source_off_pi_over_four_parameter_count": 13,
+            "best_source_proxy_t_pressure": 260,
+            "current_line1381_proxy_t_pressure": 100,
+            "grid_snap_pricing_accepted": False,
+            "local_u3_pricing_completed": False,
+            "accepted_full_circuit_replay_certificate_count": 0,
+            "accepted_full_circuit_qasm_patch_count": 0,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "resource_saving_claimed": False,
+            "b7_ledger_improvement_claimed": False,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_grid_snap_fields.items():
+            if grid_snap_summary.get(field) != value:
+                errors.append(
+                    f"B1/B7 cone_01 union-region grid-snap pricing expected {field}={value}"
+                )
+            if (
+                b1_b7_cone01_union_region_grid_snap_pricing_manifest
+                and field in b1_b7_cone01_union_region_grid_snap_pricing_manifest
+                and grid_snap_summary.get(field)
+                != b1_b7_cone01_union_region_grid_snap_pricing_manifest.get(field)
+            ):
+                errors.append(
+                    f"B1/B7 cone_01 union-region grid-snap pricing {field} mismatch"
+                )
+        rows = grid_snap_payload.get("union_region_grid_snap_rows", [])
+        if len(rows) != 4:
+            errors.append("B1/B7 cone_01 union-region grid-snap pricing must have 4 rows")
+        if any(row.get("exact_pass_after_grid_snap") is not False for row in rows):
+            errors.append("B1/B7 cone_01 union-region grid-snap rows must all fail")
+        if any(row.get("snapped_off_pi_over_four_parameter_count") != 0 for row in rows):
+            errors.append("B1/B7 cone_01 union-region grid-snap rows must have zero snapped off-grid params")
+        for field in [
+            "grid_snap_pricing_accepted",
+            "local_u3_pricing_completed",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if grid_snap_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 union-region grid-snap pricing must not claim {field}")
+            if grid_snap_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 union-region grid-snap pricing claim boundary "
+                    f"must not claim {field}"
+                )
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 union-region grid-snap pricing report: "
+            f"{b1_b7_cone01_union_region_grid_snap_pricing_path}"
         )
 
     b1_b7_cone01_line1381_leave_one_out_parameter = {
@@ -21412,6 +21613,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_union_region_pricing_dominance_gate": (
                 b1_b7_cone01_union_region_pricing_dominance
             ),
+            "b7_cone01_union_region_grid_snap_pricing_gate": (
+                b1_b7_cone01_union_region_grid_snap_pricing
+            ),
             "b7_cone01_line1381_leave_one_out_parameter_gate": (
                 b1_b7_cone01_line1381_leave_one_out_parameter
             ),
@@ -21742,6 +21946,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_union_region_pricing_dominance_gate": str(
                 b1_b7_cone01_union_region_pricing_dominance_path
+            ),
+            "b1_b7_cone01_union_region_grid_snap_pricing_gate": str(
+                b1_b7_cone01_union_region_grid_snap_pricing_path
             ),
             "b1_b7_cone01_line1381_leave_one_out_parameter_gate": str(
                 b1_b7_cone01_line1381_leave_one_out_parameter_path
@@ -22858,6 +23065,19 @@ def markdown_report(report: dict) -> str:
             f"- Census dominates current / current dominates census: {report['b1']['b7_cone01_union_region_pricing_dominance_gate'].get('census_candidate_dominates_current_line1381_pricing')} / {report['b1']['b7_cone01_union_region_pricing_dominance_gate'].get('current_line1381_patch_pricing_dominates_census')}",
             f"- Selected replacement changed / adopted for B7 / B7 claim: {report['b1']['b7_cone01_union_region_pricing_dominance_gate'].get('selected_replacement_changed')} / {report['b1']['b7_cone01_union_region_pricing_dominance_gate'].get('two_cnot_census_adopted_for_b7_ledger')} / {report['b1']['b7_cone01_union_region_pricing_dominance_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_union_region_pricing_dominance_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Union-Region Grid-Snap Pricing Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('status')}",
+            f"- Orientation sequences: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('orientation_sequence_ids')}",
+            f"- Grid-snap exact pass / fail: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('all_grid_snap_exact_pass_count')} / {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('all_grid_snap_exact_fail_count')}",
+            f"- Best grid-snap residual / sequence: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('best_grid_snap_residual_norm')} / {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('best_grid_snap_sequence_id')}",
+            f"- Worst grid-snap residual / sequence: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('worst_grid_snap_residual_norm')} / {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('worst_grid_snap_sequence_id')}",
+            f"- Best source off-grid / proxy-T pressure: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('best_source_off_pi_over_four_parameter_count')} / {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('best_source_proxy_t_pressure')}",
+            f"- Current line-1381 proxy-T pressure: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('current_line1381_proxy_t_pressure')}",
+            f"- Grid-snap pricing accepted / B7 claim: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('grid_snap_pricing_accepted')} / {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_union_region_grid_snap_pricing_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Line-1381 Leave-One-Out Parameter Gate",
             "",

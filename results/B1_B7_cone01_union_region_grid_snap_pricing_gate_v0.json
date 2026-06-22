@@ -1,0 +1,164 @@
+{
+  "benchmark_id": "B1",
+  "claim_boundary": {
+    "b7_ledger_improvement_claimed": false,
+    "grid_snap_pricing_accepted": false,
+    "local_u3_pricing_completed": false,
+    "resource_saving_claimed": false,
+    "supported_claim": "Within the T-B1-004bf union-region two-CNOT census candidates, snapping all local-U3 parameters to the pi/4 grid does not produce an exact replay of the union target.",
+    "unsupported_claims": [
+      "This is not a global lower bound for the union target.",
+      "This does not rule out a different scaffold or symbolic absorption.",
+      "This does not accept local-U3 pricing, occurrence removal, or a B7 ledger improvement."
+    ]
+  },
+  "linked_b7_problem_id": 21,
+  "method": "b1_b7_cone01_union_region_grid_snap_pricing_gate_v0",
+  "model_status": "two_cnot_union_census_candidates_do_not_become_grid_priced",
+  "source_orientation_census_result": "results/B1_B7_cone01_union_region_two_cnot_orientation_census_gate_v0.json",
+  "source_pricing_dominance_result": "results/B1_B7_cone01_union_region_pricing_dominance_gate_v0.json",
+  "source_semantic_packet_result": "results/B1_B7_cone01_semantic_replay_packet_gate_v0.json",
+  "status": "cone01_union_region_grid_snap_pricing_rejected",
+  "summary": {
+    "accepted_full_circuit_qasm_patch_count": 0,
+    "accepted_full_circuit_replay_certificate_count": 0,
+    "accepted_occurrence_removal": 0,
+    "accepted_proxy_t_reduction": 0,
+    "all_grid_snap_exact_fail_count": 4,
+    "all_grid_snap_exact_pass_count": 0,
+    "all_grid_snap_row_count": 4,
+    "all_grid_snaps_fail": true,
+    "b7_ledger_improvement_claimed": false,
+    "best_grid_snap_residual_norm": 0.36435162331693166,
+    "best_grid_snap_residual_ratio_to_exact_tolerance": 36435162.331693165,
+    "best_grid_snap_sequence_id": "10-10",
+    "best_source_off_pi_over_four_parameter_count": 13,
+    "best_source_proxy_t_pressure": 260,
+    "current_line1381_proxy_t_pressure": 100,
+    "grid_snap_pricing_accepted": false,
+    "local_u3_pricing_completed": false,
+    "missing_occurrences_after_gate": 30,
+    "missing_proxy_t_after_gate": 600,
+    "orientation_sequence_count": 4,
+    "orientation_sequence_ids": [
+      "01-01",
+      "01-10",
+      "10-01",
+      "10-10"
+    ],
+    "resource_saving_claimed": false,
+    "searched_cnot_count": 2,
+    "source_cnot_count": 5,
+    "source_orientation_census_method": "b1_b7_cone01_union_region_two_cnot_orientation_census_gate_v0",
+    "source_pricing_dominance_method": "b1_b7_cone01_union_region_pricing_dominance_gate_v0",
+    "source_semantic_packet_method": "b1_b7_cone01_semantic_replay_packet_gate_v0",
+    "support_qubits": [
+      4,
+      8
+    ],
+    "target_line_number": 1381,
+    "union_window": [
+      1369,
+      1379
+    ],
+    "validation_error_count": 0,
+    "worst_grid_snap_residual_norm": 1.021457442072864,
+    "worst_grid_snap_residual_ratio_to_exact_tolerance": 102145744.20728639,
+    "worst_grid_snap_sequence_id": "10-01"
+  },
+  "union_region_grid_snap_rows": [
+    {
+      "cnot_sequence": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "exact_pass_after_grid_snap": false,
+      "max_absolute_snap_error": 6.0692713585287255,
+      "mean_absolute_snap_error": 0.45977655783381,
+      "sequence_id": "01-01",
+      "snapped_nonzero_parameter_count": 17,
+      "snapped_off_pi_over_four_parameter_count": 0,
+      "snapped_residual_norm": 0.656090143720822,
+      "snapped_residual_ratio_to_exact_tolerance": 65609014.372082196,
+      "source_nonzero_parameter_count": 17,
+      "source_off_pi_over_four_parameter_count": 15,
+      "source_residual_norm": 5.843214470341767e-13
+    },
+    {
+      "cnot_sequence": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "exact_pass_after_grid_snap": false,
+      "max_absolute_snap_error": 6.283185307179586,
+      "mean_absolute_snap_error": 1.182524576210531,
+      "sequence_id": "01-10",
+      "snapped_nonzero_parameter_count": 17,
+      "snapped_off_pi_over_four_parameter_count": 0,
+      "snapped_residual_norm": 0.5773113079336994,
+      "snapped_residual_ratio_to_exact_tolerance": 57731130.79336994,
+      "source_nonzero_parameter_count": 17,
+      "source_off_pi_over_four_parameter_count": 13,
+      "source_residual_norm": 5.812946138498332e-13
+    },
+    {
+      "cnot_sequence": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "exact_pass_after_grid_snap": false,
+      "max_absolute_snap_error": 5.9183279553934,
+      "mean_absolute_snap_error": 0.48655095669022785,
+      "sequence_id": "10-01",
+      "snapped_nonzero_parameter_count": 17,
+      "snapped_off_pi_over_four_parameter_count": 0,
+      "snapped_residual_norm": 1.021457442072864,
+      "snapped_residual_ratio_to_exact_tolerance": 102145744.20728639,
+      "source_nonzero_parameter_count": 17,
+      "source_off_pi_over_four_parameter_count": 14,
+      "source_residual_norm": 5.896475870720445e-13
+    },
+    {
+      "cnot_sequence": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "exact_pass_after_grid_snap": false,
+      "max_absolute_snap_error": 6.283185307179572,
+      "mean_absolute_snap_error": 0.7525690844140406,
+      "sequence_id": "10-10",
+      "snapped_nonzero_parameter_count": 15,
+      "snapped_off_pi_over_four_parameter_count": 0,
+      "snapped_residual_norm": 0.36435162331693166,
+      "snapped_residual_ratio_to_exact_tolerance": 36435162.331693165,
+      "source_nonzero_parameter_count": 16,
+      "source_off_pi_over_four_parameter_count": 13,
+      "source_residual_norm": 5.874430624497437e-13
+    }
+  ],
+  "workload": "qasmbench_medium_exact/gcm_h6.qasm"
+}
