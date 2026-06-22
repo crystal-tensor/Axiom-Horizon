@@ -291,6 +291,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_union_region_three_cnot_pricing_screen_path = (
         results / "B1_B7_cone01_union_region_three_cnot_pricing_screen_gate_v0.json"
     )
+    b1_b7_cone01_three_cnot_context_absorption_path = (
+        results / "B1_B7_cone01_three_cnot_context_absorption_gate_v0.json"
+    )
     b1_b7_cone01_line1381_leave_one_out_parameter_path = (
         results / "B1_B7_cone01_line1381_leave_one_out_parameter_gate_v0.json"
     )
@@ -952,6 +955,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_union_region_three_cnot_pricing_screen_manifest = current_results.get(
         "b1_b7_cone01_union_region_three_cnot_pricing_screen_gate_v0"
+    )
+    b1_b7_cone01_three_cnot_context_absorption_manifest = current_results.get(
+        "b1_b7_cone01_three_cnot_context_absorption_gate_v0"
     )
     b1_b7_cone01_line1381_leave_one_out_parameter_manifest = current_results.get(
         "b1_b7_cone01_line1381_leave_one_out_parameter_gate_v0"
@@ -11469,6 +11475,236 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 union-region three-CNOT pricing screen report: "
             f"{b1_b7_cone01_union_region_three_cnot_pricing_screen_path}"
+        )
+
+    b1_b7_cone01_three_cnot_context_absorption = {
+        "path": str(b1_b7_cone01_three_cnot_context_absorption_path),
+        "exists": b1_b7_cone01_three_cnot_context_absorption_path.exists(),
+    }
+    if not b1_b7_cone01_three_cnot_context_absorption_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_three_cnot_context_absorption_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_three_cnot_context_absorption_manifest.get("status")
+            != "cone01_three_cnot_context_absorption_not_accepted"
+        ):
+            errors.append("B1/B7 cone_01 three-CNOT context-absorption status mismatch")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_three_cnot_context_absorption_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 three-CNOT context-absorption missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_three_cnot_context_absorption_path.exists():
+        three_cnot_context_payload = json.loads(
+            read(b1_b7_cone01_three_cnot_context_absorption_path)
+        )
+        three_cnot_context_summary = three_cnot_context_payload.get("summary", {})
+        three_cnot_context_claims = three_cnot_context_payload.get("claim_boundary", {})
+        b1_b7_cone01_three_cnot_context_absorption.update(
+            {
+                "status": three_cnot_context_payload.get("status"),
+                "model_status": three_cnot_context_payload.get("model_status"),
+                "method": three_cnot_context_payload.get("method"),
+                "workload": three_cnot_context_payload.get("workload"),
+                "target_line_number": three_cnot_context_summary.get("target_line_number"),
+                "union_window": three_cnot_context_summary.get("union_window"),
+                "support_qubits": three_cnot_context_summary.get("support_qubits"),
+                "selected_sequence_id": three_cnot_context_summary.get(
+                    "selected_sequence_id"
+                ),
+                "selected_residual_norm": three_cnot_context_summary.get(
+                    "selected_residual_norm"
+                ),
+                "selected_max_abs_entry_error": three_cnot_context_summary.get(
+                    "selected_max_abs_entry_error"
+                ),
+                "selected_off_pi_over_four_parameter_count": three_cnot_context_summary.get(
+                    "selected_off_pi_over_four_parameter_count"
+                ),
+                "selected_proxy_t_pressure": three_cnot_context_summary.get(
+                    "selected_proxy_t_pressure"
+                ),
+                "current_line1381_off_grid_parameter_count": three_cnot_context_summary.get(
+                    "current_line1381_off_grid_parameter_count"
+                ),
+                "current_line1381_proxy_t_pressure": three_cnot_context_summary.get(
+                    "current_line1381_proxy_t_pressure"
+                ),
+                "best_two_cnot_census_proxy_t_pressure": three_cnot_context_summary.get(
+                    "best_two_cnot_census_proxy_t_pressure"
+                ),
+                "rotation_argument_inventory_count": three_cnot_context_summary.get(
+                    "rotation_argument_inventory_count"
+                ),
+                "context_radius": three_cnot_context_summary.get("context_radius"),
+                "context_start_line": three_cnot_context_summary.get("context_start_line"),
+                "context_end_line": three_cnot_context_summary.get("context_end_line"),
+                "context_rotation_argument_count": three_cnot_context_summary.get(
+                    "context_rotation_argument_count"
+                ),
+                "inventory_exact_match_parameter_count": three_cnot_context_summary.get(
+                    "inventory_exact_match_parameter_count"
+                ),
+                "inventory_abs_match_parameter_count": three_cnot_context_summary.get(
+                    "inventory_abs_match_parameter_count"
+                ),
+                "same_support_abs_match_parameter_count": three_cnot_context_summary.get(
+                    "same_support_abs_match_parameter_count"
+                ),
+                "context_abs_match_parameter_count": three_cnot_context_summary.get(
+                    "context_abs_match_parameter_count"
+                ),
+                "context_grid_cancellation_exact_parameter_count": three_cnot_context_summary.get(
+                    "context_grid_cancellation_exact_parameter_count"
+                ),
+                "min_best_context_grid_cancellation_error": three_cnot_context_summary.get(
+                    "min_best_context_grid_cancellation_error"
+                ),
+                "max_best_context_grid_cancellation_error": three_cnot_context_summary.get(
+                    "max_best_context_grid_cancellation_error"
+                ),
+                "accepted_context_absorption_certificate_count": three_cnot_context_summary.get(
+                    "accepted_context_absorption_certificate_count"
+                ),
+                "accepted_full_circuit_replay_certificate_count": three_cnot_context_summary.get(
+                    "accepted_full_circuit_replay_certificate_count"
+                ),
+                "accepted_local_u3_pricing_certificate_count": three_cnot_context_summary.get(
+                    "accepted_local_u3_pricing_certificate_count"
+                ),
+                "accepted_occurrence_removal": three_cnot_context_summary.get(
+                    "accepted_occurrence_removal"
+                ),
+                "accepted_proxy_t_reduction": three_cnot_context_summary.get(
+                    "accepted_proxy_t_reduction"
+                ),
+                "missing_occurrences_after_gate": three_cnot_context_summary.get(
+                    "missing_occurrences_after_gate"
+                ),
+                "missing_proxy_t_after_gate": three_cnot_context_summary.get(
+                    "missing_proxy_t_after_gate"
+                ),
+                "context_absorption_claimed": three_cnot_context_summary.get(
+                    "context_absorption_claimed"
+                ),
+                "single_step_grid_cancellation_claimed": three_cnot_context_summary.get(
+                    "single_step_grid_cancellation_claimed"
+                ),
+                "local_u3_pricing_accepted": three_cnot_context_summary.get(
+                    "local_u3_pricing_accepted"
+                ),
+                "resource_saving_claimed": three_cnot_context_summary.get(
+                    "resource_saving_claimed"
+                ),
+                "b7_ledger_improvement_claimed": three_cnot_context_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "validation_error_count": three_cnot_context_summary.get(
+                    "validation_error_count"
+                ),
+            }
+        )
+        if three_cnot_context_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 three-CNOT context-absorption must have benchmark_id B1")
+        if (
+            three_cnot_context_payload.get("method")
+            != "b1_b7_cone01_three_cnot_context_absorption_gate_v0"
+        ):
+            errors.append("B1/B7 cone_01 three-CNOT context-absorption method mismatch")
+        if (
+            three_cnot_context_payload.get("status")
+            != "cone01_three_cnot_context_absorption_not_accepted"
+        ):
+            errors.append("B1/B7 cone_01 three-CNOT context-absorption status mismatch")
+        if (
+            three_cnot_context_payload.get("model_status")
+            != "best_three_cnot_candidate_has_no_single_step_context_absorption"
+        ):
+            errors.append("B1/B7 cone_01 three-CNOT context-absorption model_status mismatch")
+        expected_three_cnot_context_fields = {
+            "target_line_number": 1381,
+            "union_window": [1369, 1379],
+            "support_qubits": [4, 8],
+            "selected_sequence_id": "10-10-01",
+            "selected_residual_norm": 6.047584909121987e-13,
+            "selected_max_abs_entry_error": 3.3549975708996263e-13,
+            "selected_off_pi_over_four_parameter_count": 18,
+            "selected_proxy_t_pressure": 360,
+            "current_line1381_off_grid_parameter_count": 5,
+            "current_line1381_proxy_t_pressure": 100,
+            "best_two_cnot_census_proxy_t_pressure": 260,
+            "rotation_argument_inventory_count": 2049,
+            "context_radius": 64,
+            "context_start_line": 1305,
+            "context_end_line": 1443,
+            "context_rotation_argument_count": 44,
+            "inventory_exact_match_parameter_count": 0,
+            "inventory_abs_match_parameter_count": 0,
+            "same_support_abs_match_parameter_count": 0,
+            "context_abs_match_parameter_count": 0,
+            "context_grid_cancellation_exact_parameter_count": 0,
+            "min_best_context_grid_cancellation_error": 0.000655799901145393,
+            "max_best_context_grid_cancellation_error": 0.0945879123733615,
+            "accepted_context_absorption_certificate_count": 0,
+            "accepted_full_circuit_replay_certificate_count": 0,
+            "accepted_local_u3_pricing_certificate_count": 0,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "missing_occurrences_after_gate": 30,
+            "missing_proxy_t_after_gate": 600,
+            "context_absorption_claimed": False,
+            "single_step_grid_cancellation_claimed": False,
+            "local_u3_pricing_accepted": False,
+            "resource_saving_claimed": False,
+            "b7_ledger_improvement_claimed": False,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_three_cnot_context_fields.items():
+            if three_cnot_context_summary.get(field) != value:
+                errors.append(
+                    "B1/B7 cone_01 three-CNOT context-absorption "
+                    f"expected {field}={value}"
+                )
+            if (
+                b1_b7_cone01_three_cnot_context_absorption_manifest
+                and field in b1_b7_cone01_three_cnot_context_absorption_manifest
+                and three_cnot_context_summary.get(field)
+                != b1_b7_cone01_three_cnot_context_absorption_manifest.get(field)
+            ):
+                errors.append(
+                    "B1/B7 cone_01 three-CNOT context-absorption "
+                    f"{field} mismatch"
+                )
+        rows = three_cnot_context_payload.get("three_cnot_context_absorption_rows", [])
+        if len(rows) != 18:
+            errors.append("B1/B7 cone_01 three-CNOT context-absorption must have 18 rows")
+        if any(row.get("accepted_context_absorption_certificate") is not False for row in rows):
+            errors.append("B1/B7 cone_01 three-CNOT context rows must not accept absorption")
+        if any(row.get("accepted_occurrence_removal") != 0 for row in rows):
+            errors.append("B1/B7 cone_01 three-CNOT context rows must not remove occurrences")
+        for field in [
+            "context_absorption_claimed",
+            "single_step_grid_cancellation_claimed",
+            "local_u3_pricing_accepted",
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+        ]:
+            if three_cnot_context_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 three-CNOT context-absorption must not claim {field}")
+            if three_cnot_context_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 three-CNOT context-absorption claim boundary "
+                    f"must not claim {field}"
+                )
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 three-CNOT context-absorption report: "
+            f"{b1_b7_cone01_three_cnot_context_absorption_path}"
         )
 
     b1_b7_cone01_line1381_leave_one_out_parameter = {
@@ -22539,6 +22775,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_union_region_three_cnot_pricing_screen_gate": (
                 b1_b7_cone01_union_region_three_cnot_pricing_screen
             ),
+            "b7_cone01_three_cnot_context_absorption_gate": (
+                b1_b7_cone01_three_cnot_context_absorption
+            ),
             "b7_cone01_line1381_leave_one_out_parameter_gate": (
                 b1_b7_cone01_line1381_leave_one_out_parameter
             ),
@@ -22884,6 +23123,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_union_region_three_cnot_pricing_screen_gate": str(
                 b1_b7_cone01_union_region_three_cnot_pricing_screen_path
+            ),
+            "b1_b7_cone01_three_cnot_context_absorption_gate": str(
+                b1_b7_cone01_three_cnot_context_absorption_path
             ),
             "b1_b7_cone01_line1381_leave_one_out_parameter_gate": str(
                 b1_b7_cone01_line1381_leave_one_out_parameter_path
@@ -24062,6 +24304,19 @@ def markdown_report(report: dict) -> str:
             f"- Prices below current / structurally dominates current: {report['b1']['b7_cone01_union_region_three_cnot_pricing_screen_gate'].get('three_cnot_prices_below_current_line1381_boundary')} / {report['b1']['b7_cone01_union_region_three_cnot_pricing_screen_gate'].get('three_cnot_structurally_dominates_current_line1381_replacement')}",
             f"- Three-CNOT pricing accepted / B7 claim: {report['b1']['b7_cone01_union_region_three_cnot_pricing_screen_gate'].get('three_cnot_pricing_accepted')} / {report['b1']['b7_cone01_union_region_three_cnot_pricing_screen_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_union_region_three_cnot_pricing_screen_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Three-CNOT Context-Absorption Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('status')}",
+            f"- Selected sequence / off-grid / proxy-T: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('selected_sequence_id')} / {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('selected_off_pi_over_four_parameter_count')} / {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('selected_proxy_t_pressure')}",
+            f"- Current line-1381 off-grid / proxy-T: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('current_line1381_off_grid_parameter_count')} / {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('current_line1381_proxy_t_pressure')}",
+            f"- Inventory exact / abs-match parameter counts: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('inventory_exact_match_parameter_count')} / {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('inventory_abs_match_parameter_count')}",
+            f"- Same-support / context abs-match parameter counts: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('same_support_abs_match_parameter_count')} / {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('context_abs_match_parameter_count')}",
+            f"- Context rotations / one-step exact cancellations: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('context_rotation_argument_count')} / {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('context_grid_cancellation_exact_parameter_count')}",
+            f"- Best one-step grid-cancellation error range: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('min_best_context_grid_cancellation_error')} / {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('max_best_context_grid_cancellation_error')}",
+            f"- Context absorption accepted / B7 claim: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('context_absorption_claimed')} / {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Validation errors: {report['b1']['b7_cone01_three_cnot_context_absorption_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Line-1381 Leave-One-Out Parameter Gate",
             "",

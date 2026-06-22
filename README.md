@@ -761,3 +761,13 @@ boundary and the best 2-CNOT census 13-parameter / 260-proxy-T candidate; the
 3-CNOT scaffold also fails to structurally dominate the current 2-CNOT
 line-1381 replacement. Occurrence removal, proxy-T reduction, local-U3 pricing
 acceptance, and B7 ledger credit remain 0.
+
+T-B1-004br consumes that best exact 3-CNOT priced candidate and asks whether the
+18 off-pi/4 local-U3 parameters can be cheaply absorbed by the native optimized
+gcm_h6 rotation inventory or by one same-support context rotation in the
+line-1378/1381 union window. The answer is negative under this gate: 0/18
+parameters have exact inventory matches, 0/18 have absolute-angle inventory
+matches, 0/18 have same-support context matches, and 0/18 exactly cancel back
+to the pi/4 grid with one context rotation. The best one-step grid-cancellation
+error is 0.000655799901145393, still outside the exact tolerance. The 3-CNOT
+route therefore remains pricing-dominated; B7 ledger credit remains 0.

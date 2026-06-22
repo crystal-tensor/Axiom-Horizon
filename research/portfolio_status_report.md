@@ -934,6 +934,19 @@ Overall audit: PASS
 - Three-CNOT pricing accepted / B7 claim: False / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Three-CNOT Context-Absorption Gate
+
+- Exists: True
+- Status: cone01_three_cnot_context_absorption_not_accepted
+- Selected sequence / off-grid / proxy-T: 10-10-01 / 18 / 360
+- Current line-1381 off-grid / proxy-T: 5 / 100
+- Inventory exact / abs-match parameter counts: 0 / 0
+- Same-support / context abs-match parameter counts: 0 / 0
+- Context rotations / one-step exact cancellations: 44 / 0
+- Best one-step grid-cancellation error range: 0.000655799901145393 / 0.0945879123733615
+- Context absorption accepted / B7 claim: False / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Line-1381 Leave-One-Out Parameter Gate
 
 - Exists: True

@@ -1925,3 +1925,14 @@ proxy-T pressure units. This is worse than the current line-1381 5-parameter /
 replacement. The next useful work must change scaffold in a way that actually
 reduces priced local-U3 burden, prove symbolic/context absorption, or find a
 different occurrence-removing route.
+
+Sprint update 18br: B1/B7 now has a context-absorption gate for that best exact
+3-CNOT priced candidate. T-B1-004br consumes sequence `10-10-01` and tests its
+18 off-pi/4 local-U3 parameters against the native optimized gcm_h6 rotation
+inventory plus the same-support context around the union window. The gate finds
+0 exact inventory matches, 0 absolute-angle inventory matches, 0 same-support
+context matches, and 0 exact one-step cancellations back to the pi/4 grid. The
+best one-step grid-cancellation error is 0.000655799901145393, which is close
+but not exact. The 3-CNOT route remains pricing-dominated, and occurrence
+removal, proxy-T reduction, local-U3 pricing acceptance, and B7 ledger
+improvement remain 0.
