@@ -2484,6 +2484,61 @@
       "validation_error_count": 0,
       "workload": "qasmbench_medium_exact/gcm_h6.qasm"
     },
+    "b7_cone01_union_region_two_free_parameter_pricing_gate": {
+      "accepted_full_circuit_qasm_patch_count": 0,
+      "accepted_full_circuit_replay_certificate_count": 0,
+      "accepted_occurrence_removal": 0,
+      "accepted_proxy_t_reduction": 0,
+      "all_two_free_trials_fail": true,
+      "b7_ledger_improvement_claimed": false,
+      "best_source_proxy_t_pressure": 260,
+      "best_two_free_parameter_pair": [
+        5,
+        7
+      ],
+      "best_two_free_residual_norm": 0.1831095797026285,
+      "best_two_free_residual_ratio_to_exact_tolerance": 18310957.97026285,
+      "best_two_free_sequence_id": "10-10",
+      "current_line1381_proxy_t_pressure": 100,
+      "exists": true,
+      "local_u3_pricing_completed": false,
+      "method": "b1_b7_cone01_union_region_two_free_parameter_pricing_gate_v0",
+      "missing_occurrences_after_gate": 30,
+      "missing_proxy_t_after_gate": 600,
+      "model_status": "two_free_parameter_union_census_candidates_do_not_recover_exactness",
+      "one_free_proxy_t_pressure_if_accepted": 20,
+      "orientation_sequence_count": 4,
+      "orientation_sequence_ids": [
+        "01-01",
+        "01-10",
+        "10-01",
+        "10-10"
+      ],
+      "path": "results/B1_B7_cone01_union_region_two_free_parameter_pricing_gate_v0.json",
+      "resource_saving_claimed": false,
+      "searched_cnot_count": 2,
+      "source_cnot_count": 5,
+      "status": "cone01_union_region_two_free_parameter_pricing_rejected",
+      "support_qubits": [
+        4,
+        8
+      ],
+      "target_line_number": 1381,
+      "two_free_exact_fail_count": 612,
+      "two_free_exact_pass_count": 0,
+      "two_free_pricing_accepted": false,
+      "two_free_pricing_candidate_found": false,
+      "two_free_proxy_t_pressure_if_accepted": 40,
+      "two_free_trial_count": 612,
+      "union_window": [
+        1369,
+        1379
+      ],
+      "validation_error_count": 0,
+      "workload": "qasmbench_medium_exact/gcm_h6.qasm",
+      "worst_best_sequence_id": "10-01",
+      "worst_best_sequence_residual_norm": 0.46644639853601
+    },
     "b7_gcm_h6_cone_feasibility_gate": {
       "cone_classes_meeting_target_by_pair_local_single_windows": 1,
       "exists": true,
@@ -5526,6 +5581,7 @@
     "b1_b7_cone01_union_region_one_free_parameter_pricing_gate": "results/B1_B7_cone01_union_region_one_free_parameter_pricing_gate_v0.json",
     "b1_b7_cone01_union_region_pricing_dominance_gate": "results/B1_B7_cone01_union_region_pricing_dominance_gate_v0.json",
     "b1_b7_cone01_union_region_two_cnot_orientation_census_gate": "results/B1_B7_cone01_union_region_two_cnot_orientation_census_gate_v0.json",
+    "b1_b7_cone01_union_region_two_free_parameter_pricing_gate": "results/B1_B7_cone01_union_region_two_free_parameter_pricing_gate_v0.json",
     "b1_b7_gcm_h6_cone_feasibility_gate": "results/B1_B7_gcm_h6_cone_feasibility_gate_v0.json",
     "b1_b7_gcm_h6_target_selector": "results/B1_B7_gcm_h6_target_selector_v0.json",
     "b1_certificate_report": "research/B1_certificate_report.json",

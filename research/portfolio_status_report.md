@@ -897,6 +897,18 @@ Overall audit: PASS
 - One-free pricing accepted / B7 claim: False / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Union-Region Two-Free-Parameter Pricing Gate
+
+- Exists: True
+- Status: cone01_union_region_two_free_parameter_pricing_rejected
+- Orientation sequences: ['01-01', '01-10', '10-01', '10-10']
+- Two-free exact pass / fail: 0 / 612
+- Best two-free residual / sequence / pair: 0.1831095797026285 / 10-10 / [5, 7]
+- Worst best-sequence residual / sequence: 0.46644639853601 / 10-01
+- Two-free proxy-T if accepted / current line-1381 proxy-T / source census proxy-T: 40 / 100 / 260
+- Two-free pricing accepted / B7 claim: False / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Line-1381 Leave-One-Out Parameter Gate
 
 - Exists: True

@@ -1890,3 +1890,15 @@ worst best-sequence residual is 0.6857140007440164 on sequence `10-01`. This
 blocks a 20-proxy-T one-free-parameter adoption of the union route and keeps
 occurrence removal, proxy-T reduction, local-U3 pricing acceptance, and B7
 improvement at 0.
+
+Sprint update 18bo: B1/B7 now has a union-region two-free-parameter pricing
+gate. T-B1-004bo consumes the same four exact 2-CNOT union-region census
+candidates from T-B1-004bf, snaps all local-U3 parameters to the pi/4 grid, and
+then frees every possible pair of parameters. All 612 two-free-parameter trials
+fail exact replay. The best residual is 0.1831095797026285 on sequence `10-10`
+at pair `[5, 7]`, about 1.83e7 times the 1e-8 exact tolerance; the worst
+best-sequence residual is 0.46644639853601 on sequence `10-01`. This blocks a
+40-proxy-T two-free-parameter adoption of the union route. The next useful work
+must change scaffold, produce symbolic/context absorption, accept honest larger
+local-U3 pricing with full-circuit replay, or find a different
+occurrence-removing branch.

@@ -581,6 +581,18 @@ This blocks a 20-proxy-T one-free-parameter adoption of the union route;
 occurrence removal, proxy-T reduction, local-U3 pricing acceptance, and B7
 ledger credit remain 0.
 
+T-B1-004bo now tests the next pricing rung for the same union-census branch.
+It snaps all local-U3 parameters in the four exact 2-CNOT union candidates to
+the pi/4 grid, then frees every possible pair of parameters and re-optimizes
+that pair. All 612 two-free-parameter trials fail exact replay. The best
+residual is 0.1831095797026285 on sequence `10-10` at pair `[5, 7]`; the worst
+best-sequence residual is 0.46644639853601 on sequence `10-01`. This blocks a
+40-proxy-T two-free-parameter adoption of the union route. The remaining useful
+routes are now a different scaffold, symbolic/context absorption, honest
+larger local-U3 pricing with full-circuit replay, or a different
+occurrence-removing branch; occurrence removal, proxy-T reduction, local-U3
+pricing acceptance, and B7 ledger credit remain 0.
+
 T-B1-004bh sharpens the remaining line-1381 blocker. It snaps each one of the
 five current off-pi/4 local-U3 parameters back to the pi/4 grid, then
 re-optimizes the other four parameters on the same two-CNOT scaffold. All 5/5
