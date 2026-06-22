@@ -602,6 +602,15 @@ claim, but it still does not prove global five-parameter minimality.
 Occurrence removal, proxy-T reduction, local-U3 acceptance, and B7 ledger
 credit remain 0.
 
+T-B1-004bl closes the endpoint version of the same cheap-removal story. It
+snaps all five current off-pi/4 line-1381 local-U3 parameters back to the
+pi/4 grid with no parameter left to re-optimize. The all-grid endpoint fails
+the exact replay threshold: exact pass / fail is 0/1, residual is
+0.8415210419190079, about 8.42e7 times the 1e-8 exact tolerance. This blocks
+an all-grid snap interpretation, but it still does not prove global
+five-parameter minimality. Occurrence removal, proxy-T reduction, local-U3
+acceptance, and B7 ledger credit remain 0.
+
 ## Repository Layout
 
 ```text

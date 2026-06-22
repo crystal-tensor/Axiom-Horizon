@@ -1860,3 +1860,12 @@ the worst is 0.8369082341779268 for fixed quadruple [4, 9, 16, 17]. This
 blocks a cheap four-parameter free-removal claim, but it is still not a global
 five-parameter minimality theorem. Occurrence removal, proxy-T reduction,
 local-U3 acceptance, and B7 improvement remain 0.
+
+Sprint update 18bl: B1/B7 now has a line-1381 leave-five-out endpoint gate.
+T-B1-004bl keeps the same five-parameter exact line-1381 repair, snaps all
+five off-pi/4 local-U3 parameters back to the pi/4 grid, and leaves no
+parameter free for re-optimization on the same two-CNOT scaffold. Exact pass /
+fail is 0/1. The all-grid residual is 0.8415210419190079, about 8.42e7 times
+the 1e-8 exact tolerance. This blocks a cheap all-grid snap interpretation,
+but it is still not a global five-parameter minimality theorem. Occurrence
+removal, proxy-T reduction, local-U3 acceptance, and B7 improvement remain 0.
