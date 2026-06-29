@@ -2104,3 +2104,16 @@ and the witness packet hash is
 accepts one project-local review packet only; Qiskit-loader replay, full-space
 symbolic/local-unitary equivalence, local-U3 pricing, occurrence removal,
 proxy-T reduction, and B7 ledger improvement remain 0.
+
+Sprint update 18cg: B1/B7 now has a Qiskit-loader OpenQASM 3 replay gate.
+T-B1-004cg consumes the parser-readiness, project-local semantic replay, and
+patch witness packet gates, then loads the exported OpenQASM 3 candidate through
+Qiskit's `qasm3` loader after adding `qiskit-qasm3-import>=0.6`. The loader
+parses 19 qubits, 1 classical bit, depth 1483, and operation counts `cx=789`,
+`rz=601`, `u=487`, `measure=1`. Default-input replay against the optimized
+source passes with fidelity `0.9999999999999551`, max aligned amplitude delta
+`1.3908205762322243e-13`, max probability delta `5.551115123125783e-16`, and
+measured q[4] marginal delta `5.551115123125783e-16`. This accepts one
+Qiskit-loader parse artifact and one Qiskit-loader replay artifact only;
+arbitrary-input/symbolic equivalence, local-U3 pricing, occurrence removal,
+proxy-T reduction, and B7 ledger improvement remain 0.

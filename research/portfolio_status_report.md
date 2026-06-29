@@ -907,6 +907,20 @@ Overall audit: PASS
 - Accepted occurrence / proxy-T reduction / B7 claim: 0 / 0 / False
 - Validation errors: 0
 
+## B1/B7 cone_01 OpenQASM 3 Qiskit-Loader Replay Gate
+
+- Exists: True
+- Status: cone01_openqasm3_qiskit_loader_replay_passed_default_input_only
+- OpenQASM 3 path: results/B1_B7_cone01_openqasm3_candidate_export_gate/gcm_h6_line268_line1381_candidate_openqasm3.qasm
+- Qiskit / qiskit-qasm3-import / openqasm3 versions: 2.4.1 / 0.6.0 / 1.0.1
+- Loader attempted / passed / replay passed: True / True / True
+- Qubits / clbits / depth / operation counts: 19 / 1 / 1483 / {'cx': 789, 'measure': 1, 'rz': 601, 'u': 487}
+- State fidelity / infidelity: 0.9999999999999551 / 4.4853010194856324e-14
+- Max amplitude / probability / measured marginal delta: 1.3908205762322243e-13 / 5.551115123125783e-16 / 5.551115123125783e-16
+- Accepted Qiskit-loader parse / replay / symbolic artifacts: 1 / 1 / 0
+- Accepted occurrence / proxy-T reduction / B7 claim: 0 / 0 / False
+- Validation errors: 0
+
 ## B1/B7 cone_01 Full-Statevector Replay Probe Gate
 
 - Exists: True

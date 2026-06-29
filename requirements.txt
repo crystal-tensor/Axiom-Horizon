@@ -1,4 +1,5 @@
 PyYAML>=6.0
 numpy>=1.26
 scipy>=1.11
-
+qiskit>=2.4
+qiskit-qasm3-import>=0.6

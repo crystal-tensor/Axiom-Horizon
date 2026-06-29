@@ -934,3 +934,15 @@ max witness residual is `9.049428032408627e-13`, max entry error is
 delta remains 3. This accepts one project-local review packet only; Qiskit-loader
 parsing, symbolic equivalence, local-U3 pricing, occurrence removal, proxy-T
 reduction, and B7 ledger credit remain 0.
+
+T-B1-004cg removes the previous OpenQASM 3 loader dependency blocker. After
+adding `qiskit-qasm3-import>=0.6`, Qiskit's OpenQASM 3 loader parses the
+exported candidate with 19 qubits, 1 classical bit, depth 1483, and operation
+counts `cx=789`, `rz=601`, `u=487`, `measure=1`. Default-input replay against
+the optimized source passes with fidelity `0.9999999999999551`, max aligned
+amplitude delta `1.3908205762322243e-13`, max probability delta
+`5.551115123125783e-16`, and measured q[4] marginal delta
+`5.551115123125783e-16`. This accepts one Qiskit-loader parse artifact and one
+Qiskit-loader replay artifact, but it still does not claim arbitrary-input or
+symbolic equivalence, local-U3 pricing, occurrence removal, proxy-T reduction,
+or B7 ledger credit.
