@@ -25297,6 +25297,7 @@ def audit(root: Path) -> dict:
         "production_dmrg_mps_acceptance_gate_v0"
     )
     b5_production_dmrg_mps_denominator = b5_results.get("production_dmrg_mps_denominator_v0")
+    b5_canonical_residual_blocker_gate = b5_results.get("canonical_residual_blocker_gate_v0")
     b5_two_site_dmrg = b5_results.get("two_site_finite_dmrg_response_reference_v0")
     b5_var_mps = b5_results.get("variational_mps_als_response_reference_v0")
     b5_mps = b5_results.get("mps_schmidt_truncation_response_reference_v0")
@@ -26640,6 +26641,153 @@ def audit(root: Path) -> dict:
 
     b5_production_dmrg_mps_denominator_status = audit_b5_production_dmrg_mps_denominator(
         b5_production_dmrg_mps_denominator, "B5"
+    )
+
+    def audit_b5_canonical_residual_blocker_gate(entry, label):
+        status = {}
+        if not entry:
+            warnings.append(f"{label} manifest has no B5 W1 canonical residual blocker gate")
+            return status
+        result_path = entry.get("result")
+        markdown_path = entry.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"{label} W1 canonical residual blocker result missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"{label} W1 canonical residual blocker markdown missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        claims = payload.get("claim_boundary", {})
+        status = {
+            "status": entry.get("status"),
+            "method": entry.get("method"),
+            "model_status": entry.get("model_status"),
+            "row_contract_count": summary.get("row_contract_count"),
+            "row_contract_hash": summary.get("row_contract_hash"),
+            "canonical_residual_requirement_count": summary.get(
+                "canonical_residual_requirement_count"
+            ),
+            "canonical_residual_requirements_passed": summary.get(
+                "canonical_residual_requirements_passed"
+            ),
+            "canonical_residual_requirements_failed": summary.get(
+                "canonical_residual_requirements_failed"
+            ),
+            "failed_canonical_residual_requirement_ids": summary.get(
+                "failed_canonical_residual_requirement_ids"
+            ),
+            "environment_rows": summary.get("environment_rows"),
+            "orthonormal_residual_rows": summary.get("orthonormal_residual_rows"),
+            "discarded_weight_rows": summary.get("discarded_weight_rows"),
+            "convergence_passed_rows": summary.get("convergence_passed_rows"),
+            "rows_beating_seeded_pressure": summary.get("rows_beating_seeded_pressure"),
+            "same_access_production_cost_ledger_complete": summary.get(
+                "same_access_production_cost_ledger_complete"
+            ),
+            "pr_packet_count": summary.get("pr_packet_count"),
+            "w1_canonical_residual_gate_ready": summary.get(
+                "w1_canonical_residual_gate_ready"
+            ),
+            "production_dmrg_available": summary.get("production_dmrg_available"),
+            "same_access_positive_route_ready": summary.get("same_access_positive_route_ready"),
+            "production_dmrg_claimed": summary.get("production_dmrg_claimed"),
+            "same_access_positive_route_claimed": summary.get(
+                "same_access_positive_route_claimed"
+            ),
+            "quantum_advantage_claimed": summary.get("quantum_advantage_claimed"),
+            "bqp_separation_claimed": summary.get("bqp_separation_claimed"),
+            "condition_count": summary.get("canonical_residual_requirement_count"),
+            "conditions_satisfied": summary.get("canonical_residual_requirements_passed"),
+            "conditions_failed": summary.get("canonical_residual_requirements_failed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("benchmark_id") != "B5":
+            errors.append(f"{label} W1 canonical residual blocker benchmark_id must be B5")
+        if payload.get("linked_benchmark_id") != "B10":
+            errors.append(f"{label} W1 canonical residual blocker linked_benchmark_id must be B10")
+        if payload.get("source_target_id") != "B10-T1":
+            errors.append(f"{label} W1 canonical residual blocker source_target_id must be B10-T1")
+        if payload.get("method") != entry.get("method"):
+            errors.append(f"{label} W1 canonical residual blocker method mismatch")
+        if payload.get("status") != entry.get("status"):
+            errors.append(f"{label} W1 canonical residual blocker status mismatch")
+        if payload.get("model_status") != entry.get("model_status"):
+            errors.append(f"{label} W1 canonical residual blocker model-status mismatch")
+        for field in [
+            "row_contract_count",
+            "row_contract_hash",
+            "canonical_residual_requirement_count",
+            "canonical_residual_requirements_passed",
+            "canonical_residual_requirements_failed",
+            "failed_canonical_residual_requirement_ids",
+            "environment_rows",
+            "orthonormal_residual_rows",
+            "discarded_weight_rows",
+            "convergence_passed_rows",
+            "rows_beating_seeded_pressure",
+            "same_access_production_cost_ledger_complete",
+            "pr_packet_count",
+            "w1_canonical_residual_gate_ready",
+            "production_dmrg_available",
+            "same_access_positive_route_ready",
+            "production_dmrg_claimed",
+            "same_access_positive_route_claimed",
+            "quantum_advantage_claimed",
+            "bqp_separation_claimed",
+        ]:
+            if summary.get(field) != entry.get(field):
+                errors.append(f"{label} W1 canonical residual blocker {field} mismatch")
+        if summary.get("row_contract_count") != 9:
+            errors.append(f"{label} W1 canonical residual blocker must preserve nine rows")
+        if summary.get("canonical_residual_requirement_count") != 8:
+            errors.append(f"{label} W1 canonical residual blocker should expose eight requirements")
+        if summary.get("canonical_residual_requirements_passed") != 4 or summary.get(
+            "canonical_residual_requirements_failed"
+        ) != 4:
+            errors.append(f"{label} W1 canonical residual blocker should be 4/4 passed/failed")
+        if summary.get("failed_canonical_residual_requirement_ids") != ["C3", "C4", "C5", "C7"]:
+            errors.append(f"{label} W1 canonical residual blocker failed IDs changed")
+        if summary.get("environment_rows") != 0 or summary.get("orthonormal_residual_rows") != 0:
+            errors.append(f"{label} W1 canonical residual blocker should have no env/residual rows")
+        if summary.get("convergence_passed_rows") != 0:
+            errors.append(f"{label} W1 canonical residual blocker should have 0 convergence rows")
+        if summary.get("rows_beating_seeded_pressure") != 0:
+            errors.append(f"{label} W1 canonical residual blocker should not beat seeded pressure")
+        if summary.get("pr_packet_count") != 4:
+            errors.append(f"{label} W1 canonical residual blocker should emit four PR packets")
+        for field in [
+            "same_access_production_cost_ledger_complete",
+            "w1_canonical_residual_gate_ready",
+            "production_dmrg_available",
+            "same_access_positive_route_ready",
+            "production_dmrg_claimed",
+            "same_access_positive_route_claimed",
+            "quantum_advantage_claimed",
+            "bqp_separation_claimed",
+        ]:
+            if summary.get(field) is not False:
+                errors.append(f"{label} W1 canonical residual blocker must keep {field}=False")
+            if field in claims and claims.get(field) is not False:
+                errors.append(
+                    f"{label} W1 canonical residual blocker claim boundary must keep {field}=False"
+                )
+        if len(payload.get("rows", [])) != 9:
+            errors.append(f"{label} W1 canonical residual blocker row count mismatch")
+        if len(payload.get("requirements", [])) != 8:
+            errors.append(f"{label} W1 canonical residual blocker requirement count mismatch")
+        if len(payload.get("pr_packets", [])) != 4:
+            errors.append(f"{label} W1 canonical residual blocker packet count mismatch")
+        if len(payload.get("validation_errors", [])) != entry.get("validation_error_count"):
+            errors.append(f"{label} W1 canonical residual blocker validation-error count mismatch")
+        return status
+
+    b5_canonical_residual_blocker_gate_status = audit_b5_canonical_residual_blocker_gate(
+        b5_canonical_residual_blocker_gate, "B5"
     )
 
     b5_boundary_field_status = {}
@@ -29733,6 +29881,9 @@ def audit(root: Path) -> dict:
     b10_t1_b5_production_dmrg_mps_denominator = b10_results.get(
         "b10_t1_b5_production_dmrg_mps_denominator_v0"
     )
+    b10_t1_b5_canonical_residual_blocker_gate = b10_results.get(
+        "b10_t1_b5_canonical_residual_blocker_gate_v0"
+    )
     b10_status = {}
     if not b10_graph:
         warnings.append("B10 manifest has no BQP-boundary graph result")
@@ -31123,6 +31274,11 @@ def audit(root: Path) -> dict:
             b10_t1_b5_production_dmrg_mps_denominator, "B10"
         )
     )
+    b10_t1_b5_canonical_residual_blocker_gate_status = (
+        audit_b5_canonical_residual_blocker_gate(
+            b10_t1_b5_canonical_residual_blocker_gate, "B10"
+        )
+    )
 
     for path in [roadmap_path, status_html_path]:
         if not path.exists():
@@ -31481,6 +31637,7 @@ def audit(root: Path) -> dict:
             "response_oracle_cost_ledger": b5_response_oracle_cost_ledger_status,
             "production_dmrg_mps_acceptance_gate": b5_production_dmrg_mps_acceptance_gate_status,
             "production_dmrg_mps_denominator": b5_production_dmrg_mps_denominator_status,
+            "canonical_residual_blocker_gate": b5_canonical_residual_blocker_gate_status,
             "canonical_environment_smoke_gate": b5_canonical_smoke_status,
             "canonical_dmrg_readiness_gate": b5_dmrg_readiness_status,
             "two_site_finite_dmrg_response_reference": b5_two_site_dmrg_status,
@@ -31586,6 +31743,9 @@ def audit(root: Path) -> dict:
             ),
             "t1_b5_production_dmrg_mps_denominator": (
                 b10_t1_b5_production_dmrg_mps_denominator_status
+            ),
+            "t1_b5_canonical_residual_blocker_gate": (
+                b10_t1_b5_canonical_residual_blocker_gate_status
             ),
         },
         "status_artifacts": {
@@ -32007,6 +32167,9 @@ def audit(root: Path) -> dict:
             "b5_production_dmrg_mps_denominator": str(
                 research / "B5_production_dmrg_mps_denominator.md"
             ),
+            "b5_w1_canonical_residual_blocker_gate": str(
+                research / "B5_w1_canonical_residual_blocker_gate.md"
+            ),
             "b5_canonical_environment_smoke_gate": str(
                 research / "B5_canonical_environment_smoke_gate.md"
             ),
@@ -32071,6 +32234,9 @@ def audit(root: Path) -> dict:
             ),
             "b10_t1_b5_production_dmrg_mps_denominator": str(
                 research / "B5_production_dmrg_mps_denominator.md"
+            ),
+            "b10_t1_b5_canonical_residual_blocker_gate": str(
+                research / "B5_w1_canonical_residual_blocker_gate.md"
             ),
             "b9_failed_gap_amplification_lemma": str(research / "B9_failed_gap_amplification_lemma.md"),
             "b9_symbolic_gap_skeleton": str(research / "B9_symbolic_gap_skeleton.md"),
@@ -34143,6 +34309,12 @@ def markdown_report(report: dict) -> str:
             f"- B5 W1 denominator engine failed IDs: {report['b5']['production_dmrg_mps_denominator'].get('failed_denominator_requirement_ids')}",
             f"- B5 W1 denominator engine convergence / seeded wins: {report['b5']['production_dmrg_mps_denominator'].get('convergence_passed_rows')} / {report['b5']['production_dmrg_mps_denominator'].get('rows_beating_seeded_mps_pressure')}",
             f"- B5 W1 denominator engine result/markdown exists: {report['b5']['production_dmrg_mps_denominator'].get('result_exists')} / {report['b5']['production_dmrg_mps_denominator'].get('markdown_exists')}",
+            f"- B5 W1 canonical residual blocker status: {report['b5']['canonical_residual_blocker_gate'].get('status')}",
+            f"- B5 W1 canonical residual blocker requirements passed/failed: {report['b5']['canonical_residual_blocker_gate'].get('canonical_residual_requirements_passed')} / {report['b5']['canonical_residual_blocker_gate'].get('canonical_residual_requirements_failed')}",
+            f"- B5 W1 canonical residual blocker failed IDs: {report['b5']['canonical_residual_blocker_gate'].get('failed_canonical_residual_requirement_ids')}",
+            f"- B5 W1 canonical residual blocker env/residual/convergence rows: {report['b5']['canonical_residual_blocker_gate'].get('environment_rows')} / {report['b5']['canonical_residual_blocker_gate'].get('orthonormal_residual_rows')} / {report['b5']['canonical_residual_blocker_gate'].get('convergence_passed_rows')}",
+            f"- B5 W1 canonical residual blocker PR packets: {report['b5']['canonical_residual_blocker_gate'].get('pr_packet_count')}",
+            f"- B5 W1 canonical residual blocker result/markdown exists: {report['b5']['canonical_residual_blocker_gate'].get('result_exists')} / {report['b5']['canonical_residual_blocker_gate'].get('markdown_exists')}",
             "",
             "## B6 Superconductivity Descriptor Status",
             "",
@@ -34709,6 +34881,11 @@ def markdown_report(report: dict) -> str:
             f"- B10-T1 B5 W1 denominator engine failed IDs: {report['b10']['t1_b5_production_dmrg_mps_denominator'].get('failed_denominator_requirement_ids')}",
             f"- B10-T1 B5 W1 denominator engine convergence / seeded wins: {report['b10']['t1_b5_production_dmrg_mps_denominator'].get('convergence_passed_rows')} / {report['b10']['t1_b5_production_dmrg_mps_denominator'].get('rows_beating_seeded_mps_pressure')}",
             f"- B10-T1 B5 W1 denominator engine result/markdown exists: {report['b10']['t1_b5_production_dmrg_mps_denominator'].get('result_exists')} / {report['b10']['t1_b5_production_dmrg_mps_denominator'].get('markdown_exists')}",
+            f"- B10-T1 B5 W1 canonical residual blocker status: {report['b10']['t1_b5_canonical_residual_blocker_gate'].get('status')}",
+            f"- B10-T1 B5 W1 canonical residual blocker requirements passed/failed: {report['b10']['t1_b5_canonical_residual_blocker_gate'].get('canonical_residual_requirements_passed')} / {report['b10']['t1_b5_canonical_residual_blocker_gate'].get('canonical_residual_requirements_failed')}",
+            f"- B10-T1 B5 W1 canonical residual blocker failed IDs: {report['b10']['t1_b5_canonical_residual_blocker_gate'].get('failed_canonical_residual_requirement_ids')}",
+            f"- B10-T1 B5 W1 canonical residual blocker PR packets: {report['b10']['t1_b5_canonical_residual_blocker_gate'].get('pr_packet_count')}",
+            f"- B10-T1 B5 W1 canonical residual blocker result/markdown exists: {report['b10']['t1_b5_canonical_residual_blocker_gate'].get('result_exists')} / {report['b10']['t1_b5_canonical_residual_blocker_gate'].get('markdown_exists')}",
             "",
         ]
     )

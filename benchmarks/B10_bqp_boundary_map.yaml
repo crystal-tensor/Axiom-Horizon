@@ -861,6 +861,42 @@ current_results:
     caveat: w1_denominator_engine_v0_not_production_dmrg_not_positive_route
     result: ../results/B5_production_dmrg_mps_denominator_v0.json
     markdown_report: ../research/B5_production_dmrg_mps_denominator.md
+  b10_t1_b5_canonical_residual_blocker_gate_v0:
+    status: w1_canonical_residual_blocker_gate_failed_missing_production_evidence
+    model_status: w1_v0_blockers_decomposed_for_production_dmrg_prs
+    method: b5_w1_canonical_residual_blocker_gate_v0
+    source: b5_production_dmrg_mps_denominator_v0
+    source_target_id: B10-T1
+    dependency_benchmarks:
+      - B5
+      - B10
+    row_contract_count: 9
+    row_contract_hash: 7ee407e20f51bd0c003d885c8d43282359f84bea9729f0da203b9b2c2970a9fc
+    canonical_residual_requirement_count: 8
+    canonical_residual_requirements_passed: 4
+    canonical_residual_requirements_failed: 4
+    failed_canonical_residual_requirement_ids: [C3, C4, C5, C7]
+    environment_rows: 0
+    orthonormal_residual_rows: 0
+    discarded_weight_rows: 0
+    convergence_passed_rows: 0
+    rows_beating_seeded_pressure: 0
+    same_access_production_cost_ledger_complete: false
+    pr_packet_count: 4
+    w1_canonical_residual_gate_ready: false
+    production_dmrg_available: false
+    same_access_positive_route_ready: false
+    production_dmrg_claimed: false
+    same_access_positive_route_claimed: false
+    quantum_advantage_claimed: false
+    bqp_separation_claimed: false
+    condition_count: 8
+    conditions_satisfied: 4
+    conditions_failed: 4
+    validation_error_count: 0
+    caveat: canonical_residual_blocker_gate_not_production_dmrg_not_positive_route
+    result: ../results/B5_w1_canonical_residual_blocker_gate_v0.json
+    markdown_report: ../research/B5_w1_canonical_residual_blocker_gate.md
 prototype_artifacts:
   boundary_graph_builder: ../tools/b10_bqp_boundary_graph.py
   formal_theorem_target_builder: ../tools/b10_formal_theorem_targets.py
@@ -884,6 +920,7 @@ prototype_artifacts:
   t1_b5_response_oracle_cost_ledger: ../tools/b5_b10_response_oracle_cost_ledger.py
   t1_b5_production_dmrg_mps_acceptance_gate: ../tools/b5_b10_production_dmrg_mps_acceptance_gate.py
   t1_b5_production_dmrg_mps_denominator: ../tools/b5_production_dmrg_mps_denominator.py
+  t1_b5_canonical_residual_blocker_gate: ../tools/b5_w1_canonical_residual_blocker_gate.py
   t2_refresh_proof_obligation_gate_builder: ../tools/b10_t2_refresh_proof_obligation_gate.py
   t2_restricted_soundness_lemma_builder: ../tools/b10_t2_restricted_soundness_lemma.py
   t2_transcript_leakage_simulator_builder: ../tools/b10_t2_transcript_leakage_simulator.py

@@ -556,6 +556,12 @@ E8 forbidden-claim discipline, then fails E4 production canonical
 environments/residuals, E5 all-row convergence, E6 seeded-pressure replacement,
 and E7 same-access production cost ledger. It preserves 216 sweep rows but has
 0 convergence-passed rows and 0 rows beating seeded pressure.
+T-B5-006i/T-B10-014g executes W1 canonical residual blocker decomposition. It
+checks 8 requirements, passes 4, and fails C3 stored canonical environments,
+C4 orthonormal residual ledgers, C5 all-row convergence evidence, and C7
+same-access production cost ledger. It emits 4 PR packets:
+W1-E4-env-residuals, W1-E5-convergence, W1-E6-seeded-pressure, and
+W1-E7-cost-ledger.
 
 **Remaining path to a serious solution:** run T-B5-006 by implementing mature
 canonical-environment DMRG/MPS for the same response rows, with stored
@@ -564,8 +570,8 @@ exact-state seeding, and full cost accounting; or compare a fully costed
 quantum impurity/response kernel against exact D5, non-oracle embedding, seeded
 MPS pressure, one-site ALS, two-site finite-DMRG-style, readiness-gate, and
 smoke-gate denominators while satisfying the same-access production contract.
-Use T-B5-006c/T-B5-006d/T-B5-006e/T-B5-006f/T-B5-006g/T-B5-006h as the execution queue:
-W2, W3, W1 acceptance, and W1 denominator-engine v0 are now negative audits, so
+Use T-B5-006c/T-B5-006d/T-B5-006e/T-B5-006f/T-B5-006g/T-B5-006h/T-B5-006i as the execution queue:
+W2, W3, W1 acceptance, W1 denominator-engine v0, and canonical residual blocker are now negative audits, so
 the actual W1 production DMRG/MPS denominator is the remaining technical reopen
 route and must preserve the row-contract hash while supplying canonical
 environments/residuals, all-row convergence, seeded-pressure replacement, and
@@ -1088,12 +1094,15 @@ denominator available.
 T-B5-006h/T-B10-014f now adds W1 denominator-engine v0: 8 requirements checked,
 4 passed, 4 failed, failed IDs E4-E7, 216 sweep rows preserved, 0
 convergence-passed rows, and 0 rows beating seeded pressure.
+T-B5-006i/T-B10-014g now adds W1 canonical residual blocker decomposition:
+8 requirements checked, 4 passed, 4 failed, failed IDs C3/C4/C5/C7, and 4 PR
+packets emitted for the next production solver attempt.
 
 **Remaining path to a serious solution:** treat B3 as demoted unless a
 multi-parameter UCCSD/ADAPT or stronger measurement rescue succeeds; run
 T-B10-014 through B5 W1 by replacing the readiness/cost negative boundary, the
-T-B5-006g acceptance failure, and the T-B5-006h denominator-engine v0 failure
-with canonical-environment production DMRG/MPS for the same B5 Hubbard response
+T-B5-006g acceptance failure, the T-B5-006h denominator-engine v0 failure, and
+the T-B5-006i canonical residual blocker failure with canonical-environment production DMRG/MPS for the same B5 Hubbard response
 rows while preserving the row-contract hash, or by
 supplying a future real same-access response oracle with
 preparation, mixing, variance, confidence, optimizer-loop, and classical

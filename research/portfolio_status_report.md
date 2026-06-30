@@ -1980,6 +1980,12 @@ Overall audit: PASS
 - B5 W1 denominator engine failed IDs: ['E4', 'E5', 'E6', 'E7']
 - B5 W1 denominator engine convergence / seeded wins: 0 / 0
 - B5 W1 denominator engine result/markdown exists: True / True
+- B5 W1 canonical residual blocker status: w1_canonical_residual_blocker_gate_failed_missing_production_evidence
+- B5 W1 canonical residual blocker requirements passed/failed: 4 / 4
+- B5 W1 canonical residual blocker failed IDs: ['C3', 'C4', 'C5', 'C7']
+- B5 W1 canonical residual blocker env/residual/convergence rows: 0 / 0 / 0
+- B5 W1 canonical residual blocker PR packets: 4
+- B5 W1 canonical residual blocker result/markdown exists: True / True
 
 ## B6 Superconductivity Descriptor Status
 
@@ -2546,6 +2552,11 @@ Overall audit: PASS
 - B10-T1 B5 W1 denominator engine failed IDs: ['E4', 'E5', 'E6', 'E7']
 - B10-T1 B5 W1 denominator engine convergence / seeded wins: 0 / 0
 - B10-T1 B5 W1 denominator engine result/markdown exists: True / True
+- B10-T1 B5 W1 canonical residual blocker status: w1_canonical_residual_blocker_gate_failed_missing_production_evidence
+- B10-T1 B5 W1 canonical residual blocker requirements passed/failed: 4 / 4
+- B10-T1 B5 W1 canonical residual blocker failed IDs: ['C3', 'C4', 'C5', 'C7']
+- B10-T1 B5 W1 canonical residual blocker PR packets: 4
+- B10-T1 B5 W1 canonical residual blocker result/markdown exists: True / True
 
 ## Errors
 

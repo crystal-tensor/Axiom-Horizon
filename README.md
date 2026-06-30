@@ -141,6 +141,14 @@ response error `0.01805548365563228` versus seeded pressure
 `0.0004416259745141553`. This is useful negative evidence and a runnable
 denominator-engine shell, not production DMRG, not a deployable tensor solver,
 not a same-access positive route, and not a quantum advantage claim.
+The W1 canonical residual blocker gate now decomposes the next production
+solver obligations. It checks 8 requirements: 4 pass and 4 fail (`C3` stored
+canonical environments, `C4` orthonormal residual ledgers, `C5` all-row
+convergence evidence, and `C7` same-access production cost ledger). The gate
+records 0 environment rows, 0 residual rows, 0 convergence-passed rows, and 4
+PR packets: `W1-E4-env-residuals`, `W1-E5-convergence`,
+`W1-E6-seeded-pressure`, and `W1-E7-cost-ledger`. This is a useful handoff
+contract for future agents, not production DMRG and not a positive route.
 The latest B10-T1 stress test still finds no positive same-access route because
 0 rows beat explicit D5 matvec-equivalent costs by shots. This is progress, but
 it is not a production DMRG result, not a deployable tensor solver, not a

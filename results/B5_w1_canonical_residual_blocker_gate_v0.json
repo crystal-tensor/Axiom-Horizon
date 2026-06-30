@@ -1,0 +1,406 @@
+{
+  "benchmark_id": "B5",
+  "claim_boundary": {
+    "bqp_separation_claimed": false,
+    "next_gate": "A future solver must satisfy C3/C4/C5/C7 by storing canonical environments, orthonormal residuals, convergence evidence, and a complete same-access cost ledger.",
+    "production_dmrg_claimed": false,
+    "quantum_advantage_claimed": false,
+    "same_access_positive_route_claimed": false,
+    "what_is_not_supported": "This does not add production DMRG, canonical environments, residual ledgers, seeded-pressure wins, a same-access positive route, quantum advantage, or BQP separation.",
+    "what_is_supported": "The E4/E5 W1 failures are decomposed into row-level missing evidence and PR-sized production-solver packets under the locked nine-row B5/B10 contract."
+  },
+  "dependency_benchmarks": [
+    "B5",
+    "B10"
+  ],
+  "last_updated": "2026-07-01",
+  "linked_benchmark_id": "B10",
+  "method": "b5_w1_canonical_residual_blocker_gate_v0",
+  "model_status": "w1_v0_blockers_decomposed_for_production_dmrg_prs",
+  "pr_packets": [
+    {
+      "acceptance": "environment_rows == 9 and orthonormal_residual_rows == 9",
+      "owner_role": "DMRG Solver Agent",
+      "packet_id": "W1-E4-env-residuals",
+      "required_artifact": "store canonical left/right environments and orthonormal residual norms for all 9 rows"
+    },
+    {
+      "acceptance": "convergence_passed_rows == 9",
+      "owner_role": "Baseline Adversary",
+      "packet_id": "W1-E5-convergence",
+      "required_artifact": "prove fixed-sector, energy-variance, discarded-weight, and monotonicity gates pass for all 9 rows"
+    },
+    {
+      "acceptance": "rows_beating_seeded_pressure == 9",
+      "owner_role": "Tensor Denominator Agent",
+      "packet_id": "W1-E6-seeded-pressure",
+      "required_artifact": "beat exact-state-seeded MPS pressure under the same 9-row access contract"
+    },
+    {
+      "acceptance": "same_access_production_cost_ledger_complete == true",
+      "owner_role": "Cost Ledger Agent",
+      "packet_id": "W1-E7-cost-ledger",
+      "required_artifact": "add wall-clock, memory, sweep/matvec, and optimizer-loop costs for the production solver"
+    }
+  ],
+  "requirements": [
+    {
+      "evidence": {
+        "row_contract_hash": "7ee407e20f51bd0c003d885c8d43282359f84bea9729f0da203b9b2c2970a9fc",
+        "row_count": 9
+      },
+      "label": "Locked row contract is still intact",
+      "passed": true,
+      "requirement_id": "C1"
+    },
+    {
+      "evidence": {
+        "failed_denominator_requirement_ids": [
+          "E4",
+          "E5",
+          "E6",
+          "E7"
+        ],
+        "validation_error_count": 0
+      },
+      "label": "Source W1 denominator v0 is valid and negative",
+      "passed": true,
+      "requirement_id": "C2"
+    },
+    {
+      "evidence": {
+        "environment_rows": 0,
+        "required_rows": 9
+      },
+      "label": "Stored canonical environments are available for all rows",
+      "passed": false,
+      "requirement_id": "C3"
+    },
+    {
+      "evidence": {
+        "orthonormal_residual_rows": 0,
+        "required_rows": 9
+      },
+      "label": "Orthonormal residual ledgers are available for all rows",
+      "passed": false,
+      "requirement_id": "C4"
+    },
+    {
+      "evidence": {
+        "convergence_passed_rows": 0,
+        "discarded_weight_rows": 0,
+        "energy_monotonicity_passed_rows": 6,
+        "energy_variance_passed_rows": 3,
+        "fixed_sector_norm_passed_rows": 0
+      },
+      "label": "All convergence diagnostics pass for all rows",
+      "passed": false,
+      "requirement_id": "C5"
+    },
+    {
+      "evidence": {
+        "packet_ids": [
+          "W1-E4-env-residuals",
+          "W1-E5-convergence",
+          "W1-E6-seeded-pressure",
+          "W1-E7-cost-ledger"
+        ]
+      },
+      "label": "Blockers are decomposed into PR-sized production packets",
+      "passed": true,
+      "requirement_id": "C6"
+    },
+    {
+      "evidence": {
+        "blocked_by": "W1-E7-cost-ledger",
+        "same_access_production_cost_ledger_complete": false
+      },
+      "label": "Same-access production cost ledger exists",
+      "passed": false,
+      "requirement_id": "C7"
+    },
+    {
+      "evidence": {
+        "bqp_separation_claimed": false,
+        "production_dmrg_claimed": false,
+        "quantum_advantage_claimed": false,
+        "same_access_positive_route_claimed": false
+      },
+      "label": "Forbidden claims remain false",
+      "passed": true,
+      "requirement_id": "C8"
+    }
+  ],
+  "rows": [
+    {
+      "beats_seeded_mps_pressure": false,
+      "convergence_ledger_passed": false,
+      "discarded_weight_ledger_present": false,
+      "energy_monotonicity_passed": false,
+      "energy_variance_passed": true,
+      "fixed_sector_norm_passed": false,
+      "missing_production_evidence": [
+        "stored_left_right_environments",
+        "orthonormal_residual_ledger",
+        "discarded_weight_ledger",
+        "fixed_sector_norm",
+        "energy_monotonicity",
+        "composite_convergence"
+      ],
+      "orthonormal_residual_ledger_present": false,
+      "required_solver_artifact": "canonical-center sweep output with left/right environments, orthonormal residuals, discarded weights, monotone energy ledger, fixed-sector norm, energy variance, and same-access sweep/memory costs for this row",
+      "row_id": "4|2",
+      "seeded_mps_pressure_relative_response_error": 2.3089228124250614e-13,
+      "selected_candidate_family": "variational_mps_als",
+      "selected_relative_response_error": 2.5364131264803592e-05,
+      "sites": 4,
+      "stored_left_right_environments": false,
+      "u_over_t": 2.0
+    },
+    {
+      "beats_seeded_mps_pressure": false,
+      "convergence_ledger_passed": false,
+      "discarded_weight_ledger_present": false,
+      "energy_monotonicity_passed": false,
+      "energy_variance_passed": true,
+      "fixed_sector_norm_passed": false,
+      "missing_production_evidence": [
+        "stored_left_right_environments",
+        "orthonormal_residual_ledger",
+        "discarded_weight_ledger",
+        "fixed_sector_norm",
+        "energy_monotonicity",
+        "composite_convergence"
+      ],
+      "orthonormal_residual_ledger_present": false,
+      "required_solver_artifact": "canonical-center sweep output with left/right environments, orthonormal residuals, discarded weights, monotone energy ledger, fixed-sector norm, energy variance, and same-access sweep/memory costs for this row",
+      "row_id": "4|4",
+      "seeded_mps_pressure_relative_response_error": 5.6285327306057525e-12,
+      "selected_candidate_family": "variational_mps_als",
+      "selected_relative_response_error": 2.2511062548060744e-05,
+      "sites": 4,
+      "stored_left_right_environments": false,
+      "u_over_t": 4.0
+    },
+    {
+      "beats_seeded_mps_pressure": false,
+      "convergence_ledger_passed": false,
+      "discarded_weight_ledger_present": false,
+      "energy_monotonicity_passed": false,
+      "energy_variance_passed": true,
+      "fixed_sector_norm_passed": false,
+      "missing_production_evidence": [
+        "stored_left_right_environments",
+        "orthonormal_residual_ledger",
+        "discarded_weight_ledger",
+        "fixed_sector_norm",
+        "energy_monotonicity",
+        "composite_convergence"
+      ],
+      "orthonormal_residual_ledger_present": false,
+      "required_solver_artifact": "canonical-center sweep output with left/right environments, orthonormal residuals, discarded weights, monotone energy ledger, fixed-sector norm, energy variance, and same-access sweep/memory costs for this row",
+      "row_id": "4|8",
+      "seeded_mps_pressure_relative_response_error": 1.811403606954639e-11,
+      "selected_candidate_family": "variational_mps_als",
+      "selected_relative_response_error": 1.2191537640827434e-06,
+      "sites": 4,
+      "stored_left_right_environments": false,
+      "u_over_t": 8.0
+    },
+    {
+      "beats_seeded_mps_pressure": false,
+      "convergence_ledger_passed": false,
+      "discarded_weight_ledger_present": false,
+      "energy_monotonicity_passed": true,
+      "energy_variance_passed": false,
+      "fixed_sector_norm_passed": false,
+      "missing_production_evidence": [
+        "stored_left_right_environments",
+        "orthonormal_residual_ledger",
+        "discarded_weight_ledger",
+        "fixed_sector_norm",
+        "energy_variance",
+        "composite_convergence"
+      ],
+      "orthonormal_residual_ledger_present": false,
+      "required_solver_artifact": "canonical-center sweep output with left/right environments, orthonormal residuals, discarded weights, monotone energy ledger, fixed-sector norm, energy variance, and same-access sweep/memory costs for this row",
+      "row_id": "6|2",
+      "seeded_mps_pressure_relative_response_error": 0.0009974838776394149,
+      "selected_candidate_family": "variational_mps_als",
+      "selected_relative_response_error": 0.016795238146711286,
+      "sites": 6,
+      "stored_left_right_environments": false,
+      "u_over_t": 2.0
+    },
+    {
+      "beats_seeded_mps_pressure": false,
+      "convergence_ledger_passed": false,
+      "discarded_weight_ledger_present": false,
+      "energy_monotonicity_passed": true,
+      "energy_variance_passed": false,
+      "fixed_sector_norm_passed": false,
+      "missing_production_evidence": [
+        "stored_left_right_environments",
+        "orthonormal_residual_ledger",
+        "discarded_weight_ledger",
+        "fixed_sector_norm",
+        "energy_variance",
+        "composite_convergence"
+      ],
+      "orthonormal_residual_ledger_present": false,
+      "required_solver_artifact": "canonical-center sweep output with left/right environments, orthonormal residuals, discarded weights, monotone energy ledger, fixed-sector norm, energy variance, and same-access sweep/memory costs for this row",
+      "row_id": "6|4",
+      "seeded_mps_pressure_relative_response_error": 0.0001445259555551208,
+      "selected_candidate_family": "variational_mps_als",
+      "selected_relative_response_error": 0.03907201105154143,
+      "sites": 6,
+      "stored_left_right_environments": false,
+      "u_over_t": 4.0
+    },
+    {
+      "beats_seeded_mps_pressure": false,
+      "convergence_ledger_passed": false,
+      "discarded_weight_ledger_present": false,
+      "energy_monotonicity_passed": true,
+      "energy_variance_passed": false,
+      "fixed_sector_norm_passed": false,
+      "missing_production_evidence": [
+        "stored_left_right_environments",
+        "orthonormal_residual_ledger",
+        "discarded_weight_ledger",
+        "fixed_sector_norm",
+        "energy_variance",
+        "composite_convergence"
+      ],
+      "orthonormal_residual_ledger_present": false,
+      "required_solver_artifact": "canonical-center sweep output with left/right environments, orthonormal residuals, discarded weights, monotone energy ledger, fixed-sector norm, energy variance, and same-access sweep/memory costs for this row",
+      "row_id": "6|8",
+      "seeded_mps_pressure_relative_response_error": 0.00044015204209268223,
+      "selected_candidate_family": "variational_mps_als",
+      "selected_relative_response_error": 0.032124024833131516,
+      "sites": 6,
+      "stored_left_right_environments": false,
+      "u_over_t": 8.0
+    },
+    {
+      "beats_seeded_mps_pressure": false,
+      "convergence_ledger_passed": false,
+      "discarded_weight_ledger_present": false,
+      "energy_monotonicity_passed": true,
+      "energy_variance_passed": false,
+      "fixed_sector_norm_passed": false,
+      "missing_production_evidence": [
+        "stored_left_right_environments",
+        "orthonormal_residual_ledger",
+        "discarded_weight_ledger",
+        "fixed_sector_norm",
+        "energy_variance",
+        "composite_convergence"
+      ],
+      "orthonormal_residual_ledger_present": false,
+      "required_solver_artifact": "canonical-center sweep output with left/right environments, orthonormal residuals, discarded weights, monotone energy ledger, fixed-sector norm, energy variance, and same-access sweep/memory costs for this row",
+      "row_id": "8|2",
+      "seeded_mps_pressure_relative_response_error": 0.0016954037598740704,
+      "selected_candidate_family": "variational_mps_als",
+      "selected_relative_response_error": 0.004758660629988784,
+      "sites": 8,
+      "stored_left_right_environments": false,
+      "u_over_t": 2.0
+    },
+    {
+      "beats_seeded_mps_pressure": false,
+      "convergence_ledger_passed": false,
+      "discarded_weight_ledger_present": false,
+      "energy_monotonicity_passed": true,
+      "energy_variance_passed": false,
+      "fixed_sector_norm_passed": false,
+      "missing_production_evidence": [
+        "stored_left_right_environments",
+        "orthonormal_residual_ledger",
+        "discarded_weight_ledger",
+        "fixed_sector_norm",
+        "energy_variance",
+        "composite_convergence"
+      ],
+      "orthonormal_residual_ledger_present": false,
+      "required_solver_artifact": "canonical-center sweep output with left/right environments, orthonormal residuals, discarded weights, monotone energy ledger, fixed-sector norm, energy variance, and same-access sweep/memory costs for this row",
+      "row_id": "8|4",
+      "seeded_mps_pressure_relative_response_error": 0.0006823937978339813,
+      "selected_candidate_family": "variational_mps_als",
+      "selected_relative_response_error": 0.035923281106899,
+      "sites": 8,
+      "stored_left_right_environments": false,
+      "u_over_t": 4.0
+    },
+    {
+      "beats_seeded_mps_pressure": false,
+      "convergence_ledger_passed": false,
+      "discarded_weight_ledger_present": false,
+      "energy_monotonicity_passed": true,
+      "energy_variance_passed": false,
+      "fixed_sector_norm_passed": false,
+      "missing_production_evidence": [
+        "stored_left_right_environments",
+        "orthonormal_residual_ledger",
+        "discarded_weight_ledger",
+        "fixed_sector_norm",
+        "energy_variance",
+        "composite_convergence"
+      ],
+      "orthonormal_residual_ledger_present": false,
+      "required_solver_artifact": "canonical-center sweep output with left/right environments, orthonormal residuals, discarded weights, monotone energy ledger, fixed-sector norm, energy variance, and same-access sweep/memory costs for this row",
+      "row_id": "8|8",
+      "seeded_mps_pressure_relative_response_error": 1.4674313658667297e-05,
+      "selected_candidate_family": "variational_mps_als",
+      "selected_relative_response_error": 0.033777042784841546,
+      "sites": 8,
+      "stored_left_right_environments": false,
+      "u_over_t": 8.0
+    }
+  ],
+  "runtime_seconds": 0.0001628398895263672,
+  "source_denominator_engine_result": "results/B5_production_dmrg_mps_denominator_v0.json",
+  "source_target_id": "B10-T1",
+  "status": "w1_canonical_residual_blocker_gate_failed_missing_production_evidence",
+  "summary": {
+    "bqp_separation_claimed": false,
+    "canonical_residual_requirement_count": 8,
+    "canonical_residual_requirements_failed": 4,
+    "canonical_residual_requirements_passed": 4,
+    "convergence_passed_rows": 0,
+    "discarded_weight_rows": 0,
+    "energy_monotonicity_passed_rows": 6,
+    "energy_variance_passed_rows": 3,
+    "environment_rows": 0,
+    "failed_canonical_residual_requirement_ids": [
+      "C3",
+      "C4",
+      "C5",
+      "C7"
+    ],
+    "fixed_sector_norm_passed_rows": 0,
+    "orthonormal_residual_rows": 0,
+    "pr_packet_count": 4,
+    "production_dmrg_available": false,
+    "production_dmrg_claimed": false,
+    "quantum_advantage_claimed": false,
+    "row_contract_count": 9,
+    "row_contract_hash": "7ee407e20f51bd0c003d885c8d43282359f84bea9729f0da203b9b2c2970a9fc",
+    "rows_beating_seeded_pressure": 0,
+    "same_access_positive_route_claimed": false,
+    "same_access_positive_route_ready": false,
+    "same_access_production_cost_ledger_complete": false,
+    "source_denominator_method": "b5_production_dmrg_mps_denominator_v0",
+    "source_failed_denominator_requirement_ids": [
+      "E4",
+      "E5",
+      "E6",
+      "E7"
+    ],
+    "validation_error_count": 0,
+    "w1_canonical_residual_gate_ready": false
+  },
+  "title": "B5 W1 Canonical Residual Blocker Gate v0",
+  "validation_errors": [],
+  "version": "0.1"
+}

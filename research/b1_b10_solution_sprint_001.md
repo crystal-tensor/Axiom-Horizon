@@ -2496,3 +2496,17 @@ relative response error `0.01805548365563228`, and mean seeded-pressure error
 implementation slot into an audited failing denominator-engine shell. It is
 still not production DMRG, not a deployable denominator, not a same-access
 positive route, not quantum advantage, and not BQP separation.
+
+Sprint update 66: B5/B10 now has a W1 canonical residual blocker gate.
+T-B5-006i/T-B10-014g adds `tools/b5_w1_canonical_residual_blocker_gate.py`
+and emits `results/B5_w1_canonical_residual_blocker_gate_v0.json` plus
+`research/B5_w1_canonical_residual_blocker_gate.md`. The gate consumes W1
+denominator-engine v0 and decomposes its E4-E7 failures into four PR-sized
+packets: `W1-E4-env-residuals`, `W1-E5-convergence`,
+`W1-E6-seeded-pressure`, and `W1-E7-cost-ledger`. It checks 8 canonical
+residual requirements, passes 4, and fails C3 stored canonical environments,
+C4 orthonormal residual ledgers, C5 all-row convergence evidence, and C7
+same-access production cost ledger. It records 0 environment rows, 0 residual
+rows, 0 convergence-passed rows, and 0 seeded-pressure wins. This is a useful
+handoff contract for future solver agents, but still not production DMRG, not
+a positive same-access route, not quantum advantage, and not BQP separation.
