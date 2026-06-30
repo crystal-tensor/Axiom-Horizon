@@ -1173,6 +1173,18 @@ Overall audit: PASS
 - Accepted occurrence / proxy-T reduction / B7 claim: 0 / 0 / False
 - Validation errors: 0
 
+## B1/B7 cone_01 Physical Synthesis Pricing Gate
+
+- Exists: True
+- Status: cone01_physical_synthesis_pricing_rejects_line1381_b7_credit
+- Line-1381 off-grid params / all-grid exact pass count: 5 / 0
+- Error budget aggregate / per parameter: 1e-08 / 2e-09
+- Single-parameter / total physical synthesis T-count bound: 97 / 485
+- Selected CNOT delta / proxy credit / physical cost minus credit: 6 / 120 / 365
+- Physical synthesis pricing accepted / line-1378 recovered: False / False
+- Accepted occurrence / proxy-T reduction / B7 claim: 0 / 0 / False
+- Gates passed-failed / validation errors: 6-0 / 0
+
 ## B1/B7 cone_01 Overlap Additivity Bound Gate
 
 - Exists: True

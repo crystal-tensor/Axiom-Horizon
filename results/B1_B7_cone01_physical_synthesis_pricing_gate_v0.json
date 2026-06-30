@@ -1,0 +1,68 @@
+{
+  "benchmark_id": "B1",
+  "claim_boundary": {
+    "b7_ledger_improvement_claimed": false,
+    "physical_synthesis_pricing_accepted": false,
+    "resource_saving_claimed": false,
+    "supported_claim": "Under a conservative precision-aware physical synthesis pricing guardrail, the five line-1381 off-grid local-U3 parameters cost 485 T-count proxy units, exceeding the 120 proxy credit from the selected 6-CNOT delta.",
+    "unsupported_claims": [
+      "This is not a realized Clifford+T synthesis circuit.",
+      "This does not prove a global lower bound for line 1381.",
+      "This does not recover line 1378.",
+      "This does not accept occurrence removal, proxy-T reduction, or B7 ledger improvement."
+    ]
+  },
+  "gate_results": {
+    "G1_route_triage_requested_honest_pricing": true,
+    "G2_line1381_has_five_off_grid_parameters": true,
+    "G3_all_grid_cleanup_still_fails": true,
+    "G4_physical_synthesis_cost_is_computed": true,
+    "G5_physical_cost_exceeds_selected_cnot_credit": true,
+    "G6_no_b7_credit_claimed": true
+  },
+  "linked_b7_problem_id": "B7",
+  "method": "b1_b7_cone01_physical_synthesis_pricing_gate_v0",
+  "model_status": "precision_aware_synthesis_cost_exceeds_selected_cnot_delta_credit",
+  "source_line1381_leave_five_out_result": "results/B1_B7_cone01_line1381_leave_five_out_parameter_gate_v0.json",
+  "source_local_u3_pricing_result": "results/B1_B7_cone01_line1381_local_u3_pricing_gate_v0.json",
+  "source_route_triage_result": "results/B1_B7_cone01_route_triage_decision_gate_v0.json",
+  "status": "cone01_physical_synthesis_pricing_rejects_line1381_b7_credit",
+  "summary": {
+    "accepted_occurrence_removal": 0,
+    "accepted_proxy_t_reduction": 0,
+    "aggregate_synthesis_error_budget": 1e-08,
+    "b7_ledger_improvement_claimed": false,
+    "dropped_overlap_candidate_line_numbers": [
+      1378
+    ],
+    "failed_gate_count": 0,
+    "gate_count": 6,
+    "line1378_delta_recovered": false,
+    "line1381_all_grid_exact_pass_count": 0,
+    "line1381_off_grid_parameter_count": 5,
+    "line1381_parameters_absorbed": false,
+    "line1381_parameters_eliminated": false,
+    "line1381_parameters_symbolically_decomposed": false,
+    "passed_gate_count": 6,
+    "per_parameter_error_budget": 2e-09,
+    "physical_synthesis_cost_minus_selected_cnot_credit": 365,
+    "physical_synthesis_pricing_accepted": false,
+    "placeholder_proxy_t_per_parameter": 20,
+    "placeholder_proxy_t_pressure": 100,
+    "resource_saving_claimed": false,
+    "selected_candidate_cnot_reduction": 6,
+    "selected_cnot_delta_proxy_credit": 120,
+    "selected_line_numbers": [
+      268,
+      1381
+    ],
+    "single_parameter_t_count_bound": 97,
+    "source_line1381_leave_five_out_method": "b1_b7_cone01_line1381_leave_five_out_parameter_gate_v0",
+    "source_local_u3_pricing_method": "b1_b7_cone01_line1381_local_u3_pricing_gate_v0",
+    "source_route_triage_method": "b1_b7_cone01_route_triage_decision_gate_v0",
+    "total_physical_synthesis_t_count_bound": 485,
+    "validation_error_count": 0
+  },
+  "validation_errors": [],
+  "workload": "qasmbench_medium_exact/gcm_h6.qasm"
+}

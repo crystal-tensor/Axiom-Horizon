@@ -2264,6 +2264,19 @@ double-counting, or an alternate occurrence-removing scaffold. Accepted
 occurrence removal, proxy-T reduction, resource saving, and B7 ledger
 improvement remain 0.
 
+Sprint update 18cs: B1/B7 now has the first non-shortcut follow-up from the
+route triage: a physical synthesis pricing gate for line 1381. T-B1-004cs/T-B7-011
+adds `tools/b1_b7_cone01_physical_synthesis_pricing_gate.py` and emits
+`results/B1_B7_cone01_physical_synthesis_pricing_gate_v0.json` plus
+`research/B1_B7_cone01_physical_synthesis_pricing_gate.md`. It keeps the
+selected line-268 plus line-1381 patch fixed, then prices the 5 remaining
+line-1381 off-grid local-U3 parameters under a conservative `1e-8` aggregate
+synthesis-error budget. The per-parameter budget is `2e-9`, the
+single-parameter T-count bound is 97, the total physical synthesis T-count bound
+is 485, and the selected 6-CNOT delta supplies only 120 proxy-credit units. The
+cost-minus-credit gap is therefore 365, so physical synthesis pricing is not
+accepted and B7 ledger improvement remains 0.
+
 Sprint update 59b: B4/B8 now has the formal verifier-private challenge protocol
 model that the earlier private-predicate pressure gate was missing.
 T-B4-002b/T-B8-003f repairs

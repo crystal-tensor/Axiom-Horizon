@@ -240,6 +240,9 @@ def audit(root: Path) -> dict:
     b1_b7_cone01_route_triage_decision_path = (
         results / "B1_B7_cone01_route_triage_decision_gate_v0.json"
     )
+    b1_b7_cone01_physical_synthesis_pricing_path = (
+        results / "B1_B7_cone01_physical_synthesis_pricing_gate_v0.json"
+    )
     b1_b7_cone01_bounded_replacement_patch_path = (
         results / "B1_B7_cone01_bounded_replacement_patch_gate_v0.json"
     )
@@ -982,6 +985,9 @@ def audit(root: Path) -> dict:
     )
     b1_b7_cone01_route_triage_decision_manifest = current_results.get(
         "b1_b7_cone01_route_triage_decision_gate_v0"
+    )
+    b1_b7_cone01_physical_synthesis_pricing_manifest = current_results.get(
+        "b1_b7_cone01_physical_synthesis_pricing_gate_v0"
     )
     b1_b7_cone01_bounded_replacement_patch_manifest = current_results.get(
         "b1_b7_cone01_bounded_replacement_patch_gate_v0"
@@ -15226,6 +15232,167 @@ def audit(root: Path) -> dict:
         errors.append(
             f"missing B1/B7 cone_01 line-1381 local-U3 pricing report: "
             f"{b1_b7_cone01_line1381_local_u3_pricing_path}"
+        )
+
+    b1_b7_cone01_physical_synthesis_pricing = {
+        "path": str(b1_b7_cone01_physical_synthesis_pricing_path),
+        "exists": b1_b7_cone01_physical_synthesis_pricing_path.exists(),
+    }
+    if not b1_b7_cone01_physical_synthesis_pricing_manifest:
+        errors.append(
+            "B1 manifest missing current result: "
+            "b1_b7_cone01_physical_synthesis_pricing_gate_v0"
+        )
+    else:
+        if (
+            b1_b7_cone01_physical_synthesis_pricing_manifest.get("status")
+            != "cone01_physical_synthesis_pricing_rejects_line1381_b7_credit"
+        ):
+            errors.append("B1/B7 cone_01 physical synthesis pricing status mismatch")
+        for field in ["report", "markdown_report"]:
+            value = b1_b7_cone01_physical_synthesis_pricing_manifest.get(field)
+            if not value or not path_exists_from(benchmarks, value):
+                errors.append(
+                    "B1/B7 cone_01 physical synthesis pricing missing "
+                    f"existing {field} path: {value}"
+                )
+    if b1_b7_cone01_physical_synthesis_pricing_path.exists():
+        physical_pricing_payload = json.loads(
+            read(b1_b7_cone01_physical_synthesis_pricing_path)
+        )
+        physical_summary = physical_pricing_payload.get("summary", {})
+        physical_claims = physical_pricing_payload.get("claim_boundary", {})
+        b1_b7_cone01_physical_synthesis_pricing.update(
+            {
+                "status": physical_pricing_payload.get("status"),
+                "model_status": physical_pricing_payload.get("model_status"),
+                "method": physical_pricing_payload.get("method"),
+                "workload": physical_pricing_payload.get("workload"),
+                "line1381_off_grid_parameter_count": physical_summary.get(
+                    "line1381_off_grid_parameter_count"
+                ),
+                "aggregate_synthesis_error_budget": physical_summary.get(
+                    "aggregate_synthesis_error_budget"
+                ),
+                "per_parameter_error_budget": physical_summary.get(
+                    "per_parameter_error_budget"
+                ),
+                "single_parameter_t_count_bound": physical_summary.get(
+                    "single_parameter_t_count_bound"
+                ),
+                "total_physical_synthesis_t_count_bound": physical_summary.get(
+                    "total_physical_synthesis_t_count_bound"
+                ),
+                "selected_candidate_cnot_reduction": physical_summary.get(
+                    "selected_candidate_cnot_reduction"
+                ),
+                "selected_cnot_delta_proxy_credit": physical_summary.get(
+                    "selected_cnot_delta_proxy_credit"
+                ),
+                "physical_synthesis_cost_minus_selected_cnot_credit": physical_summary.get(
+                    "physical_synthesis_cost_minus_selected_cnot_credit"
+                ),
+                "physical_synthesis_pricing_accepted": physical_summary.get(
+                    "physical_synthesis_pricing_accepted"
+                ),
+                "line1381_all_grid_exact_pass_count": physical_summary.get(
+                    "line1381_all_grid_exact_pass_count"
+                ),
+                "line1378_delta_recovered": physical_summary.get("line1378_delta_recovered"),
+                "accepted_occurrence_removal": physical_summary.get(
+                    "accepted_occurrence_removal"
+                ),
+                "accepted_proxy_t_reduction": physical_summary.get(
+                    "accepted_proxy_t_reduction"
+                ),
+                "resource_saving_claimed": physical_summary.get("resource_saving_claimed"),
+                "b7_ledger_improvement_claimed": physical_summary.get(
+                    "b7_ledger_improvement_claimed"
+                ),
+                "gate_count": physical_summary.get("gate_count"),
+                "passed_gate_count": physical_summary.get("passed_gate_count"),
+                "failed_gate_count": physical_summary.get("failed_gate_count"),
+                "validation_error_count": physical_summary.get("validation_error_count"),
+            }
+        )
+        if physical_pricing_payload.get("benchmark_id") != "B1":
+            errors.append("B1/B7 cone_01 physical synthesis pricing must have benchmark_id B1")
+        if physical_pricing_payload.get("linked_b7_problem_id") != "B7":
+            errors.append("B1/B7 cone_01 physical synthesis pricing must link B7")
+        if (
+            physical_pricing_payload.get("method")
+            != "b1_b7_cone01_physical_synthesis_pricing_gate_v0"
+        ):
+            errors.append("B1/B7 cone_01 physical synthesis pricing method mismatch")
+        if (
+            physical_pricing_payload.get("status")
+            != "cone01_physical_synthesis_pricing_rejects_line1381_b7_credit"
+        ):
+            errors.append("B1/B7 cone_01 physical synthesis pricing status mismatch")
+        if (
+            physical_pricing_payload.get("model_status")
+            != "precision_aware_synthesis_cost_exceeds_selected_cnot_delta_credit"
+        ):
+            errors.append("B1/B7 cone_01 physical synthesis pricing model_status mismatch")
+        expected_physical_pricing_fields = {
+            "line1381_off_grid_parameter_count": 5,
+            "aggregate_synthesis_error_budget": 1.0e-08,
+            "per_parameter_error_budget": 2.0e-09,
+            "single_parameter_t_count_bound": 97,
+            "total_physical_synthesis_t_count_bound": 485,
+            "selected_candidate_cnot_reduction": 6,
+            "selected_cnot_delta_proxy_credit": 120,
+            "physical_synthesis_cost_minus_selected_cnot_credit": 365,
+            "physical_synthesis_pricing_accepted": False,
+            "line1381_all_grid_exact_pass_count": 0,
+            "line1378_delta_recovered": False,
+            "accepted_occurrence_removal": 0,
+            "accepted_proxy_t_reduction": 0,
+            "resource_saving_claimed": False,
+            "b7_ledger_improvement_claimed": False,
+            "gate_count": 6,
+            "passed_gate_count": 6,
+            "failed_gate_count": 0,
+            "validation_error_count": 0,
+        }
+        for field, value in expected_physical_pricing_fields.items():
+            if physical_summary.get(field) != value:
+                errors.append(
+                    f"B1/B7 cone_01 physical synthesis pricing expected {field}={value}"
+                )
+            if (
+                b1_b7_cone01_physical_synthesis_pricing_manifest
+                and field in b1_b7_cone01_physical_synthesis_pricing_manifest
+                and physical_summary.get(field)
+                != b1_b7_cone01_physical_synthesis_pricing_manifest.get(field)
+            ):
+                errors.append(f"B1/B7 cone_01 physical synthesis pricing {field} mismatch")
+        if (
+            physical_summary.get("total_physical_synthesis_t_count_bound")
+            - physical_summary.get("selected_cnot_delta_proxy_credit")
+            != physical_summary.get("physical_synthesis_cost_minus_selected_cnot_credit")
+        ):
+            errors.append("B1/B7 cone_01 physical synthesis pricing arithmetic mismatch")
+        for field in [
+            "resource_saving_claimed",
+            "b7_ledger_improvement_claimed",
+            "physical_synthesis_pricing_accepted",
+        ]:
+            if physical_summary.get(field) is not False:
+                errors.append(f"B1/B7 cone_01 physical synthesis pricing must not claim {field}")
+            if physical_claims.get(field) is not False:
+                errors.append(
+                    "B1/B7 cone_01 physical synthesis pricing claim boundary "
+                    f"must not claim {field}"
+                )
+        if len(physical_pricing_payload.get("validation_errors", [])) != physical_summary.get(
+            "validation_error_count"
+        ):
+            errors.append("B1/B7 cone_01 physical synthesis pricing validation-error count mismatch")
+    else:
+        errors.append(
+            f"missing B1/B7 cone_01 physical synthesis pricing report: "
+            f"{b1_b7_cone01_physical_synthesis_pricing_path}"
         )
 
     b1_b7_cone01_overlap_additivity_bound = {
@@ -29489,6 +29656,9 @@ def audit(root: Path) -> dict:
             "b7_cone01_line1381_local_u3_pricing_gate": (
                 b1_b7_cone01_line1381_local_u3_pricing
             ),
+            "b7_cone01_physical_synthesis_pricing_gate": (
+                b1_b7_cone01_physical_synthesis_pricing
+            ),
             "b7_cone01_overlap_additivity_bound_gate": (
                 b1_b7_cone01_overlap_additivity_bound
             ),
@@ -29923,6 +30093,9 @@ def audit(root: Path) -> dict:
             ),
             "b1_b7_cone01_line1381_local_u3_pricing_gate": str(
                 b1_b7_cone01_line1381_local_u3_pricing_path
+            ),
+            "b1_b7_cone01_physical_synthesis_pricing_gate": str(
+                b1_b7_cone01_physical_synthesis_pricing_path
             ),
             "b1_b7_cone01_overlap_additivity_bound_gate": str(
                 b1_b7_cone01_overlap_additivity_bound_path
@@ -31388,6 +31561,18 @@ def markdown_report(report: dict) -> str:
             f"- Accepted replay / QASM patch artifacts: {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('accepted_full_circuit_replay_certificate_count')} / {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('accepted_full_circuit_qasm_patch_count')}",
             f"- Accepted occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('b7_ledger_improvement_claimed')}",
             f"- Validation errors: {report['b1']['b7_cone01_line1381_local_u3_pricing_gate'].get('validation_error_count')}",
+            "",
+            "## B1/B7 cone_01 Physical Synthesis Pricing Gate",
+            "",
+            f"- Exists: {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('exists')}",
+            f"- Status: {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('status')}",
+            f"- Line-1381 off-grid params / all-grid exact pass count: {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('line1381_off_grid_parameter_count')} / {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('line1381_all_grid_exact_pass_count')}",
+            f"- Error budget aggregate / per parameter: {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('aggregate_synthesis_error_budget')} / {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('per_parameter_error_budget')}",
+            f"- Single-parameter / total physical synthesis T-count bound: {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('single_parameter_t_count_bound')} / {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('total_physical_synthesis_t_count_bound')}",
+            f"- Selected CNOT delta / proxy credit / physical cost minus credit: {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('selected_candidate_cnot_reduction')} / {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('selected_cnot_delta_proxy_credit')} / {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('physical_synthesis_cost_minus_selected_cnot_credit')}",
+            f"- Physical synthesis pricing accepted / line-1378 recovered: {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('physical_synthesis_pricing_accepted')} / {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('line1378_delta_recovered')}",
+            f"- Accepted occurrence / proxy-T reduction / B7 claim: {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('accepted_occurrence_removal')} / {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('accepted_proxy_t_reduction')} / {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('b7_ledger_improvement_claimed')}",
+            f"- Gates passed-failed / validation errors: {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('passed_gate_count')}-{report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('failed_gate_count')} / {report['b1']['b7_cone01_physical_synthesis_pricing_gate'].get('validation_error_count')}",
             "",
             "## B1/B7 cone_01 Overlap Additivity Bound Gate",
             "",

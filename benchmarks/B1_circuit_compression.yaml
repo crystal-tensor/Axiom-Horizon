@@ -1722,6 +1722,36 @@ current_results:
     validation_error_count: 0
     report: ../results/B1_B7_cone01_route_triage_decision_gate_v0.json
     markdown_report: ../research/B1_B7_cone01_route_triage_decision_gate.md
+  b1_b7_cone01_physical_synthesis_pricing_gate_v0:
+    circuits: 1
+    status: cone01_physical_synthesis_pricing_rejects_line1381_b7_credit
+    model_status: precision_aware_synthesis_cost_exceeds_selected_cnot_delta_credit
+    method: b1_b7_cone01_physical_synthesis_pricing_gate_v0
+    source_route_triage_gate: b1_b7_cone01_route_triage_decision_gate_v0
+    source_line1381_local_u3_pricing_gate: b1_b7_cone01_line1381_local_u3_pricing_gate_v0
+    source_line1381_leave_five_out_parameter_gate: b1_b7_cone01_line1381_leave_five_out_parameter_gate_v0
+    workload: qasmbench_medium_exact/gcm_h6.qasm
+    line1381_off_grid_parameter_count: 5
+    aggregate_synthesis_error_budget: 1.0e-08
+    per_parameter_error_budget: 2.0e-09
+    single_parameter_t_count_bound: 97
+    total_physical_synthesis_t_count_bound: 485
+    selected_candidate_cnot_reduction: 6
+    selected_cnot_delta_proxy_credit: 120
+    physical_synthesis_cost_minus_selected_cnot_credit: 365
+    physical_synthesis_pricing_accepted: false
+    line1381_all_grid_exact_pass_count: 0
+    line1378_delta_recovered: false
+    accepted_occurrence_removal: 0
+    accepted_proxy_t_reduction: 0
+    resource_saving_claimed: false
+    b7_ledger_improvement_claimed: false
+    gate_count: 6
+    passed_gate_count: 6
+    failed_gate_count: 0
+    validation_error_count: 0
+    report: ../results/B1_B7_cone01_physical_synthesis_pricing_gate_v0.json
+    markdown_report: ../research/B1_B7_cone01_physical_synthesis_pricing_gate.md
   b1_b7_cone01_bounded_replacement_patch_gate_v0:
     circuits: 1
     status: cone01_bounded_replacement_patches_not_composable_full_circuit

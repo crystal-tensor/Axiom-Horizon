@@ -1090,6 +1090,18 @@ double-counting, or a different occurrence-removing scaffold. No occurrence
 removal, proxy-T reduction, resource saving, or B7 ledger improvement is
 accepted.
 
+`T-B1-004cs` / `T-B7-011` follows the route-triage decision by testing the
+honest line-1381 local-U3 pricing route under a conservative physical synthesis
+guardrail. The current selected line-268 plus line-1381 patch keeps 5 off-grid
+line-1381 local-U3 parameters. With an aggregate synthesis-error budget of
+`1e-8`, the per-parameter budget is `2e-9`, the single-parameter T-count bound
+is 97, and the five-parameter physical synthesis T-count bound is 485. The
+selected 6-CNOT structural delta only supplies 120 proxy-credit units under the
+project ledger, leaving a positive cost-minus-credit gap of 365. Physical
+synthesis pricing is therefore not accepted, line 1378 is still unrecovered,
+and accepted occurrence removal, proxy-T reduction, resource saving, and B7
+ledger improvement remain 0.
+
 B4/B8 now has a formal verifier-private challenge protocol model:
 `T-B4-002b` / `T-B8-003f` turns the previous private-predicate pressure gate
 into a commit-challenge-response-verify protocol over 36 shared challenge rows.
