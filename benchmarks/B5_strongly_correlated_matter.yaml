@@ -40,6 +40,38 @@ next_actions:
   - add_observable_errors_beyond_energy
   - move_from_1d_chain_to_2d_plaquette_proxy
 current_results:
+  b5_b10_production_implementation_triage_gate_v0:
+    status: production_implementation_triage_ready_no_positive_route
+    model_status: failed_production_contract_split_into_parallel_pr_work
+    method: b5_b10_production_implementation_triage_gate_v0
+    source_production_contract_result: ../results/B5_B10_same_access_production_contract_gate_v0.json
+    source_contract_gate_count: 10
+    source_contract_pass_count: 2
+    source_contract_fail_count: 8
+    failed_source_gate_ids: [P2, P3, P4, P5, P6, P7, P8, P9]
+    passed_source_gate_ids: [P1, P10]
+    work_packet_count: 6
+    ready_packet_count: 2
+    blocked_packet_count: 4
+    readiness_condition_count: 6
+    satisfied_readiness_condition_count: 6
+    unsatisfied_readiness_condition_count: 0
+    production_dmrg_available: false
+    sampling_oracle_constructed: false
+    same_access_positive_route_ready: false
+    b10_t1_positive_route_ready: false
+    catalog_change_required: false
+    production_dmrg_claimed: false
+    quantum_response_win_claimed: false
+    accuracy_per_resource_win_claimed: false
+    same_access_positive_route_claimed: false
+    quantum_advantage_claimed: false
+    bqp_separation_claimed: false
+    dequantization_theorem_claimed: false
+    sampling_access_theorem_claimed: false
+    validation_error_count: 0
+    result: ../results/B5_B10_production_implementation_triage_gate_v0.json
+    markdown_report: ../research/B5_B10_production_implementation_triage_gate.md
   b5_b10_same_access_production_contract_gate_v0:
     status: same_access_production_contract_failed
     model_status: production_dmrg_or_response_oracle_requirements_unmet
@@ -300,6 +332,7 @@ current_results:
       cluster4: 0.05921856583390095
     result: ../results/B5_hubbard_embedding_baseline_v0.json
 prototype_artifacts:
+  production_implementation_triage_gate: ../tools/b5_b10_production_implementation_triage_gate.py
   canonical_environment_smoke_gate: ../tools/b5_canonical_environment_smoke_gate.py
   canonical_dmrg_readiness_gate: ../tools/b5_canonical_dmrg_readiness_gate.py
   two_site_finite_dmrg_response_reference: ../tools/b5_two_site_dmrg_response_reference.py

@@ -514,6 +514,15 @@ same-access bridge. The current portfolio passes only 2/10 contract gates,
 fails 8/10, has 0 smoke-passed rows, 0 readiness gates, 5 blocking sampling
 requirements, no production DMRG, no sampling oracle, no same-access positive
 route, and no BQP or quantum-advantage claim.
+T-B5-006c/T-B10-014a adds a production implementation triage gate over that
+failed contract. It satisfies 6/6 triage readiness conditions, keeps failed
+source gates P2-P9 explicit, and splits the next work into 6 PR-sized packets:
+W1 production DMRG/MPS denominator, W2 seeded-pressure replacement audit, W3
+same-access response-oracle cost ledger, W4 row-contract harness, W5 B10-T1
+theorem-boundary integration, and W6 claim-safety/audit wiring. Only W4/W6 are
+ready now; W1/W2/W3/W5 remain blocked on new implementation or evidence. It is
+not production DMRG, not a response oracle, not a positive route, not quantum
+advantage, and not BQP separation.
 
 **Remaining path to a serious solution:** run T-B5-006 by implementing mature
 canonical-environment DMRG/MPS for the same response rows, with stored
@@ -522,8 +531,10 @@ exact-state seeding, and full cost accounting; or compare a fully costed
 quantum impurity/response kernel against exact D5, non-oracle embedding, seeded
 MPS pressure, one-site ALS, two-site finite-DMRG-style, readiness-gate, and
 smoke-gate denominators while satisfying the same-access production contract.
+Use T-B5-006c as the execution queue: W1/W2/W3 are the technical reopen routes,
+while W4/W6 keep row and claim discipline fixed.
 
-**Current internal maturity:** 27/100.
+**Current internal maturity:** 28/100.
 
 ## B6: High-Temperature Superconductivity Search
 
@@ -1018,14 +1029,19 @@ T-B5-006b now turns the B5/B10 same-access blocker into a production contract:
 only 2/10 gates pass, 8/10 fail, and the current state has 0 smoke-passed rows,
 0 readiness gates, 5 blocking sampling requirements, no production DMRG, no
 sampling oracle, and no same-access positive route.
+T-B5-006c/T-B10-014a now converts that production-contract failure into a B10-T1
+implementation queue: 6 work packets, 2 ready guardrails, 4 blocked
+implementation/theory packets, 6/6 triage conditions satisfied, no production
+DMRG, no response oracle, no same-access positive route, no quantum advantage,
+and no BQP separation.
 
 **Remaining path to a serious solution:** treat B3 as demoted unless a
 multi-parameter UCCSD/ADAPT or stronger measurement rescue succeeds; run
-T-B10-014 with T-B5-006 by replacing the readiness/cost negative boundary with
-canonical-environment production DMRG/MPS for the same B5 Hubbard response rows,
-or by supplying a real same-access response oracle with preparation, mixing,
-variance, confidence, optimizer-loop, and classical denominator costs strong
-enough to survive the full denominator ladder; turn the B10-T2
+T-B10-014 through T-B5-006c W1/W2/W3 by replacing the readiness/cost negative
+boundary with canonical-environment production DMRG/MPS for the same B5 Hubbard
+response rows, or by supplying a real same-access response oracle with
+preparation, mixing, variance, confidence, optimizer-loop, and classical
+denominator costs strong enough to survive the full denominator ladder; turn the B10-T2
 bridge into real backend-property verifier execution or hardware randomized
 measurements; connect B4/B8 verification burdens back into the boundary map.
 

@@ -25289,6 +25289,7 @@ def audit(root: Path) -> dict:
     b5_canonical_smoke = b5_results.get("canonical_environment_smoke_gate_v0")
     b5_dmrg_readiness = b5_results.get("canonical_dmrg_readiness_gate_v0")
     b5_b10_production_contract = b5_results.get("b5_b10_same_access_production_contract_gate_v0")
+    b5_b10_production_triage = b5_results.get("b5_b10_production_implementation_triage_gate_v0")
     b5_two_site_dmrg = b5_results.get("two_site_finite_dmrg_response_reference_v0")
     b5_var_mps = b5_results.get("variational_mps_als_response_reference_v0")
     b5_mps = b5_results.get("mps_schmidt_truncation_response_reference_v0")
@@ -25669,6 +25670,149 @@ def audit(root: Path) -> dict:
                 errors.append(f"B5/B10 same-access production contract claim boundary must keep {field}=False")
         if len(payload.get("validation_errors", [])) != b5_b10_production_contract.get("validation_error_count"):
             errors.append("B5/B10 same-access production contract validation-error count mismatch")
+
+    def audit_b5_b10_production_triage(entry, label):
+        status = {}
+        if not entry:
+            warnings.append(f"{label} manifest has no B5/B10 production implementation triage gate")
+            return status
+        result_path = entry.get("result")
+        markdown_path = entry.get("markdown_report")
+        result_exists = bool(result_path and path_exists_from(benchmarks, result_path))
+        markdown_exists = bool(markdown_path and path_exists_from(benchmarks, markdown_path))
+        if not result_exists:
+            errors.append(f"{label} production implementation triage result path missing: {result_path}")
+        if not markdown_exists:
+            errors.append(f"{label} production implementation triage markdown missing: {markdown_path}")
+        payload = json.loads(read((benchmarks / result_path).resolve())) if result_exists else {}
+        summary = payload.get("summary", {})
+        claims = payload.get("claim_boundary", {})
+        status = {
+            "status": entry.get("status"),
+            "method": entry.get("method"),
+            "model_status": entry.get("model_status"),
+            "source_contract_gate_count": summary.get("source_contract_gate_count"),
+            "source_contract_pass_count": summary.get("source_contract_pass_count"),
+            "source_contract_fail_count": summary.get("source_contract_fail_count"),
+            "failed_source_gate_ids": summary.get("failed_source_gate_ids"),
+            "passed_source_gate_ids": summary.get("passed_source_gate_ids"),
+            "work_packet_count": summary.get("work_packet_count"),
+            "ready_packet_count": summary.get("ready_packet_count"),
+            "blocked_packet_count": summary.get("blocked_packet_count"),
+            "readiness_condition_count": summary.get("readiness_condition_count"),
+            "satisfied_readiness_condition_count": summary.get("satisfied_readiness_condition_count"),
+            "unsatisfied_readiness_condition_count": summary.get("unsatisfied_readiness_condition_count"),
+            "production_dmrg_available": summary.get("production_dmrg_available"),
+            "sampling_oracle_constructed": summary.get("sampling_oracle_constructed"),
+            "same_access_positive_route_ready": summary.get("same_access_positive_route_ready"),
+            "b10_t1_positive_route_ready": summary.get("b10_t1_positive_route_ready"),
+            "catalog_change_required": summary.get("catalog_change_required"),
+            "production_dmrg_claimed": summary.get("production_dmrg_claimed"),
+            "quantum_response_win_claimed": summary.get("quantum_response_win_claimed"),
+            "accuracy_per_resource_win_claimed": summary.get("accuracy_per_resource_win_claimed"),
+            "same_access_positive_route_claimed": summary.get("same_access_positive_route_claimed"),
+            "quantum_advantage_claimed": summary.get("quantum_advantage_claimed"),
+            "bqp_separation_claimed": summary.get("bqp_separation_claimed"),
+            "dequantization_theorem_claimed": summary.get("dequantization_theorem_claimed"),
+            "sampling_access_theorem_claimed": summary.get("sampling_access_theorem_claimed"),
+            "validation_error_count": len(payload.get("validation_errors", [])),
+            "result_exists": result_exists,
+            "markdown_exists": markdown_exists,
+            "result": result_path,
+            "markdown_report": markdown_path,
+        }
+        if payload.get("benchmark_id") != "B5":
+            errors.append(f"{label} production implementation triage benchmark_id must be B5")
+        if payload.get("linked_benchmark_id") != "B10":
+            errors.append(f"{label} production implementation triage linked_benchmark_id must be B10")
+        if payload.get("method") != entry.get("method"):
+            errors.append(f"{label} production implementation triage method mismatch")
+        if payload.get("status") != entry.get("status"):
+            errors.append(f"{label} production implementation triage status mismatch")
+        if payload.get("model_status") != entry.get("model_status"):
+            errors.append(f"{label} production implementation triage model-status mismatch")
+        for field in [
+            "source_contract_gate_count",
+            "source_contract_pass_count",
+            "source_contract_fail_count",
+            "failed_source_gate_ids",
+            "work_packet_count",
+            "ready_packet_count",
+            "blocked_packet_count",
+            "readiness_condition_count",
+            "satisfied_readiness_condition_count",
+            "unsatisfied_readiness_condition_count",
+            "production_dmrg_available",
+            "sampling_oracle_constructed",
+            "same_access_positive_route_ready",
+            "b10_t1_positive_route_ready",
+            "catalog_change_required",
+            "production_dmrg_claimed",
+            "quantum_response_win_claimed",
+            "accuracy_per_resource_win_claimed",
+            "same_access_positive_route_claimed",
+            "quantum_advantage_claimed",
+            "bqp_separation_claimed",
+            "dequantization_theorem_claimed",
+            "sampling_access_theorem_claimed",
+        ]:
+            if summary.get(field) != entry.get(field):
+                errors.append(f"{label} production implementation triage {field} mismatch")
+        if summary.get("passed_source_gate_ids") != ["P1", "P10"]:
+            errors.append(f"{label} production implementation triage passed source gates changed")
+        if summary.get("failed_source_gate_ids") != ["P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"]:
+            errors.append(f"{label} production implementation triage failed source gates changed")
+        if summary.get("source_contract_pass_count") != 2 or summary.get("source_contract_fail_count") != 8:
+            errors.append(f"{label} production implementation triage source contract split should be 2/8")
+        if summary.get("work_packet_count") != 6:
+            errors.append(f"{label} production implementation triage should expose six work packets")
+        if summary.get("ready_packet_count") != 2 or summary.get("blocked_packet_count") != 4:
+            errors.append(f"{label} production implementation triage ready/blocked packet split should be 2/4")
+        if summary.get("readiness_condition_count") != 6:
+            errors.append(f"{label} production implementation triage should expose six readiness conditions")
+        if summary.get("satisfied_readiness_condition_count") != 6:
+            errors.append(f"{label} production implementation triage should satisfy all readiness conditions")
+        if summary.get("unsatisfied_readiness_condition_count") != 0:
+            errors.append(f"{label} production implementation triage should have zero unsatisfied readiness conditions")
+        if summary.get("catalog_change_required") is not False:
+            errors.append(f"{label} production implementation triage must not require catalog changes")
+        if len(payload.get("work_packets", [])) != 6:
+            errors.append(f"{label} production implementation triage work packet row count mismatch")
+        ready_packet_ids = [packet.get("packet_id") for packet in payload.get("work_packets", []) if packet.get("status") == "ready_now"]
+        if ready_packet_ids != ["W4", "W6"]:
+            errors.append(f"{label} production implementation triage ready packet IDs changed")
+        blocked_packet_ids = [
+            packet.get("packet_id")
+            for packet in payload.get("work_packets", [])
+            if packet.get("status") != "ready_now"
+        ]
+        if blocked_packet_ids != ["W1", "W2", "W3", "W5"]:
+            errors.append(f"{label} production implementation triage blocked packet IDs changed")
+        blocker_to_packets = payload.get("blocker_to_packets", {})
+        for gate_id in ["P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"]:
+            if not blocker_to_packets.get(gate_id):
+                errors.append(f"{label} production implementation triage blocker {gate_id} has no work packet")
+        for field in [
+            "production_dmrg_claimed",
+            "quantum_response_win_claimed",
+            "accuracy_per_resource_win_claimed",
+            "same_access_positive_route_claimed",
+            "quantum_advantage_claimed",
+            "bqp_separation_claimed",
+            "dequantization_theorem_claimed",
+            "sampling_access_theorem_claimed",
+        ]:
+            if summary.get(field) is not False:
+                errors.append(f"{label} production implementation triage must keep {field}=False")
+            if claims.get(field) is not False:
+                errors.append(f"{label} production implementation triage claim boundary must keep {field}=False")
+        if len(payload.get("validation_errors", [])) != entry.get("validation_error_count"):
+            errors.append(f"{label} production implementation triage validation-error count mismatch")
+        return status
+
+    b5_b10_production_triage_status = audit_b5_b10_production_triage(
+        b5_b10_production_triage, "B5"
+    )
 
     b5_boundary_field_status = {}
     if not b5_boundary_field:
@@ -28745,6 +28889,9 @@ def audit(root: Path) -> dict:
     b10_t1_asymptotic_access_contract = b10_results.get("b10_t1_asymptotic_access_contract_v0")
     b10_t1_b5_same_access_bridge = b10_results.get("b10_t1_b5_same_access_sampling_or_dmrg_bridge_v0")
     b10_t1_b5_response_sampler_stress = b10_results.get("b10_t1_b5_response_sampler_cost_stress_v0")
+    b10_t1_b5_production_triage = b10_results.get(
+        "b10_t1_b5_production_implementation_triage_gate_v0"
+    )
     b10_status = {}
     if not b10_graph:
         warnings.append("B10 manifest has no BQP-boundary graph result")
@@ -30113,6 +30260,10 @@ def audit(root: Path) -> dict:
         ):
             errors.append("B10-T1 B5 response sampler stress validation-error count mismatch")
 
+    b10_t1_b5_production_triage_status = audit_b5_b10_production_triage(
+        b10_t1_b5_production_triage, "B10"
+    )
+
     for path in [roadmap_path, status_html_path]:
         if not path.exists():
             errors.append(f"missing status artifact: {path}")
@@ -30464,6 +30615,7 @@ def audit(root: Path) -> dict:
             "manifest": str(b5_manifest_path),
             "hubbard_embedding": b5_status,
             "same_access_production_contract_gate": b5_b10_production_contract_status,
+            "production_implementation_triage_gate": b5_b10_production_triage_status,
             "canonical_environment_smoke_gate": b5_canonical_smoke_status,
             "canonical_dmrg_readiness_gate": b5_dmrg_readiness_status,
             "two_site_finite_dmrg_response_reference": b5_two_site_dmrg_status,
@@ -30560,6 +30712,7 @@ def audit(root: Path) -> dict:
             "t1_asymptotic_access_contract": b10_t1_asymptotic_access_contract_status,
             "t1_b5_same_access_sampling_or_dmrg_bridge": b10_t1_b5_same_access_bridge_status,
             "t1_b5_response_sampler_cost_stress": b10_t1_b5_response_sampler_stress_status,
+            "t1_b5_production_implementation_triage_gate": b10_t1_b5_production_triage_status,
         },
         "status_artifacts": {
             "roadmap": str(roadmap_path),
@@ -30962,6 +31115,9 @@ def audit(root: Path) -> dict:
             "b5_b10_same_access_production_contract_gate": str(
                 research / "B5_B10_same_access_production_contract_gate.md"
             ),
+            "b5_b10_production_implementation_triage_gate": str(
+                research / "B5_B10_production_implementation_triage_gate.md"
+            ),
             "b5_canonical_environment_smoke_gate": str(
                 research / "B5_canonical_environment_smoke_gate.md"
             ),
@@ -31008,6 +31164,9 @@ def audit(root: Path) -> dict:
             ),
             "b10_t1_b5_response_sampler_cost_stress": str(
                 research / "B10_t1_b5_response_sampler_cost_stress.md"
+            ),
+            "b10_t1_b5_production_implementation_triage_gate": str(
+                research / "B5_B10_production_implementation_triage_gate.md"
             ),
             "b9_failed_gap_amplification_lemma": str(research / "B9_failed_gap_amplification_lemma.md"),
             "b9_symbolic_gap_skeleton": str(research / "B9_symbolic_gap_skeleton.md"),
@@ -33047,6 +33206,12 @@ def markdown_report(report: dict) -> str:
             f"- B5/B10 same-access production contract production DMRG / oracle / positive route: {report['b5']['same_access_production_contract_gate'].get('production_dmrg_available')} / {report['b5']['same_access_production_contract_gate'].get('sampling_oracle_constructed')} / {report['b5']['same_access_production_contract_gate'].get('same_access_positive_route_ready')}",
             f"- B5/B10 same-access production contract validation errors: {report['b5']['same_access_production_contract_gate'].get('validation_error_count')}",
             f"- B5/B10 same-access production contract result/markdown exists: {report['b5']['same_access_production_contract_gate'].get('result_exists')} / {report['b5']['same_access_production_contract_gate'].get('markdown_exists')}",
+            f"- B5/B10 production implementation triage status: {report['b5']['production_implementation_triage_gate'].get('status')}",
+            f"- B5/B10 production implementation triage source gates passed/failed: {report['b5']['production_implementation_triage_gate'].get('source_contract_pass_count')} / {report['b5']['production_implementation_triage_gate'].get('source_contract_fail_count')}",
+            f"- B5/B10 production implementation triage work packets ready/blocked: {report['b5']['production_implementation_triage_gate'].get('ready_packet_count')} / {report['b5']['production_implementation_triage_gate'].get('blocked_packet_count')}",
+            f"- B5/B10 production implementation triage conditions satisfied/unsatisfied: {report['b5']['production_implementation_triage_gate'].get('satisfied_readiness_condition_count')} / {report['b5']['production_implementation_triage_gate'].get('unsatisfied_readiness_condition_count')}",
+            f"- B5/B10 production implementation triage DMRG / oracle / positive route / catalog change: {report['b5']['production_implementation_triage_gate'].get('production_dmrg_available')} / {report['b5']['production_implementation_triage_gate'].get('sampling_oracle_constructed')} / {report['b5']['production_implementation_triage_gate'].get('same_access_positive_route_ready')} / {report['b5']['production_implementation_triage_gate'].get('catalog_change_required')}",
+            f"- B5/B10 production implementation triage result/markdown exists: {report['b5']['production_implementation_triage_gate'].get('result_exists')} / {report['b5']['production_implementation_triage_gate'].get('markdown_exists')}",
             "",
             "## B6 Superconductivity Descriptor Status",
             "",
@@ -33583,6 +33748,11 @@ def markdown_report(report: dict) -> str:
             f"- B10-T1 B5 response sampler stress sampling oracle / same-access positive route / quantum advantage: {report['b10']['t1_b5_response_sampler_cost_stress'].get('sampling_oracle_constructed')} / {report['b10']['t1_b5_response_sampler_cost_stress'].get('same_access_positive_route_ready')} / {report['b10']['t1_b5_response_sampler_cost_stress'].get('quantum_advantage_claimed')}",
             f"- B10-T1 B5 response sampler stress validation errors: {report['b10']['t1_b5_response_sampler_cost_stress'].get('validation_error_count')}",
             f"- B10-T1 B5 response sampler stress result/markdown exists: {report['b10']['t1_b5_response_sampler_cost_stress'].get('result_exists')} / {report['b10']['t1_b5_response_sampler_cost_stress'].get('markdown_exists')}",
+            f"- B10-T1 B5 production triage status: {report['b10']['t1_b5_production_implementation_triage_gate'].get('status')}",
+            f"- B10-T1 B5 production triage work packets ready/blocked: {report['b10']['t1_b5_production_implementation_triage_gate'].get('ready_packet_count')} / {report['b10']['t1_b5_production_implementation_triage_gate'].get('blocked_packet_count')}",
+            f"- B10-T1 B5 production triage conditions satisfied/unsatisfied: {report['b10']['t1_b5_production_implementation_triage_gate'].get('satisfied_readiness_condition_count')} / {report['b10']['t1_b5_production_implementation_triage_gate'].get('unsatisfied_readiness_condition_count')}",
+            f"- B10-T1 B5 production triage DMRG / oracle / positive route / catalog change: {report['b10']['t1_b5_production_implementation_triage_gate'].get('production_dmrg_available')} / {report['b10']['t1_b5_production_implementation_triage_gate'].get('sampling_oracle_constructed')} / {report['b10']['t1_b5_production_implementation_triage_gate'].get('same_access_positive_route_ready')} / {report['b10']['t1_b5_production_implementation_triage_gate'].get('catalog_change_required')}",
+            f"- B10-T1 B5 production triage result/markdown exists: {report['b10']['t1_b5_production_implementation_triage_gate'].get('result_exists')} / {report['b10']['t1_b5_production_implementation_triage_gate'].get('markdown_exists')}",
             "",
         ]
     )

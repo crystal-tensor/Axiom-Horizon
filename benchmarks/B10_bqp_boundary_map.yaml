@@ -602,6 +602,42 @@ current_results:
     caveat: optimistic_sampler_cost_stress_not_response_oracle_not_sampling_theorem_not_advantage
     result: ../results/B10_t1_b5_response_sampler_cost_stress_v0.json
     markdown_report: ../research/B10_t1_b5_response_sampler_cost_stress.md
+  b10_t1_b5_production_implementation_triage_gate_v0:
+    status: production_implementation_triage_ready_no_positive_route
+    model_status: failed_production_contract_split_into_parallel_pr_work
+    method: b5_b10_production_implementation_triage_gate_v0
+    source: b5_b10_same_access_production_contract_gate_v0
+    source_target_id: B10-T1
+    dependency_benchmarks:
+      - B5
+      - B10
+    source_contract_gate_count: 10
+    source_contract_pass_count: 2
+    source_contract_fail_count: 8
+    failed_source_gate_ids: [P2, P3, P4, P5, P6, P7, P8, P9]
+    work_packet_count: 6
+    ready_packet_count: 2
+    blocked_packet_count: 4
+    readiness_condition_count: 6
+    satisfied_readiness_condition_count: 6
+    unsatisfied_readiness_condition_count: 0
+    production_dmrg_available: false
+    sampling_oracle_constructed: false
+    same_access_positive_route_ready: false
+    b10_t1_positive_route_ready: false
+    catalog_change_required: false
+    production_dmrg_claimed: false
+    quantum_response_win_claimed: false
+    accuracy_per_resource_win_claimed: false
+    same_access_positive_route_claimed: false
+    bqp_separation_claimed: false
+    quantum_advantage_claimed: false
+    dequantization_theorem_claimed: false
+    sampling_access_theorem_claimed: false
+    validation_error_count: 0
+    caveat: triage_gate_not_production_dmrg_not_response_oracle_not_advantage
+    result: ../results/B5_B10_production_implementation_triage_gate_v0.json
+    markdown_report: ../research/B5_B10_production_implementation_triage_gate.md
 prototype_artifacts:
   boundary_graph_builder: ../tools/b10_bqp_boundary_graph.py
   formal_theorem_target_builder: ../tools/b10_formal_theorem_targets.py
@@ -619,6 +655,7 @@ prototype_artifacts:
   t1_asymptotic_access_contract_builder: ../tools/b10_t1_asymptotic_access_contract.py
   t1_b5_same_access_sampling_or_dmrg_bridge_builder: ../tools/b10_t1_b5_same_access_sampling_or_dmrg_bridge.py
   t1_b5_response_sampler_cost_stress_builder: ../tools/b10_t1_b5_response_sampler_cost_stress.py
+  t1_b5_production_implementation_triage_gate: ../tools/b5_b10_production_implementation_triage_gate.py
   t2_refresh_proof_obligation_gate_builder: ../tools/b10_t2_refresh_proof_obligation_gate.py
   t2_restricted_soundness_lemma_builder: ../tools/b10_t2_restricted_soundness_lemma.py
   t2_transcript_leakage_simulator_builder: ../tools/b10_t2_transcript_leakage_simulator.py

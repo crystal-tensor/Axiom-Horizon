@@ -71,9 +71,9 @@
       "title": "Verifiable quantum advantage protocols"
     },
     {
-      "30_day_gate": "Turn the production-contract failure into mature canonical-environment production DMRG/MPS with convergence and cost ledgers, or compare a fully costed quantum impurity/response kernel against the full D5 denominator ladder under the same access contract.",
+      "30_day_gate": "Execute W1/W2/W3 from T-B5-006c: production DMRG/MPS denominator, seeded-pressure replacement audit, or same-access response-oracle cost ledger; keep W4/W6 enforcing row and claim contracts.",
       "b_id": "B5",
-      "current_maturity": "production_contract_failed_tensor_pressure_ladder",
+      "current_maturity": "T-B5-006c/T-B10-014a production implementation triage completed: the failed B5/B10 production contract is now split into 6 PR-sized work packets. W4 row-contract preservation and W6 claim-safety/audit wiring are ready; W1 production DMRG/MPS denominator, W2 seeded-pressure replacement audit, W3 same-access response-oracle cost ledger, and W5 B10-T1 theorem-boundary integration remain blocked on implementation/evidence. The triage satisfies 6/6 readiness conditions but keeps production DMRG, sampling oracle, same-access positive route, quantum advantage, BQP separation, and catalog change all false.",
       "dependencies": [
         "B3",
         "B6"
@@ -150,9 +150,9 @@
       "title": "Quantum PCP and local Hamiltonian hardness"
     },
     {
-      "30_day_gate": "Prioritize B5/B10 production denominators or B10-T2 real backend verifier evidence; keep B3 closed unless the same-access negative boundary is overturned by new evidence.",
+      "30_day_gate": "Run T-B10-014 through the T-B5-006c W1/W2/W3 queue, or push B10-T2 to real backend/hardware verifier evidence; reopen B3 only if M5-M9 are replaced by same-access evidence.",
       "b_id": "B10",
-      "current_maturity": "B10-T1 now has two explicit failed positive-route branches: B3 T-B3-013 same-access negative boundary note and B5 T-B5-006b production contract failure. The B3 note satisfies 9/9 negative-boundary conditions and preserves no quantum advantage, no reaction-dynamics solution, and no BQP separation claims.",
+      "current_maturity": "B10-T1 now has two explicit failed positive-route branches: B3 T-B3-013 same-access negative boundary note and B5 T-B5-006c production implementation triage. The B5 triage exposes 6 work packets, 2 ready guardrails, 4 blocked implementation/theory packets, and no production DMRG, sampling oracle, positive same-access route, quantum advantage, or BQP separation.",
       "dependencies": [
         "B5",
         "B3",

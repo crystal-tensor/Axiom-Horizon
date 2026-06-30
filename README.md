@@ -91,6 +91,15 @@ The B5/B10 same-access production contract now makes that blocker explicit:
 10 contract gates are checked, only row coverage and no-forbidden-claim gates
 pass, 8 gates fail, there is still no production DMRG, no sampling oracle,
 no same-access positive route, and no BQP or quantum-advantage claim.
+The latest B5/B10 production implementation triage gate now splits that failed
+contract into six PR-sized work packets: two immediate guardrail packets
+(`W4` row-contract preservation and `W6` claim-safety/audit wiring) and four
+blocked implementation/theory packets (`W1` production DMRG/MPS denominator,
+`W2` seeded-pressure replacement audit, `W3` same-access response-oracle cost
+ledger, and `W5` B10-T1 theorem-boundary integration). It satisfies 6/6
+triage readiness conditions while keeping production DMRG, sampling oracle,
+same-access positive route, catalog change, quantum advantage, and BQP
+separation all false.
 The latest B10-T1 stress test still finds no positive same-access route because
 0 rows beat explicit D5 matvec-equivalent costs by shots. This is progress, but
 it is not a production DMRG result, not a deployable tensor solver, not a

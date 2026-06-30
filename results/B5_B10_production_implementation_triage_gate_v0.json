@@ -1,0 +1,336 @@
+{
+  "benchmark_id": "B5",
+  "blocker_to_packets": {
+    "P2": [
+      "W1",
+      "W5"
+    ],
+    "P3": [
+      "W1"
+    ],
+    "P4": [
+      "W1"
+    ],
+    "P5": [
+      "W1",
+      "W2",
+      "W5"
+    ],
+    "P6": [
+      "W1",
+      "W2"
+    ],
+    "P7": [
+      "W3",
+      "W5"
+    ],
+    "P8": [
+      "W3"
+    ],
+    "P9": [
+      "W3",
+      "W5"
+    ]
+  },
+  "claim_boundary": {
+    "accuracy_per_resource_win_claimed": false,
+    "bqp_separation_claimed": false,
+    "dequantization_theorem_claimed": false,
+    "next_gate": "Run W1/W2/W3: a non-exact-state-seeded production DMRG/MPS denominator, a seeded-pressure replacement audit, or a fully costed same-access response oracle. Keep W4/W6 as row-contract and claim-safety guards.",
+    "production_dmrg_claimed": false,
+    "quantum_advantage_claimed": false,
+    "quantum_response_win_claimed": false,
+    "same_access_positive_route_claimed": false,
+    "sampling_access_theorem_claimed": false,
+    "what_is_not_supported": "This is not production DMRG, not a response oracle, not a positive same-access route, not quantum advantage, not BQP separation, and not a dequantization theorem.",
+    "what_is_supported": "The failed B5/B10 production contract has been split into auditable PR-sized work packets. The next implementation steps are explicit and can be assigned to agents without changing the 100-problem catalog."
+  },
+  "last_updated": "2026-07-01",
+  "linked_benchmark_id": "B10",
+  "linked_problem_id": 11,
+  "method": "b5_b10_production_implementation_triage_gate_v0",
+  "model_status": "failed_production_contract_split_into_parallel_pr_work",
+  "problem_id": 38,
+  "readiness_conditions": [
+    {
+      "condition_id": "C1",
+      "evidence": {
+        "source_method": "b5_b10_same_access_production_contract_gate_v0",
+        "source_status": "same_access_production_contract_failed"
+      },
+      "label": "Source production contract is present and failed",
+      "satisfied": true
+    },
+    {
+      "condition_id": "C2",
+      "evidence": {
+        "expected_failed_gate_ids": [
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "P6",
+          "P7",
+          "P8",
+          "P9"
+        ],
+        "failed_gate_ids": [
+          "P2",
+          "P3",
+          "P4",
+          "P5",
+          "P6",
+          "P7",
+          "P8",
+          "P9"
+        ]
+      },
+      "label": "Failed production gates are exactly P2-P9",
+      "satisfied": true
+    },
+    {
+      "condition_id": "C3",
+      "evidence": {
+        "blocker_to_packets": {
+          "P2": [
+            "W1",
+            "W5"
+          ],
+          "P3": [
+            "W1"
+          ],
+          "P4": [
+            "W1"
+          ],
+          "P5": [
+            "W1",
+            "W2",
+            "W5"
+          ],
+          "P6": [
+            "W1",
+            "W2"
+          ],
+          "P7": [
+            "W3",
+            "W5"
+          ],
+          "P8": [
+            "W3"
+          ],
+          "P9": [
+            "W3",
+            "W5"
+          ]
+        }
+      },
+      "label": "All current blockers are assigned to at least one work packet",
+      "satisfied": true
+    },
+    {
+      "condition_id": "C4",
+      "evidence": {
+        "ready_packet_ids": [
+          "W4",
+          "W6"
+        ]
+      },
+      "label": "At least two immediate maintenance/audit packets are ready",
+      "satisfied": true
+    },
+    {
+      "condition_id": "C5",
+      "evidence": {
+        "bqp_separation_claimed": false,
+        "production_dmrg_claimed": false,
+        "quantum_advantage_claimed": false,
+        "quantum_response_win_claimed": false,
+        "same_access_positive_route_ready": false
+      },
+      "label": "Positive-route and forbidden claims remain false",
+      "satisfied": true
+    },
+    {
+      "condition_id": "C6",
+      "evidence": {
+        "catalog_change_required": false,
+        "next_gate": "run W1/W2/W3 while W4/W6 enforce row and claim contracts"
+      },
+      "label": "T-B5-006/T-B10-014 next gate is executable without changing the 100-problem catalog",
+      "satisfied": true
+    }
+  ],
+  "runtime_seconds": 8.9e-05,
+  "source_production_contract_result": "results/B5_B10_same_access_production_contract_gate_v0.json",
+  "status": "production_implementation_triage_ready_no_positive_route",
+  "summary": {
+    "accuracy_per_resource_win_claimed": false,
+    "b10_t1_positive_route_ready": false,
+    "blocked_packet_count": 4,
+    "bqp_separation_claimed": false,
+    "catalog_change_required": false,
+    "dequantization_theorem_claimed": false,
+    "failed_source_gate_ids": [
+      "P2",
+      "P3",
+      "P4",
+      "P5",
+      "P6",
+      "P7",
+      "P8",
+      "P9"
+    ],
+    "passed_source_gate_ids": [
+      "P1",
+      "P10"
+    ],
+    "production_dmrg_available": false,
+    "production_dmrg_claimed": false,
+    "quantum_advantage_claimed": false,
+    "quantum_response_win_claimed": false,
+    "readiness_condition_count": 6,
+    "ready_packet_count": 2,
+    "same_access_positive_route_claimed": false,
+    "same_access_positive_route_ready": false,
+    "sampling_access_theorem_claimed": false,
+    "sampling_oracle_constructed": false,
+    "satisfied_readiness_condition_count": 6,
+    "source_contract_fail_count": 8,
+    "source_contract_gate_count": 10,
+    "source_contract_pass_count": 2,
+    "unsatisfied_readiness_condition_count": 0,
+    "validation_error_count": 0,
+    "work_packet_count": 6
+  },
+  "title": "B5/B10 production implementation triage gate",
+  "validation_errors": [],
+  "version": "0.1",
+  "work_packets": [
+    {
+      "acceptance_evidence": [
+        "all nine response rows covered",
+        "stored left/right environments",
+        "orthonormal residual ledger",
+        "sweep convergence ledger",
+        "no exact-state seeding",
+        "rows beating seeded pressure or explicitly failing it"
+      ],
+      "blocker_gate_ids": [
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6"
+      ],
+      "expected_artifacts": [
+        "tools/b5_production_dmrg_mps_denominator.py",
+        "results/B5_production_dmrg_mps_denominator_v0.json",
+        "research/B5_production_dmrg_mps_denominator.md"
+      ],
+      "owner_role": "correlated-matter-agent",
+      "packet_id": "W1",
+      "status": "blocked_on_implementation",
+      "title": "Canonical production DMRG/MPS denominator engine"
+    },
+    {
+      "acceptance_evidence": [
+        "seeded MPS pressure no longer strongest or remains explicit blocker",
+        "same row IDs and observable contract preserved",
+        "selection rule does not consume exact target states"
+      ],
+      "blocker_gate_ids": [
+        "P5",
+        "P6"
+      ],
+      "expected_artifacts": [
+        "tools/b5_seeded_pressure_replacement_audit.py",
+        "results/B5_seeded_pressure_replacement_audit_v0.json",
+        "research/B5_seeded_pressure_replacement_audit.md"
+      ],
+      "owner_role": "baseline-adversary",
+      "packet_id": "W2",
+      "status": "blocked_on_denominator",
+      "title": "Exact-state seed removal and denominator replay"
+    },
+    {
+      "acceptance_evidence": [
+        "state-preparation cost",
+        "mixing or response-query cost",
+        "measurement variance and confidence ledger",
+        "classical denominator comparison",
+        "no hidden access advantage"
+      ],
+      "blocker_gate_ids": [
+        "P7",
+        "P8",
+        "P9"
+      ],
+      "expected_artifacts": [
+        "tools/b5_b10_response_oracle_cost_ledger.py",
+        "results/B5_B10_response_oracle_cost_ledger_v0.json",
+        "research/B5_B10_response_oracle_cost_ledger.md"
+      ],
+      "owner_role": "quantum-response-agent",
+      "packet_id": "W3",
+      "status": "blocked_on_oracle_construction",
+      "title": "Same-access response oracle cost ledger"
+    },
+    {
+      "acceptance_evidence": [
+        "nine row IDs preserved",
+        "response observable names preserved",
+        "D5 denominator ladder linked",
+        "future production outputs rejected if row contract drifts"
+      ],
+      "blocker_gate_ids": [],
+      "expected_artifacts": [
+        "tools/b5_b10_row_contract_harness.py",
+        "results/B5_B10_row_contract_harness_v0.json",
+        "research/B5_B10_row_contract_harness.md"
+      ],
+      "owner_role": "audit-agent",
+      "packet_id": "W4",
+      "status": "ready_now",
+      "title": "Row-contract preservation harness"
+    },
+    {
+      "acceptance_evidence": [
+        "explicit theorem assumptions",
+        "same-access denominator branch status",
+        "oracle branch status",
+        "no BQP separation or dequantization theorem claim"
+      ],
+      "blocker_gate_ids": [
+        "P2",
+        "P5",
+        "P7",
+        "P9"
+      ],
+      "expected_artifacts": [
+        "research/B10_t1_b5_production_boundary_integration.md",
+        "results/B10_t1_b5_production_boundary_integration_v0.json"
+      ],
+      "owner_role": "theory-agent",
+      "packet_id": "W5",
+      "status": "blocked_on_positive_denominator_or_oracle",
+      "title": "B10-T1 theorem-boundary integration note"
+    },
+    {
+      "acceptance_evidence": [
+        "forbidden claims remain false",
+        "future readiness upgrades must cite machine-readable evidence",
+        "landing page updates preserve style and only update research content"
+      ],
+      "blocker_gate_ids": [],
+      "expected_artifacts": [
+        "tools/research_portfolio_audit.py",
+        "research/portfolio_status_report.json",
+        "research/portfolio_status_report.md"
+      ],
+      "owner_role": "maintainer-agent",
+      "packet_id": "W6",
+      "status": "ready_now",
+      "title": "Claim-safety and audit wiring"
+    }
+  ]
+}

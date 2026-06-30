@@ -519,6 +519,17 @@ no production DMRG, no sampling oracle, and no same-access positive route. This
 does not solve B5 or B10; it turns `T-B5-006` and `T-B10-014` into explicit
 acceptance-contract tasks.
 
+**Sprint update 62:** `T-B5-006c` / `T-B10-014a` is now merged as the B5/B10
+production implementation triage gate. It consumes the failed production
+contract and splits the next work into 6 PR-sized packets: `W1` production
+DMRG/MPS denominator, `W2` seeded-pressure replacement audit, `W3` same-access
+response-oracle cost ledger, `W4` row-contract harness, `W5` B10-T1
+theorem-boundary integration, and `W6` claim-safety/audit wiring. The triage
+satisfies 6/6 readiness conditions, exposes 2 ready guardrail packets and 4
+blocked implementation/theory packets, keeps `P2`-`P9` as the failed source
+gates, and makes no production-DMRG, response-oracle, positive-route, quantum
+advantage, BQP-separation, or catalog-change claim.
+
 ## B6: High-Temperature Superconductivity Search
 
 **Technical target:** rank candidate materials using mechanism-aware
@@ -1446,6 +1457,10 @@ claim.
 production-readiness conditions, keeps seeded MPS pressure strongest, records 0
 non-seeded rows beating seeded pressure, and preserves the no-production-DMRG,
 no-same-access-positive-route, no-quantum-advantage boundary.
+`T-B5-006c` / `T-B10-014a` now converts the failed B5/B10 production contract
+into an executable multi-agent queue: 6 work packets, 2 ready guardrails, 4
+blocked implementation/theory packets, 6/6 triage conditions satisfied, and no
+positive same-access route.
 `T-B3-012` / `T-B10-015` now adds the B3 same-access measurement-rescue gate:
 10 requirements checked, 5 passed and 5 failed. It keeps B3 demoted because
 full compiled-state covariance, multi-parameter/converged chemistry, denominator

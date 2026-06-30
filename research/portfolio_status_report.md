@@ -40,7 +40,7 @@ Overall audit: PASS
 - B IDs are B1..B10: True
 - Problem IDs match attack pack: True
 - All required fields present: True
-- Maturity scores: {'B1': 63, 'B2': 48, 'B3': 28, 'B4': 29, 'B5': 27, 'B6': 24, 'B7': 59, 'B8': 41, 'B9': 15, 'B10': 52}
+- Maturity scores: {'B1': 63, 'B2': 48, 'B3': 28, 'B4': 29, 'B5': 28, 'B6': 24, 'B7': 59, 'B8': 41, 'B9': 15, 'B10': 52}
 
 ## Technical Resolution Program
 
@@ -1947,6 +1947,12 @@ Overall audit: PASS
 - B5/B10 same-access production contract production DMRG / oracle / positive route: False / False / False
 - B5/B10 same-access production contract validation errors: 0
 - B5/B10 same-access production contract result/markdown exists: True / True
+- B5/B10 production implementation triage status: production_implementation_triage_ready_no_positive_route
+- B5/B10 production implementation triage source gates passed/failed: 2 / 8
+- B5/B10 production implementation triage work packets ready/blocked: 2 / 4
+- B5/B10 production implementation triage conditions satisfied/unsatisfied: 6 / 0
+- B5/B10 production implementation triage DMRG / oracle / positive route / catalog change: False / False / False / False
+- B5/B10 production implementation triage result/markdown exists: True / True
 
 ## B6 Superconductivity Descriptor Status
 
@@ -2483,6 +2489,11 @@ Overall audit: PASS
 - B10-T1 B5 response sampler stress sampling oracle / same-access positive route / quantum advantage: False / False / False
 - B10-T1 B5 response sampler stress validation errors: 0
 - B10-T1 B5 response sampler stress result/markdown exists: True / True
+- B10-T1 B5 production triage status: production_implementation_triage_ready_no_positive_route
+- B10-T1 B5 production triage work packets ready/blocked: 2 / 4
+- B10-T1 B5 production triage conditions satisfied/unsatisfied: 6 / 0
+- B10-T1 B5 production triage DMRG / oracle / positive route / catalog change: False / False / False / False
+- B10-T1 B5 production triage result/markdown exists: True / True
 
 ## Errors
 
