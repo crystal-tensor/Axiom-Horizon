@@ -17,8 +17,8 @@ LAKEFILE = ROOT / "lakefile.lean"
 PROJECT_MODULE = ROOT / "B9" / "ClusterStabilizer" / "WidthLocality.lean"
 
 METHOD = "b9_toolchain_ci_contract_gate_v0"
-STATUS = "toolchain_ci_contract_open_pending_remote_run"
-MODEL_STATUS = "github_actions_lean_lake_handoff_without_checked_run_artifact"
+STATUS = "toolchain_ci_contract_workflow_scope_blocked"
+MODEL_STATUS = "github_actions_lean_lake_template_ready_workflow_scope_required"
 
 
 def read_text(path: Path) -> str:
@@ -43,7 +43,9 @@ def has(pattern: str, source: str) -> bool:
 
 
 def build_payload() -> dict[str, Any]:
-    workflow = read_text(WORKFLOW_TEMPLATE)
+    template_workflow = read_text(WORKFLOW_TEMPLATE)
+    active_workflow = read_text(ACTIVE_WORKFLOW)
+    workflow = active_workflow or template_workflow
     toolchain = read_text(LEAN_TOOLCHAIN).strip()
     lakefile = read_text(LAKEFILE)
     module = read_text(PROJECT_MODULE)
@@ -56,6 +58,18 @@ def build_payload() -> dict[str, Any]:
         ),
         requirement(
             "C2",
+            "active B9 Lean workflow is installed",
+            ACTIVE_WORKFLOW.exists(),
+            rel(ACTIVE_WORKFLOW),
+        ),
+        requirement(
+            "C3",
+            "active workflow matches the reviewed template",
+            ACTIVE_WORKFLOW.exists() and active_workflow == template_workflow,
+            "active workflow content must be byte-identical to research/ci template",
+        ),
+        requirement(
+            "C4",
             "workflow is scoped to B9 proof files",
             '"B9/**"' in workflow
             and '"research/proof_skeletons/B9_*.lean"' in workflow
@@ -63,7 +77,7 @@ def build_payload() -> dict[str, Any]:
             "paths include B9, proof_skeletons, tools, results, and benchmark",
         ),
         requirement(
-            "C3",
+            "C5",
             "workflow installs pinned toolchain from lean-toolchain",
             "cat lean-toolchain" in workflow
             and "elan-init.sh" in workflow
@@ -71,26 +85,26 @@ def build_payload() -> dict[str, Any]:
             f"toolchain={toolchain}",
         ),
         requirement(
-            "C4",
+            "C6",
             "workflow exposes both Lean and Lake version probes",
             "lean --version" in workflow and "lake --version" in workflow,
             "lean --version / lake --version",
         ),
         requirement(
-            "C5",
+            "C7",
             "workflow runs Lake dependency resolution",
             "lake update" in workflow and "mathlib4" in lakefile,
             "lake update with mathlib4 dependency",
         ),
         requirement(
-            "C6",
+            "C8",
             "workflow checks the B9 Lean module",
             "lake env lean B9/ClusterStabilizer/WidthLocality.lean" in workflow
             and "cluster_stabilizer_open_uniform_reweight_obligation" in module,
             rel(PROJECT_MODULE),
         ),
         requirement(
-            "C7",
+            "C9",
             "workflow refreshes B9 proof-environment gates",
             "tools/b9_proof_environment_readiness_gate.py" in workflow
             and "tools/b9_proof_environment_contract_gate.py" in workflow
@@ -98,10 +112,10 @@ def build_payload() -> dict[str, Any]:
             "readiness, contract, and scaffold refresh commands",
         ),
         requirement(
-            "C8",
+            "C10",
             "active remote CI run artifact is present",
             False,
-            "the OAuth token cannot activate .github/workflows here; no remote CI run artifact or checked theorem output is recorded in this repository",
+            "no active workflow or remote CI run artifact is recorded; pushing .github/workflows/b9-lean-proof-scaffold.yml requires a token with workflow scope",
         ),
     ]
     failed = [row for row in requirements if not row["passed"]]
@@ -114,6 +128,8 @@ def build_payload() -> dict[str, Any]:
         "workflow_template": rel(WORKFLOW_TEMPLATE),
         "active_workflow": rel(ACTIVE_WORKFLOW),
         "active_workflow_present": ACTIVE_WORKFLOW.exists(),
+        "active_workflow_matches_template": ACTIVE_WORKFLOW.exists()
+        and active_workflow == template_workflow,
         "lean_toolchain": rel(LEAN_TOOLCHAIN),
         "lakefile": rel(LAKEFILE),
         "lean_project_module": rel(PROJECT_MODULE),
@@ -125,6 +141,9 @@ def build_payload() -> dict[str, Any]:
         "claim_boundary": {
             "ci_template_created": True,
             "active_workflow_present": ACTIVE_WORKFLOW.exists(),
+            "active_workflow_matches_template": ACTIVE_WORKFLOW.exists()
+            and active_workflow == template_workflow,
+            "workflow_activation_blocked_by_oauth_scope": not ACTIVE_WORKFLOW.exists(),
             "remote_ci_run_artifact_present": False,
             "actual_lean4_available_locally": False,
             "lake_available_locally": False,
@@ -177,7 +196,7 @@ def write_markdown(payload: dict[str, Any], path: Path) -> None:
             "## Claim Boundary",
             "",
             "- The CI handoff template exists and is scoped to B9 proof files.",
-            "- The template must be copied into `.github/workflows/` by a token with workflow scope before it can run on GitHub.",
+            "- Installing the reviewed template as `.github/workflows/b9-lean-proof-scaffold.yml` requires a token with `workflow` scope.",
             "- No remote CI run artifact is recorded yet.",
             "- No proof-assistant checked theorem is claimed.",
             "- No Quantum PCP, NLTS, or global gap-amplification theorem is claimed.",

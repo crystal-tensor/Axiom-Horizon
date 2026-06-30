@@ -222,17 +222,20 @@ current_results:
     result: ../results/B9_proof_project_scaffold_gate_v0.json
     markdown_report: ../research/B9_proof_project_scaffold_gate.md
   toolchain_ci_contract_gate_v0:
-    status: toolchain_ci_contract_open_pending_remote_run
+    status: toolchain_ci_contract_workflow_scope_blocked
     method: b9_toolchain_ci_contract_gate_v0
-    model_status: github_actions_lean_lake_handoff_without_checked_run_artifact
+    model_status: github_actions_lean_lake_template_ready_workflow_scope_required
     workflow_template: ../research/ci/b9-lean-proof-scaffold.yml
     active_workflow: ../.github/workflows/b9-lean-proof-scaffold.yml
     active_workflow_present: false
-    ci_contract_requirement_count: 8
+    active_workflow_matches_template: false
+    ci_contract_requirement_count: 10
     passed_ci_contract_requirement_count: 7
-    failed_ci_contract_requirement_count: 1
-    failed_ci_contract_requirement_ids: [C8]
+    failed_ci_contract_requirement_count: 3
+    failed_ci_contract_requirement_ids: [C2, C3, C10]
     ci_template_created: true
+    active_workflow_installed: false
+    workflow_activation_blocked_by_oauth_scope: true
     remote_ci_run_artifact_present: false
     actual_lean4_available_locally: false
     lake_available_locally: false

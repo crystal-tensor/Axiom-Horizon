@@ -9047,14 +9047,17 @@
     "toolchain_ci_contract_gate": {
       "active_workflow": ".github/workflows/b9-lean-proof-scaffold.yml",
       "active_workflow_exists": false,
+      "active_workflow_matches_template": false,
       "active_workflow_present": false,
       "actual_lean4_available_locally": false,
-      "ci_contract_requirement_count": 8,
+      "ci_contract_requirement_count": 10,
       "ci_template_created": true,
       "explicit_not_quantum_pcp_proof": true,
-      "failed_ci_contract_requirement_count": 1,
+      "failed_ci_contract_requirement_count": 3,
       "failed_ci_contract_requirement_ids": [
-        "C8"
+        "C2",
+        "C3",
+        "C10"
       ],
       "formal_theorem_proved": false,
       "global_gap_amplification_impossibility_claimed": false,
@@ -9062,15 +9065,16 @@
       "markdown_exists": true,
       "markdown_report": "../research/B9_toolchain_ci_contract_gate.md",
       "method": "b9_toolchain_ci_contract_gate_v0",
-      "model_status": "github_actions_lean_lake_handoff_without_checked_run_artifact",
+      "model_status": "github_actions_lean_lake_template_ready_workflow_scope_required",
       "passed_ci_contract_requirement_count": 7,
       "proof_assistant_checked": false,
       "proof_environment_ready": false,
       "remote_ci_run_artifact_present": false,
       "result": "../results/B9_toolchain_ci_contract_gate_v0.json",
       "result_exists": true,
-      "status": "toolchain_ci_contract_open_pending_remote_run",
+      "status": "toolchain_ci_contract_workflow_scope_blocked",
       "validation_error_count": 0,
+      "workflow_activation_blocked_by_oauth_scope": true,
       "workflow_exists": true,
       "workflow_template": "research/ci/b9-lean-proof-scaffold.yml"
     }

@@ -32078,6 +32078,7 @@ def audit(root: Path) -> dict:
             "workflow_template": payload.get("workflow_template"),
             "active_workflow": payload.get("active_workflow"),
             "active_workflow_present": payload.get("active_workflow_present"),
+            "active_workflow_matches_template": payload.get("active_workflow_matches_template"),
             "ci_contract_requirement_count": payload.get("ci_contract_requirement_count"),
             "passed_ci_contract_requirement_count": payload.get(
                 "passed_ci_contract_requirement_count"
@@ -32089,6 +32090,9 @@ def audit(root: Path) -> dict:
                 "failed_ci_contract_requirement_ids"
             ),
             "ci_template_created": claim_boundary.get("ci_template_created"),
+            "workflow_activation_blocked_by_oauth_scope": claim_boundary.get(
+                "workflow_activation_blocked_by_oauth_scope"
+            ),
             "remote_ci_run_artifact_present": claim_boundary.get(
                 "remote_ci_run_artifact_present"
             ),
@@ -32113,7 +32117,7 @@ def audit(root: Path) -> dict:
         }
         if payload.get("benchmark_id") != "B9":
             errors.append("B9 toolchain CI contract benchmark_id mismatch")
-        if payload.get("status") != "toolchain_ci_contract_open_pending_remote_run":
+        if payload.get("status") != "toolchain_ci_contract_workflow_scope_blocked":
             errors.append("B9 toolchain CI contract status mismatch")
         if payload.get("method") != b9_toolchain_ci_contract.get("method"):
             errors.append("B9 toolchain CI contract method mismatch")
@@ -32121,6 +32125,7 @@ def audit(root: Path) -> dict:
             errors.append("B9 toolchain CI contract model status mismatch")
         for field in [
             "active_workflow_present",
+            "active_workflow_matches_template",
             "ci_contract_requirement_count",
             "passed_ci_contract_requirement_count",
             "failed_ci_contract_requirement_count",
@@ -32129,18 +32134,21 @@ def audit(root: Path) -> dict:
         ]:
             if payload.get(field) != b9_toolchain_ci_contract.get(field):
                 errors.append(f"B9 toolchain CI contract {field} mismatch")
-        if payload.get("ci_contract_requirement_count") != 8:
-            errors.append("B9 toolchain CI contract should check eight requirements")
+        if payload.get("ci_contract_requirement_count") != 10:
+            errors.append("B9 toolchain CI contract should check ten requirements")
         if payload.get("passed_ci_contract_requirement_count") != 7:
             errors.append("B9 toolchain CI contract should pass seven requirements")
-        if payload.get("failed_ci_contract_requirement_count") != 1:
-            errors.append("B9 toolchain CI contract should fail one requirement")
-        if payload.get("failed_ci_contract_requirement_ids") != ["C8"]:
-            errors.append("B9 toolchain CI contract should fail only C8")
+        if payload.get("failed_ci_contract_requirement_count") != 3:
+            errors.append("B9 toolchain CI contract should fail three requirements")
+        if payload.get("failed_ci_contract_requirement_ids") != ["C2", "C3", "C10"]:
+            errors.append("B9 toolchain CI contract should fail only C2/C3/C10")
         if claim_boundary.get("ci_template_created") is not True:
             errors.append("B9 toolchain CI contract should disclose CI template creation")
+        if claim_boundary.get("workflow_activation_blocked_by_oauth_scope") is not True:
+            errors.append("B9 toolchain CI contract should disclose OAuth workflow-scope blocker")
         for claim_key in [
             "active_workflow_present",
+            "active_workflow_matches_template",
             "remote_ci_run_artifact_present",
             "actual_lean4_available_locally",
             "lake_available_locally",
