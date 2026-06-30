@@ -1,0 +1,204 @@
+{
+  "benchmark_id": "B7",
+  "claim_boundary": {
+    "b2_calibrated_credit_allowed": false,
+    "b7_dependency_gate_built": true,
+    "b7_resource_reduction_claimed_from_b2_calibration": false,
+    "b7_structural_planning_bridge_supported": true,
+    "hardware_result_claimed": false,
+    "low_overhead_qec_claimed": false,
+    "physical_layout_claimed": false,
+    "quantum_advantage_claimed": false,
+    "threshold_claimed": false,
+    "what_is_not_supported": "No B2-derived calibrated resource credit, physical layout result, low-overhead QEC claim, threshold claim, hardware result, or quantum advantage claim is supported until D4-D6 are closed.",
+    "what_is_supported": "The existing B7 B1/B2 dependency bridge is preserved as a structural planning input, and B7 now has an explicit claim-credit gate tied to B2 calibrated flag data, real hardware trace replay, and holdout improvement."
+  },
+  "last_updated": "2026-07-01",
+  "method": "b7_b2_calibrated_dependency_credit_gate_v0",
+  "model_status": "b7_dependency_bridge_structural_only_b2_claim_credit_blocked",
+  "problem_id": 21,
+  "requirements": [
+    {
+      "acceptance_rule": "Use only the structural B1/B2 bridge as the dependency source.",
+      "blocks_credit": false,
+      "evidence": {
+        "comparison_count": 6,
+        "mean_space_time_volume_reduction": 1.353572610789181,
+        "min_space_time_volume_reduction": 1.1948051948051948,
+        "source_method": "b1_b2_dependency_schedule_bridge_v0",
+        "source_status": "dependency_schedule_bridge_not_physical_layout"
+      },
+      "gate_id": "D1",
+      "label": "B7 dependency bridge is present and structural",
+      "passed": true
+    },
+    {
+      "acceptance_rule": "The B7 bridge must point to an explicit B2 target-volume row.",
+      "blocks_credit": false,
+      "evidence": {
+        "matched_logical_failures": 0,
+        "matched_row_found": true,
+        "matched_wilson_95_high": 0.0012788956648046956,
+        "selected_b2_target": {
+          "criterion": "wilson_95_high",
+          "distance": 3,
+          "memory_basis": "x",
+          "physical_error": 0.001,
+          "physical_qubits": 26,
+          "rounds": 3,
+          "space_time_volume": 78,
+          "target_logical_error": 0.01,
+          "wilson_95_high": 0.0012788956648046956
+        }
+      },
+      "gate_id": "D2",
+      "label": "Selected B2 target-volume row is replayable in the B2 baseline table",
+      "passed": true
+    },
+    {
+      "acceptance_rule": "Consume the validated B2 calibrated-evidence contract.",
+      "blocks_credit": false,
+      "evidence": {
+        "contract_method": "b2_calibrated_evidence_contract_gate_v0",
+        "contract_status": "calibrated_evidence_contract_open_missing_hardware_data",
+        "failed_contract_requirement_ids": [
+          "K4",
+          "K5",
+          "K6"
+        ],
+        "validation_errors": []
+      },
+      "gate_id": "D3",
+      "label": "B2 calibrated-evidence contract is valid",
+      "passed": true
+    },
+    {
+      "acceptance_rule": "Submit calibrated leakage/flag rows before B2 credit enters B7.",
+      "blocks_credit": true,
+      "evidence": {
+        "calibrated_flag_data_used": false,
+        "required_packet": "B2-C4-calibrated-flag-data",
+        "source_gate": "K4/C4"
+      },
+      "gate_id": "D4",
+      "label": "Calibrated leakage/flag data are present",
+      "passed": false
+    },
+    {
+      "acceptance_rule": "Replay real or independently calibrated traces through the same B2 decoder path.",
+      "blocks_credit": true,
+      "evidence": {
+        "real_hardware_trace_used": false,
+        "required_packet": "B2-C5-hardware-trace-replay",
+        "source_gate": "K5/C5"
+      },
+      "gate_id": "D5",
+      "label": "Real or independently calibrated hardware traces are replayed",
+      "passed": false
+    },
+    {
+      "acceptance_rule": "Show fewer holdout logical failures while preserving non-regression.",
+      "blocks_credit": true,
+      "evidence": {
+        "holdout_baseline_failures": 16,
+        "holdout_failure_delta": 0,
+        "holdout_improvement_gate_passed": false,
+        "holdout_injected_failures": 16,
+        "source_gate": "K6/C6"
+      },
+      "gate_id": "D6",
+      "label": "Strict holdout improvement is shown under the calibrated injection",
+      "passed": false
+    },
+    {
+      "acceptance_rule": "Keep B2 claim boundaries strict while the dependency gate is blocked.",
+      "blocks_credit": false,
+      "evidence": {
+        "calibrated_device_claimed": false,
+        "hardware_result_claimed": false,
+        "new_code_claimed": false,
+        "production_decoder_claimed": false,
+        "quantum_advantage_claimed": false,
+        "threshold_claimed": false
+      },
+      "gate_id": "D7",
+      "label": "Forbidden production, threshold, hardware, and advantage claims remain absent",
+      "passed": true
+    },
+    {
+      "acceptance_rule": "Allow B2-derived B7 credit only after D4-D7 all pass.",
+      "blocks_credit": true,
+      "evidence": {
+        "b7_claim_credit_space_time_volume_reduction": null,
+        "b7_structural_min_space_time_volume_reduction": 1.1948051948051948,
+        "dependency_credit_allowed": false,
+        "open_calibrated_blockers": [
+          "C4",
+          "C5",
+          "C6"
+        ]
+      },
+      "gate_id": "D8",
+      "label": "B7 may count B2 calibrated-dependency credit",
+      "passed": false
+    }
+  ],
+  "sources": {
+    "b2_contract_result": "results/B2_calibrated_evidence_contract_gate_v0.json",
+    "b2_target_volume": "results/B2_stim_surface_code_target_volume_v0.json",
+    "b7_bridge_result": "results/B7_b1_b2_dependency_schedule_bridge_v0.json"
+  },
+  "status": "b2_calibrated_dependency_credit_rejected_missing_hardware_evidence",
+  "summary": {
+    "b7_claim_credit_space_time_volume_reduction": null,
+    "b7_structural_bridge_remains_usable_as_planning_input": true,
+    "blocking_failed_requirement_ids": [
+      "D4",
+      "D5",
+      "D6",
+      "D8"
+    ],
+    "calibrated_flag_data_used": false,
+    "dependency_credit_allowed": false,
+    "failed_requirement_count": 4,
+    "failed_requirement_ids": [
+      "D4",
+      "D5",
+      "D6",
+      "D8"
+    ],
+    "holdout_baseline_failures": 16,
+    "holdout_failure_delta": 0,
+    "holdout_improvement_gate_passed": false,
+    "holdout_injected_failures": 16,
+    "holdout_nonregression_gate_passed": true,
+    "passed_requirement_count": 4,
+    "real_hardware_trace_used": false,
+    "requirement_count": 8,
+    "selected_b2_distance": 3,
+    "selected_b2_physical_error": 0.001,
+    "selected_b2_row_replayed": true,
+    "selected_b2_space_time_volume": 78,
+    "selected_b2_target_logical_error": 0.01,
+    "selected_b2_wilson_95_high": 0.0012788956648046956,
+    "source_b2_contract_failed_ids": [
+      "K4",
+      "K5",
+      "K6"
+    ],
+    "source_b2_contract_packet_ids": [
+      "B2-C4-calibrated-flag-data",
+      "B2-C5-hardware-trace-replay",
+      "B2-C6-holdout-improvement"
+    ],
+    "source_b2_contract_status": "calibrated_evidence_contract_open_missing_hardware_data",
+    "source_b7_comparison_count": 6,
+    "source_b7_mean_space_time_volume_reduction": 1.353572610789181,
+    "source_b7_method": "b1_b2_dependency_schedule_bridge_v0",
+    "source_b7_min_space_time_volume_reduction": 1.1948051948051948,
+    "source_b7_status": "dependency_schedule_bridge_not_physical_layout"
+  },
+  "title": "B7 B2 calibrated dependency credit gate",
+  "validation_errors": [],
+  "version": "0.1"
+}

@@ -79,6 +79,34 @@ current_results:
     caveat: dependency_schedule_bridge_not_lattice_surgery_or_physical_layout_claim
     result: ../results/B7_b1_b2_dependency_schedule_bridge_v0.json
     markdown_report: ../research/B7_b1_b2_dependency_schedule_bridge.md
+  b2_calibrated_dependency_credit_gate_v0:
+    status: b2_calibrated_dependency_credit_rejected_missing_hardware_evidence
+    method: b7_b2_calibrated_dependency_credit_gate_v0
+    source_bridge: b1_b2_dependency_schedule_bridge_v0
+    source_b2_contract: ../results/B2_calibrated_evidence_contract_gate_v0.json
+    selected_b2_physical_error: 0.001
+    selected_b2_target_logical_error: 0.01
+    selected_b2_distance: 3
+    selected_b2_space_time_volume: 78
+    selected_b2_wilson_95_high: 0.0012788956648046956
+    source_b7_min_space_time_volume_reduction: 1.1948051948051948
+    source_b7_mean_space_time_volume_reduction: 1.353572610789181
+    requirement_count: 8
+    passed_requirement_count: 4
+    failed_requirement_count: 4
+    failed_requirement_ids: [D4, D5, D6, D8]
+    blocking_failed_requirement_ids: [D4, D5, D6, D8]
+    calibrated_flag_data_used: false
+    real_hardware_trace_used: false
+    holdout_improvement_gate_passed: false
+    holdout_baseline_failures: 16
+    holdout_injected_failures: 16
+    holdout_failure_delta: 0
+    dependency_credit_allowed: false
+    b7_claim_credit_space_time_volume_reduction: null
+    caveat: structural_b1_b2_bridge_remains_planning_input_but_b2_calibrated_credit_is_blocked
+    result: ../results/B7_B2_calibrated_dependency_credit_gate_v0.json
+    markdown_report: ../research/B7_B2_calibrated_dependency_credit_gate.md
   workload_dag_factory_schedule_v0:
     status: workload_dag_factory_schedule_not_physical_layout
     method: b7_workload_dag_factory_scheduler_v0
@@ -508,6 +536,7 @@ current_results:
 prototype_artifacts:
   resource_model: ../tools/b7_fault_tolerance_codesign.py
   dependency_schedule_bridge: ../tools/b7_dependency_schedule_bridge.py
+  b2_calibrated_dependency_credit_gate: ../tools/b7_b2_calibrated_dependency_credit_gate.py
   workload_dag_factory_scheduler: ../tools/b7_workload_dag_factory_scheduler.py
   logical_t_factory_scheduler: ../tools/b7_logical_t_factory_scheduler.py
   min_stv_regime_classifier: ../tools/b7_min_stv_regime_classifier.py
