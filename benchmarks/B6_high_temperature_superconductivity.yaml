@@ -311,6 +311,42 @@ current_results:
     validation_error_count: 0
     result: ../results/B6_observable_contract_gate_v0.json
     markdown: ../research/B6_observable_contract_gate.md
+  b6_b5_observable_row_intake_template_gate_v0:
+    status: observable_row_intake_template_open_missing_dft_b5_rows
+    method: b6_observable_row_intake_template_gate_v0
+    source: b6_observable_contract_gate_v0
+    model_status: top_post_materials_mapped_to_observable_row_templates_no_rows_submitted
+    source_observable_contract_status: observable_contract_open_missing_dft_b5_rows
+    source_backend_replay_status: backend_replay_candidate_built_missing_observables
+    intake_requirement_count: 8
+    intake_requirements_passed: 6
+    intake_requirements_failed: 2
+    failed_intake_requirement_ids: [T6, T7]
+    failed_observable_contract_requirement_ids: [O5, O6]
+    failed_backend_replay_requirement_ids: [R7, R8]
+    template_row_count: 12
+    required_dft_key_count: 11
+    required_b5_key_count: 11
+    dft_schema_hash: e9215a51f2736f1c29890577b201ad5980b835dd787bd9bde4f2484293f17388
+    b5_schema_hash: 79217e965af5e0d4ed95f143fcfd0aa3936edef001a292f559a70cf9e688c576
+    source_table_hash: ce134d0a5d295af982b77be0a8a43e90ea19e828af20cc80ac3f20b7664d2fdc
+    replay_formula_hash: e23239648dd11aa8e0db8ecdeb5824506a5a379c9ba2777965c3aafa5d5d8230
+    replay_table_hash: c44099194d0bc04d74cd3c4c4e068bf51a9e114d11c6e0b5e3890786cda5b8de
+    submitted_dft_rows: 0
+    submitted_b5_rows: 0
+    accepted_dft_rows: 0
+    accepted_b5_rows: 0
+    observable_row_intake_ready: false
+    dft_observable_claimed: false
+    b5_computed_observable_claimed: false
+    material_discovery_claimed: false
+    mechanism_solved: false
+    solution_claimed: false
+    validation_error_count: 0
+    interpretation: top_post_b6_replay_materials_are_mapped_to_dft_and_b5_observable_row_templates_without_claiming_discovery
+    caveat: template_only_no_dft_rows_no_b5_rows_no_material_discovery_or_mechanism_solution
+    result: ../results/B6_B5_observable_row_intake_template_gate_v0.json
+    markdown: ../research/B6_B5_observable_row_intake_template_gate.md
   b6_curated_materials_leakage_audit_v0:
     status: curated_retrospective_leakage_audit
     model_status: curated_materials_table_with_time_family_leakage_audit
@@ -372,4 +408,5 @@ prototype_artifacts:
   validation_rescue_scout: ../tools/b6_validation_rescue_scout.py
   backend_replay_scout: ../tools/b6_backend_replay_scout.py
   observable_contract_gate: ../tools/b6_observable_contract_gate.py
+  observable_row_intake_template_gate: ../tools/b6_observable_row_intake_template_gate.py
   prototype_notes: ../research/B6_prototype_notes.md
